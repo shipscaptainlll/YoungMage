@@ -153,6 +153,94 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &72410267
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 72410268}
+  - component: {fileID: 72410269}
+  m_Layer: 0
+  m_Name: SkeletonInvoker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &72410268
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72410267}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1545679394}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &72410269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72410267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b675d80e8b9d46e4ea80c00f7d12b25b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contactManager: {fileID: 1819079332}
+  skeleton: {fileID: 5255633760099641006, guid: 90128782300ae7c47ae646010043c4c0, type: 3}
+--- !u!1 &144706689
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 144706690}
+  - component: {fileID: 144706691}
+  m_Layer: 0
+  m_Name: ClickManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &144706690
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 144706689}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1545679394}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &144706691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 144706689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90e03bce8eb09804da6e9a779a153e01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &145875849 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 42a400101d8a20c45b6964ea2515dd32, type: 3}
@@ -245,6 +333,9 @@ MonoBehaviour:
   CheckLayer:
     serializedVersion: 2
     m_Bits: 64
+  CheckLayer2:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!143 &159558123
 CharacterController:
   m_ObjectHideFlags: 0
@@ -259,7 +350,7 @@ CharacterController:
   m_Height: 2
   m_Radius: 0.5000001
   m_SlopeLimit: 45
-  m_StepOffset: 0.3
+  m_StepOffset: 0.57
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
@@ -517,6 +608,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 77169a44a05c72c43bcc6320b7c06ea2, type: 3}
       propertyPath: m_Name
       value: WindstoneOre
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 77169a44a05c72c43bcc6320b7c06ea2, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77169a44a05c72c43bcc6320b7c06ea2, type: 3}
@@ -896,6 +991,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterBody: {fileID: 159558121}
   mouseSensitivity: 75
+  currentObjectLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  ClickManager: {fileID: 144706691}
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -991,6 +1090,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MetalOre
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 670ffe7a42d94e5498e9c4660cec34db, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 670ffe7a42d94e5498e9c4660cec34db, type: 3}
 --- !u!1 &1079769830 stripped
@@ -1084,6 +1187,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WaterstoneOre
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a1eec4e6d4e0f1b4288efe4e1e52394e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1eec4e6d4e0f1b4288efe4e1e52394e, type: 3}
 --- !u!1001 &1174197578
@@ -1148,6 +1255,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: cc90d66c1da14d74ea6af41357d42674, type: 3}
       propertyPath: m_Name
       value: EarthstoneOre
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: cc90d66c1da14d74ea6af41357d42674, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc90d66c1da14d74ea6af41357d42674, type: 3}
@@ -1241,6 +1352,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 13e5c2467568b714f84b8483901d7df1, type: 3}
       propertyPath: m_Name
       value: RockOre
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 13e5c2467568b714f84b8483901d7df1, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13e5c2467568b714f84b8483901d7df1, type: 3}
@@ -1344,7 +1459,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 24.675156, y: -7.380934, z: 21.161522}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 144706690}
+  - {fileID: 1819079331}
+  - {fileID: 72410268}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1410,6 +1528,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 42a400101d8a20c45b6964ea2515dd32, type: 3}
       propertyPath: m_Name
       value: CursedOre
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 42a400101d8a20c45b6964ea2515dd32, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 42a400101d8a20c45b6964ea2515dd32, type: 3}
@@ -1504,6 +1626,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MagicstoneOre
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fd14eec1886f5044c98409a224737aef, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd14eec1886f5044c98409a224737aef, type: 3}
 --- !u!1 &1773766128
@@ -1537,6 +1663,51 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1819079330
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1819079331}
+  - component: {fileID: 1819079332}
+  m_Layer: 0
+  m_Name: ContactManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1819079331
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1819079330}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1545679394}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1819079332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1819079330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cae7f6289b236594c80115cd24986dd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ClickManager: {fileID: 144706691}
+  CameraController: {fileID: 963194229}
 --- !u!1 &1947218476
 GameObject:
   m_ObjectHideFlags: 0
@@ -1686,6 +1857,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 3d8e07ebd9e3e994793fa92e447968b2, type: 3}
       propertyPath: m_Name
       value: LavastoneOre
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3d8e07ebd9e3e994793fa92e447968b2, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d8e07ebd9e3e994793fa92e447968b2, type: 3}

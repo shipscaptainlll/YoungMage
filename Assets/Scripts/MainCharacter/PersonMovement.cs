@@ -11,6 +11,7 @@ public class PersonMovement : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] float jumpHeight;
     [SerializeField] LayerMask CheckLayer;
+    [SerializeField] LayerMask CheckLayer2;
     Vector3 velocity;
     float gravity;
     float checkRadius;
@@ -24,25 +25,30 @@ public class PersonMovement : MonoBehaviour
 
     void Update()
     {
-            float x = Input.GetAxis("Horizontal");
-            float z = Input.GetAxis("Vertical");
+        MoveCharacter();
+    }
 
-            Vector3 move = transform.right * x + transform.forward * z;
-            CharacterController.Move(move * speed * Time.deltaTime);
+    void MoveCharacter()
+    {
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
 
-            isGrounded = Physics.CheckSphere(CheckGround.position, checkRadius, CheckLayer);
+        Vector3 move = transform.right * x + transform.forward * z;
+        CharacterController.Move(move * speed * Time.deltaTime);
 
-            if (isGrounded && velocity.y < 0)
-            {
-                velocity.y = -2f;
-            }
+        isGrounded = (Physics.CheckSphere(CheckGround.position, checkRadius, CheckLayer) || Physics.CheckSphere(CheckGround.position, checkRadius, CheckLayer2));
 
-            if (isGrounded && Input.GetButtonDown("Jump"))
-            {
-                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-            }
+        if (isGrounded && velocity.y < 0)
+        {
+            velocity.y = -2f;
+        }
 
-            velocity.y += gravity * Time.deltaTime;
-            CharacterController.Move(velocity * Time.deltaTime);
+        if (isGrounded && Input.GetButtonDown("Jump"))
+        {
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
+
+        velocity.y += gravity * Time.deltaTime;
+        CharacterController.Move(velocity * Time.deltaTime);
     }
 }

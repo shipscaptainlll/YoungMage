@@ -55,16 +55,6 @@ public class RockOre : MonoBehaviour, IOre
     // Start is called before the first frame update
     void Start()
     {
-        ShowParameters();
-    }
-
-    void ShowParameters()
-    {
-        Debug.Log("Object type is: " + ObjectType);
-        Debug.Log("Type is: " + Type);
-        Debug.Log("Max health is: " + Health);
-        Debug.Log("Hardness is: " + Hardness);
-        Debug.Log("Production type is: " + ProductionType);
-        Debug.Log("Production per cycle is: " + ProductionPerCycle);
+        
     }
 }
