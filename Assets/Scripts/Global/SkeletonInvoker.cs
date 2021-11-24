@@ -6,6 +6,9 @@ public class SkeletonInvoker : MonoBehaviour
 {
     [SerializeField] ContactManager contactManager;
     [SerializeField] GameObject skeleton;
+    Transform targetOre;
+
+    public Transform TargetOre => targetOre;
     
 
     void Start()
@@ -21,9 +24,11 @@ public class SkeletonInvoker : MonoBehaviour
 
     void InvokeSkeleton(Transform detectedOre)
     {
-        Vector3 offsetPosition = new Vector3(0, 1, 3);
+        targetOre = detectedOre;
+        Debug.Log("1:"  + targetOre);
+        Vector3 offsetPosition = new Vector3(0, 1, 30);
         Quaternion zeroRotation = Quaternion.Euler(0, -90, 0);
         GameObject newShinySkeleton = Instantiate(skeleton, detectedOre.position + offsetPosition, zeroRotation);
-        Destroy(newShinySkeleton, 10f);
+        newShinySkeleton.GetComponent<SkeletonBehavior>().AddTarget(detectedOre);
     }
 }

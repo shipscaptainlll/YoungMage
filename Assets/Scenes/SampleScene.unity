@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contactManager: {fileID: 1819079332}
-  skeleton: {fileID: 5255633760099641006, guid: 90128782300ae7c47ae646010043c4c0, type: 3}
+  skeleton: {fileID: 31239628312455199, guid: 90128782300ae7c47ae646010043c4c0, type: 3}
 --- !u!1 &144706689
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,14 +326,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47612484335df6b4493d4c8fe9ba0134, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharacterController: {fileID: 159558123}
-  CheckGround: {fileID: 1947218477}
+  characterController: {fileID: 159558123}
+  checkGround: {fileID: 1947218477}
   speed: 20
   jumpHeight: 2
-  CheckLayer:
+  checkLayer:
     serializedVersion: 2
     m_Bits: 64
-  CheckLayer2:
+  checkLayer2:
     serializedVersion: 2
     m_Bits: 128
 --- !u!143 &159558123

@@ -6,12 +6,12 @@ using UnityEngine.UI;
 
 public class PersonMovement : MonoBehaviour
 {
-    [SerializeField] CharacterController CharacterController;
-    [SerializeField] Transform CheckGround;
+    [SerializeField] CharacterController characterController;
+    [SerializeField] Transform checkGround;
     [SerializeField] float speed;
     [SerializeField] float jumpHeight;
-    [SerializeField] LayerMask CheckLayer;
-    [SerializeField] LayerMask CheckLayer2;
+    [SerializeField] LayerMask checkLayer;
+    [SerializeField] LayerMask checkLayer2;
     Vector3 velocity;
     float gravity;
     float checkRadius;
@@ -34,9 +34,9 @@ public class PersonMovement : MonoBehaviour
         float z = Input.GetAxis("Vertical");
 
         Vector3 move = transform.right * x + transform.forward * z;
-        CharacterController.Move(move * speed * Time.deltaTime);
+        characterController.Move(move * speed * Time.deltaTime);
 
-        isGrounded = (Physics.CheckSphere(CheckGround.position, checkRadius, CheckLayer) || Physics.CheckSphere(CheckGround.position, checkRadius, CheckLayer2));
+        isGrounded = (Physics.CheckSphere(checkGround.position, checkRadius, checkLayer) || Physics.CheckSphere(checkGround.position, checkRadius, checkLayer2));
 
         if (isGrounded && velocity.y < 0)
         {
@@ -49,6 +49,6 @@ public class PersonMovement : MonoBehaviour
         }
 
         velocity.y += gravity * Time.deltaTime;
-        CharacterController.Move(velocity * Time.deltaTime);
+        characterController.Move(velocity * Time.deltaTime);
     }
 }
