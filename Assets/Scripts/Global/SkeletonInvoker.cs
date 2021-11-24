@@ -13,7 +13,7 @@ public class SkeletonInvoker : MonoBehaviour
 
     void Start()
     {
-        contactManager.OreDetected += InvokeSkeleton;
+        //contactManager.OreDetected += InvokeSkeleton;
     }
 
     // Update is called once per frame
@@ -29,6 +29,7 @@ public class SkeletonInvoker : MonoBehaviour
         Vector3 offsetPosition = new Vector3(0, 1, 30);
         Quaternion zeroRotation = Quaternion.Euler(0, -90, 0);
         GameObject newShinySkeleton = Instantiate(skeleton, detectedOre.position + offsetPosition, zeroRotation);
+        newShinySkeleton.SetActive(true);
         newShinySkeleton.GetComponent<SkeletonBehavior>().AddTarget(detectedOre);
     }
 }

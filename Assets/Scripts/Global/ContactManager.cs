@@ -7,8 +7,10 @@ public class ContactManager : MonoBehaviour
 {
     [SerializeField] ClickManager ClickManager;
     [SerializeField] CameraController CameraController;
+    [SerializeField] Transform mainCharacter;
 
     public event Action<Transform> OreDetected = delegate { };
+    public event Action<Transform, Transform> SkeletonDetected = delegate { };
     private void Start()
     {
         ClickManager.LMBClicked += ContactObject;
@@ -25,6 +27,12 @@ public class ContactManager : MonoBehaviour
                 {
                     //send to skeletonInvoker
                     OreDetected(contactedObject);
+                }
+            } else if (contactedObject.GetComponent<Skeleton>() != null)
+            {
+                if (SkeletonDetected != null)
+                {
+                    SkeletonDetected(contactedObject, mainCharacter);
                 }
             }
         }
