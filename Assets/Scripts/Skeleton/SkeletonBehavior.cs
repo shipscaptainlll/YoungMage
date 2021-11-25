@@ -21,7 +21,10 @@ public class SkeletonBehavior : MonoBehaviour
     bool isIdle;
     string activity;
     bool cache = false;
-    
+
+    //cache
+    [SerializeField] Transform targetMage1;
+
     void Start()
     {
         localAnimator = transform.GetComponent<Animator>();
@@ -38,9 +41,11 @@ public class SkeletonBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         BehaviorManager();
-        //transform.Rotate(0, 1, 0);
+        Vision();
     }
+
 
     void BehaviorManager()
     {
@@ -73,24 +78,8 @@ public class SkeletonBehavior : MonoBehaviour
 
     void ChazeOre()
     {
-        if (Vector3.Distance(transform.position, targetOre.position) > 4)
-        {
-            float distancex = targetOre.position.x - transform.position.x;
-            float distancez = targetOre.position.z - transform.position.z;
-            Vector3 distance = new Vector3(distancex, 0, distancez);
-            distance.Normalize();
-            velocity = distance;
-            characterController.Move(velocity * Time.deltaTime);
-
-            Vector3 distanceAngles = targetOre.position - transform.position;
-            float angle = Mathf.Atan2(distanceAngles.y, distanceAngles.x) * Mathf.Rad2Deg;
-            Quaternion lookRotation = Quaternion.LookRotation(distanceAngles);
-            Debug.Log(distanceAngles);
-            lookRotation.x = 0; lookRotation.z = 0;
-            
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Mathf.Clamp01(3.0f * Time.maximumDeltaTime));
-            transform.Rotate(new Vector3(0, 90, 0));
-        } else { ResetVelocity(); }
+        GoTo(targetOre, 4);
+        TurnAroundTo(targetOre);
     }
 
     void ConnectToMage(Transform foundSkeleton, Transform mage)
@@ -112,72 +101,39 @@ public class SkeletonBehavior : MonoBehaviour
 
     void ChazeMage()
     {
-        if (Vector3.Distance(transform.position, targetMage.position) > 1)
+        GoTo(targetMage, 1);
+        TurnAroundTo(targetMage);
+    }
+
+    void TurnAroundTo(Transform target)
+    {
+        Vector3 distanceAngles = (target.position - transform.position).normalized;
+        float angleLangle = Vector3.Angle(distanceAngles, -transform.right);
+
+        float angle = Mathf.Atan2(distanceAngles.y, distanceAngles.x) * Mathf.Rad2Deg;
+        if (angleLangle >= 10)
         {
-            float distancex = targetMage.position.x - transform.position.x;
-            float distancez = targetMage.position.z - transform.position.z;
+            if (Vector3.Cross(-transform.right, distanceAngles).y > 0)
+            { transform.Rotate(new Vector3(0, angleLangle / 60, 0)); }
+            else if (Vector3.Cross(-transform.right, distanceAngles).y < 0)
+            {
+                transform.Rotate(new Vector3(0, -angleLangle / 60, 0));
+            }
+        }
+    }
+
+    void GoTo(Transform target, float keptDistance)
+    {
+        if (Vector3.Distance(transform.position, targetMage.position) > keptDistance)
+        {
+            float distancex = target.position.x - transform.position.x;
+            float distancez = target.position.z - transform.position.z;
             Vector3 distance = new Vector3(distancex, 0, distancez);
             distance.Normalize();
             velocity = distance;
             characterController.Move(velocity * Time.deltaTime);
-
-            Vector3 distanceAngles = (targetMage.position - transform.position).normalized;
-            float angle = Mathf.Atan2(distanceAngles.y, distanceAngles.x) * Mathf.Rad2Deg;
-            Quaternion lookRotation = Quaternion.LookRotation(distanceAngles);
-            //Debug.Log(lookRotation);
-            //Debug.Log(transform.rotation);
-            lookRotation.x = 0; lookRotation.z = 0;
-            //transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Mathf.Clamp01(3.0f * Time.maximumDeltaTime));
-            if (cache == false)
-            {
-                cache = true;
-                StartCoroutine(helloworld());
-            }
-            
-            if (angle > 0)
-            {
-                //transform.Rotate(new Vector3(0, -0.1f, 0));
-            } else if (angle < 0 ) { transform.Rotate(new Vector3(0, -0.1f, 0)); }
-            
         }
         else { ResetVelocity(); }
-    }
-
-    IEnumerator helloworld()
-    {
-        float permit;
-        Vector3 distanceAngles = (targetMage.position - transform.position).normalized;
-        float angle = Mathf.Atan2(distanceAngles.y, distanceAngles.x) * Mathf.Rad2Deg;
-        Quaternion lookRotation = Quaternion.LookRotation(distanceAngles);
-        lookRotation.x = 0; lookRotation.z = 0;
-        while (Mathf.Abs((lookRotation.y - transform.rotation.y)) >= 0.05f)
-        {
-            Vector3 distanceAngles1 = (targetMage.position - transform.position).normalized;
-            float angle1 = Mathf.Atan2(distanceAngles1.y, distanceAngles1.x) * Mathf.Rad2Deg;
-            Quaternion lookRotation1 = Quaternion.LookRotation(distanceAngles1);
-            lookRotation1.x = 0; lookRotation1.z = 0;
-            
-            if (Mathf.Abs(transform.rotation.y - lookRotation1.y) > Mathf.Abs(lookRotation1.y - transform.rotation.y))
-            {
-                permit = Mathf.Abs((transform.rotation.y - lookRotation1.y) / 200);
-                Quaternion newOne = lookRotation1;
-                newOne.y = -permit;
-                lookRotation1.y += permit;
-                transform.rotation *= newOne;
-            } else { 
-                permit = Mathf.Abs((transform.rotation.y - lookRotation1.y) / 200);
-                Quaternion newOne = lookRotation1;
-                newOne.y = permit;
-                lookRotation1.y -= permit;
-                transform.rotation *= newOne;
-            }
-            
-            Debug.Log(permit);
-            
-            yield return new WaitForSeconds(0.002f);
-        }
-        
-        
     }
 
     void GetRoundObject()
