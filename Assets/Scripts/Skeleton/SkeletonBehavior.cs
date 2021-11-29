@@ -5,7 +5,9 @@ using UnityEngine;
 public class SkeletonBehavior : MonoBehaviour
 {
     [SerializeField] Transform checkGround;
-    [SerializeField] LayerMask checkLayer;
+    [SerializeField] Transform checkSurrounding;
+    [SerializeField] LayerMask checkSurroundingLayer;
+    [SerializeField] LayerMask checkGroundLayer;
     [SerializeField] LayerMask targetLayerMask;
     [SerializeField] CharacterController characterController;
     [SerializeField] Transform contactManager;
@@ -28,7 +30,7 @@ public class SkeletonBehavior : MonoBehaviour
     void Start()
     {
         localAnimator = transform.GetComponent<Animator>();
-        localAnimator.Play("SkeletonMine");
+        
         gravity = -9.81f;
         checkRadius = 0;
         isIdle = true;
@@ -41,9 +43,11 @@ public class SkeletonBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //-transform.forward equals left
         
         BehaviorManager();
         Vision();
+        GoAroundSurroundings();
     }
 
 
@@ -61,8 +65,8 @@ public class SkeletonBehavior : MonoBehaviour
             case "ChasingOre":
                 ChazeOre();
                 break;
-            case "GetRoundObject":
-                GetRoundObject();
+            case "MineOre":
+                MineOre();
                 break;
         }
     }
@@ -78,8 +82,13 @@ public class SkeletonBehavior : MonoBehaviour
 
     void ChazeOre()
     {
-        GoTo(targetOre, 4);
+        float keptDistance = 4.5f;
+        GoTo(targetOre, keptDistance);
         TurnAroundTo(targetOre);
+        if (Vector3.Distance(transform.position, targetMage.position) <= keptDistance)
+        {
+            activity = "MineOre";
+        }
     }
 
     void ConnectToMage(Transform foundSkeleton, Transform mage)
@@ -103,6 +112,12 @@ public class SkeletonBehavior : MonoBehaviour
     {
         GoTo(targetMage, 1);
         TurnAroundTo(targetMage);
+    }
+
+    void MineOre()
+    {
+        TurnAroundTo(targetOre);
+        localAnimator.Play("SkeletonMine");
     }
 
     void TurnAroundTo(Transform target)
@@ -136,14 +151,9 @@ public class SkeletonBehavior : MonoBehaviour
         else { ResetVelocity(); }
     }
 
-    void GetRoundObject()
-    {
-
-    }
-
     void Gravitation()
     {
-        isGrounded = Physics.CheckSphere(checkGround.position, checkRadius, checkLayer);
+        isGrounded = Physics.CheckSphere(checkGround.position, checkRadius, checkGroundLayer);
 
         if (isGrounded && velocity.y < 0)
         {
@@ -153,6 +163,29 @@ public class SkeletonBehavior : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
 
         characterController.Move(velocity * Time.deltaTime);
+    }
+
+    void GoAroundSurroundings()
+    {
+        bool isCollided = Physics.CheckSphere(checkSurrounding.position, 4f, checkSurroundingLayer);
+        Collider[] hitCollider = Physics.OverlapSphere(checkSurrounding.position, 4f, checkSurroundingLayer);
+        if (isCollided == true)
+        {
+            Vector3 disctanceVector = checkSurrounding.position - hitCollider[0].transform.position;
+            float distanceBetweenX = checkSurrounding.position.x - hitCollider[0].transform.position.x;
+            float distanceBetweenZ = checkSurrounding.position.z - hitCollider[0].transform.position.z;
+            float distance = Mathf.Sqrt(distanceBetweenX * distanceBetweenX + distanceBetweenZ * distanceBetweenZ);
+            float coefficient = 8f / distance;
+            
+            if (Vector3.Cross(-transform.right, disctanceVector).y > 0)
+            {
+                characterController.Move(transform.forward * coefficient * Time.deltaTime);
+            } else if (Vector3.Cross(-transform.right, disctanceVector).y <= 0)
+            {
+                characterController.Move(-transform.forward * coefficient * Time.deltaTime);
+            }
+            
+        }
     }
 
     void Vision()
