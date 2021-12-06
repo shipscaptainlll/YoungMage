@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,16 +9,20 @@ public class LassoInvoker : MonoBehaviour
     [SerializeField] ContactManager ContactManager;
     [SerializeField] Transform FirstPoint;
     [SerializeField] Transform SecondPoint;
-    LineRenderer lassoRenderer;
+    [SerializeField] LineRenderer lassoRenderer;
     string state;
+    bool isContactingSkeleton;
+    Transform rememberedSkeleton;
+    Transform mageTransform;
 
+    public event Action<Transform, Transform> UsedWand = delegate { };
     // Start is called before the first frame update
     void Start()
     {
         ContactManager.SkeletonDetected += ChangeTarget;
         ContactManager.OreDetected += CalculateBehavior;
         state = "idle";
-        lassoRenderer = GetComponent<LineRenderer>();
+        isContactingSkeleton = false;
     }
 
     // Update is called once per frame
@@ -68,15 +73,19 @@ public class LassoInvoker : MonoBehaviour
 
     void InvokeLasso()
     {
-        lassoRenderer.SetPosition(0, FirstPoint.position);
+        lassoRenderer.SetPosition(0, FirstPoint.position + new Vector3(0, -0.2f, 0));
         lassoRenderer.SetPosition(1, SecondPoint.position);
     }
 
-    void ChangeTarget(Transform nextTarget, Transform ignoreGarbage)
+    void ChangeTarget(Transform nextTarget, Transform mage)
     {
+        rememberedSkeleton = nextTarget;
+        mageTransform = mage;
+        isContactingSkeleton = true;
+        GetComponent<Animator>().Play("WandCast");
         SecondPoint = nextTarget;
         SearchForNeck();
-        CalculateBehavior();
+        
     }
 
     void LineToDefaults()
@@ -93,5 +102,15 @@ public class LassoInvoker : MonoBehaviour
     void SearchForNeck()
     {
         SecondPoint = SecondPoint.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0);
+    }
+
+    void Hello()
+    {
+        CalculateBehavior();
+        isContactingSkeleton = false;
+        if (UsedWand != null)
+        {
+            UsedWand(rememberedSkeleton, mageTransform);
+        }
     }
 }

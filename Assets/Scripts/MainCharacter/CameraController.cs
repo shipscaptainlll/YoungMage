@@ -53,7 +53,7 @@ public class CameraController : MonoBehaviour
         Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward * 3), Color.red);
 
         if (Physics.SphereCast(transform.position, 1.2f, transform.TransformDirection(Vector3.forward * 3), out hit, 100f, currentObjectLayerMask)) {
-            Debug.Log(hit.transform);
+            //Debug.Log(hit.transform);
         }
     }
 }

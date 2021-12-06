@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SkeletonBehavior : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class SkeletonBehavior : MonoBehaviour
     [SerializeField] LayerMask targetLayerMask;
     [SerializeField] CharacterController characterController;
     [SerializeField] Transform contactManager;
+    [SerializeField] Transform LassoInvoker;
+    [SerializeField] StoneOreCounter stoneOreCounter;
     Animator localAnimator;
     Vector3 velocity;
     RaycastHit foundObject = new RaycastHit();
@@ -35,7 +38,7 @@ public class SkeletonBehavior : MonoBehaviour
         gravity = -9.81f;
         checkRadius = 0;
         isIdle = true;
-        contactManager.GetComponent<ContactManager>().SkeletonDetected += ConnectToMage;
+        LassoInvoker.GetComponent<LassoInvoker>().UsedWand += ConnectToMage;
         contactManager.GetComponent<ContactManager>().OreDetected += AddTarget;
         activity = "idle";
         Debug.Log(transform.parent);
@@ -152,7 +155,7 @@ public class SkeletonBehavior : MonoBehaviour
             float distancex = target.position.x - transform.position.x;
             float distancez = target.position.z - transform.position.z;
             Vector3 distance = new Vector3(distancex, 0, distancez);
-            Debug.Log(Vector3.Distance(transform.position, targetMage.position));
+            //Debug.Log(Vector3.Distance(transform.position, targetMage.position));
             distance.Normalize();
             velocity = distance;
             characterController.Move(velocity * Time.deltaTime * speed);
@@ -189,7 +192,6 @@ public class SkeletonBehavior : MonoBehaviour
             float distance = Mathf.Sqrt(distanceBetweenX * distanceBetweenX + distanceBetweenZ * distanceBetweenZ);
             float coefficient = 50f / (distance * distance);
             if (coefficient >= 3) { coefficient = 3; }
-            Debug.Log(coefficient);
             if (Vector3.Cross(transform.forward, disctanceVector).y > 0)
             {
                 characterController.Move(transform.right * coefficient * Time.deltaTime);
@@ -205,12 +207,17 @@ public class SkeletonBehavior : MonoBehaviour
     {
         Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward * 3), Color.red);
         if (Physics.SphereCast(transform.position, 1.0f, transform.TransformDirection(Vector3.forward * 3), out foundObject, 3f, targetLayerMask)) {
-            Debug.Log(foundObject.transform);
+            
         }
     }
 
     void ResetVelocity()
     {
         velocity = new Vector3(0, 0, 0);
+    }
+
+    void HitOre()
+    {
+        stoneOreCounter.AddResource(1);
     }
 }

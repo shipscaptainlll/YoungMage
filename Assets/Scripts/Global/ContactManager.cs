@@ -11,6 +11,7 @@ public class ContactManager : MonoBehaviour
 
     public event Action<Transform> OreDetected = delegate { };
     public event Action<Transform, Transform> SkeletonDetected = delegate { };
+    public event Action DefractorDetected = delegate { };
     private void Start()
     {
         ClickManager.LMBClicked += ContactObject;
@@ -21,6 +22,7 @@ public class ContactManager : MonoBehaviour
         Transform contactedObject = CameraController.ObservedObject.transform;
         if (contactedObject != null)
         {
+            Debug.Log(contactedObject);
             if (contactedObject.GetComponent<IOre>() != null)
             {
                 if (OreDetected != null)
@@ -33,6 +35,13 @@ public class ContactManager : MonoBehaviour
                 if (SkeletonDetected != null)
                 {
                     SkeletonDetected(contactedObject, mainCharacter);
+                }
+            } else if (contactedObject.parent.GetComponent<Defractor>() != null)
+            {
+                if (DefractorDetected != null)
+                {
+                    Debug.Log("Hellohello");
+                    DefractorDetected();
                 }
             }
         }
