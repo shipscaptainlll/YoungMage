@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Defractor : MonoBehaviour
+public class MidasCauldron : MonoBehaviour
 {
     [SerializeField] ContactManager contactManager;
     [SerializeField] StoneOreCounter stoneOreCounter;
@@ -19,10 +19,10 @@ public class Defractor : MonoBehaviour
     void Start()
     {
         random = new System.Random();
-        contactManager.DefractorDetected += CalculateBehavior;
+        contactManager.MidasCauldronDetected += CalculateBehavior;
         isWorking = false;
         productionCost = 10;
-        productAmmount = 2;
+        productAmmount = 1;
         GetComponent<Animator>().Play("Idle");
     }
 
@@ -48,14 +48,12 @@ public class Defractor : MonoBehaviour
     {
         StartCoroutine(InvokeResource(productionCost));
         isWorking = true;
-        GetComponent<Animator>().Play("Working");
         yield return new WaitForSeconds(3f);
         for (int i = 0; i < productAmmount; i++)
         {
             InvokeProduct();
         }
         isWorking = false;
-        GetComponent<Animator>().Play("Idle");
     }
 
     void InvokeProduct()
@@ -69,7 +67,7 @@ public class Defractor : MonoBehaviour
     {
         for (int i = 0; i < cyclesCount; i++)
         {
-            int modifier = 13;
+            int modifier = 20;
             float x = (float)random.Next(-10, 10) / modifier;
             float y = (float)random.Next(-10, 10) / modifier;
             float xR = (float)random.Next(-180, 180);
@@ -79,7 +77,7 @@ public class Defractor : MonoBehaviour
             Vector3 randomRotation = new Vector3(xR, zR, yR);
             GameObject newShinyResource = Instantiate(resourceMesh, resourceInvoker.position + randomAddition, resourceInvoker.rotation * Quaternion.Euler(randomRotation));
 
-            Destroy(newShinyResource, 2);
+            Destroy(newShinyResource, 0.5f);
             yield return new WaitForSeconds(0.1f);
         }
     }

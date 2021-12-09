@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,13 @@ public class SkeletonBehavior : MonoBehaviour
     [SerializeField] Transform contactManager;
     [SerializeField] Transform LassoInvoker;
     [SerializeField] StoneOreCounter stoneOreCounter;
+    [SerializeField] MetalOreCounter metalOreCounter;
+    [SerializeField] CursedOreCounter cursedOreCounter;
+    [SerializeField] EarthstoneOreCounter earthstoneOreCounter;
+    [SerializeField] LavastoneOreCounter lavastoneOreCounter;
+    [SerializeField] MagicstoneOreCounter magicstoneOreCounter;
+    [SerializeField] WaterstoneOreCounter waterstoneOreCounter;
+    [SerializeField] WindstoneOreCounter windstoneOreCounter;
     Animator localAnimator;
     Vector3 velocity;
     RaycastHit foundObject = new RaycastHit();
@@ -41,8 +49,15 @@ public class SkeletonBehavior : MonoBehaviour
         LassoInvoker.GetComponent<LassoInvoker>().UsedWand += ConnectToMage;
         contactManager.GetComponent<ContactManager>().OreDetected += AddTarget;
         activity = "idle";
-        Debug.Log(transform.parent);
     }
+
+    public string Activity
+    {
+        get
+        {
+            return activity;
+        }
+    } 
 
     // Update is called once per frame
     void Update()
@@ -218,6 +233,32 @@ public class SkeletonBehavior : MonoBehaviour
 
     void HitOre()
     {
-        stoneOreCounter.AddResource(1);
+        switch (targetOre.GetComponent<IOre>().Type)
+        {
+            case "RockOre":
+                stoneOreCounter.AddResource(1);
+                break;
+            case "MetalOre":
+                metalOreCounter.AddResource(1);
+                break;
+            case "CursedOre":
+                cursedOreCounter.AddResource(1);
+                break;
+            case "EarthstoneOre":
+                earthstoneOreCounter.AddResource(1);
+                break;
+            case "LavastoneOre":
+                lavastoneOreCounter.AddResource(1);
+                break;
+            case "MagicstoneOre":
+                magicstoneOreCounter.AddResource(1);
+                break;
+            case "WaterstoneOre":
+                waterstoneOreCounter.AddResource(1);
+                break;
+            case "WindstoneOre":
+                windstoneOreCounter.AddResource(1);
+                break;
+        }
     }
 }
