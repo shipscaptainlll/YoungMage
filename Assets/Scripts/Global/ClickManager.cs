@@ -8,6 +8,7 @@ public class ClickManager : MonoBehaviour
     public event Action LMBClicked = delegate { };
     public event Action RMBClicked = delegate { };
     public event Action VClicked = delegate { };
+    public event Action IClicked = delegate { };
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -28,6 +29,13 @@ public class ClickManager : MonoBehaviour
             if (VClicked != null)
             {
                 VClicked();
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            if (IClicked != null)
+            {
+                IClicked();
             }
         }
     }

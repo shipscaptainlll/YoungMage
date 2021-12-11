@@ -10,6 +10,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] float mouseSensitivity;
     [SerializeField] LayerMask currentObjectLayerMask;
     [SerializeField] ClickManager ClickManager;
+    [SerializeField] CursorManager cursorManager;
     float yRotation;
     RaycastHit hit = new RaycastHit();
 
@@ -23,14 +24,17 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        RotateHead();
-        DetectObject();
+        if (!cursorManager.SomethingOpened)
+        {
+            RotateHead();
+            DetectObject();
+        }
     }
 
     void RotateHead()

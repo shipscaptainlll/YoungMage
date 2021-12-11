@@ -79,7 +79,6 @@ public class PotentialPositioner : MonoBehaviour
             
             TurnAroundTo(cameraController.ObservedObject.transform, skeletonMeshed);
             skeletonMeshed.position = cameraController.ObservedObject.transform.Find("SkeletonPosition").position + new Vector3(0,0,0);
-            Debug.Log("hello");
         }
         else
         {

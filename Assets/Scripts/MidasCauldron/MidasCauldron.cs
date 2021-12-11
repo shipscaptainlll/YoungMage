@@ -6,6 +6,7 @@ public class MidasCauldron : MonoBehaviour
 {
     [SerializeField] ContactManager contactManager;
     [SerializeField] StoneOreCounter stoneOreCounter;
+    [SerializeField] GoldCoinsCounter goldCoinsCounter;
     [SerializeField] GameObject resourceMesh;
     [SerializeField] Transform resourceInvoker;
     [SerializeField] GameObject productMesh;
@@ -61,6 +62,7 @@ public class MidasCauldron : MonoBehaviour
         GameObject newShinyProduct = Instantiate(productMesh, productInvoker.position, productInvoker.rotation);
 
         Destroy(newShinyProduct, 5);
+        goldCoinsCounter.AddResource(productAmmount);
     }
 
     IEnumerator InvokeResource(int cyclesCount)
@@ -78,6 +80,7 @@ public class MidasCauldron : MonoBehaviour
             GameObject newShinyResource = Instantiate(resourceMesh, resourceInvoker.position + randomAddition, resourceInvoker.rotation * Quaternion.Euler(randomRotation));
 
             Destroy(newShinyResource, 0.5f);
+            
             yield return new WaitForSeconds(0.1f);
         }
     }
