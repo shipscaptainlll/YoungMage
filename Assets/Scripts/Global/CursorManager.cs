@@ -33,7 +33,7 @@ public class CursorManager : MonoBehaviour
         }
     }
 
-    bool CheckSomethingOpened()
+    public bool CheckSomethingOpened()
     {
         if (inventoryOpenClose.IsOpened)
         {

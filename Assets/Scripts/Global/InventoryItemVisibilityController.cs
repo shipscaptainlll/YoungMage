@@ -6,11 +6,27 @@ public class InventoryItemVisibilityController : MonoBehaviour
 {
     [SerializeField] Transform inventoryPanel;
     [SerializeField] GoldCoinsCounter goldCoinsCounter;
+    [SerializeField] StoneOreCounter stoneOreCounter;
+    [SerializeField] MetalOreCounter metalOreCounter;
+    [SerializeField] CursedOreCounter cursedOreCounter;
+    [SerializeField] EarthstoneOreCounter earthstoneOreCounter;
+    [SerializeField] LavastoneOreCounter lavastoneOreCounter;
+    [SerializeField] MagicstoneOreCounter magicstoneOreCounter;
+    [SerializeField] WaterstoneOreCounter waterstoneOreCounter;
+    [SerializeField] WindstoneOreCounter windstoneOreCounter;
 
     // Start is called before the first frame update
     void Start()
     {
         goldCoinsCounter.ItemCreated += CreateVisibleItem;
+        stoneOreCounter.ItemCreated += CreateVisibleItem;
+        metalOreCounter.ItemCreated += CreateVisibleItem;
+        cursedOreCounter.ItemCreated += CreateVisibleItem;
+        earthstoneOreCounter.ItemCreated += CreateVisibleItem;
+        lavastoneOreCounter.ItemCreated += CreateVisibleItem;
+        magicstoneOreCounter.ItemCreated += CreateVisibleItem;
+        waterstoneOreCounter.ItemCreated += CreateVisibleItem;
+        windstoneOreCounter.ItemCreated += CreateVisibleItem;
         SearchEmptySlot();
     }
 
@@ -20,8 +36,8 @@ public class InventoryItemVisibilityController : MonoBehaviour
         if (foundEmptySlot != null)
         {
             Element emptySlotElementScript = foundEmptySlot.Find("Borders").GetChild(1).GetComponent<Element>();
-            emptySlotElementScript.CustomID = customId;
             emptySlotElementScript.AttachedCounter = attachedCounter;
+            emptySlotElementScript.CustomID = customId;
         }
     }
 

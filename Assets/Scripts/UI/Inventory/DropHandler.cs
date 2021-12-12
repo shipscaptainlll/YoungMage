@@ -20,18 +20,60 @@ public class DropHandler : MonoBehaviour, IDropHandler
 
         if (RectTransformUtility.RectangleContainsScreenPoint(inventoryPanel, Input.mousePosition))
         {
-            SwapProperties(eventData);
+            if (GetObjectUnderMouse() != eventData.pointerDrag.transform)
+            {
+                if (CheckElementType() == "inventorySlot")
+                {
+                    SwapProperties(eventData);
+                } else if (CheckElementType() == "quickAccessSlot")
+                {
+                    TransferProperties(eventData);
+                }
+                
+            }
         }
-        
     }
 
     void SwapProperties(PointerEventData eventData)
+    {
+        SwapCounter(eventData);
+        SwapCustomID(eventData);
+    }
+
+    void TransferProperties(PointerEventData eventData)
+    {
+        CopyCounter(eventData);
+        CopyCustomID(eventData);
+    }
+
+    void SwapCustomID(PointerEventData eventData)
     {
         GameObject targetObject = GetObjectUnderMouse();
 
         int cacheCustomId = targetObject.GetComponent<Element>().CustomID;
         targetObject.GetComponent<Element>().CustomID = eventData.pointerDrag.transform.GetComponent<Element>().CustomID;
         eventData.pointerDrag.transform.GetComponent<Element>().CustomID = cacheCustomId;
+    }
+
+    void SwapCounter(PointerEventData eventData)
+    {
+        GameObject targetObject = GetObjectUnderMouse();
+        targetObject.GetComponent<Element>().AttachedCounter = eventData.pointerDrag.transform.GetComponent<Element>().AttachedCounter;
+    }
+
+    void CopyCustomID(PointerEventData eventData)
+    {
+        GameObject targetObject = GetObjectUnderMouse();
+        targetObject.GetComponent<Element>().CustomID = eventData.pointerDrag.transform.GetComponent<Element>().CustomID;
+    }
+
+    void CopyCounter(PointerEventData eventData)
+    {
+        GameObject targetObject = GetObjectUnderMouse();
+
+        Transform cacheCounter = targetObject.GetComponent<Element>().AttachedCounter;
+        targetObject.GetComponent<Element>().AttachedCounter = eventData.pointerDrag.transform.GetComponent<Element>().AttachedCounter;
+        eventData.pointerDrag.transform.GetComponent<Element>().AttachedCounter = cacheCounter;
     }
 
     GameObject GetObjectUnderMouse()
@@ -44,6 +86,15 @@ public class DropHandler : MonoBehaviour, IDropHandler
 
         if (hitObjects.Count <= 0) return null;
 
-        return hitObjects[1].gameObject;
+        return hitObjects[2].gameObject;
+    }
+
+    string CheckElementType()
+    {
+        GameObject objectUnderMouse = GetObjectUnderMouse();
+
+        string objectType = objectUnderMouse.GetComponent<Element>().ElementType;
+
+        return objectType;
     }
 }

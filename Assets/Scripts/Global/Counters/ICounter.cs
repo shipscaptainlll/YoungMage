@@ -5,5 +5,6 @@ using UnityEngine;
 
 public interface ICounter
 {
+    public int Count { get; }
     public event Action<int> AmountChanged;
 }

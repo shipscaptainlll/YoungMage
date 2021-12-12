@@ -6,6 +6,7 @@ using UnityEngine;
 public class ContactManager : MonoBehaviour
 {
     [SerializeField] ClickManager ClickManager;
+    [SerializeField] CursorManager cursorManager;
     [SerializeField] CameraController CameraController;
     [SerializeField] Transform mainCharacter;
     [SerializeField] PotentialPositioner potentialPositioner;
@@ -23,34 +24,40 @@ public class ContactManager : MonoBehaviour
 
     void ContactObject()
     {
-        Transform contactedObject = CameraController.ObservedObject.transform;
-        if (contactedObject != null)
+        if (!cursorManager.CheckSomethingOpened())
         {
-            if (contactedObject.GetComponent<IOre>() != null)
+            Transform contactedObject = CameraController.ObservedObject.transform;
+            if (contactedObject != null)
             {
-                if (OreDetected != null)
+                if (contactedObject.GetComponent<IOre>() != null)
                 {
-                    if (potentialPositioner.IsActive) { PotentialPositionerDeactivated(); }
-                    OreDetected(contactedObject);
+                    if (OreDetected != null)
+                    {
+                        if (potentialPositioner.IsActive) { PotentialPositionerDeactivated(); }
+                        OreDetected(contactedObject);
+                    }
                 }
-            } else if (contactedObject.GetComponent<Skeleton>() != null)
-            {
-                if (SkeletonDetected != null)
+                else if (contactedObject.GetComponent<Skeleton>() != null)
                 {
-                    TriggerPotentialPositioner(contactedObject);
-                    SkeletonDetected(contactedObject, mainCharacter);
+                    if (SkeletonDetected != null)
+                    {
+                        TriggerPotentialPositioner(contactedObject);
+                        SkeletonDetected(contactedObject, mainCharacter);
+                    }
                 }
-            } else if (contactedObject.parent.GetComponent<Defractor>() != null)
-            {
-                if (DefractorDetected != null)
+                else if (contactedObject.parent.GetComponent<Defractor>() != null)
                 {
-                    DefractorDetected();
+                    if (DefractorDetected != null)
+                    {
+                        DefractorDetected();
+                    }
                 }
-            } else if (contactedObject.parent.GetComponent<MidasCauldron>() != null)
-            {
-                if (MidasCauldronDetected != null)
+                else if (contactedObject.parent.GetComponent<MidasCauldron>() != null)
                 {
-                    MidasCauldronDetected();
+                    if (MidasCauldronDetected != null)
+                    {
+                        MidasCauldronDetected();
+                    }
                 }
             }
         }

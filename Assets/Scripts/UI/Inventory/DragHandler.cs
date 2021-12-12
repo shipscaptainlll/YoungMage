@@ -16,15 +16,17 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnDrag(PointerEventData eventData)
     {
-        
-        transform.position = Input.mousePosition;
+
+        transform.parent.position = Input.mousePosition;
+        //transform.parent.Find("AmountCounter").position = Input.mousePosition;
         transform.parent.parent.SetAsLastSibling();
         transform.parent.parent.parent.SetAsLastSibling();
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        transform.localPosition = Vector3.zero;
+        transform.parent.localPosition = Vector3.zero;
+        //transform.parent.Find("AmountCounter").position = Vector3.zero;
         transform.parent.parent.SetSiblingIndex(slotSiblingIndex);
         transform.parent.parent.parent.SetSiblingIndex(rowSiblingIndex);
     }

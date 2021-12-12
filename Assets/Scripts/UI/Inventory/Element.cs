@@ -8,6 +8,7 @@ public class Element : MonoBehaviour
     [SerializeField] ItemsList itemsList;
     [SerializeField] int customID;
     [SerializeField] SpriteManager spriteManager;
+    [SerializeField] ElementTypeEnum elementTypeEnum;
     Transform attachedCounter;
     Text textBox;
 
@@ -21,7 +22,7 @@ public class Element : MonoBehaviour
         set
         {
             customID = value;
-            updateElement();
+            UpdateElement();
         }
     }
 
@@ -35,38 +36,65 @@ public class Element : MonoBehaviour
         {
             if (attachedCounter != null)
             {
-                attachedCounter.GetComponent<ICounter>().AmountChanged -= updateCounter;
+                attachedCounter.GetComponent<ICounter>().AmountChanged -= UpdateCounter;
             }
             attachedCounter = value;
             if (attachedCounter != null)
             {
-                attachedCounter.GetComponent<ICounter>().AmountChanged += updateCounter;
+                attachedCounter.GetComponent<ICounter>().AmountChanged += UpdateCounter;
             }
         }
     }
 
+    public enum ElementTypeEnum { inventorySlot, quickAccessSlot };
+
+    public string ElementType
+    {
+        get
+        {
+            return elementTypeEnum.ToString();
+        }
+    }
 
 
     void Start()
     {
-        //nullCustomID = 0;
-        //customID = nullCustomID;
         attachedCounter = null;
         textBox = transform.parent.Find("AmountCounter").GetComponent<Text>();
+        UpdateImage();
+        Debug.Log(elementTypeEnum.ToString() == "inventorySlot");
     }
 
-    void updateElement()
+    void UpdateElement()
     {
-        updateImage();
+        UpdateImage();
+        if (attachedCounter != null && elementTypeEnum.ToString() == "inventorySlot")
+        {
+            UpdateCounter(attachedCounter.GetComponent<ICounter>().Count);
+        }
+        if (elementTypeEnum.ToString() == "inventorySlot")
+        {
+            RegulateCounterVisibility();
+        }
+        
     }
 
-    void updateImage()
+    void UpdateImage()
     {
         transform.GetComponent<Image>().sprite = spriteManager.TakeSprite(customID);
     }
 
-    void updateCounter(int count)
+    void UpdateCounter(int count)
     {
         textBox.text = count.ToString();
+    }
+
+    void RegulateCounterVisibility()
+    {
+        if (customID == 0)
+        {
+            textBox.transform.GetComponent<CanvasGroup>().alpha = 0;
+        }
+        else if (customID != 0) { textBox.transform.GetComponent<CanvasGroup>().alpha = 1; }
     }
 }
