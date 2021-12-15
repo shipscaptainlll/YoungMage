@@ -22,6 +22,7 @@ public class ItemsList : MonoBehaviour
         lavaStoneOre = 6,
         magicStoneOre = 7,
         waterStoneOre = 8,
-        windStoneOre = 9
+        windStoneOre = 9,
+        magicWand = 10
     }
 }

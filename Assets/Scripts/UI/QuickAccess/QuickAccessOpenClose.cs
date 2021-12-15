@@ -1,66 +1,33 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OpenClose : MonoBehaviour
+public class QuickAccessOpenClose : MonoBehaviour
 {
-    [SerializeField] ClickManager clickManager;
+    [SerializeField] OpenClose openClose;
     [SerializeField] Transform panel;
     [SerializeField] Transform invisiblePosition;
     [SerializeField] Transform defaultPosition;
     CanvasGroup panelCanvasgroup;
     float updateSpeed;
-    bool isOpened;
 
-    public bool IsOpened
-    {
-        get
-        {
-            return isOpened;
-        }
-    }
-
-    public event Action InventoryOpened = delegate { };
-    public event Action InventoryClosed = delegate { };
     // Start is called before the first frame update
     void Start()
     {
-        isOpened = false;
+        openClose.InventoryOpened += Open;
+        openClose.InventoryClosed += Close;
         updateSpeed = 0.1f;
-        clickManager.IClicked += ChooseOpenClose;
-        clickManager.EscClicked += Close;
         panelCanvasgroup = panel.GetComponent<CanvasGroup>();
     }
 
-    void ChooseOpenClose()
+    void Open()
     {
-        if (isOpened)
-        {
-            StartCoroutine(CacheClosePanel());
-            isOpened = false;
-            if (InventoryOpened != null)
-            {
-                InventoryOpened();
-            }
-        } else if (!isOpened)
-        {
-            StartCoroutine(CacheOpenPanel());
-            isOpened = true;
-            if (InventoryClosed != null)
-            {
-                InventoryClosed();
-            }
-        }
+        StartCoroutine(CacheOpenPanel());
     }
 
     void Close()
     {
-        if (isOpened)
-        {
-            StartCoroutine(CacheClosePanel());
-            isOpened = false;
-        }
+        StartCoroutine(CacheClosePanel());
     }
 
     void RelocateFarAway()

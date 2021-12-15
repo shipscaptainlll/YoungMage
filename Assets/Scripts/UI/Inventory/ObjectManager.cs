@@ -2,19 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpriteManager : MonoBehaviour
+public class ObjectManager : MonoBehaviour
 {
-    [SerializeField] Sprite nothing;
-    [SerializeField] Sprite goldCoins;
-    [SerializeField] Sprite stoneOre;
-    [SerializeField] Sprite metalOre;
-    [SerializeField] Sprite cursedOre;
-    [SerializeField] Sprite earthStoneOre;
-    [SerializeField] Sprite lavaStoneOre;
-    [SerializeField] Sprite magicStoneOre;
-    [SerializeField] Sprite waterStoneOre;
-    [SerializeField] Sprite windStoneOre;
-    [SerializeField] Sprite magicWand;
+    [SerializeField] GameObject goldCoins;
+    [SerializeField] GameObject stoneOre;
+    [SerializeField] GameObject metalOre;
+    [SerializeField] GameObject cursedOre;
+    [SerializeField] GameObject earthStoneOre;
+    [SerializeField] GameObject lavaStoneOre;
+    [SerializeField] GameObject magicStoneOre;
+    [SerializeField] GameObject waterStoneOre;
+    [SerializeField] GameObject windStoneOre;
+    [SerializeField] GameObject magicWand;
 
 
     void Start()
@@ -22,12 +21,12 @@ public class SpriteManager : MonoBehaviour
         
     }
 
-    public Sprite TakeSprite(int customeID)
+    public GameObject TakeObject(int customeID)
     {
         switch (customeID)
         {
             case 0:
-                return nothing;
+                return null;
             case 1:
                 return goldCoins;
             case 2:
@@ -49,7 +48,7 @@ public class SpriteManager : MonoBehaviour
             case 10:
                 return magicWand;
         }
-        return nothing;
+        return null;
     }
 
 }

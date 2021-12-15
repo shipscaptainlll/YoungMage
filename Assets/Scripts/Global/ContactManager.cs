@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ContactManager : MonoBehaviour
 {
+    [SerializeField] QuickAccessHandController quickAccessHandController;
     [SerializeField] ClickManager ClickManager;
     [SerializeField] CursorManager cursorManager;
     [SerializeField] CameraController CameraController;
@@ -29,7 +30,7 @@ public class ContactManager : MonoBehaviour
             Transform contactedObject = CameraController.ObservedObject.transform;
             if (contactedObject != null)
             {
-                if (contactedObject.GetComponent<IOre>() != null)
+                if (contactedObject.GetComponent<IOre>() != null && quickAccessHandController.CurrentCustomID == 10)
                 {
                     if (OreDetected != null)
                     {
@@ -37,7 +38,7 @@ public class ContactManager : MonoBehaviour
                         OreDetected(contactedObject);
                     }
                 }
-                else if (contactedObject.GetComponent<Skeleton>() != null)
+                else if (contactedObject.GetComponent<Skeleton>() != null && quickAccessHandController.CurrentCustomID == 10)
                 {
                     if (SkeletonDetected != null)
                     {

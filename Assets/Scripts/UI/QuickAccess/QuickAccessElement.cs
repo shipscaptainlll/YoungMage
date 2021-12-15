@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Element : MonoBehaviour
+public class QuickAccessElement : MonoBehaviour
 {
     [SerializeField] ItemsList itemsList;
     [SerializeField] int customID;

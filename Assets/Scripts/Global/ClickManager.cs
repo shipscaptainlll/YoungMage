@@ -9,6 +9,16 @@ public class ClickManager : MonoBehaviour
     public event Action RMBClicked = delegate { };
     public event Action VClicked = delegate { };
     public event Action IClicked = delegate { };
+    public event Action EscClicked = delegate { };
+    public event Action<int> OneClicked = delegate { };
+    public event Action<int> TwoClicked = delegate { };
+    public event Action<int> ThreeClicked = delegate { };
+    public event Action<int> FourClicked = delegate { };
+    public event Action<int> FiveClicked = delegate { };
+    public event Action<int> SixClicked = delegate { };
+    public event Action<int> SevenClicked = delegate { };
+    public event Action<int> EightClicked = delegate { };
+    public event Action<int> NineClicked = delegate { };
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -36,6 +46,77 @@ public class ClickManager : MonoBehaviour
             if (IClicked != null)
             {
                 IClicked();
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (EscClicked != null)
+            {
+                EscClicked();
+            }
+        }
+        
+        if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            if (OneClicked != null)
+            {
+                OneClicked(1);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            if (TwoClicked != null)
+            {
+                TwoClicked(2);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            if (ThreeClicked != null)
+            {
+                ThreeClicked(3);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4))
+        {
+            if (FourClicked != null)
+            {
+                FourClicked(4);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5) || Input.GetKeyDown(KeyCode.Keypad5))
+        {
+            if (FiveClicked != null)
+            {
+                FiveClicked(5);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha6) || Input.GetKeyDown(KeyCode.Keypad6))
+        {
+            if (SixClicked != null)
+            {
+                SixClicked(6);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha7) || Input.GetKeyDown(KeyCode.Keypad7))
+        {
+            if (SevenClicked != null)
+            {
+                SevenClicked(7);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha8) || Input.GetKeyDown(KeyCode.Keypad8))
+        {
+            if (EightClicked != null)
+            {
+                EightClicked(8);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha9) || Input.GetKeyDown(KeyCode.Keypad9))
+        {
+            if (NineClicked != null)
+            {
+                NineClicked(9);
             }
         }
     }
