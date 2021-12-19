@@ -28,6 +28,7 @@ public class CursedOreCounter : MonoBehaviour, ICounter
     }
 
     public event Action<int> AmountChanged = delegate { };
+    public event Action CursedOreCreated = delegate { };
     public event Action<int, Transform> ItemCreated = delegate { };
     void Start()
     {
@@ -87,6 +88,10 @@ public class CursedOreCounter : MonoBehaviour, ICounter
         if (ItemCreated != null)
         {
             ItemCreated((int)ItemsList.Items.cursedOre, transform);
+        }
+        if (CursedOreCreated != null)
+        {
+            CursedOreCreated();
         }
     }
 }

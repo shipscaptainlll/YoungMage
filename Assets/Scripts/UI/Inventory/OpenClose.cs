@@ -39,17 +39,18 @@ public class OpenClose : MonoBehaviour
         {
             StartCoroutine(CacheClosePanel());
             isOpened = false;
-            if (InventoryOpened != null)
+            if (InventoryClosed != null)
             {
-                InventoryOpened();
+                InventoryClosed();
             }
         } else if (!isOpened)
         {
             StartCoroutine(CacheOpenPanel());
             isOpened = true;
-            if (InventoryClosed != null)
+
+            if (InventoryOpened != null)
             {
-                InventoryClosed();
+                InventoryOpened();
             }
         }
     }
@@ -60,6 +61,10 @@ public class OpenClose : MonoBehaviour
         {
             StartCoroutine(CacheClosePanel());
             isOpened = false;
+            if (InventoryClosed != null)
+            {
+                InventoryClosed();
+            }
         }
     }
 

@@ -23,6 +23,13 @@ public class ItemsList : MonoBehaviour
         magicStoneOre = 7,
         waterStoneOre = 8,
         windStoneOre = 9,
-        magicWand = 10
+        magicWand = 10,
+        stoneHands = 11,
+        leggings = 12,
+        plateArmor = 13,
+        shoes = 14,
+        helm = 15,
+        belt = 16,
+        bracers = 17
     }
 }

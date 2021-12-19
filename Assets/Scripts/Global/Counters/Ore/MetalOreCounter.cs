@@ -28,6 +28,7 @@ public class MetalOreCounter : MonoBehaviour, ICounter
     }
 
     public event Action<int> AmountChanged = delegate { };
+    public event Action MetalOreCreated = delegate { };
     public event Action<int, Transform> ItemCreated = delegate { };
     void Start()
     {
@@ -87,6 +88,10 @@ public class MetalOreCounter : MonoBehaviour, ICounter
         if (ItemCreated != null)
         {
             ItemCreated((int)ItemsList.Items.metalOre, transform);
+        }
+        if (MetalOreCreated != null)
+        {
+            MetalOreCreated();
         }
     }
 }

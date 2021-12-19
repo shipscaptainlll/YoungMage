@@ -5,20 +5,25 @@ using UnityEngine;
 
 public class LassoInvoker : MonoBehaviour
 {
-    [SerializeField] ClickManager ClickManager;
-    [SerializeField] ContactManager ContactManager;
+    ClickManager ClickManager;
+    ContactManager ContactManager;
     [SerializeField] Transform FirstPoint;
-    [SerializeField] Transform SecondPoint;
-    [SerializeField] LineRenderer lassoRenderer;
+    Transform SecondPoint;
+    LineRenderer lassoRenderer;
     string state;
     bool isContactingSkeleton;
     Transform rememberedSkeleton;
     Transform mageTransform;
+    Animator localAnimator;
 
     public event Action<Transform, Transform> UsedWand = delegate { };
     // Start is called before the first frame update
     void Start()
     {
+        ClickManager = transform.parent.parent.parent.Find("Script").Find("ClickManager").GetComponent<ClickManager>();
+        ContactManager = transform.parent.parent.parent.Find("Script").Find("ContactManager").GetComponent<ContactManager>();
+        lassoRenderer = transform.parent.parent.Find("Line").GetComponent<LineRenderer>();
+        localAnimator = transform.GetComponent<Animator>();
         ContactManager.SkeletonDetected += ChangeTarget;
         ContactManager.OreDetected += CalculateBehavior;
         state = "idle";
@@ -82,7 +87,8 @@ public class LassoInvoker : MonoBehaviour
         rememberedSkeleton = nextTarget;
         mageTransform = mage;
         isContactingSkeleton = true;
-        GetComponent<Animator>().Play("WandCast");
+        var localAnimatorCache = transform.GetComponent<Animator>();
+        localAnimatorCache.Play("WandCast");
         SecondPoint = nextTarget;
         SearchForNeck();
         
@@ -106,11 +112,16 @@ public class LassoInvoker : MonoBehaviour
 
     void Hello()
     {
+        var skeletonCache = rememberedSkeleton.GetComponent<SkeletonBehavior>();
         CalculateBehavior();
         isContactingSkeleton = false;
-        if (UsedWand != null)
-        {
-            UsedWand(rememberedSkeleton, mageTransform);
-        }
+        skeletonCache.ConnectToMage(rememberedSkeleton, mageTransform);
     }
+    public void Unsubscribe()
+    {
+        ContactManager.SkeletonDetected -= ChangeTarget;
+        ContactManager.OreDetected -= CalculateBehavior;
+    }
+
+    
 }

@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class QuickAccessOpenClose : MonoBehaviour
 {
+    /*
     [SerializeField] OpenClose openClose;
+    [SerializeField] UpgradeTableOpenClose upgradeTableOpenClose;
+    [SerializeField] CursorManager cursorManager;
     [SerializeField] Transform panel;
     [SerializeField] Transform invisiblePosition;
     [SerializeField] Transform defaultPosition;
@@ -14,15 +17,20 @@ public class QuickAccessOpenClose : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        openClose.InventoryOpened += Open;
-        openClose.InventoryClosed += Close;
+        openClose.InventoryOpened += Close;
+        openClose.InventoryClosed += Open;
+        upgradeTableOpenClose.UpgradeTableOpened += Close;
+        upgradeTableOpenClose.UpgradeTableClosed += Open;
         updateSpeed = 0.1f;
         panelCanvasgroup = panel.GetComponent<CanvasGroup>();
     }
-
+    
     void Open()
     {
-        StartCoroutine(CacheOpenPanel());
+        if (!cursorManager.CheckSomethingOpened())
+        {
+            StartCoroutine(CacheOpenPanel());
+        }
     }
 
     void Close()
@@ -72,5 +80,5 @@ public class QuickAccessOpenClose : MonoBehaviour
         }
         RelocateFarAway();
     }
-
+    */
 }

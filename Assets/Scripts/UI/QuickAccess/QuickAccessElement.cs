@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,8 @@ public class QuickAccessElement : MonoBehaviour
     [SerializeField] int customID;
     [SerializeField] SpriteManager spriteManager;
     [SerializeField] ElementTypeEnum elementTypeEnum;
+    [SerializeField] QuickAccessHandController quickAccessHandController;
+    int slotNumber;
     Transform attachedCounter;
     Text textBox;
 
@@ -23,6 +26,11 @@ public class QuickAccessElement : MonoBehaviour
         {
             customID = value;
             UpdateElement();
+            if (SlotWasUpdated != null && quickAccessHandController.CurrentSlot == slotNumber)
+            {
+                SlotWasUpdated();
+                Debug.Log(slotNumber + " was updated");
+            }
         }
     }
 
@@ -56,9 +64,10 @@ public class QuickAccessElement : MonoBehaviour
         }
     }
 
-
+    public event Action SlotWasUpdated = delegate { };
     void Start()
     {
+        arrangeSlotNumber();
         attachedCounter = null;
         textBox = transform.parent.Find("AmountCounter").GetComponent<Text>();
 
@@ -88,10 +97,25 @@ public class QuickAccessElement : MonoBehaviour
 
     void RegulateCounterVisibility()
     {
-        if (customID == 0)
+        if (customID == 0 || attachedCounter.GetComponent<ICounter>().Count <= 1)
         {
             textBox.transform.GetComponent<CanvasGroup>().alpha = 0;
         }
-        else if (customID != 0) { textBox.transform.GetComponent<CanvasGroup>().alpha = 1; }
+        else if (customID != 0 && attachedCounter.GetComponent<ICounter>().Count > 1) { textBox.transform.GetComponent<CanvasGroup>().alpha = 1; }
+    }
+
+    void arrangeSlotNumber()
+    {
+        foreach (Transform slot in transform.parent.parent.parent)
+        {
+            var foundSlot = slot.Find("Borders").Find("Element");
+            if (foundSlot == transform)
+            {
+                slotNumber = foundSlot.parent.parent.GetSiblingIndex() + 1;
+                
+                break;
+            }
+            
+        }
     }
 }

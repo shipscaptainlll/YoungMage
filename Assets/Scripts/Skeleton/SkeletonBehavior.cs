@@ -46,7 +46,7 @@ public class SkeletonBehavior : MonoBehaviour
         gravity = -9.81f;
         checkRadius = 0;
         isIdle = true;
-        LassoInvoker.GetComponent<LassoInvoker>().UsedWand += ConnectToMage;
+        
         contactManager.GetComponent<ContactManager>().OreDetected += AddTarget;
         activity = "idle";
     }
@@ -117,7 +117,7 @@ public class SkeletonBehavior : MonoBehaviour
         }
     }
 
-    void ConnectToMage(Transform foundSkeleton, Transform mage)
+    public void ConnectToMage(Transform foundSkeleton, Transform mage)
     {
         if (activity != "ChasingMage")
         {

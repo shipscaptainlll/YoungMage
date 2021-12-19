@@ -88,10 +88,10 @@ public class Element : MonoBehaviour
 
     void RegulateCounterVisibility()
     {
-        if (customID == 0)
+        if (customID == 0 || attachedCounter.GetComponent<ICounter>().Count <= 1)
         {
             textBox.transform.GetComponent<CanvasGroup>().alpha = 0;
         }
-        else if (customID != 0) { textBox.transform.GetComponent<CanvasGroup>().alpha = 1; }
+        else if (customID != 0 && attachedCounter.GetComponent<ICounter>().Count > 1) { textBox.transform.GetComponent<CanvasGroup>().alpha = 1; }
     }
 }

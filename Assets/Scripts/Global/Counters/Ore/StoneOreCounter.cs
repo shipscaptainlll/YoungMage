@@ -28,6 +28,7 @@ public class StoneOreCounter : MonoBehaviour, ICounter
     }
 
     public event Action<int> AmountChanged = delegate { };
+    public event Action StoneOreCreated = delegate { };
     public event Action<int, Transform> ItemCreated = delegate { };
     void Start()
     {
@@ -87,6 +88,10 @@ public class StoneOreCounter : MonoBehaviour, ICounter
         if (ItemCreated != null)
         {
             ItemCreated((int)ItemsList.Items.stoneOre, transform);
+        }
+        if (StoneOreCreated != null)
+        {
+            StoneOreCreated();
         }
     }
 }

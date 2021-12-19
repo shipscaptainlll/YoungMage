@@ -15,6 +15,7 @@ public class ContactManager : MonoBehaviour
     public event Action<Transform> OreDetected = delegate { };
     public event Action<Transform, Transform> SkeletonDetected = delegate { };
     public event Action DefractorDetected = delegate { };
+    public event Action UpgradeTableDetected = delegate { };
     public event Action MidasCauldronDetected = delegate { };
     public event Action PotentialPositionerActivated = delegate { };
     public event Action PotentialPositionerDeactivated = delegate { };
@@ -25,7 +26,7 @@ public class ContactManager : MonoBehaviour
 
     void ContactObject()
     {
-        if (!cursorManager.CheckSomethingOpened())
+        if (!cursorManager.SomethingOpened)
         {
             Transform contactedObject = CameraController.ObservedObject.transform;
             if (contactedObject != null)
@@ -58,6 +59,13 @@ public class ContactManager : MonoBehaviour
                     if (MidasCauldronDetected != null)
                     {
                         MidasCauldronDetected();
+                    }
+                }
+                else if (contactedObject.GetComponent<UpgradeTable>() != null)
+                {
+                    if (UpgradeTableDetected != null)
+                    {
+                        UpgradeTableDetected();
                     }
                 }
             }

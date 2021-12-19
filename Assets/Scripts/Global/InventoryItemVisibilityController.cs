@@ -14,6 +14,7 @@ public class InventoryItemVisibilityController : MonoBehaviour
     [SerializeField] MagicstoneOreCounter magicstoneOreCounter;
     [SerializeField] WaterstoneOreCounter waterstoneOreCounter;
     [SerializeField] WindstoneOreCounter windstoneOreCounter;
+    [SerializeField] MagicWandCounter magicWandCounter;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +28,10 @@ public class InventoryItemVisibilityController : MonoBehaviour
         magicstoneOreCounter.ItemCreated += CreateVisibleItem;
         waterstoneOreCounter.ItemCreated += CreateVisibleItem;
         windstoneOreCounter.ItemCreated += CreateVisibleItem;
+        magicWandCounter.ItemCreated += CreateVisibleItem;
         SearchEmptySlot();
+        StartCoroutine(Hello());
+        //goldCoinsCounter.AddResource(1);
     }
 
     void CreateVisibleItem(int customId, Transform attachedCounter)
@@ -56,5 +60,11 @@ public class InventoryItemVisibilityController : MonoBehaviour
             }
         }
         return null;
+    }
+
+    IEnumerator Hello()
+    {
+        yield return new WaitForSeconds(1);
+        magicWandCounter.AddResource(1);
     }
 }

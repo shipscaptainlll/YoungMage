@@ -5,6 +5,8 @@ using UnityEngine;
 public class CursorManager : MonoBehaviour
 {
     [SerializeField] OpenClose inventoryOpenClose;
+    [SerializeField] UpgradeTableOpenClose upgradeTableOpenClose;
+    [SerializeField] PanelsManager panelsManager;
     bool somethingOpened;
 
     public bool SomethingOpened
@@ -18,29 +20,18 @@ public class CursorManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        panelsManager.PanelsUpdated += CheckSomethingOpened;
         Cursor.lockState = CursorLockMode.Locked;
         somethingOpened = false;
     }
 
-    private void Update()
+    void CheckSomethingOpened()
     {
-        if (CheckSomethingOpened())
+        if (panelsManager.CurrentlyOpened != null)
         {
             Cursor.lockState = CursorLockMode.Confined;
-        } else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-    }
-
-    public bool CheckSomethingOpened()
-    {
-        if (inventoryOpenClose.IsOpened)
-        {
             somethingOpened = true;
-            return true;
-        } else { 
-            somethingOpened = false; 
-            return false; }
+        }
+        else { Cursor.lockState = CursorLockMode.Locked; somethingOpened = false; }
     }
 }
