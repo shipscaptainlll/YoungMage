@@ -29,7 +29,7 @@ public class ItemsList : MonoBehaviour
         plateArmor = 13,
         shoes = 14,
         helm = 15,
-        belt = 16,
+        gloves = 16,
         bracers = 17
     }
 }

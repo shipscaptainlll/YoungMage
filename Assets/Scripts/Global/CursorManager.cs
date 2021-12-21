@@ -5,7 +5,6 @@ using UnityEngine;
 public class CursorManager : MonoBehaviour
 {
     [SerializeField] OpenClose inventoryOpenClose;
-    [SerializeField] UpgradeTableOpenClose upgradeTableOpenClose;
     [SerializeField] PanelsManager panelsManager;
     bool somethingOpened;
 

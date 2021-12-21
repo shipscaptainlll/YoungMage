@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BeltCounter : MonoBehaviour, ICounter, ISkeletonItems
+public class GlovesCounter : MonoBehaviour, ICounter, ISkeletonItems
 {
     [SerializeField] ItemsList itemsList;
     int count;
@@ -80,7 +80,7 @@ public class BeltCounter : MonoBehaviour, ICounter, ISkeletonItems
     {
         if (ItemCreated != null)
         {
-            ItemCreated((int) ItemsList.Items.belt, transform);
+            ItemCreated((int) ItemsList.Items.gloves, transform);
         }
         if (ItemFirstCreated != null)
         {

@@ -7,7 +7,6 @@ public class PanelsManager : MonoBehaviour
 {
     [SerializeField] ContactManager contactManager;
     [SerializeField] ClickManager clickManager;
-    [SerializeField] UpgradeTableOpenClose upgradeTableOpenClose;
     [SerializeField] Transform inventoryPanel;
     [SerializeField] Transform upgradeTablePanel;
     [SerializeField] Transform quickAccessPanel;
