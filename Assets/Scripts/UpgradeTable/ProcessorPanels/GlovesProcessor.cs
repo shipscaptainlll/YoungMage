@@ -8,7 +8,7 @@ public class GlovesProcessor : MonoBehaviour, IProcessorPanel
     [SerializeField] int customID;
     [SerializeField] Button createButton;
     [SerializeField] CursedOreCounter resourceCounter;
-    [SerializeField] MagicGlovesCounter productCounter;
+    [SerializeField] GlovesCounter productCounter;
 
     [SerializeField] int productCost;
     [SerializeField] int productPerProcess;

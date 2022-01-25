@@ -9,6 +9,8 @@ public class PanelsManager : MonoBehaviour
     [SerializeField] ClickManager clickManager;
     [SerializeField] Transform inventoryPanel;
     [SerializeField] Transform upgradeTablePanel;
+    [SerializeField] Transform midasCauldronTablePanel;
+    [SerializeField] Transform defractorTablePanel;
     [SerializeField] Transform quickAccessPanel;
     [SerializeField] Transform invisiblePosition;
     [SerializeField] Transform defaultPosition;
@@ -33,6 +35,8 @@ public class PanelsManager : MonoBehaviour
         clickManager.IClicked += openInventory;
         clickManager.EscClicked += closeCurrentPanel;
         contactManager.UpgradeTableDetected += openUpgradeTable;
+        contactManager.MidasCauldronDetected += openMidasCauldronTable;
+        contactManager.DefractorDetected += openDefractorTable;
     }
 
     void decideNextState()
@@ -48,6 +52,7 @@ public class PanelsManager : MonoBehaviour
                 closePanel(currentlyOpened);
             }
             openPanel(nextToOpen);
+            showOnForeground(nextToOpen);
             currentlyOpened = nextToOpen;
         }
         considerQuickAccessPanel();
@@ -71,7 +76,10 @@ public class PanelsManager : MonoBehaviour
 
     void closePanel(Transform panelToClose)
     {
-        StartCoroutine(CacheClosePanel(panelToClose));
+        if (panelToClose != null)
+        {
+            StartCoroutine(CacheClosePanel(panelToClose));
+        }
     }
 
     void closeCurrentPanel()
@@ -86,6 +94,11 @@ public class PanelsManager : MonoBehaviour
         StartCoroutine(CacheOpenPanel(panelToOpen));
     }
 
+    void showOnForeground(Transform panelToForeground)
+    {
+        panelToForeground.SetAsLastSibling();
+    }
+
     void openInventory()
     {
         nextToOpen = inventoryPanel;
@@ -95,6 +108,18 @@ public class PanelsManager : MonoBehaviour
     void openUpgradeTable()
     {
         nextToOpen = upgradeTablePanel;
+        decideNextState();
+    }
+
+    void openMidasCauldronTable()
+    {
+        nextToOpen = midasCauldronTablePanel;
+        decideNextState();
+    }
+
+    void openDefractorTable()
+    {
+        nextToOpen = defractorTablePanel;
         decideNextState();
     }
 

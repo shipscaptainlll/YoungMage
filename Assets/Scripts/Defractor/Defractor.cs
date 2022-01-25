@@ -19,7 +19,7 @@ public class Defractor : MonoBehaviour
     void Start()
     {
         random = new System.Random();
-        contactManager.DefractorDetected += CalculateBehavior;
+        //contactManager.DefractorDetected += CalculateBehavior;
         isWorking = false;
         productionCost = 10;
         productAmmount = 2;

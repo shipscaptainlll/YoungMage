@@ -13,13 +13,12 @@ public class PersonMovement : MonoBehaviour
     [SerializeField] LayerMask checkLayer;
     [SerializeField] LayerMask checkLayer2;
     Vector3 velocity;
-    float gravity;
+    [SerializeField] float gravity;
     float checkRadius;
 
     bool isGrounded;
     void Start()
     {
-        gravity = -9.81f;
         checkRadius = 0.5f;
     }
 

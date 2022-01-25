@@ -14,6 +14,21 @@ public class ObjectManager : MonoBehaviour
     [SerializeField] GameObject waterStoneOre;
     [SerializeField] GameObject windStoneOre;
     [SerializeField] GameObject magicWand;
+    [SerializeField] GameObject stoneHands;
+    [SerializeField] GameObject leggings;
+    [SerializeField] GameObject plateArmor;
+    [SerializeField] GameObject shoes;
+    [SerializeField] GameObject helm;
+    [SerializeField] GameObject gloves;
+    [SerializeField] GameObject bracers;
+    [SerializeField] GameObject stoneBrick;
+    [SerializeField] GameObject metalIngot;
+    [SerializeField] GameObject cursedIngot;
+    [SerializeField] GameObject earthStoneDust;
+    [SerializeField] GameObject lavaStoneDust;
+    [SerializeField] GameObject magicStoneDust;
+    [SerializeField] GameObject waterStoneDust;
+    [SerializeField] GameObject windStoneDust;
 
 
     void Start()
@@ -47,6 +62,36 @@ public class ObjectManager : MonoBehaviour
                 return windStoneOre;
             case 10:
                 return magicWand;
+            case 11:
+                return stoneHands;
+            case 12:
+                return leggings;
+            case 13:
+                return plateArmor;
+            case 14:
+                return shoes;
+            case 15:
+                return helm;
+            case 16:
+                return gloves;
+            case 17:
+                return bracers;
+            case 18:
+                return stoneBrick;
+            case 19:
+                return metalIngot;
+            case 20:
+                return cursedIngot;
+            case 21:
+                return earthStoneDust;
+            case 22:
+                return lavaStoneDust;
+            case 23:
+                return magicStoneDust;
+            case 24:
+                return waterStoneDust;
+            case 25:
+                return windStoneDust;
         }
         return null;
     }

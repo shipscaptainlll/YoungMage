@@ -15,6 +15,23 @@ public class InventoryItemVisibilityController : MonoBehaviour
     [SerializeField] WaterstoneOreCounter waterstoneOreCounter;
     [SerializeField] WindstoneOreCounter windstoneOreCounter;
     [SerializeField] MagicWandCounter magicWandCounter;
+    [SerializeField] StoneHandsCounter stoneHandsCounter;
+    [SerializeField] LeggingsCounter leggingsCounter;
+    [SerializeField] PlateArmorCounter plateArmorCounter;
+    [SerializeField] ShoesCounter shoesCounter;
+    [SerializeField] HelmCounter helmCounter;
+    [SerializeField] GlovesCounter magicGlovesCounter;
+    [SerializeField] BracersCounter bracersCounter;
+    [SerializeField] StoneBrickCounter stoneBrickCounter;
+    [SerializeField] MetalIngotCounter metalIngotCounter;
+    [SerializeField] CursedIngotCounter cursedIngotCounter;
+    [SerializeField] EarthstoneDustCounter earthstoneDustCounter;
+    [SerializeField] LavastoneDustCounter lavastoneDustCounter;
+    [SerializeField] MagicstoneDustCounter magicstoneDustCounter;
+    [SerializeField] WaterstoneDustCounter waterstoneDustCounter;
+    [SerializeField] WindstoneDustCounter windstoneDustCounter;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +46,21 @@ public class InventoryItemVisibilityController : MonoBehaviour
         waterstoneOreCounter.ItemCreated += CreateVisibleItem;
         windstoneOreCounter.ItemCreated += CreateVisibleItem;
         magicWandCounter.ItemCreated += CreateVisibleItem;
+        stoneHandsCounter.ItemCreated += CreateVisibleItem;
+        leggingsCounter.ItemCreated += CreateVisibleItem;
+        plateArmorCounter.ItemCreated += CreateVisibleItem;
+        shoesCounter.ItemCreated += CreateVisibleItem;
+        helmCounter.ItemCreated += CreateVisibleItem;
+        bracersCounter.ItemCreated += CreateVisibleItem;
+        magicGlovesCounter.ItemCreated += CreateVisibleItem;
+        stoneBrickCounter.ItemCreated += CreateVisibleItem;
+        metalIngotCounter.ItemCreated += CreateVisibleItem;
+        cursedIngotCounter.ItemCreated += CreateVisibleItem;
+        earthstoneDustCounter.ItemCreated += CreateVisibleItem;
+        lavastoneDustCounter.ItemCreated += CreateVisibleItem;
+        magicstoneDustCounter.ItemCreated += CreateVisibleItem;
+        waterstoneDustCounter.ItemCreated += CreateVisibleItem;
+        windstoneDustCounter.ItemCreated += CreateVisibleItem;
         SearchEmptySlot();
         StartCoroutine(Hello());
         //goldCoinsCounter.AddResource(1);
@@ -40,7 +72,6 @@ public class InventoryItemVisibilityController : MonoBehaviour
         if (foundEmptySlot != null)
         {
             Element emptySlotElementScript = foundEmptySlot.Find("Borders").GetChild(1).GetComponent<Element>();
-            emptySlotElementScript.AttachedCounter = attachedCounter;
             emptySlotElementScript.CustomID = customId;
         }
     }

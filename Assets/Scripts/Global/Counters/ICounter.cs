@@ -7,4 +7,6 @@ public interface ICounter
 {
     public int Count { get; }
     public event Action<int> AmountChanged;
+    public void AddResource(int ammount);
+    public void GetResource(int ammount);
 }

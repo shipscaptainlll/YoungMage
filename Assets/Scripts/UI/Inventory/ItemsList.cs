@@ -30,6 +30,14 @@ public class ItemsList : MonoBehaviour
         shoes = 14,
         helm = 15,
         gloves = 16,
-        bracers = 17
+        bracers = 17,
+        stoneBrick = 18,
+        metalIngot = 19,
+        cursedIngot = 20,
+        earthStoneDust = 21,
+        lavaStoneDust = 22,
+        magicStoneDust = 23,
+        waterStoneDust = 24,
+        windStoneDust = 25
     }
 }

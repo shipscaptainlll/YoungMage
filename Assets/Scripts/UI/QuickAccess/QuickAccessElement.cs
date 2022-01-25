@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class QuickAccessElement : MonoBehaviour
 {
-    [SerializeField] ItemsList itemsList;
+    [SerializeField] CounterManager counterManager;
     [SerializeField] int customID;
     [SerializeField] SpriteManager spriteManager;
     [SerializeField] ElementTypeEnum elementTypeEnum;
@@ -25,12 +25,25 @@ public class QuickAccessElement : MonoBehaviour
         set
         {
             customID = value;
+            UpdateAttachedCounter();
             UpdateElement();
             if (SlotWasUpdated != null && quickAccessHandController.CurrentSlot == slotNumber)
             {
                 SlotWasUpdated();
-                Debug.Log(slotNumber + " was updated");
             }
+        }
+    }
+
+    void UpdateAttachedCounter()
+    {
+        if (attachedCounter != null)
+        {
+            attachedCounter.GetComponent<ICounter>().AmountChanged -= UpdateCounter;
+        }
+        attachedCounter = counterManager.TakeCounter(customID);
+        if (attachedCounter != null)
+        {
+            attachedCounter.GetComponent<ICounter>().AmountChanged += UpdateCounter;
         }
     }
 
@@ -39,18 +52,6 @@ public class QuickAccessElement : MonoBehaviour
         get
         {
             return attachedCounter;
-        }
-        set
-        {
-            if (attachedCounter != null)
-            {
-                attachedCounter.GetComponent<ICounter>().AmountChanged -= UpdateCounter;
-            }
-            attachedCounter = value;
-            if (attachedCounter != null)
-            {
-                attachedCounter.GetComponent<ICounter>().AmountChanged += UpdateCounter;
-            }
         }
     }
 
@@ -115,7 +116,6 @@ public class QuickAccessElement : MonoBehaviour
                 
                 break;
             }
-            
         }
     }
 }

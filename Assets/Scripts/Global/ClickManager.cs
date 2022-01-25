@@ -10,6 +10,7 @@ public class ClickManager : MonoBehaviour
     public event Action VClicked = delegate { };
     public event Action IClicked = delegate { };
     public event Action EscClicked = delegate { };
+    public event Action PClicked = delegate { }; 
     public event Action<int> OneClicked = delegate { };
     public event Action<int> TwoClicked = delegate { };
     public event Action<int> ThreeClicked = delegate { };
@@ -55,7 +56,14 @@ public class ClickManager : MonoBehaviour
                 EscClicked();
             }
         }
-        
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (PClicked != null)
+            {
+                PClicked();
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
         {
             if (OneClicked != null)

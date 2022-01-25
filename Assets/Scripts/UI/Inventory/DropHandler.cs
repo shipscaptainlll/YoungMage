@@ -31,14 +31,12 @@ public class DropHandler : MonoBehaviour, IDropHandler
                 {
                     TransferProperties(eventData);
                 }
-                
             }
         }
     }
 
     void SwapProperties(PointerEventData eventData)
     {
-        SwapCounter(eventData);
         SwapCustomID(eventData);
     }
 
@@ -49,7 +47,6 @@ public class DropHandler : MonoBehaviour, IDropHandler
             Transform copyToErase = CheckForRepeating(eventData);
             EraseCopy(copyToErase);
         }
-        CopyCounter(eventData);
         CopyCustomID(eventData);
     }
 
@@ -60,12 +57,6 @@ public class DropHandler : MonoBehaviour, IDropHandler
         int cacheCustomId = targetObject.GetComponent<Element>().CustomID;
         targetObject.GetComponent<Element>().CustomID = eventData.pointerDrag.transform.GetComponent<Element>().CustomID;
         eventData.pointerDrag.transform.GetComponent<Element>().CustomID = cacheCustomId;
-    }
-
-    void SwapCounter(PointerEventData eventData)
-    {
-        GameObject targetObject = GetObjectUnderMouse();
-        targetObject.GetComponent<Element>().AttachedCounter = eventData.pointerDrag.transform.GetComponent<Element>().AttachedCounter;
     }
 
     void CopyCustomID(PointerEventData eventData)
@@ -82,19 +73,6 @@ public class DropHandler : MonoBehaviour, IDropHandler
         quickAccessPanel.GetChild(slotNumber).Find("Borders").Find("Element").GetComponent<QuickAccessElement>().CustomID = eventData.pointerDrag.transform.GetComponent<Element>().CustomID;
     }
 
-    void CopyCounter(PointerEventData eventData)
-    {
-        GameObject targetObject = GetObjectUnderMouse();
-        targetObject.GetComponent<Element>().AttachedCounter = eventData.pointerDrag.transform.GetComponent<Element>().AttachedCounter;
-        int slotNumber = targetObject.transform.parent.parent.GetSiblingIndex();
-        CopyCounterToQuickAccess(eventData, slotNumber);
-    }
-
-    void CopyCounterToQuickAccess(PointerEventData eventData, int slotNumber)
-    {
-        quickAccessPanel.GetChild(slotNumber).Find("Borders").Find("Element").GetComponent<QuickAccessElement>().AttachedCounter = eventData.pointerDrag.transform.GetComponent<Element>().AttachedCounter;
-    }
-
     Transform CheckForRepeating(PointerEventData eventData)
     {
         Transform quickAccessPanel = transform.Find("QuickAccess");
@@ -103,7 +81,6 @@ public class DropHandler : MonoBehaviour, IDropHandler
             if (slot.GetChild(0).Find("Element").GetComponent<Element>().CustomID == eventData.pointerDrag.transform.GetComponent<Element>().CustomID)
             {
                 return slot;
-                
             } 
         }
         return null;
@@ -112,7 +89,6 @@ public class DropHandler : MonoBehaviour, IDropHandler
     void EraseCopy(Transform slotToErase)
     {
         slotToErase.GetChild(0).Find("Element").GetComponent<Element>().CustomID = 0;
-        slotToErase.GetChild(0).Find("Element").GetComponent<Element>().AttachedCounter = null;
 
         int numberOfSlot = slotToErase.GetSiblingIndex();
         
@@ -123,7 +99,6 @@ public class DropHandler : MonoBehaviour, IDropHandler
     void EraseQuickAccessCopy(int numberOfSlot)
     {
         quickAccessPanel.GetChild(numberOfSlot).Find("Borders").Find("Element").GetComponent<QuickAccessElement>().CustomID = 0;
-        quickAccessPanel.GetChild(numberOfSlot).Find("Borders").Find("Element").GetComponent<QuickAccessElement>().AttachedCounter = null;
     }
 
     GameObject GetObjectUnderMouse()

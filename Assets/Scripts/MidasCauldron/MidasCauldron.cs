@@ -20,7 +20,7 @@ public class MidasCauldron : MonoBehaviour
     void Start()
     {
         random = new System.Random();
-        contactManager.MidasCauldronDetected += CalculateBehavior;
+        //contactManager.MidasCauldronDetected += CalculateBehavior;
         isWorking = false;
         productionCost = 10;
         productAmmount = 1;
