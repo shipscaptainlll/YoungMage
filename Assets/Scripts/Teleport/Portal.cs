@@ -10,7 +10,7 @@ public class Portal : MonoBehaviour
 
     private void Start()
     {
-        Other.PortalView.targetTexture = new RenderTexture(Screen.width, Screen.height, 2);
+        Other.PortalView.targetTexture = new RenderTexture(Screen.width, Screen.height, 24);
         GetComponentInChildren<MeshRenderer>().sharedMaterial.mainTexture = Other.PortalView.targetTexture;
     }
 
@@ -30,9 +30,13 @@ public class Portal : MonoBehaviour
         // Clipping
         PortalView.nearClipPlane = lookerPositionInverted.magnitude;
         PortalViewForward.nearClipPlane = lookerPosition.magnitude;
-        if (Physics.SphereCast(PortalViewForward.transform.position, 0.1f, PortalViewForward.transform.TransformDirection(Vector3.forward * 4), out hit, 100f, currentObjectLayerMask))
+        if (Physics.SphereCast(PortalView.transform.position, 0.7f, PortalView.transform.TransformDirection(Vector3.forward * 4), out hit, 100f, currentObjectLayerMask))
         {
-            Debug.Log(hit.transform);
+            if (hit.transform.GetComponent<Skeleton>() != null)
+            {
+                //Debug.Log("Chazing portal");
+                hit.transform.GetComponent<SkeletonBehavior>().ChazePortal(PortalViewForward.transform);
+            }
         }
     }
 }

@@ -34,6 +34,8 @@ public class SkeletonBehavior : MonoBehaviour
     bool isGrounded;
     bool isIdle;
     bool isTeleported = false;
+    bool chasingPortal = false;
+    bool rotatedEnough = false;
     string activity;
     bool cache = false;
     float speed = 3f;
@@ -44,11 +46,11 @@ public class SkeletonBehavior : MonoBehaviour
     void Start()
     {
         localAnimator = transform.GetComponent<Animator>();
-        
+
         gravity = -9.81f;
         checkRadius = 0;
         isIdle = true;
-        
+
         contactManager.GetComponent<ContactManager>().OreDetected += AddTarget;
         activity = "idle";
         connectedTeleport.GetComponent<Teleporter>().TeleportFound += StopGravity;
@@ -60,13 +62,13 @@ public class SkeletonBehavior : MonoBehaviour
         {
             return activity;
         }
-    } 
+    }
 
     // Update is called once per frame
     void Update()
     {
         //-transform.forward equals left
-        
+
         BehaviorManager();
         Vision();
         GoAroundSurroundings();
@@ -156,6 +158,23 @@ public class SkeletonBehavior : MonoBehaviour
         TurnAroundTo(targetMage);
     }
 
+    public void ChazePortal(Transform targetPortal)
+    {
+        Transform neededPortal = targetPortal;
+        if (!chasingPortal)
+        {
+            TurnAroundTo(neededPortal);
+            if (rotatedEnough)
+            {
+                GoTo(targetPortal, 0f);
+            }
+            //
+            
+            //chasingPortal = true;
+        }
+        
+    }
+
     void MineOre()
     {
         TurnAroundTo(targetOre);
@@ -176,13 +195,20 @@ public class SkeletonBehavior : MonoBehaviour
             {
                 transform.Rotate(new Vector3(0, -angleLangle / 60, 0));
             }
+            Debug.Log(angleLangle);
+            if (Mathf.Abs(angleLangle) <= 60)
+            {
+                rotatedEnough = true;
+            }
+            
         }
     }
 
     void GoTo(Transform target, float keptDistance)
     {
-        if (Vector3.Distance(transform.position, targetMage.position) > keptDistance)
+        if (Vector3.Distance(transform.position, target.position) > keptDistance)
         {
+            Debug.Log(Vector3.Distance(transform.position, target.position));
             float distancex = target.position.x - transform.position.x;
             float distancez = target.position.z - transform.position.z;
             Vector3 distance = new Vector3(distancex, 0, distancez);

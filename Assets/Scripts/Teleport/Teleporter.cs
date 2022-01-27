@@ -6,6 +6,8 @@ public class Teleporter : MonoBehaviour
     public Teleporter Other;
     Transform objectCache;
     bool teleportUsed = false;
+    Vector3 localPos;
+    Quaternion difference;
 
     public event Action TeleportFound = delegate { };
     private void Start()
@@ -28,14 +30,12 @@ public class Teleporter : MonoBehaviour
 
         if (zPos < 0)
         {
-            if (!teleportUsed)
-            {
                 if (TeleportFound != null)
                 {
                     TeleportFound();
                 }
-            }
-            Teleport(other.transform);
+                Teleport(other.transform);
+            
         }
     }
 
@@ -43,15 +43,26 @@ public class Teleporter : MonoBehaviour
     {
         objectCache = obj;
         // Position
-        Vector3 localPos = transform.worldToLocalMatrix.MultiplyPoint3x4(obj.position);
-        localPos = new Vector3(-localPos.x, localPos.y, -localPos.z);
+        if (!teleportUsed)
+        {
+            localPos = transform.worldToLocalMatrix.MultiplyPoint3x4(obj.position);
+            localPos = new Vector3(-localPos.x, localPos.y, -localPos.z);
+            difference = Other.transform.rotation * Quaternion.Inverse(transform.rotation * Quaternion.Euler(0, 180, 0));
+            teleportUsed = true;
+        }
         Debug.Log(Other.transform.localToWorldMatrix.MultiplyPoint3x4(localPos));
-        obj.position = Other.transform.localToWorldMatrix.MultiplyPoint3x4(localPos);
+        obj.position = Other.transform.localToWorldMatrix.MultiplyPoint3x4(localPos) + new Vector3(0f,0,0);
         //obj.position = Other.transform.localToWorldMatrix.MultiplyPoint3x4(localPos);
         Debug.Log(obj.gameObject + " " + obj.position);
         // Rotation
-        Quaternion difference = Other.transform.rotation * Quaternion.Inverse(transform.rotation * Quaternion.Euler(0, 180, 0));
+        
+        
         obj.rotation = difference * obj.rotation;
+    }
+
+    void setPosition()
+    {
+        
     }
 
     private void OnTriggerEnter(Collider other)
