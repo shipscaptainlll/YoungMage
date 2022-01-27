@@ -5,6 +5,9 @@ public class Teleporter : MonoBehaviour
 {
     public Teleporter Other;
     Transform objectCache;
+    bool teleportUsed = false;
+
+    public event Action TeleportFound = delegate { };
     private void Start()
     {
 
@@ -22,7 +25,18 @@ public class Teleporter : MonoBehaviour
     {
         float zPos = transform.worldToLocalMatrix.MultiplyPoint3x4(other.transform.position).z;
 
-        if (zPos < 0) Teleport(other.transform);
+
+        if (zPos < 0)
+        {
+            if (!teleportUsed)
+            {
+                if (TeleportFound != null)
+                {
+                    TeleportFound();
+                }
+            }
+            Teleport(other.transform);
+        }
     }
 
     private void Teleport(Transform obj)

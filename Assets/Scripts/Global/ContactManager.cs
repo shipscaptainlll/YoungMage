@@ -12,6 +12,7 @@ public class ContactManager : MonoBehaviour
     [SerializeField] Transform mainCharacter;
     [SerializeField] PotentialPositioner potentialPositioner;
 
+    public event Action<Transform> TeleporterDetected = delegate { };
     public event Action<Transform> OreDetected = delegate { };
     public event Action<Transform, Transform> SkeletonDetected = delegate { };
     public event Action DefractorDetected = delegate { };
@@ -31,6 +32,14 @@ public class ContactManager : MonoBehaviour
             Transform contactedObject = CameraController.ObservedObject.transform;
             if (contactedObject != null)
             {
+                Debug.Log(contactedObject);
+                if (contactedObject.GetComponent<Teleporter>() != null && quickAccessHandController.CurrentCustomID == 10)
+                {
+                    if (TeleporterDetected != null)
+                    {
+                        TeleporterDetected(contactedObject);
+                    }
+                }
                 if (contactedObject.GetComponent<IOre>() != null && quickAccessHandController.CurrentCustomID == 10)
                 {
                     if (OreDetected != null)

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class SkeletonBehavior : MonoBehaviour
 {
+    [SerializeField] Transform connectedTeleport;
     [SerializeField] Transform checkGround;
     [SerializeField] Transform checkSurrounding;
     [SerializeField] LayerMask checkSurroundingLayer;
@@ -32,6 +33,7 @@ public class SkeletonBehavior : MonoBehaviour
     float checkRadius;
     bool isGrounded;
     bool isIdle;
+    bool isTeleported = false;
     string activity;
     bool cache = false;
     float speed = 3f;
@@ -49,6 +51,7 @@ public class SkeletonBehavior : MonoBehaviour
         
         contactManager.GetComponent<ContactManager>().OreDetected += AddTarget;
         activity = "idle";
+        connectedTeleport.GetComponent<Teleporter>().TeleportFound += StopGravity;
     }
 
     public string Activity
@@ -72,7 +75,10 @@ public class SkeletonBehavior : MonoBehaviour
 
     void BehaviorManager()
     {
-        Gravitation();
+        if (!isTeleported)
+        {
+            Gravitation();
+        }
         Vision();
         switch (activity)
         {
@@ -132,6 +138,16 @@ public class SkeletonBehavior : MonoBehaviour
             ResetVelocity();
             activity = "Idle";
         }
+    }
+
+    public void StopGravity()
+    {
+        if (activity == "ChasingMage")
+        {
+            ResetVelocity();
+            activity = "Idle";
+        }
+        isTeleported = true;
     }
 
     void ChazeMage()
