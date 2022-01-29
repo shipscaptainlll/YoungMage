@@ -1,42 +1,76 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
-    [SerializeField] LayerMask currentObjectLayerMask;
-    public Portal Other;
-    public Camera PortalView;
-    public Camera PortalViewForward;
-    RaycastHit hit = new RaycastHit();
+    [Header("Main Settings")]
+    public Portal linkedPortal;
+    public MeshRenderer screen;
+    public int recursionLimit = 5;
 
-    private void Start()
+    [Header("Advanced Settings")]
+    public float nearClipOffset = 0.05f;
+    public float nearClipLimit = 0.2f;
+
+    // Private variables
+    RenderTexture viewTexture;
+    Camera portalCam;
+    Camera playerCam;
+    Material firstRecursionMat;
+    List<PortalTraveller> trackedTravellers;
+    MeshFilter screenMeshFilter;
+
+    private void Awake()
     {
-        Other.PortalView.targetTexture = new RenderTexture(Screen.width, Screen.height, 24);
-        GetComponentInChildren<MeshRenderer>().sharedMaterial.mainTexture = Other.PortalView.targetTexture;
+        playerCam = Camera.main;
+        portalCam = GetComponentInChildren<Camera>();
+        portalCam.enabled = false;
+        trackedTravellers = new List<PortalTraveller>();
+        screenMeshFilter = screen.GetComponent<MeshFilter>();
     }
 
-    private void Update()
+    // Start is called before the first frame update
+    void Start()
     {
-        // Position
-        Vector3 lookerPosition = Other.transform.worldToLocalMatrix.MultiplyPoint3x4(Camera.main.transform.position);
-        PortalViewForward.transform.localPosition = lookerPosition;
-        Vector3 lookerPositionInverted = new Vector3(-lookerPosition.x, lookerPosition.y, -lookerPosition.z);
-        PortalView.transform.localPosition = lookerPositionInverted;
 
-        // Rotation
-        Quaternion difference = transform.rotation * Quaternion.Inverse(Other.transform.rotation * Quaternion.Euler(0, 180, 0));
-        PortalViewForward.transform.rotation = Camera.main.transform.rotation;
-        PortalView.transform.rotation = difference * Camera.main.transform.rotation;
+        
+    }
 
-        // Clipping
-        PortalView.nearClipPlane = lookerPositionInverted.magnitude;
-        PortalViewForward.nearClipPlane = lookerPosition.magnitude;
-        if (Physics.SphereCast(PortalView.transform.position, 0.7f, PortalView.transform.TransformDirection(Vector3.forward * 4), out hit, 100f, currentObjectLayerMask))
+    private void LateUpdate()
+    {
+        Render();
+    }
+
+    void CreateViewTexture()
+    {
+        if (viewTexture == null || viewTexture.width != Screen.width || viewTexture.height != Screen.height)
         {
-            if (hit.transform.GetComponent<Skeleton>() != null)
+            if (viewTexture != null)
             {
-                //Debug.Log("Chazing portal");
-                hit.transform.GetComponent<SkeletonBehavior>().ChazePortal(PortalViewForward.transform);
+                viewTexture.Release();
             }
+            viewTexture = new RenderTexture(Screen.width, Screen.height, 0);
+            // Render the view from the portal camera to the view texture
+            portalCam.targetTexture = viewTexture;
+            // Display the view texture on the screen of the linked portal
+            linkedPortal.screen.material.SetTexture("_MainTex", viewTexture);
         }
+    }
+
+    // Called just before player camera is rendered
+    public void Render()
+    {
+        screen.enabled = false;
+        CreateViewTexture();
+
+        // Make portal cam posiion and rotation the same relative to this portal as player cam relative to linked portal
+        var m = transform.localToWorldMatrix * linkedPortal.transform.worldToLocalMatrix * playerCam.transform.localToWorldMatrix;
+        portalCam.transform.SetPositionAndRotation(m.GetColumn(3), m.rotation);
+
+        // Render the camera
+        portalCam.Render();
+        linkedPortal.screen.material.SetInt("displayMask", 1);
+        screen.enabled = true;
     }
 }

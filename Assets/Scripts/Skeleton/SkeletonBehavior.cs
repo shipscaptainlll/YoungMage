@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class SkeletonBehavior : MonoBehaviour
 {
+    [SerializeField] bool hasPortal;
     [SerializeField] Transform connectedTeleport;
     [SerializeField] Transform checkGround;
     [SerializeField] Transform checkSurrounding;
@@ -29,6 +30,7 @@ public class SkeletonBehavior : MonoBehaviour
     Transform targetMage;
     Transform targetOre;
     Transform visibleObject;
+    Transform targetPortal;
     float gravity;
     float checkRadius;
     bool isGrounded;
@@ -42,7 +44,7 @@ public class SkeletonBehavior : MonoBehaviour
 
     //cache
     [SerializeField] Transform targetMage1;
-
+    public event Action<Transform> OriginRotated = delegate { };
     void Start()
     {
         localAnimator = transform.GetComponent<Animator>();
@@ -54,6 +56,11 @@ public class SkeletonBehavior : MonoBehaviour
         contactManager.GetComponent<ContactManager>().OreDetected += AddTarget;
         activity = "idle";
         connectedTeleport.GetComponent<Teleporter>().TeleportFound += StopGravity;
+        if (hasPortal)
+        {
+            transform.GetComponent<CopycatCreator>().OriginTeleported += StopActivities;
+        }
+        
     }
 
     public string Activity
@@ -72,6 +79,7 @@ public class SkeletonBehavior : MonoBehaviour
         BehaviorManager();
         Vision();
         GoAroundSurroundings();
+        
     }
 
 
@@ -96,12 +104,24 @@ public class SkeletonBehavior : MonoBehaviour
             case "MineOre":
                 MineOre();
                 break;
+            case "ChazePortal":
+                ChazePortal();
+                break;
         }
     }
 
     void StayStill()
     {
         localAnimator.Play("SkelIdle");
+    }
+
+    public void StopActivities()
+    {
+        Debug.Log("hello here");
+        isTeleported = true;
+        ResetVelocity();
+        activity = "Idle";
+        
     }
 
     public void AddTarget(Transform targetOre)
@@ -158,20 +178,31 @@ public class SkeletonBehavior : MonoBehaviour
         TurnAroundTo(targetMage);
     }
 
-    public void ChazePortal(Transform targetPortal)
+    public void StartChazingPortal(Transform foundPortal)
     {
-        Transform neededPortal = targetPortal;
-        if (!chasingPortal)
+        targetPortal = foundPortal;
+        activity = "ChazePortal";
+    }
+
+    public void ChazePortal()
+    {
+        if (activity == "ChazePortal")
         {
-            TurnAroundTo(neededPortal);
-            if (rotatedEnough)
+            Debug.Log("still working");
+            Transform neededPortal = targetPortal;
+            if (!chasingPortal)
             {
-                GoTo(targetPortal, 0f);
+                TurnAroundTo(neededPortal);
+                if (rotatedEnough)
+                {
+                    GoTo(targetPortal, 0f);
+                }
+                //
+
+                //chasingPortal = true;
             }
-            //
-            
-            //chasingPortal = true;
-        }
+        } else { }
+        
         
     }
 
@@ -195,7 +226,7 @@ public class SkeletonBehavior : MonoBehaviour
             {
                 transform.Rotate(new Vector3(0, -angleLangle / 60, 0));
             }
-            Debug.Log(angleLangle);
+            //Debug.Log(angleLangle);
             if (Mathf.Abs(angleLangle) <= 60)
             {
                 rotatedEnough = true;
@@ -208,7 +239,8 @@ public class SkeletonBehavior : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, target.position) > keptDistance)
         {
-            Debug.Log(Vector3.Distance(transform.position, target.position));
+            //Debug.Log(activity + " " + transform);
+            //Debug.Log(Vector3.Distance(transform.position, target.position));
             float distancex = target.position.x - transform.position.x;
             float distancez = target.position.z - transform.position.z;
             Vector3 distance = new Vector3(distancex, 0, distancez);
@@ -235,6 +267,7 @@ public class SkeletonBehavior : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
 
         characterController.Move(velocity * Time.deltaTime);
+        
     }
 
     void GoAroundSurroundings()

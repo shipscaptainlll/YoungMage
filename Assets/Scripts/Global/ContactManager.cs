@@ -32,8 +32,8 @@ public class ContactManager : MonoBehaviour
             Transform contactedObject = CameraController.ObservedObject.transform;
             if (contactedObject != null)
             {
-
-                if (contactedObject.GetComponent<Teleporter>() != null && quickAccessHandController.CurrentCustomID == 10)
+                Debug.Log(contactedObject);
+                if (contactedObject.GetComponent<Portal2>() != null)
                 {
                     if (TeleporterDetected != null)
                     {
