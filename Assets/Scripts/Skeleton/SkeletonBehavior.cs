@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class SkeletonBehavior : MonoBehaviour
 {
+    [SerializeField] int ID;
     [SerializeField] bool hasPortal;
     [SerializeField] Transform connectedTeleport;
     [SerializeField] Transform checkGround;
@@ -63,6 +64,18 @@ public class SkeletonBehavior : MonoBehaviour
         
     }
 
+    public bool IsTeleported
+    {
+        get
+        {
+            return isTeleported;
+        }
+        set
+        {
+            isTeleported = value;
+        }
+    }
+
     public string Activity
     {
         get
@@ -75,7 +88,11 @@ public class SkeletonBehavior : MonoBehaviour
     void Update()
     {
         //-transform.forward equals left
-
+        if (ID == 8)
+        {
+            //Debug.Log("is teleported " + isTeleported);
+            //Debug.Log("activity " + activity);
+        }
         BehaviorManager();
         Vision();
         GoAroundSurroundings();
@@ -87,6 +104,7 @@ public class SkeletonBehavior : MonoBehaviour
     {
         if (!isTeleported)
         {
+            
             Gravitation();
         }
         Vision();
@@ -117,12 +135,19 @@ public class SkeletonBehavior : MonoBehaviour
 
     public void StopActivities()
     {
-        Debug.Log("hello here");
+        
         isTeleported = true;
         ResetVelocity();
         activity = "Idle";
-        
+        StartCoroutine(returnGravity());
     }
+
+    IEnumerator returnGravity()
+    {
+        yield return new WaitForSeconds(0.01f);
+        isTeleported = false;
+    }
+    
 
     public void AddTarget(Transform targetOre)
     {
@@ -245,8 +270,11 @@ public class SkeletonBehavior : MonoBehaviour
             float distancez = target.position.z - transform.position.z;
             Vector3 distance = new Vector3(distancex, 0, distancez);
             //Debug.Log(Vector3.Distance(transform.position, targetMage.position));
+            
             distance.Normalize();
-            velocity = distance;
+            //velocity = distance;
+            velocity.x = distance.x;
+            velocity.z = distance.z;
             characterController.Move(velocity * Time.deltaTime * speed);
             localAnimator.Play("SkelMove");
         }

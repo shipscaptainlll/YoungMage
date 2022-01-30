@@ -14,6 +14,7 @@ public class CopycatCreator : MonoBehaviour
     Vector3 spawnOffset;
 
     public event Action OriginTeleported = delegate { };
+    public event Action SkeletonFinallyTeleported = delegate { }; //unsafe code refactoring potential
     public Vector3 SpawnOffset
     {
         get
@@ -41,7 +42,6 @@ public class CopycatCreator : MonoBehaviour
         copycat.transform.Find("OuterPart.002").GetComponent<ObjectSlicer>().ObjectToTileAround = copycatPortal.transform;
         copycat.transform.Find("OuterPart.002").GetComponent<ObjectSlicer>().Offset = new Vector3(1, 0, 0);
         copycat.transform.Find("OuterPart.002").GetComponent<ObjectSlicer>().InvertBool = 1;
-        Debug.Log(copycatPortal.transform.parent.parent);
         if (copycatPortal.transform.parent.parent.Find("CopycatCatcher") != null)
         {
             copycatPortal.transform.parent.parent.Find("CopycatCatcher").GetComponent<CopycatCatcher>().CopycatCached += destroyCopycat;
@@ -69,17 +69,26 @@ public class CopycatCreator : MonoBehaviour
     {
         lastCopycatPosition = copycat.transform.position;
         Destroy(copycat);
-        Debug.Log(transform + " this is us" + transform.GetComponent<SkeletonBehavior>().Activity);
         transform.GetComponent<SkeletonBehavior>().StopActivities();
-        Debug.Log(transform + " this is us" + transform.GetComponent<SkeletonBehavior>().Activity);
         teleportOrigin();
         copycatPortal.transform.parent.parent.Find("CopycatCatcher").GetComponent<CopycatCatcher>().CopycatCached -= destroyCopycat;
-        Debug.Log("Copycat destroyed");
     }
 
     void teleportOrigin()
     {
-        transform.position = lastCopycatPosition + new Vector3(1,1,1);
+        transform.position = lastCopycatPosition + new Vector3(0,0,0);
+
+        transform.GetComponent<SkeletonBehavior>().IsTeleported = false;
+        if (SkeletonFinallyTeleported != null)
+        {
+            SkeletonFinallyTeleported();
+        }
+        transform.GetChild(1).GetComponent<ObjectSlicer>().setObjectToTileAround(transform.GetChild(1).GetComponent<ObjectSlicer>().CopycatPortal);
+        transform.GetChild(1).GetComponent<ObjectSlicer>().setInvert(1);
+        transform.GetChild(1).GetComponent<ObjectSlicer>().setOffset(new Vector3(1, 0, 0));
+        transform.GetChild(2).GetComponent<ObjectSlicer>().setObjectToTileAround(transform.GetChild(2).GetComponent<ObjectSlicer>().CopycatPortal); ;
+        transform.GetChild(2).GetComponent<ObjectSlicer>().setInvert(1);
+        transform.GetChild(2).GetComponent<ObjectSlicer>().setOffset(new Vector3(1, 0, 0));
         if (OriginTeleported != null)
         {
             OriginTeleported();

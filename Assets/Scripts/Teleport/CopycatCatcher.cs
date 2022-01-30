@@ -20,7 +20,6 @@ public class CopycatCatcher : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other);
         if (other.GetComponent<CopycatManager>() != null)
         {
             

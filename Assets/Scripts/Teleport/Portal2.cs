@@ -46,10 +46,6 @@ public class Portal2 : MonoBehaviour
     private void LateUpdate()
     {
         Render();
-        if (searchStarted)
-        {
-            SearchSurroundings();
-        }
     }
 
     void CreateViewTexture()
@@ -89,7 +85,7 @@ public class Portal2 : MonoBehaviour
         if (usedPortal == transform && portalType == "main")
         {
             linkedCamera = linkedPortal.transform.Find("Camera");
-            searchStarted = true;
+            SearchSurroundings();
         }
     }
 
@@ -101,7 +97,6 @@ public class Portal2 : MonoBehaviour
         {
             for (int i = 0; i < hit.Length; i++)
             {
-                
                 if (hit[i].transform.parent.GetComponent<Skeleton>() != null)
                 {
                     hit[i].transform.parent.GetComponent<SkeletonBehavior>().StartChazingPortal(linkedCamera);
