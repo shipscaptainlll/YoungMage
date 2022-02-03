@@ -32,7 +32,7 @@ public class ContactManager : MonoBehaviour
             Transform contactedObject = CameraController.ObservedObject.transform;
             if (contactedObject != null)
             {
-                
+                Debug.Log(contactedObject.tag + " " + contactedObject);
                 if (contactedObject.GetComponent<Portal2>() != null)
                 {
                     if (TeleporterDetected != null)
