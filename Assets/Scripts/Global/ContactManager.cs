@@ -16,7 +16,7 @@ public class ContactManager : MonoBehaviour
     public event Action<Transform> OreDetected = delegate { };
     public event Action<Transform, Transform> SkeletonDetected = delegate { };
     public event Action DefractorDetected = delegate { };
-    public event Action UpgradeTableDetected = delegate { };
+    public event Action<Transform> AlchemistTableDetected = delegate { };
     public event Action MidasCauldronDetected = delegate { };
     public event Action PotentialPositionerActivated = delegate { };
     public event Action PotentialPositionerDeactivated = delegate { };
@@ -32,7 +32,6 @@ public class ContactManager : MonoBehaviour
             Transform contactedObject = CameraController.ObservedObject.transform;
             if (contactedObject != null)
             {
-                Debug.Log(contactedObject.tag + " " + contactedObject);
                 if (contactedObject.GetComponent<Portal2>() != null)
                 {
                     if (TeleporterDetected != null)
@@ -70,11 +69,11 @@ public class ContactManager : MonoBehaviour
                         MidasCauldronDetected();
                     }
                 }
-                else if (contactedObject.GetComponent<UpgradeTable>() != null)
+                else if (contactedObject.GetComponent<TransmutationResourcePack>() != null)
                 {
-                    if (UpgradeTableDetected != null)
+                    if (AlchemistTableDetected != null)
                     {
-                        UpgradeTableDetected();
+                        AlchemistTableDetected(contactedObject);
                     }
                 }
             }

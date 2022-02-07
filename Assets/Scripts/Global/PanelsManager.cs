@@ -34,7 +34,6 @@ public class PanelsManager : MonoBehaviour
         updateSpeed = 0.1f;
         clickManager.IClicked += openInventory;
         clickManager.EscClicked += closeCurrentPanel;
-        contactManager.UpgradeTableDetected += openUpgradeTable;
         contactManager.MidasCauldronDetected += openMidasCauldronTable;
         contactManager.DefractorDetected += openDefractorTable;
     }

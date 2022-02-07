@@ -12,18 +12,24 @@ public class PersonMovement : MonoBehaviour
     [SerializeField] float jumpHeight;
     [SerializeField] LayerMask checkLayer;
     [SerializeField] LayerMask checkLayer2;
+    [SerializeField] CharacterOccupation _characterOccupation;
     Vector3 velocity;
     [SerializeField] float gravity;
     float checkRadius;
+    bool occupied;
 
     bool isGrounded;
     void Start()
     {
+        occupied = false;
         checkRadius = 0.5f;
+        _characterOccupation.CharacterEngagedSomething += PreventMoving;
+        _characterOccupation.CharacterDisengagedSomething += EnableMoving;
     }
 
     void Update()
     {
+        if (!occupied)
         MoveCharacter();
     }
 
@@ -49,5 +55,15 @@ public class PersonMovement : MonoBehaviour
 
         velocity.y += gravity * Time.deltaTime;
         characterController.Move(velocity * Time.deltaTime);
+    }
+
+    void PreventMoving()
+    {
+        occupied = true;
+    }
+
+    void EnableMoving()
+    {
+        occupied = false;
     }
 }

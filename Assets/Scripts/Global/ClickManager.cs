@@ -9,6 +9,8 @@ public class ClickManager : MonoBehaviour
     public event Action RMBClicked = delegate { };
     public event Action VClicked = delegate { };
     public event Action IClicked = delegate { };
+    public event Action AClicked = delegate { };
+    public event Action DClicked = delegate { };
     public event Action EscClicked = delegate { };
     public event Action PClicked = delegate { };
     public event Action EClicked = delegate { };
@@ -69,6 +71,20 @@ public class ClickManager : MonoBehaviour
             if (EClicked != null)
             {
                 EClicked();
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            if (AClicked != null)
+            {
+                AClicked();
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            if (DClicked != null)
+            {
+                DClicked();
             }
         }
 
