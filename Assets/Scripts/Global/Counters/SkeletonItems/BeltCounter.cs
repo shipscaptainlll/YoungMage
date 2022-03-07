@@ -7,9 +7,11 @@ using UnityEngine.UI;
 public class GlovesCounter : MonoBehaviour, ICounter, ISkeletonItems
 {
     [SerializeField] ItemsList itemsList;
+    [SerializeField] int id;
     int count;
     bool itemOpened;
 
+    public int ID { get { return id; } }
     public int Count
     {
         get

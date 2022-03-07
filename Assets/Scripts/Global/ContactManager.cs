@@ -69,12 +69,16 @@ public class ContactManager : MonoBehaviour
                         MidasCauldronDetected();
                     }
                 }
-                else if (contactedObject.GetComponent<TransmutationResourcePack>() != null)
+                else if (contactedObject.GetComponent<TransmutationResourceChoose>() != null)
                 {
                     if (AlchemistTableDetected != null)
                     {
                         AlchemistTableDetected(contactedObject);
                     }
+                }
+                else if (contactedObject.GetComponent<AlchemistPotentialProduct>() != null)
+                {
+                    Debug.Log("Potential product is visible");
                 }
             }
         }

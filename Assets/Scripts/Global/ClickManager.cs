@@ -14,6 +14,7 @@ public class ClickManager : MonoBehaviour
     public event Action EscClicked = delegate { };
     public event Action PClicked = delegate { };
     public event Action EClicked = delegate { };
+    public event Action EnterClicked = delegate { };
     public event Action<int> OneClicked = delegate { };
     public event Action<int> TwoClicked = delegate { };
     public event Action<int> ThreeClicked = delegate { };
@@ -85,6 +86,13 @@ public class ClickManager : MonoBehaviour
             if (DClicked != null)
             {
                 DClicked();
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            if (EnterClicked != null)
+            {
+                EnterClicked();
             }
         }
 

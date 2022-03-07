@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class MagicGlovesCounter : MonoBehaviour, ICounter, ISkeletonItems
 {
     [SerializeField] ItemsList itemsList;
+    [SerializeField] int id;
     int count;
     bool itemOpened;
 
@@ -25,6 +26,8 @@ public class MagicGlovesCounter : MonoBehaviour, ICounter, ISkeletonItems
             return itemOpened;
         }
     }
+
+    public int ID { get { return id; } }
 
     public event Action<int> AmountChanged = delegate { };
     public event Action ItemFirstCreated = delegate { };

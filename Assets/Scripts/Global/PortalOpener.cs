@@ -9,6 +9,7 @@ public class PortalOpener : MonoBehaviour
     [SerializeField] Transform VFXContainer;
     [SerializeField] ClickManager clickManager;
     [SerializeField] CopycatCreator teleportationManager;
+    [SerializeField] EClickVariations eClickVariations;
     Transform housePortal;
     Transform fieldPortal;
     bool cycleRunning = false;
@@ -30,7 +31,7 @@ public class PortalOpener : MonoBehaviour
 
     void InitiatePortalOpening()
     {
-        if (!cycleRunning)
+        if (!cycleRunning && eClickVariations.IsOpeningPortal)
         {
             cycleRunning = true;
             EnablePortals();

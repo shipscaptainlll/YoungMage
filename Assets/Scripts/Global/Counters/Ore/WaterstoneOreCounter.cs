@@ -8,9 +8,11 @@ public class WaterstoneOreCounter : MonoBehaviour, ICounter
 {
     [SerializeField] ItemsList itemsList;
     [SerializeField] Text textCounter;
+    [SerializeField] int id;
     int count;
     bool itemOpened;
 
+    public int ID { get { return id; } }
     public int Count
     {
         get

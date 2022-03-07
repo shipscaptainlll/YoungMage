@@ -8,7 +8,9 @@ public class LavastoneDustCounter : MonoBehaviour, ICounter
 {
     int count;
     bool itemOpened;
+    [SerializeField] int id;
 
+    public int ID { get { return id; } }
     public int Count
     {
         get

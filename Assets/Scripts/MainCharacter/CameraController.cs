@@ -9,8 +9,10 @@ public class CameraController : MonoBehaviour
     [SerializeField] Transform characterBody;
     [SerializeField] float mouseSensitivity;
     [SerializeField] LayerMask currentObjectLayerMask;
+    [SerializeField] LayerMask clickableLayerMask;
     [SerializeField] ClickManager ClickManager;
     [SerializeField] CursorManager cursorManager;
+    [SerializeField] ObjectOutliner objectOutliner;
     float yRotation;
     RaycastHit hit = new RaycastHit();
 
@@ -24,7 +26,7 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        StartCoroutine(SeeObject());
     }
 
     // Update is called once per frame
@@ -35,6 +37,7 @@ public class CameraController : MonoBehaviour
             RotateHead();
             DetectObject();
         }
+        //
     }
 
     void RotateHead()
@@ -55,9 +58,22 @@ public class CameraController : MonoBehaviour
     void DetectObject()
     {
         Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward * 3), Color.red);
-
-        if (Physics.SphereCast(transform.position, 0.1f, transform.TransformDirection(Vector3.forward * 3), out hit, 100f, currentObjectLayerMask)) {
-            //Debug.Log(hit.transform);
+        if (Physics.SphereCast(transform.position, 0.1f, transform.TransformDirection(Vector3.forward * 3), out hit, 3f, clickableLayerMask))
+        {
+            
         }
+
+    }
+
+    IEnumerator SeeObject()
+    {
+        while (true)
+        {
+            if (Physics.SphereCast(transform.position, 0.1f, transform.TransformDirection(Vector3.forward * 3), out hit, 3f, clickableLayerMask))
+            {
+                objectOutliner.StoreVewedObject(hit.transform); 
+            } else { objectOutliner.StoreVewedObject(null);  }
+            yield return new WaitForSeconds(0.033f);
+        }        
     }
 }

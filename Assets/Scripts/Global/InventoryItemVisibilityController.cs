@@ -93,6 +93,7 @@ public class InventoryItemVisibilityController : MonoBehaviour
         return null;
     }
 
+    
     IEnumerator Hello()
     {
         yield return new WaitForSeconds(1);

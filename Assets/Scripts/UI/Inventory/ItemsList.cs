@@ -38,6 +38,7 @@ public class ItemsList : MonoBehaviour
         lavaStoneDust = 22,
         magicStoneDust = 23,
         waterStoneDust = 24,
-        windStoneDust = 25
+        windStoneDust = 25,
+        transmutationAmulet = 26
     }
 }

@@ -6,9 +6,11 @@ using UnityEngine.UI;
 
 public class StoneBrickCounter : MonoBehaviour, ICounter
 {
+    [SerializeField] int id;
     int count;
     bool itemOpened;
 
+    public int ID { get { return id; } }
     public int Count
     {
         get
