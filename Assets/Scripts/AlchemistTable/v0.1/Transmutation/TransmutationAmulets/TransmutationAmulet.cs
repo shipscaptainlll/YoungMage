@@ -6,6 +6,7 @@ using System;
 public class TransmutationAmulet : MonoBehaviour, IResource, IShowClickable
 {
     [SerializeField] Transform amuletProductsHolder;
+    [SerializeField] AmuletsTransmutation amuletsTransmutation;
     [SerializeField] ClickManager clickManager;
     [SerializeField] int id;
     [SerializeField] float zAxisOffset;
@@ -24,6 +25,8 @@ public class TransmutationAmulet : MonoBehaviour, IResource, IShowClickable
     void Start()
     {
         clickManager.EClicked += NotifyAmuletChoosen;
+        amuletsTransmutation.ParallelAmuletChoosen += ForceStopAmulet;
+        amuletsTransmutation.NoResourcesLeft += ForceStopAmulet;
     }
 
     // Update is called once per frame
@@ -32,7 +35,7 @@ public class TransmutationAmulet : MonoBehaviour, IResource, IShowClickable
         
     }
 
-    void NotifyAmuletChoosen()
+    public void NotifyAmuletChoosen()
     {
         if (!usedForProduction && isObserved && AmuletChoosen != null)
         {
@@ -45,6 +48,15 @@ public class TransmutationAmulet : MonoBehaviour, IResource, IShowClickable
             usedForProduction = false;
             HideAmuletProduct();
             StopedAutomaticTransmutation(null);
+        }
+    }
+
+    void ForceStopAmulet(Transform usedAmulet)
+    {
+        if (usedAmulet == transform)
+        {
+            usedForProduction = false;
+            HideAmuletProduct();
         }
     }
 

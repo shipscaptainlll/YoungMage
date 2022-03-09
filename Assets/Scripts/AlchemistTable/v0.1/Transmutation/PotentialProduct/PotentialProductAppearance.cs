@@ -9,6 +9,7 @@ public class PotentialProductAppearance : MonoBehaviour
 {
     [SerializeField] ClickManager clickManager;
     [SerializeField] AmuletsTransmutation amuletsTransmutation;
+    [SerializeField] TransmutationCostTaker transmutationCostTaker;
     [SerializeField] PotentialProductVisualisation potentialProductVisualisation;
     [SerializeField] Transform productsHolder;
     [SerializeField] Transform amuletsHolder;
@@ -26,6 +27,7 @@ public class PotentialProductAppearance : MonoBehaviour
     }
     public event Action<Transform> AmuletRequestedReset = delegate { };
     public event Action<Transform> StartedAutomaticTransmutation = delegate { };
+    public event Action NoResourcesLeft = delegate { };
     // Start is called before the first frame update
     void Start()
     {
@@ -47,7 +49,7 @@ public class PotentialProductAppearance : MonoBehaviour
         {
             foreach (Transform element in productsHolder)
             {
-                if (element.GetComponent<TransmutationProduct>().ID == potentialProductVisualisation.CurrentProductID)
+                if (element.GetComponent<TransmutationProduct>().ID == potentialProductVisualisation.CurrentProductID && transmutationCostTaker.CheckCost(potentialProductVisualisation.CurrentProductID))
                 {
                     isCreated = true;
                     ObjectCreated();
@@ -63,53 +65,64 @@ public class PotentialProductAppearance : MonoBehaviour
 
     void InstantiateProduct(Transform amulet)
     {
+        
         if (amulet != null)
         {
             if (amulet.GetComponent<TransmutationAmulet>().ID != 0 && !isCreated)
             {
                 foreach (Transform element in productsHolder)
                 {
+                    
+                    
                     if (element.GetComponent<TransmutationProduct>().ID == amulet.GetComponent<TransmutationAmulet>().ID)
                     {
-                        isCreated = true;
-                        ObjectCreated();
-                        createdObject = Instantiate(element, element.position, element.rotation);
-                        createdObject.GetComponent<TransmutationProduct>().EnteredPortal += DestroyObject;
-                        createdObject.GetComponent<MeshRenderer>().enabled = true;
-                        createdObject.GetComponent<Rigidbody>().useGravity = true;
-                        foreach (Transform resourcePack in resourcePacksHolder)
+                        if (transmutationCostTaker.CheckCost(element.GetComponent<TransmutationProduct>().ID))
                         {
-                            AmuletRequestedReset(resourcePack.GetChild(1).transform);
-                        }
-                        amulet.GetComponent<TransmutationAmulet>().ShowAmuletProduct();
-                        StartedAutomaticTransmutation(amulet);
-                        /*
-                        foreach (var potentialProduct in potentialProductLibrary.PotentialProducts)
-                        {
-                            if (!Enumerable.SequenceEqual(potentialProduct.Value.OrderBy(e => e), potentialProductVisualisation.ResourcesIDs.OrderBy(e => e)))
+                            isCreated = true;
+                            ObjectCreated();
+                            createdObject = Instantiate(element, element.position, element.rotation);
+                            createdObject.GetComponent<TransmutationProduct>().EnteredPortal += DestroyObject;
+                            createdObject.GetComponent<MeshRenderer>().enabled = true;
+                            createdObject.GetComponent<Rigidbody>().useGravity = true;
+                            foreach (Transform resourcePack in resourcePacksHolder)
                             {
-
+                                AmuletRequestedReset(resourcePack.GetChild(1).transform);
                             }
-                        }
-                        */
-                        break;
+                            amulet.GetComponent<TransmutationAmulet>().ShowAmuletProduct();
+                            StartedAutomaticTransmutation(amulet);
+                            /*
+                            foreach (var potentialProduct in potentialProductLibrary.PotentialProducts)
+                            {
+                                if (!Enumerable.SequenceEqual(potentialProduct.Value.OrderBy(e => e), potentialProductVisualisation.ResourcesIDs.OrderBy(e => e)))
+                                {
+
+                                }
+                            }
+                            */
+                            break;
+                        } else { if (NoResourcesLeft != null) { NoResourcesLeft(); } }
+                        
                     }
                 }
             }
             else if (amulet.GetComponent<TransmutationAmulet>().ID == 0 && potentialProductVisualisation.CurrentProductID != 26 && !isCreated && potentialProductVisualisation.CurrentProductID != 0)
-            {
+                { 
                 foreach (Transform element in productsHolder)
                 {
                     if (element.GetComponent<TransmutationProduct>().ID == potentialProductVisualisation.CurrentProductID)
                     {
-                        isCreated = true;
-                        ObjectCreated();
-                        createdObject = Instantiate(element, element.position, element.rotation);
-                        createdObject.GetComponent<TransmutationProduct>().EnteredPortal += DestroyObject;
-                        createdObject.GetComponent<MeshRenderer>().enabled = true;
-                        createdObject.GetComponent<Rigidbody>().useGravity = true;
-                        amulet.GetComponent<TransmutationAmulet>().ID = element.GetComponent<TransmutationProduct>().ID;
-                        break;
+                        if (transmutationCostTaker.CheckCost(element.GetComponent<TransmutationProduct>().ID))
+                        {
+                            isCreated = true;
+                            ObjectCreated();
+                            createdObject = Instantiate(element, element.position, element.rotation);
+                            createdObject.GetComponent<TransmutationProduct>().EnteredPortal += DestroyObject;
+                            createdObject.GetComponent<MeshRenderer>().enabled = true;
+                            createdObject.GetComponent<Rigidbody>().useGravity = true;
+                            amulet.GetComponent<TransmutationAmulet>().ID = element.GetComponent<TransmutationProduct>().ID;
+                            break;
+                        } else { if (NoResourcesLeft != null) { NoResourcesLeft(); } }
+                        
                     }
                 }
             }

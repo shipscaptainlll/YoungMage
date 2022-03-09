@@ -10,10 +10,13 @@ public class AmuletsTransmutation : MonoBehaviour
     Transform usedAmulet;
 
     public event Action<Transform>  AutomaticTransmutationContinue = delegate { };
+    public event Action<Transform> ParallelAmuletChoosen = delegate { };
+    public event Action<Transform> NoResourcesLeft = delegate { };
     // Start is called before the first frame update
     void Start()
     {
         potentialProductAppearance.StartedAutomaticTransmutation += ControllAutomaticTransmutation;
+        potentialProductAppearance.NoResourcesLeft += StopAutomaticTransmutation;
     }
 
     // Update is called once per frame
@@ -26,14 +29,24 @@ public class AmuletsTransmutation : MonoBehaviour
     {
         if (amulet != null)
         {
+            if (usedAmulet != amulet && usedAmulet != null)
+            {
+                if (ParallelAmuletChoosen != null) { ParallelAmuletChoosen(usedAmulet); }
+                usedAmulet = null;
+                StopAllCoroutines();
+                automaticTransmutation = null;
+                
+            }
+            Debug.Log(automaticTransmutation);
             usedAmulet = amulet;
             automaticTransmutation = StartCoroutine(TransmutateAutomaticly());
             Debug.Log("startedTransmutation");
         }
-        else if (amulet == null)
+        else if (amulet == null )
         {
             usedAmulet = null;
-            StopCoroutine(automaticTransmutation);
+            StopAllCoroutines();
+            automaticTransmutation = null;
             Debug.Log("stopedTransmutation");
         }
     }
@@ -48,5 +61,13 @@ public class AmuletsTransmutation : MonoBehaviour
             Debug.Log("transmutated");
         }
         
+    }
+
+    void StopAutomaticTransmutation()
+    {
+        if (NoResourcesLeft != null) { NoResourcesLeft(usedAmulet); }
+        usedAmulet = null;
+        StopAllCoroutines();
+        automaticTransmutation = null;
     }
 }

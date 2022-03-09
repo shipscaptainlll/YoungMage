@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class StoneOreCounter : MonoBehaviour, ICounter
 {
+    [SerializeField] ClickManager clickManager;
+    [SerializeField] int startAmmount;
     [SerializeField] ItemsList itemsList;
     [SerializeField] Text textCounter;
     [SerializeField] int id;
@@ -35,6 +37,16 @@ public class StoneOreCounter : MonoBehaviour, ICounter
     void Start()
     {
         count = 0;
+        clickManager.EnterClicked += AddManually;
+    }
+
+    public void AddManually()
+    {
+        count += startAmmount;
+        Debug.Log("added: " + startAmmount);
+        RefreshUICounter();
+        NotifyAmountChanged(count);
+        controlInventoryVisibility();
     }
 
     public void AddResource(int ammount)
