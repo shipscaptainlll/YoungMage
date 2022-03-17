@@ -28,6 +28,7 @@ public class MagicstoneDustCounter : MonoBehaviour, ICounter
     }
 
     public event Action<int> AmountChanged = delegate { };
+    public event Action<int> AmmountEnded = delegate { };
     public event Action<int, Transform> ItemCreated = delegate { };
     void Start()
     {
@@ -63,6 +64,7 @@ public class MagicstoneDustCounter : MonoBehaviour, ICounter
             if (itemOpened)
             {
                 itemOpened = false;
+                if (AmmountEnded != null) { AmmountEnded((int)ItemsList.Items.magicStoneDust); }
             }
         }
     }

@@ -39,11 +39,21 @@ public class QuickAccessElement : MonoBehaviour
         if (attachedCounter != null)
         {
             attachedCounter.GetComponent<ICounter>().AmountChanged -= UpdateCounter;
+            attachedCounter.GetComponent<ICounter>().AmmountEnded -= ResetCounter;
         }
         attachedCounter = counterManager.TakeCounter(customID);
         if (attachedCounter != null)
         {
             attachedCounter.GetComponent<ICounter>().AmountChanged += UpdateCounter;
+            attachedCounter.GetComponent<ICounter>().AmmountEnded += ResetCounter;
+        }
+    }
+
+    void ResetCounter(int ID)
+    {
+        if (CustomID == ID)
+        {
+            CustomID = 0;
         }
     }
 

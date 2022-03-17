@@ -20,7 +20,7 @@ public class InventoryItemVisibilityController : MonoBehaviour
     [SerializeField] PlateArmorCounter plateArmorCounter;
     [SerializeField] ShoesCounter shoesCounter;
     [SerializeField] HelmCounter helmCounter;
-    [SerializeField] GlovesCounter magicGlovesCounter;
+    [SerializeField] MagicGlovesCounterUpdated magicGlovesCounter;
     [SerializeField] BracersCounter bracersCounter;
     [SerializeField] StoneBrickCounter stoneBrickCounter;
     [SerializeField] MetalIngotCounter metalIngotCounter;
@@ -38,6 +38,7 @@ public class InventoryItemVisibilityController : MonoBehaviour
     {
         goldCoinsCounter.ItemCreated += CreateVisibleItem;
         stoneOreCounter.ItemCreated += CreateVisibleItem;
+        stoneOreCounter.AmmountEnded += DeleteVisibleItem;
         metalOreCounter.ItemCreated += CreateVisibleItem;
         cursedOreCounter.ItemCreated += CreateVisibleItem;
         earthstoneOreCounter.ItemCreated += CreateVisibleItem;
@@ -66,6 +67,7 @@ public class InventoryItemVisibilityController : MonoBehaviour
         //goldCoinsCounter.AddResource(1);
     }
 
+
     void CreateVisibleItem(int customId, Transform attachedCounter)
     {
         Transform foundEmptySlot = SearchEmptySlot();
@@ -74,6 +76,31 @@ public class InventoryItemVisibilityController : MonoBehaviour
             Element emptySlotElementScript = foundEmptySlot.Find("Borders").GetChild(1).GetComponent<Element>();
             emptySlotElementScript.CustomID = customId;
         }
+    }
+
+    void DeleteVisibleItem(int customId)
+    {
+        //Debug.Log("Starting deleting process");
+        Transform foundSlot = SearchForSlot(customId);
+        Element slotElementScript = foundSlot.Find("Borders").GetChild(1).GetComponent<Element>();
+        slotElementScript.CustomID = 0;
+    }
+
+    Transform SearchForSlot(int customId)
+    {
+        foreach (Transform row in inventoryPanel)
+        {
+            foreach (Transform slot in row)
+            {
+                if (customId == slot.Find("Borders").GetChild(1).GetComponent<Element>().CustomID)
+                {
+                    Debug.Log("found in " + slot);
+                    return slot;
+                }
+            }
+        }
+        //Debug.Log("Didnt find anything");
+        return null;
     }
 
     private Transform SearchEmptySlot()

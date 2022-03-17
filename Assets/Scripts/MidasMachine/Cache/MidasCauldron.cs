@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MidasCauldron : MonoBehaviour
 {
+    /*
     [SerializeField] ContactManager contactManager;
     [SerializeField] StoneOreCounter stoneOreCounter;
     [SerializeField] GoldCoinsCounter goldCoinsCounter;
@@ -83,5 +84,5 @@ public class MidasCauldron : MonoBehaviour
             
             yield return new WaitForSeconds(0.1f);
         }
-    }
+    }*/
 }

@@ -14,7 +14,10 @@ public class ClickManager : MonoBehaviour
     public event Action EscClicked = delegate { };
     public event Action PClicked = delegate { };
     public event Action EClicked = delegate { };
+    public event Action RHolded = delegate { };
+    public event Action RUp = delegate { };
     public event Action QClicked = delegate { };
+    public event Action QLClicked = delegate { };
     public event Action EnterClicked = delegate { };
     public event Action<int> OneClicked = delegate { };
     public event Action<int> TwoClicked = delegate { };
@@ -75,11 +78,32 @@ public class ClickManager : MonoBehaviour
                 EClicked();
             }
         }
+        if (Input.GetKey(KeyCode.R))
+        {
+            if (RHolded != null)
+            {
+                RHolded();
+            }
+        }
+        if (Input.GetKeyUp(KeyCode.R))
+        {
+            if (RUp != null)
+            {
+                RUp();
+            }
+        }
         if (Input.GetKeyDown(KeyCode.Q))
         {
             if (QClicked != null)
             {
                 QClicked();
+            }
+        }
+        if (Input.GetKey(KeyCode.Q))
+        {
+            if (QLClicked != null)
+            {
+                QLClicked();
             }
         }
         if (Input.GetKeyDown(KeyCode.A))

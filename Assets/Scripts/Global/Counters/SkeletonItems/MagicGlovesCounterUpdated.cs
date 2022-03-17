@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MagicGlovesCounter1 : MonoBehaviour, ICounter, ISkeletonItems
+public class MagicGlovesCounterUpdated : MonoBehaviour, ICounter, ISkeletonItems
 {
     [SerializeField] ItemsList itemsList;
     [SerializeField] int id;
@@ -31,6 +31,7 @@ public class MagicGlovesCounter1 : MonoBehaviour, ICounter, ISkeletonItems
 
     public event Action<int> AmountChanged = delegate { };
     public event Action ItemFirstCreated = delegate { };
+    public event Action<int> AmmountEnded = delegate { };
     public event Action<int, Transform> ItemCreated = delegate { };
 
 
@@ -67,6 +68,7 @@ public class MagicGlovesCounter1 : MonoBehaviour, ICounter, ISkeletonItems
             if (itemOpened)
             {
                 itemOpened = false;
+                if (AmmountEnded != null) { AmmountEnded((int)ItemsList.Items.gloves); }
             }
         }
     }

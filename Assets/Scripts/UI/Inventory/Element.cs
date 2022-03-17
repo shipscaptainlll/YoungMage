@@ -24,6 +24,7 @@ public class Element : MonoBehaviour
             customID = value;
             UpdateAttachedCounter();
             UpdateElement();
+            //Debug.Log("chages in " + transform + " with id " + customID);
         }
     }
 

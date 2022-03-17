@@ -16,6 +16,7 @@ public class CameraController : MonoBehaviour
     float yRotation;
     RaycastHit hit = new RaycastHit();
 
+    public float YRotation { get { return yRotation; } }
     public RaycastHit ObservedObject
     {
         get
@@ -35,7 +36,7 @@ public class CameraController : MonoBehaviour
         if (!cursorManager.SomethingOpened)
         {
             RotateHead();
-            DetectObject();
+            //DetectObject();
         }
         //
     }

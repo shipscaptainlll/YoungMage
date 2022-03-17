@@ -5,8 +5,11 @@ using UnityEngine;
 
 public class DefractorResource : MonoBehaviour
 {
+    [SerializeField] DestroyableObjects destroyableObjects;
     int id;
+    GameObject destroyableVersion;
 
+    public DestroyableObjects DestroyableObjects { set { destroyableObjects = value; } }
     public int ID { get { return id; } set { id = value; } }
     // Start is called before the first frame update
     void Start()
@@ -23,9 +26,19 @@ public class DefractorResource : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 13)
+        if (other.GetComponent<RotatingCones>())
         {
+            InstantiateDestroyableVersion();
             if (objectContactedDefractor != null) { objectContactedDefractor(transform); }
+            
         }
     }
+
+    void InstantiateDestroyableVersion()
+    {
+        destroyableVersion = Instantiate(destroyableObjects.TakeObject(id), transform.position, transform.rotation);
+        destroyableVersion.AddComponent<DestroyableObject>();
+    }
+
+    
 }

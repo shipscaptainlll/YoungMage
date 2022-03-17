@@ -31,6 +31,7 @@ public class StoneHandsCounter : MonoBehaviour, ICounter, ISkeletonItems
 
     public event Action<int> AmountChanged = delegate { };
     public event Action ItemFirstCreated = delegate { };
+    public event Action<int> AmmountEnded = delegate { };
     public event Action<int, Transform> ItemCreated = delegate { };
 
 
@@ -67,6 +68,7 @@ public class StoneHandsCounter : MonoBehaviour, ICounter, ISkeletonItems
             if (itemOpened)
             {
                 itemOpened = false;
+                if (AmmountEnded != null) { AmmountEnded((int)ItemsList.Items.stoneHands); }
             }
         }
     }
@@ -83,6 +85,7 @@ public class StoneHandsCounter : MonoBehaviour, ICounter, ISkeletonItems
     {
         if (ItemCreated != null)
         {
+            Debug.Log("Hello0)");
             ItemCreated((int) ItemsList.Items.stoneHands, transform);
         }
         if (ItemFirstCreated != null)

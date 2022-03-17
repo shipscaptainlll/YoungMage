@@ -7,6 +7,8 @@ public class TransmutationCostTaker : MonoBehaviour
 {
     [SerializeField] ClickManager clickManager;
     [SerializeField] Transform oreProductsCounters;
+    [SerializeField] Transform oreMaterialsCounters;
+    [SerializeField] Transform objectsCounters;
     [SerializeField] PotentialProductLibrary potentialProductLibrary;
     List<int> operations = new List<int>();
     int iterationNumber = 1;
@@ -22,6 +24,8 @@ public class TransmutationCostTaker : MonoBehaviour
     void Start()
     {
         clickManager.EnterClicked += AddToCounters;
+        clickManager.EnterClicked += AddOreCounters;
+        clickManager.EnterClicked += AddObjectsCounters;
         operations.Add(firstOperationID);
         operations.Add(secondOperationID);
         operations.Add(thirdOperationID);
@@ -42,6 +46,25 @@ public class TransmutationCostTaker : MonoBehaviour
         foreach (Transform counter in oreProductsCounters)
         {
             counter.GetComponent<ICounter>().AddResource(5);
+            //Debug.Log(counter);
+        }
+    }
+
+    void AddOreCounters()
+    {
+        foreach (Transform counter in oreMaterialsCounters)
+        {
+            counter.GetComponent<ICounter>().AddResource(5);
+            //Debug.Log(counter);
+        }
+    }
+
+    void AddObjectsCounters()
+    {
+        foreach (Transform counter in objectsCounters)
+        {
+            counter.GetComponent<ICounter>().AddResource(5);
+            //Debug.Log(counter);
         }
     }
 
