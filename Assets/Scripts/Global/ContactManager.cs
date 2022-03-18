@@ -32,6 +32,7 @@ public class ContactManager : MonoBehaviour
             Transform contactedObject = CameraController.ObservedObject.transform;
             if (contactedObject != null)
             {
+                Debug.Log(contactedObject);
                 if (contactedObject.GetComponent<Portal2>() != null)
                 {
                     if (TeleporterDetected != null)
@@ -79,6 +80,10 @@ public class ContactManager : MonoBehaviour
                 else if (contactedObject.GetComponent<AlchemistPotentialProduct>() != null)
                 {
                     Debug.Log("Potential product is visible");
+                }
+                else if (contactedObject.GetComponent<Portal2>() != null)
+                {
+                    Debug.Log("looking at portal");
                 }
             }
         }

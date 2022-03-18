@@ -323,7 +323,7 @@ public class SkeletonBehavior : MonoBehaviour
 
     void Vision()
     {
-        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward * 3), Color.red);
+        //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward * 3), Color.red);
         if (Physics.SphereCast(transform.position, 1.0f, transform.TransformDirection(Vector3.forward * 3), out foundObject, 3f, targetLayerMask)) {
             
         }

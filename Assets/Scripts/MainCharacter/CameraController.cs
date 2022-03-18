@@ -33,10 +33,11 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward * 3), Color.red);
         if (!cursorManager.SomethingOpened)
         {
             RotateHead();
-            //DetectObject();
+            DetectObject();
         }
         //
     }
@@ -59,7 +60,7 @@ public class CameraController : MonoBehaviour
     void DetectObject()
     {
         Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward * 3), Color.red);
-        if (Physics.SphereCast(transform.position, 0.1f, transform.TransformDirection(Vector3.forward * 3), out hit, 3f, clickableLayerMask))
+        if (Physics.SphereCast(transform.position, 0.1f, transform.TransformDirection(Vector3.forward * 3), out hit, 3f, currentObjectLayerMask))
         {
             
         }

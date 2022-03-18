@@ -4,19 +4,24 @@ using UnityEngine;
 
 public class PortalOpener : MonoBehaviour
 {
+    [SerializeField] SkeletonsStack skeletonsStack;
     [SerializeField] Transform housePortalContainer;
     [SerializeField] Transform fieldPortalContainer;
     [SerializeField] Transform VFXContainer;
     [SerializeField] ClickManager clickManager;
     [SerializeField] CopycatCreator teleportationManager;
     [SerializeField] EClickVariations eClickVariations;
+    bool portalOpened;
     Transform housePortal;
     Transform fieldPortal;
     bool cycleRunning = false;
 
+    Transform choosenSkeleton;
+    System.Random random;
     // Start is called before the first frame update
     void Start()
     {
+        random = new System.Random();
         clickManager.EClicked += InitiatePortalOpening;
         housePortal = housePortalContainer.Find("Simple Portal").Find("Visualisation");
         housePortal.localScale = new Vector3(0.1f, 0.1f, housePortal.localScale.z);
@@ -31,13 +36,31 @@ public class PortalOpener : MonoBehaviour
 
     void InitiatePortalOpening()
     {
-        if (!cycleRunning && eClickVariations.IsOpeningPortal)
+        if (!portalOpened)
         {
-            cycleRunning = true;
-            EnablePortals();
-            StartVFX();
-            StartCoroutine(OpenPortal());
+            portalOpened = true;
+            Debug.Log("OpeningPortal");
+            if (!cycleRunning && eClickVariations.IsOpeningPortal)
+            {
+                cycleRunning = true;
+                
+                EnablePortals();
+                ChooseSkeletonInstance();
+                ChangePortalPosition();
+                StartVFX();
+                StartCoroutine(OpenVFX());
+                StartCoroutine(OpenPortal());
+            }
+        } else { portalOpened = false;
+            Debug.Log("ClosingPortal");
+            if (cycleRunning)
+            {
+                cycleRunning = false;
+                StartCoroutine(ClosePortal());
+                StartCoroutine(CloseVFX());
+            }
         }
+        
     }
 
     void InitiatePortalClosing()
@@ -51,6 +74,7 @@ public class PortalOpener : MonoBehaviour
     }
     IEnumerator OpenPortal()
     {
+        housePortal.gameObject.SetActive(true);
         housePortal.localScale = new Vector3(0.001f, 0.001f, housePortal.localScale.z);
         yield return new WaitForSeconds(1f);
         
@@ -146,5 +170,21 @@ public class PortalOpener : MonoBehaviour
     {
         housePortalContainer.gameObject.SetActive(true);
         fieldPortalContainer.gameObject.SetActive(true);
+    }
+
+    void ChooseSkeletonInstance()
+    {
+        int skeletonID = random.Next(0, skeletonsStack.SkeletonStack.Count);
+        
+        var skeletons = skeletonsStack.SkeletonStack.ToArray();
+
+        choosenSkeleton = skeletons[skeletonID];
+
+        Debug.Log(choosenSkeleton);
+    }
+
+    void ChangePortalPosition()
+    {
+        fieldPortalContainer.position = choosenSkeleton.position + new Vector3(-4, 1.5f, 0);
     }
 }
