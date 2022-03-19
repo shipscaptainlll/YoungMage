@@ -30,9 +30,10 @@ public class ContactManager : MonoBehaviour
         if (!cursorManager.SomethingOpened)
         {
             Transform contactedObject = CameraController.ObservedObject.transform;
+            Debug.Log(contactedObject);
             if (contactedObject != null)
             {
-                Debug.Log(contactedObject);
+                
                 if (contactedObject.GetComponent<Portal2>() != null)
                 {
                     if (TeleporterDetected != null)
@@ -54,6 +55,14 @@ public class ContactManager : MonoBehaviour
                     {
                         TriggerPotentialPositioner(contactedObject);
                         SkeletonDetected(contactedObject, mainCharacter);
+                    }
+                }
+                else if (contactedObject.parent.GetComponent<Skeleton>() != null && quickAccessHandController.CurrentCustomID == 10)
+                {
+                    if (SkeletonDetected != null)
+                    {
+                        TriggerPotentialPositioner(contactedObject.parent);
+                        SkeletonDetected(contactedObject.parent, mainCharacter);
                     }
                 }
                 else if (contactedObject.parent.GetComponent<Defractor>() != null)
@@ -83,7 +92,7 @@ public class ContactManager : MonoBehaviour
                 }
                 else if (contactedObject.GetComponent<Portal2>() != null)
                 {
-                    Debug.Log("looking at portal");
+                    //Debug.Log("looking at portal");
                 }
             }
         }

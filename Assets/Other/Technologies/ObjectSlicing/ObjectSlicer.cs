@@ -62,6 +62,11 @@ public class ObjectSlicer : MonoBehaviour
         material.SetVector("_SliceCentre", objectToTileAround.position + offset);
     }
 
+    public void renewOffset()
+    {
+        material.SetVector("_SliceCentre", objectToTileAround.position);
+    }
+
     public void setObjectToTileAround(Transform newObject)
     {
         objectToTileAround = newObject;

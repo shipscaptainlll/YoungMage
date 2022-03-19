@@ -7,7 +7,12 @@ public class SkeletonArenaInstantiator : MonoBehaviour
 {
     [SerializeField] Transform skeletonModel;
     [SerializeField] Transform instantiationPoint;
+    [SerializeField] Transform skeletonsPotentionalPositions;
+    [SerializeField] Transform castlePosition;
+    [SerializeField] Transform skeletonsHolder;
 
+    int skeletonsCount = 0;
+    [SerializeField] int skeletonsMaxCount;
     [SerializeField] ClickManager clickManager;
     System.Random random;
 
@@ -16,7 +21,7 @@ public class SkeletonArenaInstantiator : MonoBehaviour
     void Start()
     {
         random = new System.Random();
-        clickManager.EClicked += InstantiateSkeleton;
+        StartCoroutine(DelayInstantiator());
     }
 
     // Update is called once per frame
@@ -25,11 +30,43 @@ public class SkeletonArenaInstantiator : MonoBehaviour
         
     }
 
+    IEnumerator DelayInstantiator()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+            InstantiateSkeleton();
+        }
+        
+    }
+
     void InstantiateSkeleton()
     {
-        float xPositionOffset = (float)random.Next(-10, 10);
-        float zPositionOffset = (float)random.Next(-10, 10);
-        Transform newSkeleton = Instantiate(skeletonModel, instantiationPoint.position + new Vector3(xPositionOffset, 0, zPositionOffset) , skeletonModel.rotation);
-        if (SkeletonInstantiated != null) { SkeletonInstantiated(newSkeleton); }
+        if (skeletonsCount < skeletonsMaxCount)
+        {
+            skeletonsCount++;
+            float xPositionOffset = (float)random.Next(-10, 10);
+            float zPositionOffset = (float)random.Next(-10, 10);
+            Transform newSkeleton = Instantiate(skeletonModel, instantiationPoint.position + new Vector3(xPositionOffset, 0, zPositionOffset), skeletonModel.rotation);
+            newSkeleton.gameObject.SetActive(true);
+            foreach (Transform position in skeletonsPotentionalPositions)
+            {
+                if (position.gameObject.activeSelf)
+                {
+
+                    //Debug.Log(newSkeleton.GetComponent<SkeletonBehavior>());
+                    newSkeleton.GetComponent<SkeletonBehavior>().ConnectToPosition(position);
+                    newSkeleton.parent = skeletonsHolder;
+                    newSkeleton.GetComponent<SkeletonBehavior>().CastlePosition = castlePosition;
+                    //Debug.Log(newSkeleton.GetComponent<SkeletonBehavior>().Activity);
+                    position.gameObject.SetActive(false);
+                    if (SkeletonInstantiated != null) { SkeletonInstantiated(newSkeleton); }
+                    return;
+                }
+
+            }
+            
+        }
+        
     }
 }

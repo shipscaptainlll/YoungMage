@@ -48,6 +48,7 @@ public class Portal2 : MonoBehaviour
         Render();
     }
 
+    
     void CreateViewTexture()
     {
         if (viewTexture == null || viewTexture.width != Screen.width || viewTexture.height != Screen.height)

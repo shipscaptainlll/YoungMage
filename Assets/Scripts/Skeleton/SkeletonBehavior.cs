@@ -25,6 +25,7 @@ public class SkeletonBehavior : MonoBehaviour
     [SerializeField] MagicstoneOreCounter magicstoneOreCounter;
     [SerializeField] WaterstoneOreCounter waterstoneOreCounter;
     [SerializeField] WindstoneOreCounter windstoneOreCounter;
+    Transform castlePosition;
     Animator localAnimator;
     Vector3 velocity;
     RaycastHit foundObject = new RaycastHit();
@@ -42,9 +43,12 @@ public class SkeletonBehavior : MonoBehaviour
     string activity;
     bool cache = false;
     float speed = 3f;
+    bool reachedPosition;
 
+    public bool ReachedPosition { get { return reachedPosition; } }
     //cache
     [SerializeField] Transform targetMage1;
+    public Transform CastlePosition { set { castlePosition = value; } }
     public event Action<Transform> OriginRotated = delegate { };
     void Start()
     {
@@ -55,13 +59,14 @@ public class SkeletonBehavior : MonoBehaviour
         isIdle = true;
 
         contactManager.GetComponent<ContactManager>().OreDetected += AddTarget;
-        activity = "idle";
+        //activity = "idle";
+        //Debug.Log("Start " + transform);
         connectedTeleport.GetComponent<Teleporter>().TeleportFound += StopGravity;
         if (hasPortal)
         {
             transform.GetComponent<CopycatCreator>().OriginTeleported += StopActivities;
         }
-        
+        //castlePosition = transform.parent.parent.Find("CastlePosition");
     }
 
     public bool IsTeleported
@@ -82,6 +87,10 @@ public class SkeletonBehavior : MonoBehaviour
         {
             return activity;
         }
+        set
+        {
+            activity = value;
+        }
     }
 
     // Update is called once per frame
@@ -93,10 +102,11 @@ public class SkeletonBehavior : MonoBehaviour
             //Debug.Log("is teleported " + isTeleported);
             //Debug.Log("activity " + activity);
         }
+        //Debug.Log(activity);
         BehaviorManager();
         Vision();
         GoAroundSurroundings();
-        
+        //Debug.Log(activity);
     }
 
 
@@ -113,6 +123,9 @@ public class SkeletonBehavior : MonoBehaviour
             case "Idle":
                 StayStill();
                 break;
+            case "NearCastle":
+                StayNearCastle();
+                break;
             case "ChasingMage":
                 ChazeMage();
                 break;
@@ -125,6 +138,12 @@ public class SkeletonBehavior : MonoBehaviour
             case "ChazePortal":
                 ChazePortal();
                 break;
+            case "ChasingPosition":
+                ChazePosition();
+                break;
+            case "TurningToCastle":
+                TurningToCastle();
+                break;
         }
     }
 
@@ -133,12 +152,18 @@ public class SkeletonBehavior : MonoBehaviour
         localAnimator.Play("SkelIdle");
     }
 
+    void StayNearCastle()
+    {
+        localAnimator.Play("SkelShakeHand");
+    }
+
     public void StopActivities()
     {
         
         isTeleported = true;
         ResetVelocity();
         activity = "Idle";
+        //Debug.Log("StopActivities");
         StartCoroutine(returnGravity());
     }
 
@@ -184,7 +209,35 @@ public class SkeletonBehavior : MonoBehaviour
         {
             ResetVelocity();
             activity = "Idle";
+            //Debug.Log("ConnectToMage");
         }
+    }
+
+    public void ConnectToPosition(Transform position)
+    {
+        //Debug.Log(activity);
+        if (activity != "ChasingPosition")
+        {
+            activity = "ChasingPosition";
+            targetMage = position;
+            //Debug.Log("hello");
+        }
+        //Debug.Log(activity);
+    }
+
+    void ChazePosition()
+    {
+        
+        GoTo(targetMage, 4f);
+        if (Vector3.Distance(transform.position, targetMage.position) < 4f) { reachedPosition = true; StopActivities(); StayStill(); activity = "TurningToCastle"; }
+        TurnAroundTo(targetMage);
+    }
+
+    void TurningToCastle()
+    {
+        //Debug.Log(castlePosition);
+        TurnAroundTo(castlePosition);
+        StartCoroutine(Delay(1.5f));
     }
 
     public void StopGravity()
@@ -193,6 +246,7 @@ public class SkeletonBehavior : MonoBehaviour
         {
             ResetVelocity();
             activity = "Idle";
+            Debug.Log("StopGravity");
         }
         isTeleported = true;
     }
@@ -200,6 +254,7 @@ public class SkeletonBehavior : MonoBehaviour
     void ChazeMage()
     {
         GoTo(targetMage, 4f);
+        Debug.Log("chasing mage");
         TurnAroundTo(targetMage);
     }
 
@@ -213,7 +268,7 @@ public class SkeletonBehavior : MonoBehaviour
     {
         if (activity == "ChazePortal")
         {
-            Debug.Log("still working");
+            //Debug.Log("still working");
             Transform neededPortal = targetPortal;
             if (!chasingPortal)
             {
@@ -246,7 +301,9 @@ public class SkeletonBehavior : MonoBehaviour
         if (angleLangle >= 10)
         {
             if (Vector3.Cross(transform.forward, distanceAngles).y > 0)
-            { transform.Rotate(new Vector3(0, angleLangle / 60, 0)); }
+            { 
+                transform.Rotate(new Vector3(0, angleLangle / 60, 0));
+            }
             else if (Vector3.Cross(transform.forward, distanceAngles).y < 0)
             {
                 transform.Rotate(new Vector3(0, -angleLangle / 60, 0));
@@ -256,11 +313,10 @@ public class SkeletonBehavior : MonoBehaviour
             {
                 rotatedEnough = true;
             }
-            
         }
     }
 
-    void GoTo(Transform target, float keptDistance)
+    public void GoTo(Transform target, float keptDistance)
     {
         if (Vector3.Distance(transform.position, target.position) > keptDistance)
         {
@@ -332,6 +388,12 @@ public class SkeletonBehavior : MonoBehaviour
     void ResetVelocity()
     {
         velocity = new Vector3(0, 0, 0);
+    }
+
+    IEnumerator Delay(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        StopActivities(); activity = "NearCastle";
     }
 
     void HitOre()

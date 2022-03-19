@@ -27,6 +27,7 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        OnDrawGizmosSelected();
         StartCoroutine(SeeObject());
     }
 
@@ -64,7 +65,15 @@ public class CameraController : MonoBehaviour
         {
             
         }
+        
+    }
 
+    void OnDrawGizmosSelected()
+    {
+        // Draw a yellow sphere at the transform's position
+        Gizmos.color = Color.yellow;
+        Debug.DrawLine(transform.position, transform.position + transform.TransformDirection(Vector3.forward * 3));
+        Gizmos.DrawWireSphere(transform.position + transform.TransformDirection(Vector3.forward * 3), 0.1f);
     }
 
     IEnumerator SeeObject()

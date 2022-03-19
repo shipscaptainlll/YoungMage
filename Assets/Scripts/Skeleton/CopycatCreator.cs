@@ -36,6 +36,7 @@ public class CopycatCreator : MonoBehaviour
         distanceOriginPortal();
         copycat = Instantiate(copycatInstance, copycatPortal.transform.position + spawnOffset, transform.rotation);
         copycat.GetComponent<CopycatManager>().Origin = transform;
+        copycat.AddComponent<Copycat>().ConnectedInstance = transform;
         copycat.transform.Find("MiddlePart.002").GetComponent<ObjectSlicer>().ObjectToTileAround = copycatPortal.transform;
         copycat.transform.Find("MiddlePart.002").GetComponent<ObjectSlicer>().Offset = new Vector3(1,0,0);
         copycat.transform.Find("MiddlePart.002").GetComponent<ObjectSlicer>().InvertBool = 1;
@@ -46,6 +47,7 @@ public class CopycatCreator : MonoBehaviour
         {
             copycatPortal.transform.parent.parent.Find("CopycatCatcher").GetComponent<CopycatCatcher>().CopycatCached += destroyCopycat;
         }
+        
     }
 
     // Update is called once per frame
@@ -62,16 +64,26 @@ public class CopycatCreator : MonoBehaviour
         //Debug.Log("original location" + transform.position.x + " " + transform.position.y);
         //Debug.Log("difference" + distanceX + " " + distanceY);
         float distanceZ = transform.position.z - originPortal.transform.position.z;
+        //Debug.Log(transform.position.x + " " + originPortal.transform.position.x);
+        //Debug.Log(distanceX);
+        //Debug.Log(spawnOffset);
         spawnOffset = new Vector3(distanceX, distanceY, distanceZ);
     }
 
-    void destroyCopycat()
+    void destroyCopycat(Transform modelOrigin)
     {
-        lastCopycatPosition = copycat.transform.position;
-        Destroy(copycat);
-        transform.GetComponent<SkeletonBehavior>().StopActivities();
-        teleportOrigin();
-        copycatPortal.transform.parent.parent.Find("CopycatCatcher").GetComponent<CopycatCatcher>().CopycatCached -= destroyCopycat;
+        Debug.Log(modelOrigin);
+        if (modelOrigin == transform)
+        {
+            copycatPortal.transform.parent.parent.Find("CopycatCatcher").GetComponent<CopycatCatcher>().CopycatCached -= destroyCopycat;
+            lastCopycatPosition = copycat.transform.position;
+            Debug.Log("Copycat destroyed");
+            Destroy(copycat);
+        }
+        
+        //transform.GetComponent<SkeletonBehavior>().StopActivities();
+        //teleportOrigin();
+        //copycatPortal.transform.parent.parent.Find("CopycatCatcher").GetComponent<CopycatCatcher>().CopycatCached -= destroyCopycat;
     }
 
     void teleportOrigin()

@@ -11,6 +11,7 @@ public class PortalOpener : MonoBehaviour
     [SerializeField] ClickManager clickManager;
     [SerializeField] CopycatCreator teleportationManager;
     [SerializeField] EClickVariations eClickVariations;
+    [SerializeField] CopycatCatcher copycatCatcher;
     bool portalOpened;
     Transform housePortal;
     Transform fieldPortal;
@@ -25,7 +26,8 @@ public class PortalOpener : MonoBehaviour
         clickManager.EClicked += InitiatePortalOpening;
         housePortal = housePortalContainer.Find("Simple Portal").Find("Visualisation");
         housePortal.localScale = new Vector3(0.1f, 0.1f, housePortal.localScale.z);
-        teleportationManager.SkeletonFinallyTeleported += InitiatePortalClosing;
+        //teleportationManager.SkeletonFinallyTeleported += InitiatePortalClosing;
+        copycatCatcher.CopycatCached += InitiatePortalClosing;
     }
 
     // Update is called once per frame
@@ -39,7 +41,7 @@ public class PortalOpener : MonoBehaviour
         if (!portalOpened)
         {
             portalOpened = true;
-            Debug.Log("OpeningPortal");
+            //Debug.Log("OpeningPortal");
             if (!cycleRunning && eClickVariations.IsOpeningPortal)
             {
                 cycleRunning = true;
@@ -47,12 +49,13 @@ public class PortalOpener : MonoBehaviour
                 EnablePortals();
                 ChooseSkeletonInstance();
                 ChangePortalPosition();
+                ChangeSkeletonSlicer();
                 StartVFX();
                 StartCoroutine(OpenVFX());
                 StartCoroutine(OpenPortal());
             }
         } else { portalOpened = false;
-            Debug.Log("ClosingPortal");
+            //Debug.Log("ClosingPortal");
             if (cycleRunning)
             {
                 cycleRunning = false;
@@ -64,6 +67,16 @@ public class PortalOpener : MonoBehaviour
     }
 
     void InitiatePortalClosing()
+    {
+        if (cycleRunning)
+        {
+            cycleRunning = false;
+            StartCoroutine(ClosePortal());
+            StartCoroutine(CloseVFX());
+        }
+    }
+
+    void InitiatePortalClosing(Transform cache)
     {
         if (cycleRunning)
         {
@@ -174,11 +187,27 @@ public class PortalOpener : MonoBehaviour
 
     void ChooseSkeletonInstance()
     {
-        int skeletonID = random.Next(0, skeletonsStack.SkeletonStack.Count);
+        Debug.Log(skeletonsStack.SkeletonStack.Count);
+        
         
         var skeletons = skeletonsStack.SkeletonStack.ToArray();
 
-        choosenSkeleton = skeletons[skeletonID];
+        for (int i = 0; i < skeletons.Length; i++)
+        {
+            int skeletonID = random.Next(0, skeletonsStack.SkeletonStack.Count);
+
+            for (int j = 0; j < skeletons.Length; j++)
+            {
+                if (skeletons[i].GetComponent<SkeletonBehavior>().ReachedPosition == true)
+                {
+                    
+                    choosenSkeleton = skeletons[skeletonID];
+                    return;
+                }
+            }
+        }
+
+
 
         Debug.Log(choosenSkeleton);
     }
@@ -186,5 +215,12 @@ public class PortalOpener : MonoBehaviour
     void ChangePortalPosition()
     {
         fieldPortalContainer.position = choosenSkeleton.position + new Vector3(-4, 1.5f, 0);
+    }
+
+    void ChangeSkeletonSlicer()
+    {
+        choosenSkeleton.Find("OuterPart.002").GetComponent<ObjectSlicer>().enabled = true;
+        choosenSkeleton.Find("MiddlePart.002").GetComponent<ObjectSlicer>().enabled = true;
+        choosenSkeleton.GetComponent<CopycatCreator>().enabled = true;
     }
 }
