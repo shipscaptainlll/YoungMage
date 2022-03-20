@@ -44,5 +44,6 @@ public class SkeletonHouseInstantiator : MonoBehaviour
     void DestroySkeleton(Transform teleportedSkeleton)
     {
         if (SkeletonDestroyed != null) { SkeletonDestroyed(teleportedSkeleton.transform.GetComponent<Copycat>().ConnectedInstance); }
+        skeletonArenaInstantiator.SkeletonsCount -= 1;
     }
 }

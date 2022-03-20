@@ -16,6 +16,7 @@ public class SkeletonArenaInstantiator : MonoBehaviour
     [SerializeField] ClickManager clickManager;
     System.Random random;
 
+    public int SkeletonsCount { get { return skeletonsCount; } set { skeletonsCount = value; } }
     public event Action<Transform> SkeletonInstantiated = delegate { };
     // Start is called before the first frame update
     void Start()

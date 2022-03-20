@@ -27,9 +27,11 @@ public class GlobalResource : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //Debug.Log(other.gameObject.layer + " " + other.transform);
-        if (other.gameObject.layer == 6 && id != 1
-            || other.gameObject.layer == 0 && id != 1)
+        if (other.gameObject.layer == 6 && id != 1 
+            || other.gameObject.layer == 0 && id != 1 && other.gameObject.GetComponent<GlobalResource>() == null)
         {
+            
+            Debug.Log(other.gameObject.layer + " " + other.transform);
             GetComponent<SphereCollider>().isTrigger = false;
         }
         if (other.gameObject.layer == 15)

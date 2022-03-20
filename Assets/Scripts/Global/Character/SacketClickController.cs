@@ -55,7 +55,7 @@ public class SacketClickController : MonoBehaviour
             Rotate rotator = newObject.gameObject.GetComponent<Rotate>(); rotator.RotationSpeed = 10; rotator.XAxis = 1; rotator.YAxis = 1; rotator.ZAxis = 1;
             newObject.gameObject.AddComponent<SphereCollider>();
             newObject.gameObject.GetComponent<SphereCollider>().isTrigger = true;
-            newObject.gameObject.GetComponent<SphereCollider>().radius = 0.10f;
+            newObject.gameObject.GetComponent<SphereCollider>().radius = 0.16f;
             newObject.gameObject.AddComponent<DefractorResource>();
             newObject.gameObject.GetComponent<DefractorResource>().ID = quickAccessHandController.CurrentCustomID;
             newObject.gameObject.GetComponent<DefractorResource>().DestroyableObjects = destroyableObjects;

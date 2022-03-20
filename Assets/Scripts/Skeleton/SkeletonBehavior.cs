@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class SkeletonBehavior : MonoBehaviour
@@ -25,6 +26,7 @@ public class SkeletonBehavior : MonoBehaviour
     [SerializeField] MagicstoneOreCounter magicstoneOreCounter;
     [SerializeField] WaterstoneOreCounter waterstoneOreCounter;
     [SerializeField] WindstoneOreCounter windstoneOreCounter;
+    [SerializeField] Transform player;
     Transform castlePosition;
     Animator localAnimator;
     Vector3 velocity;
@@ -42,7 +44,7 @@ public class SkeletonBehavior : MonoBehaviour
     bool rotatedEnough = false;
     string activity;
     bool cache = false;
-    float speed = 3f;
+    float speed = 9f;
     bool reachedPosition;
 
     public bool ReachedPosition { get { return reachedPosition; } }
@@ -176,6 +178,7 @@ public class SkeletonBehavior : MonoBehaviour
 
     public void AddTarget(Transform targetOre)
     {
+        Debug.Log("Ore is here");
         if (activity == "ChasingMage")
         {
             this.targetOre = targetOre;
@@ -254,7 +257,7 @@ public class SkeletonBehavior : MonoBehaviour
     void ChazeMage()
     {
         GoTo(targetMage, 4f);
-        Debug.Log("chasing mage");
+        //Debug.Log("chasing mage");
         TurnAroundTo(targetMage);
     }
 
@@ -356,10 +359,11 @@ public class SkeletonBehavior : MonoBehaviour
 
     void GoAroundSurroundings()
     {
-        bool isCollided = Physics.CheckSphere(checkSurrounding.position, 4f, checkSurroundingLayer);
-        Collider[] hitCollider = Physics.OverlapSphere(checkSurrounding.position, 4f, checkSurroundingLayer);
+        bool isCollided = Physics.CheckSphere(checkSurrounding.position, 3f, checkSurroundingLayer);
+        Collider[] hitCollider = Physics.OverlapSphere(checkSurrounding.position, 3f, checkSurroundingLayer);
         if (isCollided == true && hitCollider[0].transform != targetOre)
         {
+            Debug.Log(hitCollider[0].transform);
             Vector3 disctanceVector = checkSurrounding.position - hitCollider[0].transform.position;
             float distanceBetweenX = checkSurrounding.position.x - hitCollider[0].transform.position.x;
             float distanceBetweenZ = checkSurrounding.position.z - hitCollider[0].transform.position.z;
