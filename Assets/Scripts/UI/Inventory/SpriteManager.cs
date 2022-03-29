@@ -31,10 +31,15 @@ public class SpriteManager : MonoBehaviour
     [SerializeField] Sprite waterStoneDust;
     [SerializeField] Sprite windStoneDust;
 
-
+    public static Dictionary<int, Sprite> SpriteDictionary = new Dictionary<int, Sprite>();
     void Start()
     {
-        
+        FillDictionary();
+    }
+
+    public static Sprite GetSprite(int customeID)
+    {
+        return SpriteDictionary[customeID];
     }
 
     public Sprite TakeSprite(int customeID)
@@ -96,5 +101,34 @@ public class SpriteManager : MonoBehaviour
 
         }
         return nothing;
+    }
+
+    void FillDictionary()
+    {
+        SpriteDictionary.Add(1, goldCoins);
+        SpriteDictionary.Add(2, stoneOre);
+        SpriteDictionary.Add(3, metalOre);
+        SpriteDictionary.Add(4, cursedOre);
+        SpriteDictionary.Add(5, earthStoneOre);
+        SpriteDictionary.Add(6, lavaStoneOre);
+        SpriteDictionary.Add(7, magicStoneOre);
+        SpriteDictionary.Add(8, waterStoneOre);
+        SpriteDictionary.Add(9, windStoneOre);
+        SpriteDictionary.Add(10, magicWand);
+        SpriteDictionary.Add(11, stoneHands);
+        SpriteDictionary.Add(12, leggings);
+        SpriteDictionary.Add(13, plateArmor);
+        SpriteDictionary.Add(14, shoes);
+        SpriteDictionary.Add(15, helm);
+        SpriteDictionary.Add(16, gloves);
+        SpriteDictionary.Add(17, bracers);
+        SpriteDictionary.Add(18, stoneBrick);
+        SpriteDictionary.Add(19, metalIngot);
+        SpriteDictionary.Add(20, cursedIngot);
+        SpriteDictionary.Add(21, earthStoneDust);
+        SpriteDictionary.Add(22, lavaStoneDust);
+        SpriteDictionary.Add(23, magicStoneDust);
+        SpriteDictionary.Add(24, waterStoneDust);
+        SpriteDictionary.Add(25, windStoneDust);
     }
 }

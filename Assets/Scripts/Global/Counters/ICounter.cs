@@ -9,6 +9,7 @@ public interface ICounter
     public int ID { get; }
     
     public event Action<int> AmountChanged;
+    public event Action<int, int> AddedAmmount;
     public event Action<int> AmmountEnded;
     public void AddResource(int ammount);
     public void GetResource(int ammount);

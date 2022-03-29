@@ -28,6 +28,7 @@ public class StoneBrickCounter : MonoBehaviour, ICounter
     }
 
     public event Action<int> AmountChanged = delegate { };
+    public event Action<int, int> AddedAmmount = delegate { };
     public event Action<int> AmmountEnded = delegate { };
     public event Action<int, Transform> ItemCreated = delegate { };
     void Start()
@@ -38,6 +39,7 @@ public class StoneBrickCounter : MonoBehaviour, ICounter
     public void AddResource(int ammount)
     {
         count += ammount;
+        if (AddedAmmount != null) { AddedAmmount(id, ammount); }
         //Debug.Log("inside addd resource with ammount now " + count);
         NotifyAmountChanged(count);
         controlInventoryVisibility();
@@ -56,7 +58,7 @@ public class StoneBrickCounter : MonoBehaviour, ICounter
         {
             if (!itemOpened)
             {
-                Debug.Log("visibility controller");
+                //Debug.Log("visibility controller");
                 itemOpened = true;
                 NotifyItemCreated();
             }
@@ -84,7 +86,8 @@ public class StoneBrickCounter : MonoBehaviour, ICounter
         if (ItemCreated != null)
         {
 
-            if (id == 18) { Debug.Log((int)ItemsList.Items.stoneBrick); }
+            if (id == 18) { //Debug.Log((int)ItemsList.Items.stoneBrick);
+            }
             ItemCreated((int)ItemsList.Items.stoneBrick, transform);
         }
     }

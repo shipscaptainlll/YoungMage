@@ -29,6 +29,7 @@ public class GlovesCounter : MonoBehaviour, ICounter, ISkeletonItems
     }
 
     public event Action<int> AmountChanged = delegate { };
+    public event Action<int, int> AddedAmmount = delegate { };
     public event Action ItemFirstCreated = delegate { };
     public event Action<int> AmmountEnded = delegate { };
     public event Action<int, Transform> ItemCreated = delegate { };
@@ -42,6 +43,7 @@ public class GlovesCounter : MonoBehaviour, ICounter, ISkeletonItems
     public void AddResource(int ammount)
     {
         count += ammount;
+        if (AddedAmmount != null) { AddedAmmount(id, ammount); }
         NotifyAmountChanged(count);
         controlInventoryVisibility();
     }

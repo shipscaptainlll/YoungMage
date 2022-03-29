@@ -30,7 +30,7 @@ public class SacketMagnetism : MonoBehaviour
         {
             MagnetResources();
 
-
+            Debug.DrawRay(transform.position, transform.position, Color.red);
 
         }
     }
@@ -46,7 +46,7 @@ public class SacketMagnetism : MonoBehaviour
 
     void DetectTargets()
     {
-        hits = Physics.SphereCastAll(transform.position, 2.5f, transform.TransformDirection(Vector3.forward * 3), 10f, magneticLayers);
+        hits = Physics.SphereCastAll(transform.position, 1.5f, transform.TransformDirection(Vector3.forward * 3), 10f, magneticLayers);
     }
 
 

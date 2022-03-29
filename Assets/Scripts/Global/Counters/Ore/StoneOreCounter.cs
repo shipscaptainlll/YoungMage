@@ -32,6 +32,7 @@ public class StoneOreCounter : MonoBehaviour, ICounter
     }
 
     public event Action<int> AmountChanged = delegate { };
+    public event Action<int, int> AddedAmmount = delegate { };
     public event Action StoneOreCreated = delegate { };
     public event Action<int> AmmountEnded = delegate { };
     public event Action<int, Transform> ItemCreated = delegate { };
@@ -55,9 +56,10 @@ public class StoneOreCounter : MonoBehaviour, ICounter
     {
         count += ammount;
         RefreshUICounter();
+        if (AddedAmmount != null) { AddedAmmount(id, ammount); }
         NotifyAmountChanged(count);
         controlInventoryVisibility();
-        Debug.Log("added");
+        //Debug.Log("added");
     }
 
     public void GetResource(int ammount)

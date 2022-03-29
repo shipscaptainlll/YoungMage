@@ -30,6 +30,7 @@ public class LavastoneOreCounter : MonoBehaviour, ICounter
     }
 
     public event Action<int> AmountChanged = delegate { };
+    public event Action<int, int> AddedAmmount = delegate { };
     public event Action<int> AmmountEnded = delegate { };
     public event Action<int, Transform> ItemCreated = delegate { };
     void Start()
@@ -41,6 +42,7 @@ public class LavastoneOreCounter : MonoBehaviour, ICounter
     {
         count += ammount;
         RefreshUICounter();
+        if (AddedAmmount != null) { AddedAmmount(id, ammount); }
         NotifyAmountChanged(count);
         controlInventoryVisibility();
     }

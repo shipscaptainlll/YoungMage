@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Ripples
+  m_Shader: {fileID: -6465566751694194690, guid: 169c03e20fbbade4094ccb89c54ed67b, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_27e3b641671649fca8cf47ef80df5997:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_d6831a3a952d4eb4aad1f2646f1822e0:
+        m_Texture: {fileID: 2800000, guid: 8df75204d33b8694dab79b00f0390b29, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_5f4d67a8ee1b4331838d629841c15c21: 0.2
+    - Vector1_6a26f5e7a9bc4a1283931aeec302682c: 0.214
+    - Vector1_bf394069ec834005a48355caba6150a4: 0.85
+    - Vector1_c8e613e0a68c4d8f854e28e32e1897ca: 1.86
+    - Vector1_d36b5dba865d4209ad83eb84e2c449eb: -2.24
+    - Vector1_e6bba6502c634f978f56bdbf3f7b0fcd: 10
+    m_Colors:
+    - Color_228f67924a2d4b3fbd00867ebfd9bd54: {r: 0.9716981, g: 0.9716981, b: 0.9716981, a: 1}
+    - Vector2_38c94a022e4f4e8ba6ac4e860b4f1903: {r: 0, g: 0.61, b: 0, a: 0}
+    - Vector2_3a680dae92d045d1874d609d833d7987: {r: 0, g: 0.2, b: 0, a: 0}
+  m_BuildTextureStacks: []

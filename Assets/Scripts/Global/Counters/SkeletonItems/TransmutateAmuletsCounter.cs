@@ -22,6 +22,7 @@ public class TransmutateAmuletsCounter : MonoBehaviour, ICounter, ISkeletonItems
     }
 
     public event Action AmuletAdded = delegate { };
+    public event Action<int, int> AddedAmmount = delegate { };
     public event Action<int> AmmountEnded = delegate { };
     public event Action<int> AmountChanged = delegate { };
     public event Action ItemFirstCreated;
@@ -36,6 +37,7 @@ public class TransmutateAmuletsCounter : MonoBehaviour, ICounter, ISkeletonItems
         if (count < maxCount)
         {
             count += ammount;
+            if (AddedAmmount != null) { AddedAmmount(id, ammount); }
             if (AmuletAdded != null)
             {
                 AmuletAdded();

@@ -30,6 +30,7 @@ public class MetalOreCounter : MonoBehaviour, ICounter
     }
 
     public event Action<int> AmountChanged = delegate { };
+    public event Action<int, int> AddedAmmount = delegate { };
     public event Action MetalOreCreated = delegate { };
     public event Action<int> AmmountEnded = delegate { };
     public event Action<int, Transform> ItemCreated = delegate { };
@@ -42,6 +43,7 @@ public class MetalOreCounter : MonoBehaviour, ICounter
     {
         count += ammount;
         RefreshUICounter();
+        if (AddedAmmount != null) { AddedAmmount(id, ammount); }
         NotifyAmountChanged(count);
         controlInventoryVisibility();
     }

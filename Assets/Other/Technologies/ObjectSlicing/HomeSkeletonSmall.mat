@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: HomeSkeletonSmall
-  m_Shader: {fileID: -6465566751694194690, guid: 46493d9f57c13cd4eab54bcdaf8c3b02, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: ea6d50ccf6cd5af4b89319e44518166c, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -19,6 +19,14 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_1a6eb53dc59f46808d9b28765c56bc32:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_692c879628804beb8156d92c3e82e771:
+        m_Texture: {fileID: 2800000, guid: 93994d4ceefaf504796d4cae9c487637, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -33,12 +41,17 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Boolean_63c59e322dcd4fb3b3f6553fdf0ed7d4: 0
+    - Vector1_3f524c258100494ab9729a56777caa76: 10
+    - Vector1_56973e7ee2d247729e7c7a458d1a32be: 0
     - Vector1_bf32691c30fd4f7c8d1b5eba70b3308b: 0.97
     - _Invert: 0
     - _SliceCentre: 54
     m_Colors:
+    - Color_3f005dc25361484cb32719d8e6db49a5: {r: 0.7735849, g: 0.6969562, b: 0.6969562, a: 0}
     - Color_dff0eaad56574e338031b0e8572ef0c2: {r: 1, g: 1, b: 1, a: 1}
     - Color_e8238df672004e039986add6e916f1ab: {r: 1, g: 1, b: 1, a: 1}
+    - Vector2_cfbc0e18b5a1484ca19b2f9b05132973: {r: 1, g: 1, b: 0, a: 0}
+    - Vector2_ff355d8d20a442e1ae39e3a8936abef4: {r: 0, g: 0, b: 0, a: 0}
     - Vector3_0c6c2b3e82174c01bbc954647ed85ad8: {r: 0, g: 0, b: 0, a: 0}
     - Vector3_434b5853d272462b9df7b4e348c45e99: {r: 56, g: 55.8, b: 48.2, a: 0}
     - Vector3_718bd6cdcdd64c8d850200302645fd5b: {r: 56, g: 55.8, b: 48.2, a: 0}

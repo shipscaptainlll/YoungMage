@@ -30,6 +30,7 @@ public class StoneHandsCounter : MonoBehaviour, ICounter, ISkeletonItems
     }
 
     public event Action<int> AmountChanged = delegate { };
+    public event Action<int, int> AddedAmmount = delegate { };
     public event Action ItemFirstCreated = delegate { };
     public event Action<int> AmmountEnded = delegate { };
     public event Action<int, Transform> ItemCreated = delegate { };
@@ -43,6 +44,7 @@ public class StoneHandsCounter : MonoBehaviour, ICounter, ISkeletonItems
     public void AddResource(int ammount)
     {
         count += ammount;
+        if (AddedAmmount != null) { AddedAmmount(id, ammount); }
         NotifyAmountChanged(count);
         controlInventoryVisibility();
     }
@@ -85,7 +87,7 @@ public class StoneHandsCounter : MonoBehaviour, ICounter, ISkeletonItems
     {
         if (ItemCreated != null)
         {
-            Debug.Log("Hello0)");
+            //Debug.Log("Hello0)");
             ItemCreated((int) ItemsList.Items.stoneHands, transform);
         }
         if (ItemFirstCreated != null)

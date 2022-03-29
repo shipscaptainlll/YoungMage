@@ -8,18 +8,25 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Shelf_roof_roof
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: ea6d50ccf6cd5af4b89319e44518166c, type: 3}
   m_ShaderKeywords: _SPECULAR_SETUP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
-  stringTagMap:
-    RenderType: Opaque
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_1a6eb53dc59f46808d9b28765c56bc32:
+        m_Texture: {fileID: 2800000, guid: a831d217b5285994b8d7ffc9546c552a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_692c879628804beb8156d92c3e82e771:
+        m_Texture: {fileID: 2800000, guid: 93994d4ceefaf504796d4cae9c487637, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 2800000, guid: a831d217b5285994b8d7ffc9546c552a, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -77,6 +84,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_3f524c258100494ab9729a56777caa76: 10.99
+    - Vector1_50a6ef79af724b24a93501e1d7c3af9b: 0
+    - Vector1_56973e7ee2d247729e7c7a458d1a32be: 0
     - _AlphaClip: 0
     - _Blend: 3
     - _BumpScale: 1
@@ -106,6 +116,11 @@ Material:
     - _WorkflowMode: 0
     - _ZWrite: 1
     m_Colors:
+    - Color_3f005dc25361484cb32719d8e6db49a5: {r: 0.63529414, g: 0.5254902, b: 0.3254902, a: 0}
+    - Vector2_a27e7bdf9ce9463c8b199b7442a8d006: {r: 0, g: 0, b: 0, a: 0}
+    - Vector2_c444e8db0dd9436bae0b62f43a360c5e: {r: 1, g: 1, b: 0, a: 0}
+    - Vector2_cfbc0e18b5a1484ca19b2f9b05132973: {r: 1, g: 1, b: 0, a: 0}
+    - Vector2_ff355d8d20a442e1ae39e3a8936abef4: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 0.6039216, g: 0.49019608, b: 0.40392157, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
