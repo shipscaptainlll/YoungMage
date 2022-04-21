@@ -27,7 +27,7 @@ public class CastleHealthDecreaser : MonoBehaviour
     {
         currentHealth -= damage;
         float leftHealthPercent = ((currentHealth - damage) / maximumWidth) * 100;
-        Debug.Log(leftHealthPercent);
+        //Debug.Log(leftHealthPercent);
         leftHealthPercent = Mathf.Clamp(leftHealthPercent, 0, 100);
         UpdateCastleHealth(leftHealthPercent);
     }
