@@ -2,14 +2,15 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Ripples
   m_Shader: {fileID: -6465566751694194690, guid: 169c03e20fbbade4094ccb89c54ed67b, type: 3}
-  m_ShaderKeywords: 
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -39,6 +40,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - Vector1_5f4d67a8ee1b4331838d629841c15c21: 0.2
     - Vector1_6a26f5e7a9bc4a1283931aeec302682c: 0.214
@@ -46,8 +48,23 @@ Material:
     - Vector1_c8e613e0a68c4d8f854e28e32e1897ca: 1.86
     - Vector1_d36b5dba865d4209ad83eb84e2c449eb: -2.24
     - Vector1_e6bba6502c634f978f56bdbf3f7b0fcd: 10
+    - _QueueControl: 0
+    - _QueueOffset: 0
     m_Colors:
     - Color_228f67924a2d4b3fbd00867ebfd9bd54: {r: 0.9716981, g: 0.9716981, b: 0.9716981, a: 1}
     - Vector2_38c94a022e4f4e8ba6ac4e860b4f1903: {r: 0, g: 0.61, b: 0, a: 0}
     - Vector2_3a680dae92d045d1874d609d833d7987: {r: 0, g: 0.2, b: 0, a: 0}
   m_BuildTextureStacks: []
+--- !u!114 &3427986572303967410
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5

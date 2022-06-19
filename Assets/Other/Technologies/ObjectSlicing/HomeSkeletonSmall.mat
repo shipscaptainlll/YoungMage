@@ -1,15 +1,29 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-3031334783045186534
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: HomeSkeletonSmall
   m_Shader: {fileID: -6465566751694194690, guid: ea6d50ccf6cd5af4b89319e44518166c, type: 3}
-  m_ShaderKeywords: 
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -39,12 +53,15 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - Boolean_63c59e322dcd4fb3b3f6553fdf0ed7d4: 0
     - Vector1_3f524c258100494ab9729a56777caa76: 10
     - Vector1_56973e7ee2d247729e7c7a458d1a32be: 0
     - Vector1_bf32691c30fd4f7c8d1b5eba70b3308b: 0.97
     - _Invert: 0
+    - _QueueControl: 0
+    - _QueueOffset: 0
     - _SliceCentre: 54
     m_Colors:
     - Color_3f005dc25361484cb32719d8e6db49a5: {r: 0.7735849, g: 0.6969562, b: 0.6969562, a: 0}

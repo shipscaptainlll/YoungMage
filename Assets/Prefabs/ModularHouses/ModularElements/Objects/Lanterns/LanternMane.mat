@@ -2,14 +2,15 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: LanternMane
   m_Shader: {fileID: -6465566751694194690, guid: ea6d50ccf6cd5af4b89319e44518166c, type: 3}
-  m_ShaderKeywords: 
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -83,6 +84,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - Vector1_3f524c258100494ab9729a56777caa76: 1.11
     - Vector1_56973e7ee2d247729e7c7a458d1a32be: 0
@@ -104,6 +106,7 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Smoothness: 0.5
@@ -116,6 +119,8 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - Color_3f005dc25361484cb32719d8e6db49a5: {r: 0.3207547, g: 0.3207547, b: 0.3207547, a: 0}
+    - Vector2_cfbc0e18b5a1484ca19b2f9b05132973: {r: 1, g: 1, b: 0, a: 0}
+    - Vector2_ff355d8d20a442e1ae39e3a8936abef4: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 0.073234096, g: 0.073234096, b: 0.073234096, a: 1}
     - _Color: {r: 0.29999015, g: 0.29999015, b: 0.29999015, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
@@ -133,4 +138,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 4
+  version: 5

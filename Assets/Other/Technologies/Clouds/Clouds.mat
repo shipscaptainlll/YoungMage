@@ -2,14 +2,15 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Clouds
   m_Shader: {fileID: -6465566751694194690, guid: e3552742c6ed23a429cc8b1a128e42d9, type: 3}
-  m_ShaderKeywords: 
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -31,13 +32,29 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - Vector1_1f20fc5b4f054c2bb6ec5333ff9c62b3: 400
     - Vector1_4f796b0ce38b43fe85c169c407916011: 2.24
     - Vector1_79130b20d74d4e84b49aeff75d3bc217: 0.95
     - Vector1_e0ef6188a09f4d1ba961ac5a9e7d63e1: 59.6
+    - _QueueControl: 0
+    - _QueueOffset: 0
     m_Colors:
     - Color_f4978ac74a9b4ef7a3654f0d3f2bb40b: {r: 1.4624876, g: 1.5503277, b: 2.562375, a: 0.9843137}
     - Vector2_5ce0280d0a4e420abf04549c62ad72fb: {r: 0.002, g: 0.003, b: 0, a: 0}
     - Vector2_c1d6afb3f9654754bab3f23fd5d88c79: {r: 0, g: 0.025, b: 0, a: 0}
   m_BuildTextureStacks: []
+--- !u!114 &6166224438774199631
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5
