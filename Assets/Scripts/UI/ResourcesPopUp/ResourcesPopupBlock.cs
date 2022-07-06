@@ -144,7 +144,7 @@ public class ResourcesPopupBlock : MonoBehaviour
         //Debug.Log("ready");
         transform.localScale = new Vector3(1, 1, 1);
         blockCanvasgroup.alpha = 1;
-        Debug.Log("Hello");
+        //Debug.Log("Hello");
         transform.Find("Borders").Find("HorizontalLayout").GetComponent<HorizontalLayoutGroup>().enabled = false;
         transform.Find("Borders").Find("HorizontalLayout").GetComponent<HorizontalLayoutGroup>().enabled = true;
     }

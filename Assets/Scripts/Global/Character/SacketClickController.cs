@@ -68,17 +68,17 @@ public class SacketClickController : MonoBehaviour
             newObject.gameObject.AddComponent<GlobalResource>();
             newObject.gameObject.GetComponent<GlobalResource>().TargetLayerMask = midasLayerHolder.GetComponent<LayerMaskSettings>().TargetLayer;
             newObject.gameObject.GetComponent<GlobalResource>().ID = quickAccessHandController.CurrentCustomID;
-            Transform magneticAdd = Instantiate(magnetismAddOn, newObject.position, newObject.rotation);
+            //missed somewhereTransform magneticAdd = Instantiate(magnetismAddOn, newObject.position, newObject.rotation);
             Transform countUIAdd = Instantiate(countUIAddon, newObject.position + new Vector3(0, 0.5f, 0), newObject.rotation); 
             countUIAdd.gameObject.SetActive(true);
-            magneticAdd.parent = newObject;
+            //missed somewheremagneticAdd.parent = newObject;
             countUIAdd.parent = newObject;
             //Transform anticolliderAdd = Instantiate(anticolliderAddOn, magneticAdd.position, magneticAdd.rotation);
             //anticolliderAdd.parent = magneticAdd;
-            newObject.Find("SameResourceMagnetism(Clone)").Find("AntiColliderField").GetComponent<AntiColliderField>().ID = quickAccessHandController.CurrentCustomID;
-            newObject.Find("SameResourceMagnetism(Clone)").gameObject.GetComponent<ResourcesSameMagnetism>().ID = quickAccessHandController.CurrentCustomID;
+            //newObject.Find("SameResourceMagnetism(Clone)").Find("AntiColliderField").GetComponent<AntiColliderField>().ID = quickAccessHandController.CurrentCustomID;
+            //newObject.Find("SameResourceMagnetism(Clone)").gameObject.GetComponent<ResourcesSameMagnetism>().ID = quickAccessHandController.CurrentCustomID;
             //Debug.Log(sameMagnetismProduct);
-            newObject.Find("SameResourceMagnetism(Clone)").gameObject.GetComponent<ResourcesSameMagnetism>().sameMagnetismProduct = sameMagnetismProduct;
+            //newObject.Find("SameResourceMagnetism(Clone)").gameObject.GetComponent<ResourcesSameMagnetism>().sameMagnetismProduct = sameMagnetismProduct;
             newObject.gameObject.AddComponent<MidasResource>();
 
             newObject.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * (Mathf.Cos(Mathf.Abs(((-cameraController.YRotation) * Mathf.PI) / 180)) + xAngleOffset) * xForcePower);
