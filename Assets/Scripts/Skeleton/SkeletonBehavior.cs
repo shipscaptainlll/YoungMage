@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using UnityEngine.VFX;
 
 public class SkeletonBehavior : MonoBehaviour
 {
@@ -27,6 +28,40 @@ public class SkeletonBehavior : MonoBehaviour
     [SerializeField] WaterstoneOreCounter waterstoneOreCounter;
     [SerializeField] WindstoneOreCounter windstoneOreCounter;
     [SerializeField] Transform player;
+    [SerializeField] Transform CastleNavroutHolder;
+    [SerializeField] CastlePositionsManager castlePositionsManager;
+    VisualEffect movementVFX;
+
+    [Header("VFX conjuration")]
+    [SerializeField] ParticleSystem conjurationVFX;
+    [SerializeField] ParticleSystem hitEffectVFX;
+    Material upperPartMaterial;
+    Material lowerPartMaterial;
+
+    [Header("VFX unconjuration")]
+    Transform unusedCounter;
+    Text unusedCounterText;
+    bool isConjured;
+    bool beingUnconjured;
+    Coroutine unconjuration;
+    Coroutine electricityOverload;
+    [SerializeField] Transform overloadingElectricity;
+    VisualEffect overloadingVFXElectricity;
+    [SerializeField] GameObject destructionParticleSystem;
+    [SerializeField] GameObject destroyedSkeleton;
+    SkinnedMeshRenderer upperPartSkinnedrenderer;
+    SkinnedMeshRenderer lowerPartSkinnedrenderer;
+
+    [Header("Castle Nav")]
+    List <Transform> CastleNavrout = new List<Transform>();
+    
+
+    bool CastleNavroutActive;
+    bool PotentialpositionsNavroutActive;
+    int castleNavpointNumber;
+    NavMeshAgent navMeshAgent;
+    Transform navigationTarget;
+    bool isMoving = false;
     Transform castlePosition;
     Animator localAnimator;
     Vector3 velocity;
@@ -52,23 +87,37 @@ public class SkeletonBehavior : MonoBehaviour
     [SerializeField] Transform targetMage1;
     public Transform CastlePosition { set { castlePosition = value; } }
     public event Action<Transform> OriginRotated = delegate { };
+    public event Action OreHitted = delegate { };
     void Start()
     {
+        if (transform.Find("VFX") != null) { movementVFX = transform.Find("VFX").Find("vfxgraph_StylizedSmoke").GetComponent<VisualEffect>(); StartCoroutine(MovingDustSpawner()); }
+        navMeshAgent = GetComponent<NavMeshAgent>();
         localAnimator = transform.GetComponent<Animator>();
+        upperPartMaterial = transform.Find("MiddlePart.002").GetComponent<SkinnedMeshRenderer>().material;
+        lowerPartMaterial = transform.Find("OuterPart.002").GetComponent<SkinnedMeshRenderer>().material;
+        upperPartSkinnedrenderer = transform.Find("MiddlePart.002").GetComponent<SkinnedMeshRenderer>();
+        lowerPartSkinnedrenderer = transform.Find("OuterPart.002").GetComponent<SkinnedMeshRenderer>();
+        overloadingVFXElectricity = overloadingElectricity.GetComponent<VisualEffect>();
 
         gravity = -9.81f;
         checkRadius = 0;
         isIdle = true;
 
+        if (transform.Find("Timer").Find("TimerCanvas") != null)
+        {
+            Debug.Log("Found it on " + transform);
+            unusedCounter = transform.Find("Timer").Find("TimerCanvas");
+            unusedCounterText = unusedCounter.Find("Text").GetComponent<Text>();
+        }
+
         contactManager.GetComponent<ContactManager>().OreDetected += AddTarget;
-        //activity = "idle";
-        //Debug.Log("Start " + transform);
         connectedTeleport.GetComponent<Teleporter>().TeleportFound += StopGravity;
         if (hasPortal)
         {
             transform.GetComponent<CopycatCreator>().OriginTeleported += StopActivities;
         }
-        //castlePosition = transform.parent.parent.Find("CastlePosition");
+        GotoCastle();
+        
     }
 
     public bool IsTeleported
@@ -95,22 +144,250 @@ public class SkeletonBehavior : MonoBehaviour
         }
     }
 
+    public Transform NavigationTarget
+    {
+        get
+        {
+            return navigationTarget;
+        }
+        set
+        {
+            isConjured = true;
+            if (navigationTarget != null && navigationTarget.GetComponent<IOre>() != null)
+            {
+                navigationTarget.GetComponent<NavMeshObstacle>().enabled = true;
+            }
+            if (value != null && value.GetComponent<IOre>() != null)
+            {
+                Debug.Log("Connected to the ore");
+                value.GetComponent<OreMiningManager>().ConnectedSkeleton = this;
+            }
+            if (navigationTarget != null && navigationTarget.GetComponent<IOre>() != null && value.GetComponent<IOre>() == null)
+            {
+                Debug.Log("Disconnected from the ore");
+                navigationTarget.GetComponent<OreMiningManager>().ConnectedSkeleton = null;
+            }
+            navigationTarget = value;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
-        //-transform.forward equals left
-        if (ID == 8)
+        if (navigationTarget != null) { navMeshAgent.destination = navigationTarget.position; }
+        if (CastleNavroutActive)
         {
-            //Debug.Log("is teleported " + isTeleported);
-            //Debug.Log("activity " + activity);
+            
+            
+            if (!navMeshAgent.pathPending && ((navMeshAgent.remainingDistance - navMeshAgent.stoppingDistance) < 1))
+            {
+                castleNavpointNumber++;
+                if (CastleNavrout.Count > (castleNavpointNumber))
+                {
+                    navigationTarget = CastleNavrout[castleNavpointNumber];
+                } else
+                {
+                    PotentialpositionsNavroutActive = true;
+                    navigationTarget = castlePositionsManager.GetAvailablePosition();
+                    CastleNavroutActive = false;
+                }
+                
+            }
+            
         }
-        //Debug.Log(activity);
-        BehaviorManager();
-        Vision();
-        GoAroundSurroundings();
-        //Debug.Log(activity);
+        if (PotentialpositionsNavroutActive)
+        {
+            if (navMeshAgent.velocity.magnitude < 0.15f)
+            {
+                Debug.Log("Reached Position");
+                reachedPosition = true;
+                PotentialpositionsNavroutActive = false;
+            }
+        }
+        CheckIfStopped();
+        if (isConjured) { CheckIfUnused(); }
     }
 
+    void GotoCastle()
+    {
+        foreach(Transform point in CastleNavroutHolder)
+        {
+            CastleNavrout.Add(point);
+        }
+        CastleNavroutActive = true;
+        navigationTarget = CastleNavrout[0];
+        castleNavpointNumber = 0;
+    }
+
+    void CheckIfStopped()
+    {
+        if (navMeshAgent.velocity.magnitude < 0.15f && isMoving)
+        {
+            if (navigationTarget != null && navigationTarget.GetComponent<IOre>() == null)
+            {
+                isMoving = false;
+                localAnimator.Play("SkelIdle");
+            } else if (navigationTarget != null && navigationTarget.GetComponent<IOre>() != null)
+            {
+                isMoving = false;
+                localAnimator.Play("SkelMine");
+            }
+            
+        } else if (navMeshAgent.velocity.magnitude > 0.15f && !isMoving)
+        {
+            isMoving = true;
+            localAnimator.Play("SkelMove");
+        }
+    }
+
+    void CheckIfUnused()
+    {
+        if (navigationTarget == null && !beingUnconjured)
+        {
+            unconjuration = StartCoroutine(Unconjure());
+            electricityOverload = StartCoroutine(OverloadBeforeDestruction());
+            beingUnconjured = true;
+        }
+        if (navigationTarget != null && beingUnconjured)
+        {
+            StopCoroutine(unconjuration);
+            StopCoroutine(electricityOverload);
+            StabilizeElectricity();
+            overloadingElectricity.gameObject.SetActive(false);
+            beingUnconjured = false;
+            unusedCounter.gameObject.GetComponent<CanvasGroup>().alpha = 0;
+            Debug.Log("Active again");
+        }
+    }
+
+    IEnumerator Unconjure()
+    {
+        Debug.Log("BeingDeconjured");
+        unusedCounter.gameObject.GetComponent<CanvasGroup>().alpha = 1;
+        int elapsed = 6;
+        int lifetimeSkeleton = 0;
+        while (elapsed > lifetimeSkeleton)
+        {
+            elapsed--;
+            unusedCounterText.text = elapsed.ToString();
+            
+            yield return new WaitForSeconds(1);
+        }
+        StartCoroutine(DestroySkeleton());
+        yield return null;
+    }
+
+    IEnumerator OverloadBeforeDestruction()
+    {
+        overloadingElectricity.gameObject.SetActive(true);
+        
+        overloadingVFXElectricity.Play();
+
+        float expired = 0;
+        float processTime = 5f;
+        float currentElectricitySpeed = 0.1f;
+        float currentElectricityThickness = 0.51f;
+        float currentElectricityVFXSpeed = 1f;
+        float targetElectricitySpeed = 15f;
+        float targetElectricityThickness = 1f;
+        float targetElectricityVFXSpeed = 20f;
+        while (expired < processTime)
+        {
+            expired += Time.deltaTime;
+            currentElectricitySpeed = Mathf.Lerp(0.1f, targetElectricitySpeed, expired / processTime);
+            currentElectricityThickness = Mathf.Lerp(0.51f, targetElectricityThickness, expired / processTime);
+            currentElectricityVFXSpeed = Mathf.Lerp(1f, targetElectricityVFXSpeed, expired / processTime);
+            lowerPartMaterial.SetVector("ElecricityWidth_", new Vector2(currentElectricitySpeed, -0.05f));
+            upperPartMaterial.SetVector("ElecricityWidth_", new Vector2(currentElectricitySpeed, -0.05f));
+            lowerPartMaterial.SetFloat("Thickness_", currentElectricityThickness);
+            upperPartMaterial.SetFloat("Thickness_", currentElectricityThickness);
+            overloadingVFXElectricity.SetFloat("Speed", currentElectricityVFXSpeed);
+            yield return null;
+        }
+        lowerPartMaterial.SetVector("ElecricityWidth_", new Vector2(targetElectricitySpeed, -0.05f));
+        upperPartMaterial.SetVector("ElecricityWidth_", new Vector2(targetElectricitySpeed, -0.05f));
+        lowerPartMaterial.SetFloat("Thickness_", targetElectricityThickness);
+        upperPartMaterial.SetFloat("Thickness_", targetElectricityThickness);
+        overloadingVFXElectricity.SetFloat("Speed", targetElectricityVFXSpeed);
+        overloadingElectricity.gameObject.SetActive(false);
+        yield return null;
+    }
+
+    void StabilizeElectricity()
+    {
+        float normalElectricitySpeed = 0.1f;
+        float normalElectricityThickness = 0.51f;
+        float normalElectricityVFXSpeed = 1f;
+        lowerPartMaterial.SetVector("ElecricityWidth_", new Vector2(normalElectricitySpeed, -0.05f));
+        upperPartMaterial.SetVector("ElecricityWidth_", new Vector2(normalElectricitySpeed, -0.05f));
+        lowerPartMaterial.SetFloat("Thickness_", normalElectricityThickness);
+        upperPartMaterial.SetFloat("Thickness_", normalElectricityThickness);
+        overloadingElectricity.GetComponent<VisualEffect>().SetFloat("Speed", normalElectricityVFXSpeed);
+    }
+
+    IEnumerator DestroySkeleton()
+    {
+        destructionParticleSystem.SetActive(true);
+        destructionParticleSystem.GetComponent<ParticleSystem>().Play();
+        Debug.Log("DestroyedSkeleton");
+        lowerPartSkinnedrenderer.gameObject.SetActive(false);
+        upperPartSkinnedrenderer.gameObject.SetActive(false);
+        GameObject instantiatedDestroyedSkeleton = Instantiate(destroyedSkeleton, transform.position, transform.rotation);
+        unusedCounter.gameObject.GetComponent<CanvasGroup>().alpha = 0;
+        yield return new WaitForSeconds(1.5f);
+        foreach (Transform bone in instantiatedDestroyedSkeleton.transform)
+        {
+            if (bone.GetComponent<SphereCollider>() != null) { bone.GetComponent<SphereCollider>().isTrigger = true; }
+        }
+        yield return new WaitForSeconds(1.5f);
+        Destroy(instantiatedDestroyedSkeleton);
+        Destroy(gameObject);
+        yield return null;
+    }
+
+    IEnumerator MovingDustSpawner()
+    {
+        while (true)
+        {
+            Debug.Log("Hello started there");
+            yield return new WaitForSeconds(0.2f);
+            if (localAnimator.GetCurrentAnimatorStateInfo(0).IsName("SkelMove")) { movementVFX.SendEvent("CharacterMoved"); }
+        }
+    }
+
+    public void StartChazingPortal(Transform foundPortal)
+    {
+        StartCoroutine(BecomeCojured(foundPortal));
+        
+    }
+
+    IEnumerator BecomeCojured(Transform foundPortal)
+    {
+        conjurationVFX.gameObject.SetActive(true);
+        conjurationVFX.Play();
+        
+        
+        float expired = 0;
+        float processTime = 0.15f;
+        float currentElectricityValue = 0;
+        while (expired < processTime)
+        {
+            expired += Time.deltaTime;
+            currentElectricityValue = Mathf.Lerp(0, 1, expired / processTime);
+            lowerPartMaterial.SetFloat("_ElectricityValue", currentElectricityValue);
+            upperPartMaterial.SetFloat("_ElectricityValue", currentElectricityValue);
+            yield return null;
+        }
+        hitEffectVFX.gameObject.SetActive(true);
+        hitEffectVFX.Play();
+        lowerPartMaterial.SetFloat("_ElectricityValue", 1);
+        upperPartMaterial.SetFloat("_ElectricityValue", 1);
+        isConjured = true;
+        yield return new WaitForSeconds(0.5f);
+        navigationTarget = foundPortal;
+        yield return null;
+
+    } 
 
     void BehaviorManager()
     {
@@ -178,11 +455,14 @@ public class SkeletonBehavior : MonoBehaviour
 
     public void AddTarget(Transform targetOre)
     {
-        Debug.Log("Ore is here");
-        if (activity == "ChasingMage")
+        if (navigationTarget.GetComponent<PersonMovement>() != null)
         {
-            this.targetOre = targetOre;
-            activity = "ChasingOre";
+            if (targetOre.GetComponent<NavMeshObstacle>() != null)
+            {
+                targetOre.GetComponent<NavMeshObstacle>().enabled = false;
+            }
+            
+            NavigationTarget = targetOre;
         }
     }
 
@@ -261,11 +541,7 @@ public class SkeletonBehavior : MonoBehaviour
         TurnAroundTo(targetMage);
     }
 
-    public void StartChazingPortal(Transform foundPortal)
-    {
-        targetPortal = foundPortal;
-        activity = "ChazePortal";
-    }
+    
 
     public void ChazePortal()
     {
@@ -402,6 +678,15 @@ public class SkeletonBehavior : MonoBehaviour
 
     void HitOre()
     {
+        if (OreHitted != null)
+        {
+            OreHitted();
+        }
+    }
+
+    /*
+    void HitOre()
+    {
         switch (targetOre.GetComponent<IOre>().Type)
         {
             case "RockOre":
@@ -430,4 +715,5 @@ public class SkeletonBehavior : MonoBehaviour
                 break;
         }
     }
+    */
 }

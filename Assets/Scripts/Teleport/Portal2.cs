@@ -100,6 +100,7 @@ public class Portal2 : MonoBehaviour
             {
                 if (hit[i].transform.parent.GetComponent<Skeleton>() != null)
                 {
+                    Debug.Log(hit[i].transform.parent);
                     hit[i].transform.parent.GetComponent<SkeletonBehavior>().StartChazingPortal(linkedCamera);
                 }
             }

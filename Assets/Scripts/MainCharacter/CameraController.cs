@@ -13,6 +13,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] ClickManager ClickManager;
     [SerializeField] CursorManager cursorManager;
     [SerializeField] ObjectOutliner objectOutliner;
+    [SerializeField] float contactingRayDistance;
     float yRotation;
     RaycastHit hit = new RaycastHit();
 
@@ -61,7 +62,7 @@ public class CameraController : MonoBehaviour
     void DetectObject()
     {
         Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward * 3), Color.red);
-        if (Physics.SphereCast(transform.position, 0.1f, transform.TransformDirection(Vector3.forward * 3), out hit, 3f, currentObjectLayerMask))
+        if (Physics.SphereCast(transform.position, 0.1f, transform.TransformDirection(Vector3.forward * contactingRayDistance), out hit, contactingRayDistance, currentObjectLayerMask))
         {
             
         }
@@ -72,15 +73,15 @@ public class CameraController : MonoBehaviour
     {
         // Draw a yellow sphere at the transform's position
         Gizmos.color = Color.yellow;
-        Debug.DrawLine(transform.position, transform.position + transform.TransformDirection(Vector3.forward * 3));
-        Gizmos.DrawWireSphere(transform.position + transform.TransformDirection(Vector3.forward * 3), 0.1f);
+        Debug.DrawLine(transform.position, transform.position + transform.TransformDirection(Vector3.forward * contactingRayDistance));
+        Gizmos.DrawWireSphere(transform.position + transform.TransformDirection(Vector3.forward * contactingRayDistance), 0.1f);
     }
 
     IEnumerator SeeObject()
     {
         while (true)
         {
-            if (Physics.SphereCast(transform.position, 0.1f, transform.TransformDirection(Vector3.forward * 3), out hit, 3f, clickableLayerMask))
+            if (Physics.SphereCast(transform.position, 0.1f, transform.TransformDirection(Vector3.forward * contactingRayDistance), out hit, contactingRayDistance, clickableLayerMask))
             {
                 objectOutliner.StoreVewedObject(hit.transform); 
             } else { objectOutliner.StoreVewedObject(null);  }

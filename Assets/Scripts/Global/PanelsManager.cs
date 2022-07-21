@@ -8,6 +8,14 @@ public class PanelsManager : MonoBehaviour
     [SerializeField] ContactManager contactManager;
     [SerializeField] ClickManager clickManager;
     [SerializeField] Transform inventoryPanel;
+    [SerializeField] Transform escapeMenuPanel;
+    [SerializeField] Transform settingsMenuPanel;
+    [SerializeField] Transform graphicsSettingPanel;
+    [SerializeField] Transform audioSettingsPanel;
+    [SerializeField] Transform controlsSettingsPanel;
+    [SerializeField] Transform miscellaneousSettingsPanel;
+    [SerializeField] Transform saveMenuPanel;
+    [SerializeField] Transform loadMenuPanel;
     [SerializeField] Transform upgradeTablePanel;
     [SerializeField] Transform midasCauldronTablePanel;
     [SerializeField] Transform defractorTablePanel;
@@ -17,6 +25,7 @@ public class PanelsManager : MonoBehaviour
     [SerializeField] Transform quickaccessinvisiblePosition;
     [SerializeField] Transform quickaccessdefaultPosition;
     Transform currentlyOpened;
+    Transform currentSettingsSubpanel;
     Transform nextToOpen;
     float updateSpeed;
 
@@ -31,9 +40,10 @@ public class PanelsManager : MonoBehaviour
     public event Action PanelsUpdated = delegate { };
     void Start()
     {
+        currentSettingsSubpanel = graphicsSettingPanel;
         updateSpeed = 0.1f;
         clickManager.IClicked += openInventory;
-        clickManager.EscClicked += closeCurrentPanel;
+        clickManager.EscClicked += ChooseEscapeActions;
         contactManager.MidasCauldronDetected += openMidasCauldronTable;
         contactManager.DefractorDetected += openDefractorTable;
     }
@@ -77,11 +87,22 @@ public class PanelsManager : MonoBehaviour
     {
         if (panelToClose != null)
         {
-            StartCoroutine(CacheClosePanel(panelToClose));
+            StartCoroutine(CacheClosePanel(panelToClose, false));
         }
     }
 
-    void closeCurrentPanel()
+    void ChooseEscapeActions()
+    {
+        if (currentlyOpened != null)
+        {
+            closeCurrentPanel();
+        } else
+        {
+            OpenEscapemenuPanel();
+        }
+    }
+
+    public void closeCurrentPanel()
     {
         closePanel(currentlyOpened);
         currentlyOpened = null;
@@ -90,6 +111,8 @@ public class PanelsManager : MonoBehaviour
 
     void openPanel(Transform panelToOpen)
     {
+        
+        RelocateDefaultPosition(panelToOpen);
         StartCoroutine(CacheOpenPanel(panelToOpen));
     }
 
@@ -122,10 +145,86 @@ public class PanelsManager : MonoBehaviour
         decideNextState();
     }
 
+    void OpenEscapemenuPanel()
+    {
+        nextToOpen = escapeMenuPanel;
+        decideNextState();
+    }
+
+    public void OpenSettingsPanel()
+    {
+        nextToOpen = settingsMenuPanel;
+        decideNextState();
+    }
+
+    public void ManageSettingsPanel(String subpanelName)
+    {
+        
+        switch (subpanelName)
+        {
+            case "graphicsPanel":
+                if (currentSettingsSubpanel != graphicsSettingPanel && currentSettingsSubpanel != null) { StartCoroutine(CacheClosePanel(currentSettingsSubpanel, true)); }
+                StartCoroutine(CacheOpenPanel(graphicsSettingPanel));
+                showOnForeground(graphicsSettingPanel);
+                currentSettingsSubpanel = graphicsSettingPanel;
+                break;
+            case "audioPanel":
+                if (currentSettingsSubpanel != audioSettingsPanel && currentSettingsSubpanel != null) { StartCoroutine(CacheClosePanel(currentSettingsSubpanel, true)); }
+                StartCoroutine(CacheOpenPanel(audioSettingsPanel));
+                showOnForeground(audioSettingsPanel);
+                currentSettingsSubpanel = audioSettingsPanel;
+                break;
+            case "controlsPanel":
+                if (currentSettingsSubpanel != controlsSettingsPanel && currentSettingsSubpanel != null) { StartCoroutine(CacheClosePanel(currentSettingsSubpanel, true)); }
+                StartCoroutine(CacheOpenPanel(controlsSettingsPanel));
+                showOnForeground(controlsSettingsPanel);
+                currentSettingsSubpanel = controlsSettingsPanel;
+                break;
+            case "miscellaneousPanel":
+                if (currentSettingsSubpanel != miscellaneousSettingsPanel && currentSettingsSubpanel != null) { StartCoroutine(CacheClosePanel(currentSettingsSubpanel, true)); }
+                StartCoroutine(CacheOpenPanel(miscellaneousSettingsPanel));
+                showOnForeground(miscellaneousSettingsPanel);
+                currentSettingsSubpanel = miscellaneousSettingsPanel;
+                break;
+        }
+    }
+
+    public void OpenSavePanel()
+    {
+        nextToOpen = saveMenuPanel;
+        decideNextState();
+    }
+
+    public void OpenLoadPanel()
+    {
+        nextToOpen = loadMenuPanel;
+        decideNextState();
+    }
+
+    public void OpenMainmenuPanel()
+    {
+#if UNITY_STANDALONE
+        Application.Quit();
+#endif
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+    }
+
+    public void OpenQuitPanel()
+    {
+#if UNITY_STANDALONE
+        Application.Quit();
+#endif
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+    }
+
     IEnumerator CacheOpenPanel(Transform panelToOpen)
     {
         CanvasGroup panelCanvasGroup = panelToOpen.GetComponent<CanvasGroup>();
-        RelocateDefaultPosition(panelToOpen);
+        //RelocateDefaultPosition(panelToOpen);
         float elapsed = 0;
         float alphaMaxValue = 1;
         float alphaZeroValue = 0;
@@ -139,7 +238,7 @@ public class PanelsManager : MonoBehaviour
             }
         }
     }
-    IEnumerator CacheClosePanel(Transform panelToClose)
+    IEnumerator CacheClosePanel(Transform panelToClose, bool isSubpanel)
     {
         CanvasGroup panelCanvasGroup = panelToClose.GetComponent<CanvasGroup>();
         float elapsed = 0;
@@ -154,7 +253,8 @@ public class PanelsManager : MonoBehaviour
                 yield return null;
             }
         }
-        RelocateFarAway(panelToClose);
+        if (!isSubpanel) { RelocateFarAway(panelToClose); }
+        
     }
 
     void RelocateFarAway(Transform panelToMove)
@@ -200,6 +300,7 @@ public class PanelsManager : MonoBehaviour
             }
         }
         RelocateQuickAccessFarAway(panelToClose);
+
     }
 
     void RelocateQuickAccessFarAway(Transform panelToMove)

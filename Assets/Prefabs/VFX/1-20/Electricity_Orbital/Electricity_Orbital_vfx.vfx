@@ -19,8 +19,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: -96
     y: -365
-    width: 2205
-    height: 1730
+    width: 2207
+    height: 1746
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4201,7 +4201,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614802}
   m_ExposedName: Speed
   m_Exposed: 1
-  m_Order: 1
+  m_Order: 0
   m_Category: 
   m_Min:
     m_Type:
@@ -4281,7 +4281,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614804}
   m_ExposedName: Lifetime
   m_Exposed: 1
-  m_Order: 2
+  m_Order: 1
   m_Category: 
   m_Min:
     m_Type:
@@ -4500,7 +4500,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614810}
   m_ExposedName: Color
   m_Exposed: 1
-  m_Order: 3
+  m_Order: 2
   m_Category: 
   m_Min:
     m_Type:
@@ -5880,7 +5880,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614851}
   m_ExposedName: NoisePower
   m_Exposed: 1
-  m_Order: 4
+  m_Order: 3
   m_Category: 
   m_Min:
     m_Type:
@@ -6058,7 +6058,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614856}
   m_ExposedName: Rate
   m_Exposed: 1
-  m_Order: 5
+  m_Order: 4
   m_Category: 
   m_Min:
     m_Type:
@@ -6200,7 +6200,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614860}
   m_ExposedName: ElectricitySize
   m_Exposed: 1
-  m_Order: 6
+  m_Order: 5
   m_Category: 
   m_Min:
     m_Type:
@@ -6440,7 +6440,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614876}
   m_ExposedName: Sphere
   m_Exposed: 1
-  m_Order: 7
+  m_Order: 6
   m_Category: 
   m_Min:
     m_Type:
@@ -6457,8 +6457,10 @@ MonoBehaviour:
   m_Nodes:
   - m_Id: 0
     linkedSlots:
-    - outputSlot: {fileID: 8926484042661614876}
-      inputSlot: {fileID: 0}
+    - outputSlot: {fileID: 8926484042661614877}
+      inputSlot: {fileID: 8926484042661614890}
+    - outputSlot: {fileID: 8926484042661614881}
+      inputSlot: {fileID: 8926484042661614902}
     position: {x: 784.4975, y: 280.2075}
     expandedSlots: []
     expanded: 0

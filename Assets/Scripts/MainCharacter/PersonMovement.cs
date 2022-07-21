@@ -7,6 +7,7 @@ using UnityEngine.VFX;
 
 public class PersonMovement : MonoBehaviour
 {
+    [Header("Movement Settings")]
     [SerializeField] CharacterController characterController;
     [SerializeField] Transform checkGround;
     [SerializeField] float speed;
@@ -14,8 +15,13 @@ public class PersonMovement : MonoBehaviour
     [SerializeField] LayerMask checkLayer;
     [SerializeField] LayerMask checkLayer2;
     [SerializeField] CharacterOccupation _characterOccupation;
-    Vector3 velocity;
     [SerializeField] float gravity;
+
+    [Header("Warp Base Settings")]
+    [SerializeField] MiscPanel miscPanel;
+    [SerializeField] Transform basePosition;
+    Vector3 velocity;
+    
     float checkRadius;
     bool occupied;
     VisualEffect movementVFX;
@@ -37,6 +43,7 @@ public class PersonMovement : MonoBehaviour
         landVFX = transform.Find("VFX").Find("vfxgraph_StylizedSmokeLand").GetComponent<VisualEffect>();
         _characterOccupation.CharacterEngagedSomething += PreventMoving;
         _characterOccupation.CharacterDisengagedSomething += EnableMoving;
+        miscPanel.WarpBaseRequested += WarpBase;
         StartCoroutine(MovingDustSpawner());
     }
 
@@ -97,5 +104,14 @@ public class PersonMovement : MonoBehaviour
     void EnableMoving()
     {
         occupied = false;
+    }
+
+    void WarpBase()
+    {
+        characterController.enabled = false;
+        transform.position = basePosition.position;
+        transform.rotation = basePosition.rotation;
+        characterController.enabled = true;
+        Debug.Log("Warped back to base");
     }
 }
