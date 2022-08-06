@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,16 @@ public class ControlsPanel : MonoBehaviour
 {
     public List<KeyCode> currentlyPressedKeys = new List<KeyCode>();
     float mouseSensitivity;
+    float timeShiftPressed = Time.time;
     bool mouseInverted;
+    bool autorunToggled;
     Button activeButton;
     bool shiftPressed;
     bool changingSettings;
 
+    public bool AutorunToggled { get { return autorunToggled; } }
+    public event Action<bool> autorunWasToggled = delegate { };
+    public event Action<int> SettingChanged = delegate { };
     // Start is called before the first frame update
     void Start()
     {
@@ -54,6 +60,34 @@ public class ControlsPanel : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            shiftPressed = true;
+            var timeCurrentPressed = Time.time;
+            if (timeCurrentPressed - timeShiftPressed < 0.30f)
+            {
+                if (activeButton != null)
+                {
+                    activeButton.transform.Find("Text").GetComponent<Text>().text = "LeftShift + LeftShift";
+                    if (SettingChanged != null) { SettingChanged(1); }
+                }
+                
+                shiftPressed = false;
+            }
+            timeShiftPressed = Time.time;
+
+        }
+
+        if (Time.time - timeShiftPressed > 0.30f)
+        {
+            shiftPressed = false;
+            EventSystem.current.SetSelectedGameObject(null);
+
+        }
+    }
+
     public void StartEditingControls(Button button)
     {
         changingSettings = true;
@@ -62,19 +96,30 @@ public class ControlsPanel : MonoBehaviour
 
     public void SaveSettings(string settedButtons)
     {
-        activeButton.transform.Find("Text").GetComponent<Text>().text = settedButtons;
-        EventSystem.current.SetSelectedGameObject(null);
+        if (activeButton != null)
+        {
+            activeButton.transform.Find("Text").GetComponent<Text>().text = settedButtons;
+            if (SettingChanged != null) { SettingChanged(1); }
+        }
+
+        if (!shiftPressed)
+        {
+            activeButton = null;
+            EventSystem.current.SetSelectedGameObject(null);
+        }
     }
 
     public void InvertMouse(Toggle invertMouseToggle)
     {
         mouseInverted = invertMouseToggle.isOn;
+        if (SettingChanged != null) { SettingChanged(1); }
         Debug.Log("Mouse is inverted " + mouseInverted);
     }
 
     public void SetMouseSensitivity(Slider mouseSensitivitySlider)
     {
         mouseSensitivity = mouseSensitivitySlider.value;
+        if (SettingChanged != null) { SettingChanged(1); }
         Debug.Log("Mouse sensitivity is setted: " + mouseSensitivity);
     }
 
@@ -83,9 +128,11 @@ public class ControlsPanel : MonoBehaviour
         Debug.Log("Controls are reseted");
     }
 
-    // Update is called once per frame
-    void Update()
-    {                           
-        
+    public void ToggleAutorun(Toggle autorunToggle)
+    {
+        autorunToggled = autorunToggle.isOn;
+        if (SettingChanged != null) { SettingChanged(1); }
+        if (autorunWasToggled != null) { autorunWasToggled(autorunToggled); }
+        Debug.Log("Autorun is toggle " + mouseInverted);
     }
 }

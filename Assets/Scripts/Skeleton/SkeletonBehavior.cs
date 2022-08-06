@@ -30,17 +30,27 @@ public class SkeletonBehavior : MonoBehaviour
     [SerializeField] Transform player;
     [SerializeField] Transform CastleNavroutHolder;
     [SerializeField] CastlePositionsManager castlePositionsManager;
+    [SerializeField] ContactedSkeletonsCounter contactedSkeletonsCounter;
+    [SerializeField] DestroyedSkeletonsCounter destroyedSkeletonsCounter;
     VisualEffect movementVFX;
+    bool isSmallSkeleton;
+    bool isBigSkeleton;
+    bool isLizardSkeleton;
 
     [Header("VFX conjuration")]
     [SerializeField] ParticleSystem conjurationVFX;
     [SerializeField] ParticleSystem hitEffectVFX;
     Material upperPartMaterial;
     Material lowerPartMaterial;
+    static int countConjuredSkeletons;
+    static int countSmallSkeletons;
+    bool wasOnceConjured;
 
     [Header("VFX unconjuration")]
     Transform unusedCounter;
     Text unusedCounterText;
+    static int countDestroyedSkeletons;
+    static int destroyedSmallSkeletons;
     bool isConjured;
     bool beingUnconjured;
     Coroutine unconjuration;
@@ -81,13 +91,20 @@ public class SkeletonBehavior : MonoBehaviour
     bool cache = false;
     float speed = 9f;
     bool reachedPosition;
+    Coroutine changeColorCounter;
+    Coroutine changeScaleCounter;
 
+    public int ProgressParameter { get { return countConjuredSkeletons; } }
+    public int ProgressParameterSecond { get { return countSmallSkeletons; } }
+    public int CountDestroyedSkeletons { get { return countDestroyedSkeletons; } }
+    public int DestroyedSmallSkeletons { get { return destroyedSmallSkeletons; } }
     public bool ReachedPosition { get { return reachedPosition; } }
     //cache
     [SerializeField] Transform targetMage1;
     public Transform CastlePosition { set { castlePosition = value; } }
     public event Action<Transform> OriginRotated = delegate { };
     public event Action OreHitted = delegate { };
+    
     void Start()
     {
         if (transform.Find("VFX") != null) { movementVFX = transform.Find("VFX").Find("vfxgraph_StylizedSmoke").GetComponent<VisualEffect>(); StartCoroutine(MovingDustSpawner()); }
@@ -105,11 +122,14 @@ public class SkeletonBehavior : MonoBehaviour
 
         if (transform.Find("Timer").Find("TimerCanvas") != null)
         {
-            Debug.Log("Found it on " + transform);
+            //Debug.Log("Found it on " + transform);
             unusedCounter = transform.Find("Timer").Find("TimerCanvas");
             unusedCounterText = unusedCounter.Find("Text").GetComponent<Text>();
         }
-
+        if (transform.GetComponent<SmallSkeleton>() != null)
+        {
+            isSmallSkeleton = true;
+        }
         contactManager.GetComponent<ContactManager>().OreDetected += AddTarget;
         connectedTeleport.GetComponent<Teleporter>().TeleportFound += StopGravity;
         if (hasPortal)
@@ -167,7 +187,20 @@ public class SkeletonBehavior : MonoBehaviour
                 Debug.Log("Disconnected from the ore");
                 navigationTarget.GetComponent<OreMiningManager>().ConnectedSkeleton = null;
             }
+            if (!wasOnceConjured) {
+                //Debug.Log("hello there");
+                wasOnceConjured = true;
+                countConjuredSkeletons++;
+                
+                if (isSmallSkeleton)
+                {
+                    //Debug.Log("hello there");
+                    countSmallSkeletons++;
+                    contactedSkeletonsCounter.CountContactedSkeleton(this.transform);
+                }
+            }
             navigationTarget = value;
+            
         }
     }
 
@@ -221,6 +254,7 @@ public class SkeletonBehavior : MonoBehaviour
 
     void CheckIfStopped()
     {
+        /*
         if (navMeshAgent.velocity.magnitude < 0.15f && isMoving)
         {
             if (navigationTarget != null && navigationTarget.GetComponent<IOre>() == null)
@@ -238,6 +272,7 @@ public class SkeletonBehavior : MonoBehaviour
             isMoving = true;
             localAnimator.Play("SkelMove");
         }
+        */
     }
 
     void CheckIfUnused()
@@ -250,6 +285,8 @@ public class SkeletonBehavior : MonoBehaviour
         }
         if (navigationTarget != null && beingUnconjured)
         {
+            StopCoroutine(changeColorCounter);
+            StopCoroutine(changeScaleCounter);
             StopCoroutine(unconjuration);
             StopCoroutine(electricityOverload);
             StabilizeElectricity();
@@ -265,15 +302,61 @@ public class SkeletonBehavior : MonoBehaviour
         Debug.Log("BeingDeconjured");
         unusedCounter.gameObject.GetComponent<CanvasGroup>().alpha = 1;
         int elapsed = 6;
-        int lifetimeSkeleton = 0;
+        int lifetimeSkeleton = 1;
+        changeColorCounter = StartCoroutine(ChangeColorText());
         while (elapsed > lifetimeSkeleton)
         {
             elapsed--;
             unusedCounterText.text = elapsed.ToString();
+            changeScaleCounter = StartCoroutine(RescaleText());
             
             yield return new WaitForSeconds(1);
         }
         StartCoroutine(DestroySkeleton());
+        yield return null;
+    }
+    IEnumerator RescaleText()
+    {
+        float elapsed = 0;
+        int lifetimeSkeleton = 1;
+        float currentScale;
+        RectTransform counterTransform = unusedCounterText.rectTransform;
+        counterTransform.localScale = new Vector3(0.1f, 0.1f, 1);
+        var counterScale = unusedCounterText.rectTransform.localScale.x;
+        while (elapsed < lifetimeSkeleton)
+        {
+            elapsed += Time.deltaTime;
+            currentScale = Mathf.Lerp(counterScale * 0.5f, counterScale, elapsed / lifetimeSkeleton);
+            counterTransform.localScale = new Vector3(currentScale, currentScale, currentScale);
+            yield return null;
+        }
+        counterTransform.localScale = new Vector3(counterScale, counterScale, counterScale);
+        yield return null;
+    }
+
+    IEnumerator ChangeColorText()
+    {
+        float elapsed = 0;
+        int lifetimeSkeleton = 5;
+        Color currentColor = new Color(1, 0, 0);
+        unusedCounterText.color = currentColor;
+        Color counterColor = unusedCounterText.color;
+        currentColor = counterColor;
+        float currentRedValue;
+        float currentGreenValue;
+        while (elapsed < lifetimeSkeleton)
+        {
+            elapsed += Time.deltaTime;
+            currentRedValue = Mathf.Lerp(0.5f, 0, elapsed / lifetimeSkeleton);
+            currentGreenValue = Mathf.Lerp(0, 1, elapsed / lifetimeSkeleton);
+            currentColor = new Color(currentGreenValue, currentRedValue, 0);
+            unusedCounterText.color = currentColor;
+            yield return null;
+        }
+        currentColor = new Color(1, 0, 0);
+        unusedCounterText.color = currentColor;
+        Debug.Log(currentColor);
+        Debug.Log(counterColor);
         yield return null;
     }
 
@@ -327,6 +410,8 @@ public class SkeletonBehavior : MonoBehaviour
 
     IEnumerator DestroySkeleton()
     {
+        
+
         destructionParticleSystem.SetActive(true);
         destructionParticleSystem.GetComponent<ParticleSystem>().Play();
         Debug.Log("DestroyedSkeleton");
@@ -340,6 +425,12 @@ public class SkeletonBehavior : MonoBehaviour
             if (bone.GetComponent<SphereCollider>() != null) { bone.GetComponent<SphereCollider>().isTrigger = true; }
         }
         yield return new WaitForSeconds(1.5f);
+        countDestroyedSkeletons++;
+        if (isSmallSkeleton)
+        {
+            destroyedSmallSkeletons++;
+            destroyedSkeletonsCounter.CountDestroyedSkeleton(this.transform);
+        }
         Destroy(instantiatedDestroyedSkeleton);
         Destroy(gameObject);
         yield return null;
@@ -349,7 +440,7 @@ public class SkeletonBehavior : MonoBehaviour
     {
         while (true)
         {
-            Debug.Log("Hello started there");
+            //Debug.Log("Hello started there");
             yield return new WaitForSeconds(0.2f);
             if (localAnimator.GetCurrentAnimatorStateInfo(0).IsName("SkelMove")) { movementVFX.SendEvent("CharacterMoved"); }
         }

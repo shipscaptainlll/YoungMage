@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PanelsManager : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class PanelsManager : MonoBehaviour
     [SerializeField] Transform miscellaneousSettingsPanel;
     [SerializeField] Transform saveMenuPanel;
     [SerializeField] Transform loadMenuPanel;
+    [SerializeField] Transform questPanel;
     [SerializeField] Transform upgradeTablePanel;
     [SerializeField] Transform midasCauldronTablePanel;
     [SerializeField] Transform defractorTablePanel;
@@ -43,6 +45,7 @@ public class PanelsManager : MonoBehaviour
         currentSettingsSubpanel = graphicsSettingPanel;
         updateSpeed = 0.1f;
         clickManager.IClicked += openInventory;
+        clickManager.QClicked += OpenQuestPanel;
         clickManager.EscClicked += ChooseEscapeActions;
         contactManager.MidasCauldronDetected += openMidasCauldronTable;
         contactManager.DefractorDetected += openDefractorTable;
@@ -201,14 +204,15 @@ public class PanelsManager : MonoBehaviour
         decideNextState();
     }
 
+    public void OpenQuestPanel()
+    {
+        nextToOpen = questPanel;
+        decideNextState();
+    }
+
     public void OpenMainmenuPanel()
     {
-#if UNITY_STANDALONE
-        Application.Quit();
-#endif
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#endif
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
 
     public void OpenQuitPanel()

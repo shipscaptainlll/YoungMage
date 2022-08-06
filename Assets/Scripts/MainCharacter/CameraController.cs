@@ -33,7 +33,7 @@ public class CameraController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward * 3), Color.red);
         if (!cursorManager.SomethingOpened)

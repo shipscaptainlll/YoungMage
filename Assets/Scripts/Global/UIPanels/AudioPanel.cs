@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class AudioPanel : MonoBehaviour
     float musicVolume;
     bool soundsTurnedOff;
 
+    public event Action<int> SettingChanged = delegate { };
     // Start is called before the first frame update
     void Start()
     {
@@ -20,44 +22,49 @@ public class AudioPanel : MonoBehaviour
     public void OverallVolumeChange(Slider slider)
     {
         overallVolume = slider.value;
-        Debug.Log("Overall volume now is " + overallVolume);
+        if (SettingChanged != null) { SettingChanged(1); }
+        //Debug.Log("Overall volume now is " + overallVolume);
     }
 
     public void EffectsVolumeChange(Slider slider)
     {
         effectsVolume = slider.value;
-        Debug.Log("Effects volume now is " + effectsVolume);
+        if (SettingChanged != null) { SettingChanged(1); }
+        //Debug.Log("Effects volume now is " + effectsVolume);
     }
 
     public void CharactersSpeechChange(Slider slider)
     {
         charactersSpeechVolume = slider.value;
-        Debug.Log("Characters speech now is " + charactersSpeechVolume);
+        if (SettingChanged != null) { SettingChanged(1); }
+        //Debug.Log("Characters speech now is " + charactersSpeechVolume);
     }
 
     public void MusicVolumeChange(Slider slider)
     {
         musicVolume = slider.value;
-        Debug.Log("Music volume now is " + musicVolume);
+        if (SettingChanged != null) { SettingChanged(1); }
+        //Debug.Log("Music volume now is " + musicVolume);
     }
 
     public void TurnOffSounds(Toggle toggle)
     {
         soundsTurnedOff = toggle.isOn;
-        Debug.Log("Sounds turned off: " + soundsTurnedOff);
+        if (SettingChanged != null) { SettingChanged(1); }
+        //Debug.Log("Sounds turned off: " + soundsTurnedOff);
     }
 
     void ApplyDefaultSettings()
     {
         overallVolume = 50;
-        Debug.Log("Overall volume now is " + overallVolume);
+        //Debug.Log("Overall volume now is " + overallVolume);
         effectsVolume = 50;
-        Debug.Log("Effects volume now is " + effectsVolume);
+        //Debug.Log("Effects volume now is " + effectsVolume);
         charactersSpeechVolume = 50;
-        Debug.Log("Characters speech now is " + charactersSpeechVolume);
+        //Debug.Log("Characters speech now is " + charactersSpeechVolume);
         musicVolume = 50;
-        Debug.Log("Music volume now is " + musicVolume);
+        //Debug.Log("Music volume now is " + musicVolume);
         soundsTurnedOff = false;
-        Debug.Log("Sounds are now " + soundsTurnedOff);
+        //Debug.Log("Sounds are now " + soundsTurnedOff);
     }
 }

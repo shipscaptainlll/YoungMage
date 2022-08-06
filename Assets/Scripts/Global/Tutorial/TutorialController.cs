@@ -16,12 +16,12 @@ public class TutorialController : MonoBehaviour
 
     void StartTutorial()
     {
-        Debug.Log("Hello there!");
+        //Debug.Log("Hello there!");
     }
 
     void ResetTutorial()
     {
-        Debug.Log("Tutorial has been restarted");
+        //Debug.Log("Tutorial has been restarted");
         StartTutorial();
     }
 }

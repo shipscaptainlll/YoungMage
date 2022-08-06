@@ -45,7 +45,7 @@ public class SacketClickController : MonoBehaviour
     {
         if (!delayActive)
         {
-            Debug.Log(transform);
+            //Debug.Log(transform);
             float xTorque = (float)random.Next(-2, 2);
             float yTorque = (float)random.Next(-2, 2);
             float zTorque = (float)random.Next(-2, 2);

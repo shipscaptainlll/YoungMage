@@ -1,0 +1,52 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CursedOre : MonoBehaviour, IOre
+{
+    [SerializeField] string objectType;
+    [SerializeField] string type;
+    [SerializeField] int health;
+    [SerializeField] int hardness;
+    [SerializeField] int regeneration;
+    [SerializeField] Sprite firstProductImage;
+    [SerializeField] Sprite secondProductImage;
+    [SerializeField] int firstProductChances;
+    [SerializeField] int secondProductChances;
+
+    string objectOccupation;
+
+
+    string occupation; 
+    public string ObjectType { get { return objectType; } }
+    public string Type { get { return type; } }
+    public int Health { get { return health; } }
+    public int Hardness { get { return hardness; } }
+    public int Regeneration { get { return regeneration; } }
+    public Sprite FirstProductImage { get { return firstProductImage; } }
+    public Sprite SecondProductImage { get { return secondProductImage; } }
+    public int FirstProductChances { get { return firstProductChances; } }
+    public int SecondProductChances { get { return secondProductChances; } }
+    public string ObjectOccupation { get { return objectOccupation; } }
+    public string ProductionType
+    {
+        get
+        {
+            return "CursedOrePieces";
+        }
+    }
+
+    public int ProductionPerCycle
+    {
+        get
+        {
+            return 3;
+        }
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        objectOccupation = "not doing right now anything";
+    }
+}
