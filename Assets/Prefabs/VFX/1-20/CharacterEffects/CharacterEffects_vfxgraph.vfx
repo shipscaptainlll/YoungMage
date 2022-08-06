@@ -270,7 +270,7 @@ MonoBehaviour:
     enumValues: []
     descendantCount: 0
   m_ImportDependencies: []
-  m_GraphVersion: 6
+  m_GraphVersion: 8
   m_ResourceVersion: 1
   m_SubgraphDependencies: []
   m_CategoryPath: 
@@ -1811,6 +1811,9 @@ MonoBehaviour:
   positionMode: 0
   spawnMode: 0
   mode: 1
+  placementMode: 0
+  surfaceCoordinates: 1
+  sourceMesh: 0
 --- !u!114 &8926484042661614842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2085,6 +2088,7 @@ MonoBehaviour:
   useAlphaClipping: 0
   generateMotionVector: 0
   excludeFromTAA: 0
+  sortingPriority: 0
   m_SubOutputs: []
   cullMode: 0
   zWriteMode: 0
@@ -2092,14 +2096,18 @@ MonoBehaviour:
   colorMapping: 0
   uvMode: 2
   useSoftParticle: 1
-  sortPriority: 0
+  vfxSystemSortPriority: 0
   sort: 0
   indirectDraw: 0
   computeCulling: 0
   frustumCulling: 0
   castShadows: 0
   useExposureWeight: 0
+  flipbookLayout: 0
   shaderGraph: {fileID: 0}
+  materialSettings:
+    m_PropertyNames: []
+    m_PropertyValues: []
   primitiveType: 1
   useGeometryShader: 0
 --- !u!114 &8926484042661614851
@@ -3562,6 +3570,8 @@ MonoBehaviour:
   capacity: 10000
   stripCapacity: 16
   particlePerStripCount: 16
+  needsComputeBounds: 0
+  boundsMode: 1
   m_Space: 0
 --- !u!114 &8926484042661614897
 MonoBehaviour:
@@ -4378,6 +4388,9 @@ MonoBehaviour:
   positionMode: 0
   spawnMode: 0
   mode: 1
+  placementMode: 0
+  surfaceCoordinates: 1
+  sourceMesh: 0
 --- !u!114 &8926484042661614938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4652,6 +4665,7 @@ MonoBehaviour:
   useAlphaClipping: 0
   generateMotionVector: 0
   excludeFromTAA: 0
+  sortingPriority: 0
   m_SubOutputs: []
   cullMode: 0
   zWriteMode: 0
@@ -4659,14 +4673,18 @@ MonoBehaviour:
   colorMapping: 0
   uvMode: 2
   useSoftParticle: 1
-  sortPriority: 0
+  vfxSystemSortPriority: 0
   sort: 0
   indirectDraw: 0
   computeCulling: 0
   frustumCulling: 0
   castShadows: 0
   useExposureWeight: 0
+  flipbookLayout: 0
   shaderGraph: {fileID: 0}
+  materialSettings:
+    m_PropertyNames: []
+    m_PropertyValues: []
   primitiveType: 1
   useGeometryShader: 0
 --- !u!114 &8926484042661614947
@@ -6328,6 +6346,8 @@ MonoBehaviour:
   capacity: 10000
   stripCapacity: 16
   particlePerStripCount: 16
+  needsComputeBounds: 0
+  boundsMode: 1
   m_Space: 0
 --- !u!114 &8926484042661614999
 MonoBehaviour:
