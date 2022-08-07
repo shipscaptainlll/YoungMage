@@ -14,6 +14,9 @@ public class SUIOre : MonoBehaviour
     [SerializeField] Text objectHardness;
     [SerializeField] Text objectRegeneration;
     [SerializeField] Text objectOccupation;
+    [SerializeField] Transform borderedCanvas;
+
+    GameObject objectReference;
 
     bool isActivated;
     // Start is called before the first frame update
@@ -61,6 +64,7 @@ public class SUIOre : MonoBehaviour
             objectHardness.text = newGameObject.transform.GetComponent<IOre>().Hardness.ToString();
             objectRegeneration.text = newGameObject.transform.GetComponent<IOre>().Regeneration.ToString();
             objectOccupation.text = newGameObject.transform.GetComponent<IOre>().ObjectOccupation;
+            objectReference = newGameObject.transform.Find("Point").gameObject;
         }
     }
 
@@ -68,14 +72,21 @@ public class SUIOre : MonoBehaviour
     {
         if (cameraSUIInformer.ObservedType == "Ore")
         {
-            Debug.Log(currentDistance);
+            //Debug.Log(currentDistance);
             float koefficient = 2 / currentDistance;
-            Debug.Log(koefficient);
+            //Debug.Log(koefficient);
             koefficient = Mathf.Clamp(koefficient, 0.3f, 1);
-            Debug.Log(koefficient);
+            //Debug.Log(koefficient);
             transform.localScale = new Vector3(koefficient * 1, koefficient * 1, koefficient * 1);
+            UpdateElementPosition();
         }
         
+    }
+
+    void UpdateElementPosition()
+    {
+        Vector3 objectPosition = Camera.main.WorldToScreenPoint(objectReference.transform.position);
+        borderedCanvas.transform.position = objectPosition;
     }
 
     void HideElement()

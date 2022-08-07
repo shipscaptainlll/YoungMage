@@ -31,10 +31,10 @@ public class ContactManager : MonoBehaviour
         if (!cursorManager.SomethingOpened)
         {
             Transform contactedObject = CameraController.ObservedObject.transform;
-            Debug.Log(contactedObject);
+            //Debug.Log(contactedObject);
             if (contactedObject != null)
             {
-                Debug.Log(contactedObject);
+                //Debug.Log(contactedObject);
                 if (contactedObject.GetComponent<Portal2>() != null)
                 {
                     if (TeleporterDetected != null)
@@ -70,7 +70,7 @@ public class ContactManager : MonoBehaviour
                 }
                 else if (contactedObject.parent.GetComponent<Skeleton>() != null && quickAccessHandController.CurrentCustomID == 10)
                 {
-                    Debug.Log("Found Skeleton");
+                    //Debug.Log("Found Skeleton");
                     SkeletonBehavior skeletonScript = contactedObject.transform.parent.GetComponent<SkeletonBehavior>();
                     if (skeletonScript.NavigationTarget != mainCharacter) { skeletonScript.NavigationTarget = mainCharacter; contactedSkeleton = contactedObject.parent; Debug.Log("told skeleton to follow mage"); }
                     else if (skeletonScript.NavigationTarget == mainCharacter) { skeletonScript.NavigationTarget = null; contactedSkeleton = null; Debug.Log("told skeleton to stop following mage"); }
@@ -104,7 +104,7 @@ public class ContactManager : MonoBehaviour
                 }
                 else if (contactedObject.GetComponent<AlchemistPotentialProduct>() != null)
                 {
-                    Debug.Log("Potential product is visible");
+                    //Debug.Log("Potential product is visible");
                 }
                 else if (contactedObject.GetComponent<Portal2>() != null)
                 {

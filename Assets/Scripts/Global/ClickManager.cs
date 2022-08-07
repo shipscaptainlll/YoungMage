@@ -18,6 +18,7 @@ public class ClickManager : MonoBehaviour
     public event Action RUp = delegate { };
     public event Action QClicked = delegate { };
     public event Action QLClicked = delegate { };
+    public event Action TabClicked = delegate { };
     public event Action EnterClicked = delegate { };
     public event Action<int> OneClicked = delegate { };
     public event Action<int> TwoClicked = delegate { };
@@ -98,6 +99,13 @@ public class ClickManager : MonoBehaviour
             if (QClicked != null)
             {
                 QClicked();
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (TabClicked != null)
+            {
+                TabClicked();
             }
         }
         if (Input.GetKey(KeyCode.Q))

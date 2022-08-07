@@ -77,6 +77,7 @@ public class CameraSUIInformer : MonoBehaviour
                     //Debug.Log("WROKING");
                     cursorCircleAnimation.HideCircle();
                     NotifySUIElement();
+
                 }
 
                 if (isSUITurned)
@@ -123,14 +124,14 @@ public class CameraSUIInformer : MonoBehaviour
     {
         isSUITurned = true;
         if (SeeingNewObject != null) { SeeingNewObject(lastObservedObject); }
-        Debug.Log(mainCameraController.ObservedObject.transform.gameObject);
+        //Debug.Log(mainCameraController.ObservedObject.transform.gameObject);
     }
 
     void TurnOffSUIElement()
     {
         isSUITurned = false;
         if (StoppedSeeingAnything != null) { StoppedSeeingAnything(); }
-        Debug.Log("Seeing Nothing");
+        //Debug.Log("Seeing Nothing");
     }
 
     

@@ -107,8 +107,13 @@ public class SkeletonBehavior : MonoBehaviour
     
     void Start()
     {
-        if (transform.Find("VFX") != null) { movementVFX = transform.Find("VFX").Find("vfxgraph_StylizedSmoke").GetComponent<VisualEffect>(); StartCoroutine(MovingDustSpawner()); }
         navMeshAgent = GetComponent<NavMeshAgent>();
+        if (transform.Find("VFX") != null) {
+            Debug.Log(transform.Find("VFX") + " " + transform);
+            Debug.Log(transform.Find("VFX").Find("vfxgraph_StylizedSmoke"));
+            movementVFX = transform.Find("VFX").Find("vfxgraph_StylizedSmoke").GetComponent<VisualEffect>(); 
+            StartCoroutine(MovingDustSpawner()); }
+        
         localAnimator = transform.GetComponent<Animator>();
         upperPartMaterial = transform.Find("MiddlePart.002").GetComponent<SkinnedMeshRenderer>().material;
         lowerPartMaterial = transform.Find("OuterPart.002").GetComponent<SkinnedMeshRenderer>().material;
@@ -254,7 +259,7 @@ public class SkeletonBehavior : MonoBehaviour
 
     void CheckIfStopped()
     {
-        /*
+        
         if (navMeshAgent.velocity.magnitude < 0.15f && isMoving)
         {
             if (navigationTarget != null && navigationTarget.GetComponent<IOre>() == null)
@@ -272,7 +277,7 @@ public class SkeletonBehavior : MonoBehaviour
             isMoving = true;
             localAnimator.Play("SkelMove");
         }
-        */
+        
     }
 
     void CheckIfUnused()

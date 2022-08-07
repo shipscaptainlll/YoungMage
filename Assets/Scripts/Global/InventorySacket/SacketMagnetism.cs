@@ -61,7 +61,7 @@ public class SacketMagnetism : MonoBehaviour
 
     void ActivateResourceMagnetism(RaycastHit hit)
     {
-        hit.transform.GetComponent<GlobalResource>().ActivateInventoryMagnetism(startMovementParticles);
+        //hit.transform.GetComponent<GlobalResource>().ActivateInventoryMagnetism(startMovementParticles);
     }
 
 

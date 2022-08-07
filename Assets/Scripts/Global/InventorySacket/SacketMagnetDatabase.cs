@@ -47,7 +47,7 @@ public class SacketMagnetDatabase : MonoBehaviour
         active = false;
         foreach(Transform element in contactedObjects)
         {
-            element.GetComponent<GlobalResource>().ResetMagneticField();
+            //element.GetComponent<GlobalResource>().ResetMagneticField();
         }
         contactedObjects.Clear();
     }

@@ -10,6 +10,9 @@ public class SUIObject : MonoBehaviour
     [SerializeField] Image objectImage;
     [SerializeField] Text objectCount;
     [SerializeField] Text objectType;
+    [SerializeField] Transform borderedCanvas;
+
+    GameObject objectReference;
 
     bool isActivated;
     // Start is called before the first frame update
@@ -37,6 +40,7 @@ public class SUIObject : MonoBehaviour
             objectImage.sprite = newGameObject.transform.GetComponent<IObjectSUI>().ObjectImage;
             objectCount.text = newGameObject.transform.GetComponent<IObjectSUI>().Count.ToString();
             objectType.text = newGameObject.transform.GetComponent<IObjectSUI>().ObjectType;
+            objectReference = newGameObject.transform.Find("Point").gameObject;
         }
     }
 
@@ -50,8 +54,15 @@ public class SUIObject : MonoBehaviour
             koefficient = Mathf.Clamp(koefficient, 0.3f, 1);
             Debug.Log(koefficient);
             transform.localScale = new Vector3(koefficient * 1, koefficient * 1, koefficient * 1);
+            UpdateElementPosition();
         }
         
+    }
+
+    void UpdateElementPosition()
+    {
+        Vector3 objectPosition = Camera.main.WorldToScreenPoint(objectReference.transform.position);
+        borderedCanvas.transform.position = objectPosition;
     }
 
     void HideElement()

@@ -10,6 +10,9 @@ public class SUIMachinery : MonoBehaviour
     [SerializeField] Image objectImage;
     [SerializeField] Image objectSecondImage;
     [SerializeField] Text objectDescription;
+    [SerializeField] Transform borderedCanvas;
+
+    GameObject objectReference;
 
     bool isActivated;
     // Start is called before the first frame update
@@ -37,6 +40,7 @@ public class SUIMachinery : MonoBehaviour
             objectImage.sprite = newGameObject.transform.GetComponent<IMachinery>().ResourceImage;
             objectSecondImage.sprite = newGameObject.transform.GetComponent<IMachinery>().ProductImage;
             objectDescription.text = newGameObject.transform.GetComponent<IMachinery>().Description;
+            objectReference = newGameObject.transform.Find("Point").gameObject;
         }
     }
 
@@ -44,14 +48,21 @@ public class SUIMachinery : MonoBehaviour
     {
         if (cameraSUIInformer.ObservedType == "Machinery")
         {
-            Debug.Log(currentDistance);
+            //Debug.Log(currentDistance);
             float koefficient = 2 / currentDistance;
-            Debug.Log(koefficient);
+            //Debug.Log(koefficient);
             koefficient = Mathf.Clamp(koefficient, 0.3f, 1);
-            Debug.Log(koefficient);
+            //Debug.Log(koefficient);
             transform.localScale = new Vector3(koefficient * 1, koefficient * 1, koefficient * 1);
+            UpdateElementPosition();
         }
         
+    }
+
+    void UpdateElementPosition()
+    {
+        Vector3 objectPosition = Camera.main.WorldToScreenPoint(objectReference.transform.position);
+        borderedCanvas.transform.position = objectPosition;
     }
 
     void HideElement()

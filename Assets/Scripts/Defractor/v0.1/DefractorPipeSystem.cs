@@ -6,6 +6,7 @@ using UnityEngine;
 public class DefractorPipeSystem : MonoBehaviour
 {
     [SerializeField] DefractoringProcess defractoringProcess;
+    [SerializeField] ItemsCounterQuests itemsCounterQuests;
     [SerializeField] ObjectManager objectManager;
     [SerializeField] DefractorProductsList defractorProductsList;
     [SerializeField] Transform defractorStartLine;
@@ -34,6 +35,7 @@ public class DefractorPipeSystem : MonoBehaviour
 
     IEnumerator TransferringThroughPipes(int customID)
     {
+        itemsCounterQuests.countDefractedQuest(GetProductId(customID));
         yield return new WaitForSeconds(1f);
         LetFromDefractor(GetObjectModel(GetProductId(customID)));
         yield return new WaitForSeconds(2f);

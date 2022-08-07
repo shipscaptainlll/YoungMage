@@ -46,7 +46,7 @@ public class OreHealthDecreaser : MonoBehaviour
         {
             counter += Time.deltaTime;
             currentWidth = Mathf.Lerp(initialWidth, updatedWidth, counter / smoothingDuration);
-            Debug.Log(currentWidth);
+            //Debug.Log(currentWidth);
             healthTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, currentWidth);
             yield return null;
         }
@@ -75,7 +75,7 @@ public class OreHealthDecreaser : MonoBehaviour
         {
             counter += Time.deltaTime;
             currentWidth = Mathf.Lerp(0, updatedWidth, counter / smoothingDuration);
-            Debug.Log(currentWidth);
+            //Debug.Log(currentWidth);
             healthTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, currentWidth);
             yield return null;
         }

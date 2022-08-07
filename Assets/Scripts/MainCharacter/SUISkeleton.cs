@@ -14,7 +14,9 @@ public class SUISkeleton : MonoBehaviour
     [SerializeField] Text objectInventorySpeed;
     [SerializeField] Text objectAppliedInventory;
     [SerializeField] Text objectOccupation;
+    [SerializeField] Transform borderedCanvas;
 
+    GameObject objectReference;
     bool isActivated;
     // Start is called before the first frame update
     void Start()
@@ -43,6 +45,9 @@ public class SUISkeleton : MonoBehaviour
             objectInventoryPower.text = "(+" + newGameObject.transform.parent.GetComponent<Skeleton>().InventoryPower.ToString() + ")";
             objectSpeed.text = newGameObject.transform.parent.GetComponent<Skeleton>().Speed.ToString();
             objectInventorySpeed.text = "(+" + newGameObject.transform.parent.GetComponent<Skeleton>().InventorySpeed.ToString() + ")";
+            objectReference = newGameObject.transform.parent.Find("Point").gameObject;
+
+
             string appliedInventoryItems = "";
             if (newGameObject.transform.parent.GetComponent<Skeleton>().AppliedInventory != null)
             {
@@ -67,7 +72,13 @@ public class SUISkeleton : MonoBehaviour
             Debug.Log(koefficient);
             transform.localScale = new Vector3(koefficient * 1, koefficient * 1, koefficient * 1);
         }
-        
+        UpdateElementPosition();
+    }
+
+    void UpdateElementPosition()
+    {
+        Vector3 objectPosition = Camera.main.WorldToScreenPoint(objectReference.transform.position);
+        borderedCanvas.transform.position = objectPosition;
     }
 
     void HideElement()

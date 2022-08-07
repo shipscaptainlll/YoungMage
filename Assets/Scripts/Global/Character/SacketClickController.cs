@@ -29,8 +29,8 @@ public class SacketClickController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        clickManager.QClicked += KickOutItem;
-        clickManager.QLClicked += KickOutItem;
+        clickManager.TabClicked += KickOutItem;
+        //clickManager.TabClicked += KickOutItem;
         random = new System.Random();
         sameMagnetismProduct = GameObject.Find("SameMagnetismProduct").GetComponent<SameMagnetismProduct>();
     }
@@ -66,6 +66,7 @@ public class SacketClickController : MonoBehaviour
             newObject.gameObject.GetComponent<DefractorResource>().DestroyableObjects = destroyableObjects;
             newObject.gameObject.GetComponent<DefractorResource>().objectContactedDefractor += DestroyObject;
             newObject.gameObject.AddComponent<GlobalResource>();
+            newObject.gameObject.GetComponent<GlobalResource>().WasCollected = true;
             newObject.gameObject.GetComponent<GlobalResource>().TargetLayerMask = midasLayerHolder.GetComponent<LayerMaskSettings>().TargetLayer;
             newObject.gameObject.GetComponent<GlobalResource>().ID = quickAccessHandController.CurrentCustomID;
             //missed somewhereTransform magneticAdd = Instantiate(magnetismAddOn, newObject.position, newObject.rotation);

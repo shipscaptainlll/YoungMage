@@ -6,15 +6,16 @@ using UnityEngine;
 public class GlobalResource : MonoBehaviour
 {
     [SerializeField] LayerMask layerMask;
+    [SerializeField] int id;
     int count = 1;
     bool collidingSameResource;
 
-    
 
-    int id;
+    bool wasCollected;
     bool activatedMagnetism = false;
     Coroutine delayMagnetism;
 
+    public bool WasCollected { get { return wasCollected; } set { wasCollected = value; } }
     public int Count { get { return count; } set { count = value; if (CountChanged != null) { CountChanged(); Debug.Log("count changed" + count + " on " + transform); } } }
     public LayerMask TargetLayerMask { set { layerMask = value; } }
     public bool CollidingSameResource { get { return collidingSameResource; } set { collidingSameResource = value; } }
@@ -32,7 +33,7 @@ public class GlobalResource : MonoBehaviour
     {
         
     }
-
+    /*
     private void OnTriggerEnter(Collider other)
     {
         //Debug.Log(other.gameObject.layer + " " + other.transform);
@@ -102,4 +103,5 @@ public class GlobalResource : MonoBehaviour
         activatedMagnetism = false;
         GetComponent<Rigidbody>().useGravity = true;
     }
+    */
 }

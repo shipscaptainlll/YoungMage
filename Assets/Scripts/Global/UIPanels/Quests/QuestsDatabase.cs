@@ -356,9 +356,9 @@ public class QuestsDatabase : MonoBehaviour
         yield return new WaitForSeconds(1f);
         //StartCoroutine(AddNewQuests(1001));
         yield return new WaitForSeconds(0.24f);
-        StartCoroutine(AddNewQuests(0001));
+        StartCoroutine(AddNewQuests(0902));
         yield return new WaitForSeconds(0.24f);
-        StartCoroutine(AddNewQuests(1001));
+        StartCoroutine(AddNewQuests(0802));
         yield return new WaitForSeconds(0.24f);
         StartCoroutine(AddNewQuests(1002));
         yield return new WaitForSeconds(0.24f);
