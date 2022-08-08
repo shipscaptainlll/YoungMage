@@ -33,7 +33,7 @@ public class GlobalResource : MonoBehaviour
     {
         
     }
-    /*
+    
     private void OnTriggerEnter(Collider other)
     {
         //Debug.Log(other.gameObject.layer + " " + other.transform);
@@ -43,7 +43,7 @@ public class GlobalResource : MonoBehaviour
             //|| other.gameObject.layer == 0 && id != 1 && other.gameObject.GetComponent<GlobalResource>() == null
             //Debug.Log(other.gameObject.layer + " " + other.transform);
             GetComponent<SphereCollider>().isTrigger = false;
-            transform.Find("SameResourceMagnetism(Clone)")?.gameObject.SetActive(true);
+            //transform.Find("SameResourceMagnetism(Clone)")?.gameObject.SetActive(true);
             //if (Vector3.Distance(transform.position, other.transform.position) > 2f)
             //{
             //    transform.GetComponent<Rigidbody>().AddForce(new Vector3(0, 10, 0));
@@ -56,7 +56,7 @@ public class GlobalResource : MonoBehaviour
             //Debug.Log("entered magnet " + transform);
         }
     }
-
+    /*
     private void OnTriggerStay(Collider other)
     {
         if (!collidingSameResource && other.gameObject.layer == 6 && id != 1)

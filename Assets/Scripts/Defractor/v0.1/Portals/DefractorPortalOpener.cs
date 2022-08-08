@@ -33,7 +33,7 @@ public class DefractorPortalOpener : MonoBehaviour
             cycleRunning = true;
             EnablePortals();
             StartVFX();
-            StartCoroutine(OpenPortal());
+            //StartCoroutine(OpenPortal());
         }
     }
 
@@ -42,8 +42,11 @@ public class DefractorPortalOpener : MonoBehaviour
         if (cycleRunning)
         {
             cycleRunning = false;
-            StartCoroutine(ClosePortal());
-            StartCoroutine(CloseVFX());
+            //StartCoroutine(ClosePortal());
+            //StartCoroutine(CloseVFX());
+            PortalClosed();
+            housePortal.gameObject.SetActive(false);
+            VFXContainer.gameObject.SetActive(false);
         }
     }
     IEnumerator OpenPortal()

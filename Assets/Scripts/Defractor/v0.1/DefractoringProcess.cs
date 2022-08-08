@@ -24,11 +24,13 @@ public class DefractoringProcess : MonoBehaviour
 
     void Start(int contactedOreId)
     {
+        Debug.Log("started cones rotation");
         StartCoroutine(StartDefractoring(contactedOreId));
     }
 
     IEnumerator StartDefractoring(int contactedOreId)
     {
+        Debug.Log("started cones rotation1");
         cuttingProcess.StartConesRotation();
         yield return new WaitForSeconds(1f);
         if (SentInPipes != null) { SentInPipes(contactedOreId); }

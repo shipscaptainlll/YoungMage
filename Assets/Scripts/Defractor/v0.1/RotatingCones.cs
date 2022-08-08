@@ -28,6 +28,7 @@ public class RotatingCones : MonoBehaviour
 
     void StartRotation()
     {
+        Debug.Log("started cones rotation2");
         rotating = true;
         slowingDown = false;
         StopAllCoroutines();
@@ -57,7 +58,7 @@ public class RotatingCones : MonoBehaviour
 
     IEnumerator RotateCoroutine()
     {
-        
+        Debug.Log("started cones rotation3");
         float elapsed = 0;
         var done = false;
         while (true)
@@ -68,6 +69,7 @@ public class RotatingCones : MonoBehaviour
                 elapsed += Time.deltaTime;
                 currentSpeed += Time.deltaTime * 100;
             } else if (!done && currentSpeed >= requiredSpeed) { done = true; currentSpeed = requiredSpeed; }
+            Debug.Log("started cones rotation4");
             transform.Rotate(0, 0, currentSpeed * direction * Time.deltaTime);
         }
     }

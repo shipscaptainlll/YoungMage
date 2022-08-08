@@ -37,6 +37,7 @@ public class DefractorResource : MonoBehaviour
     void InstantiateDestroyableVersion()
     {
         destroyableVersion = Instantiate(destroyableObjects.TakeObject(id), transform.position, transform.rotation);
+        destroyableVersion.transform.position = transform.position;
         destroyableVersion.AddComponent<DestroyableObject>();
     }
 
