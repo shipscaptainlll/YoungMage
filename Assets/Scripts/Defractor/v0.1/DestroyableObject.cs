@@ -24,7 +24,7 @@ public class DestroyableObject : MonoBehaviour
             //element.GetComponent<ConstantForce>().force = new Vector3(0, -2500f, 0);
             element.GetComponent<BoxCollider>().isTrigger = true;
         }
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(1.3f);
         Destroy(gameObject);
     }
 }
