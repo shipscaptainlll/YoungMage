@@ -28,8 +28,9 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        OnDrawGizmosSelected();
+        
         StartCoroutine(SeeObject());
+        OnDrawGizmosSelected();
     }
 
     // Update is called once per frame
@@ -79,8 +80,10 @@ public class CameraController : MonoBehaviour
 
     IEnumerator SeeObject()
     {
+
         while (true)
         {
+
             if (Physics.SphereCast(transform.position, 0.1f, transform.TransformDirection(Vector3.forward * contactingRayDistance), out hit, contactingRayDistance, clickableLayerMask))
             {
                 objectOutliner.StoreVewedObject(hit.transform); 

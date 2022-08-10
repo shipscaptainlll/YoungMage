@@ -109,8 +109,8 @@ public class SkeletonBehavior : MonoBehaviour
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         if (transform.Find("VFX") != null) {
-            Debug.Log(transform.Find("VFX") + " " + transform);
-            Debug.Log(transform.Find("VFX").Find("vfxgraph_StylizedSmoke"));
+            //Debug.Log(transform.Find("VFX") + " " + transform);
+            //Debug.Log(transform.Find("VFX").Find("vfxgraph_StylizedSmoke"));
             movementVFX = transform.Find("VFX").Find("vfxgraph_StylizedSmoke").GetComponent<VisualEffect>(); 
             StartCoroutine(MovingDustSpawner()); }
         

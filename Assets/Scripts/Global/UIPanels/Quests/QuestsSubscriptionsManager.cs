@@ -34,186 +34,178 @@ public class QuestsSubscriptionsManager : MonoBehaviour
             case 0001:
                 personMovement.CharacterStepMade += questElement.UpdateProgress;
                 questElement.UpdateProgress(personMovement.ProgressParameter);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 0002:
                 break;
             case 0003:
                 personMovement.CharacterRunnedStep += questElement.UpdateProgress;
                 questElement.UpdateProgress(personMovement.ProgressParameterSecond);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 0004:
                 personMovement.CharacterJumped += questElement.UpdateProgress;
                 questElement.UpdateProgress(personMovement.ProgressParameterFourth);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 0005:
                 personMovement.CharacterDoubleJumped += questElement.UpdateProgress;
                 questElement.UpdateProgress(personMovement.ProgressParameterFifth);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 0007:
                 personMovement.CharacterShifted += questElement.UpdateProgress;
                 questElement.UpdateProgress(personMovement.ProgressParameterThird);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 0027:
                 graphicsPanel.SettingChanged += questElement.UpdateProgress;
                 audioPanel.SettingChanged += questElement.UpdateProgress;
                 controlsPanel.SettingChanged += questElement.UpdateProgress;
                 miscPanel.SettingChanged += questElement.UpdateProgress;
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 0028:
                 gameTimeManager.MinutesIngamePassed += questElement.UpdateProgress;
                 questElement.UpdateProgress(gameTimeManager.ProgressParameter);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 0031:
                 mineCharacterCatcher.CharacterEnteredDungeon += questElement.UpdateProgress;
                 questElement.UpdateProgress(mineCharacterCatcher.ProgressParameter);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 0101:
                 itemsCounterQuests.stoneoreCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedStoneoreCount);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 0102:
                 itemsCounterQuests.stonebricksCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedStonebricksCount);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 0104:
                 itemsCounterQuests.stonebricksCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedStonebricksCount);
-                Debug.Log("was subscribed on progress " + questElement.Id);
+                break;
+            case 0106:
+                itemsCounterQuests.stonehandsCreated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.CreatedStonehandsCount);
                 break;
             case 0201:
                 itemsCounterQuests.metaloreCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedMetaloreCount);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 0202:
                 itemsCounterQuests.metalingotsCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedMetalingotsCount);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 0204:
                 itemsCounterQuests.metalingotsCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedMetalingotsCount);
-                Debug.Log("was subscribed on progress " + questElement.Id);
+                break;
+            case 0206:
+                itemsCounterQuests.leggingsCreated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.CreatedLeggingsCount);
+                break;
+            case 0207:
+                itemsCounterQuests.platearmorsCreated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.CreatedPlatearmorCount);
+                break;
+            case 0208:
+                itemsCounterQuests.shoesCreated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.CreatedShoesCount);
+                break;
+            case 0209:
+                itemsCounterQuests.helmsCreated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.CreatedHelmsCount);
                 break;
             case 0301:
                 itemsCounterQuests.cursedoreCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedCursedoreCount);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 0302:
                 itemsCounterQuests.cursedingotsCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedCursedingotsCount);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 0304:
                 itemsCounterQuests.cursedingotsCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedCursedingotsCount);
-                Debug.Log("was subscribed on progress " + questElement.Id);
+                break;
+            case 0306:
+                itemsCounterQuests.bracersCreated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.CreatedBracersCount);
                 break;
             case 0401:
                 itemsCounterQuests.magicstoneoreCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedMagicstoneoreCount);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 0402:
                 itemsCounterQuests.magicstonedustCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedMagicstonedustCount);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 0404:
                 itemsCounterQuests.magicstonedustCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedMagicstonedustCount);
-                Debug.Log("was subscribed on progress " + questElement.Id);
+                break;
+            case 0406:
+                itemsCounterQuests.glovesCreated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.CreatedGlovesCount);
                 break;
             case 0501:
                 itemsCounterQuests.windstoneoreCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedWindstoneoreCount);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 0502:
                 itemsCounterQuests.windstonedustCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedWindstonedustCount);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 0504:
                 itemsCounterQuests.windstonedustCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedWindstonedustCount);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 0601:
                 itemsCounterQuests.waterstoneoreCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedWaterstoneoreCount);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 0602:
                 itemsCounterQuests.waterstonedustCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedWaterstonedustCount);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 0604:
                 itemsCounterQuests.waterstonedustCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedWaterstonedustCount);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 0701:
                 itemsCounterQuests.earthstoneoreCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedEarthstoneoreCount);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 0702:
                 itemsCounterQuests.earthstonedustCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedEarthstonedustCount);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 0704:
                 itemsCounterQuests.earthstonedustCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedEarthstonedustCount);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 0801:
                 itemsCounterQuests.lavastoneoreCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedLavastoneoreCount);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 0802:
                 itemsCounterQuests.lavastonedustCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedLavastonedustCount);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 0804:
                 itemsCounterQuests.lavastonedustCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedLavastonedustCount);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 1001:
                 contactedSkeletonsCounter.ContactedSkeleton += questElement.UpdateProgress;
                 questElement.UpdateProgress(contactedSkeletonsCounter.ContactedSkeletonsCount);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 1002:
                 contactedSkeletonsCounter.ContactedSmallSkeleton += questElement.UpdateProgress;
                 questElement.UpdateProgress(contactedSkeletonsCounter.CountSmallSkeletons);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 1006:
                 destroyedSkeletonsCounter.DestroyedSkeleton += questElement.UpdateProgress;
                 questElement.UpdateProgress(destroyedSkeletonsCounter.DestroyedSkeletonsCount);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 1007:
                 destroyedSkeletonsCounter.DestroyedSmallSkeleton += questElement.UpdateProgress;
                 questElement.UpdateProgress(destroyedSkeletonsCounter.CountSmallSkeletons);
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
         }
     }
@@ -224,152 +216,137 @@ public class QuestsSubscriptionsManager : MonoBehaviour
         {
             case 0001:
                 personMovement.CharacterStepMade -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 0002:
                 break;
             case 0003:
                 personMovement.CharacterRunnedStep -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 0004:
                 personMovement.CharacterJumped -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 0005:
                 personMovement.CharacterDoubleJumped -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 0007:
                 personMovement.CharacterShifted -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 0027:
                 graphicsPanel.SettingChanged -= questElement.UpdateProgress;
                 audioPanel.SettingChanged -= questElement.UpdateProgress;
                 controlsPanel.SettingChanged -= questElement.UpdateProgress;
                 miscPanel.SettingChanged -= questElement.UpdateProgress;
-                Debug.Log("was subscribed on progress " + questElement.Id);
                 break;
             case 0028:
                 gameTimeManager.MinutesIngamePassed -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 0031:
                 mineCharacterCatcher.CharacterEnteredDungeon -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 0101:
                 itemsCounterQuests.stoneoreCollected -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 0102:
                 itemsCounterQuests.stonebricksCollected -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 0104:
                 itemsCounterQuests.stonebricksCollected -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
+                break;
+            case 0106:
+                itemsCounterQuests.stonehandsCreated -= questElement.UpdateProgress;
                 break;
             case 0201:
                 itemsCounterQuests.metaloreCollected -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 0202:
                 itemsCounterQuests.metalingotsCollected -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 0204:
                 itemsCounterQuests.metalingotsCollected -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
+                break;
+            case 0206:
+                itemsCounterQuests.leggingsCreated -= questElement.UpdateProgress;
+                break;
+            case 0207:
+                itemsCounterQuests.platearmorsCreated -= questElement.UpdateProgress;
+                break;
+            case 0208:
+                itemsCounterQuests.shoesCreated -= questElement.UpdateProgress;
+                break;
+            case 0209:
+                itemsCounterQuests.helmsCreated -= questElement.UpdateProgress;
                 break;
             case 0301:
                 itemsCounterQuests.cursedoreCollected -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 0302:
                 itemsCounterQuests.cursedingotsCollected -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 0304:
                 itemsCounterQuests.cursedingotsCollected -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
+                break;
+            case 0306:
+                itemsCounterQuests.bracersCreated -= questElement.UpdateProgress;
                 break;
             case 0401:
                 itemsCounterQuests.magicstoneoreCollected -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 0402:
                 itemsCounterQuests.magicstonedustCollected -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 0404:
                 itemsCounterQuests.magicstonedustCollected -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
+                break;
+            case 0406:
+                itemsCounterQuests.glovesCreated -= questElement.UpdateProgress;
                 break;
             case 0501:
                 itemsCounterQuests.windstoneoreCollected -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 0502:
                 itemsCounterQuests.windstonedustCollected -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 0504:
                 itemsCounterQuests.windstonedustCollected -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 0601:
                 itemsCounterQuests.waterstoneoreCollected -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 0602:
                 itemsCounterQuests.waterstonedustCollected -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 0604:
                 itemsCounterQuests.waterstonedustCollected -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 0701:
                 itemsCounterQuests.earthstoneoreCollected -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 0702:
                 itemsCounterQuests.earthstonedustCollected -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 0704:
                 itemsCounterQuests.earthstonedustCollected -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 0801:
                 itemsCounterQuests.lavastoneoreCollected -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 0802:
                 itemsCounterQuests.lavastonedustCollected -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 0804:
                 itemsCounterQuests.lavastonedustCollected -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 1001:
                 contactedSkeletonsCounter.ContactedSkeleton -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 1002:
                 contactedSkeletonsCounter.ContactedSmallSkeleton -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 1006:
                 destroyedSkeletonsCounter.DestroyedSkeleton -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
             case 1007:
                 destroyedSkeletonsCounter.DestroyedSmallSkeleton -= questElement.UpdateProgress;
-                Debug.Log("was unsubscribed on progress " + questElement.Id);
                 break;
         }
     }
@@ -382,7 +359,7 @@ public class QuestsSubscriptionsManager : MonoBehaviour
         InstantiatePotentialQuest(0103, "Transmutate to gold stone ore", 10, 10);
         InstantiatePotentialQuest(0104, "Collect processed stone", 50, 20);+
         InstantiatePotentialQuest(0105, "Transmutate to gold processed stone", 10, 10);
-        InstantiatePotentialQuest(0106, "Create stone gloves", 1, 25);
+        InstantiatePotentialQuest(0106, "Create stone gloves", 1, 25);+
         InstantiatePotentialQuest(0107, "Transmutate to gold gloves", 1, 10);
 
         InstantiatePotentialQuest(0201, "Collect metal ore", 10, 25);+
@@ -390,10 +367,10 @@ public class QuestsSubscriptionsManager : MonoBehaviour
         InstantiatePotentialQuest(0203, "Transmutate to gold metal ore", 10, 20);
         InstantiatePotentialQuest(0204, "Collect processed metal", 50, 40);+
         InstantiatePotentialQuest(0205, "Transmutate to gold processed metal", 10, 30);
-        InstantiatePotentialQuest(0206, "Create metal leggings", 1, 30);
-        InstantiatePotentialQuest(0207, "Create metal breast plate", 1, 50);
-        InstantiatePotentialQuest(0208, "Create metal shoes", 1, 20);
-        InstantiatePotentialQuest(0209, "Create metal helm", 1, 40);
+        InstantiatePotentialQuest(0206, "Create metal leggings", 1, 30);+
+        InstantiatePotentialQuest(0207, "Create metal breast plate", 1, 50);+
+        InstantiatePotentialQuest(0208, "Create metal shoes", 1, 20);+
+        InstantiatePotentialQuest(0209, "Create metal helm", 1, 40);+
         InstantiatePotentialQuest(0210, "Transmutate to gold leggings", 1, 30);
         InstantiatePotentialQuest(0211, "Transmutate to gold breast plate", 1, 50);
         InstantiatePotentialQuest(0212, "Transmutate to gold shoes", 1, 20);
@@ -404,7 +381,7 @@ public class QuestsSubscriptionsManager : MonoBehaviour
         InstantiatePotentialQuest(0303, "Transmutate to gold cursed ore", 10, 40);
         InstantiatePotentialQuest(0304, "Collect cursed gem", 20, 10);+
         InstantiatePotentialQuest(0305, "Transmutate to gold cursed gem", 10, 80);
-        InstantiatePotentialQuest(0306, "Create cursed wrings", 1, 100);
+        InstantiatePotentialQuest(0306, "Create cursed wrings", 1, 100);+
         InstantiatePotentialQuest(0307, "Transmutate to gold wrings", 1, 100);
 
         InstantiatePotentialQuest(0401, "Collect magicstone ore", 1, 100);+
@@ -428,7 +405,7 @@ public class QuestsSubscriptionsManager : MonoBehaviour
         InstantiatePotentialQuest(0605, "Transmutate to gold water crystall", 1, 1000);
 
         InstantiatePotentialQuest(0701, "Collect earthstone ore", 1, 100);+
-        InstantiatePotentialQuest(0702, "Defract earthstone ore", 1, 100);
+        InstantiatePotentialQuest(0702, "Defract earthstone ore", 1, 100);+
         InstantiatePotentialQuest(0703, "Transmutate to gold earthstone ore", 1, 100);
         InstantiatePotentialQuest(0704, "Collect earth crystall", 1, 100);+
         InstantiatePotentialQuest(0705, "Transmutate to gold earth crystall", 1, 1000);

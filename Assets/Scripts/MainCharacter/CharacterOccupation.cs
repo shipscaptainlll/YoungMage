@@ -24,7 +24,7 @@ public class CharacterOccupation : MonoBehaviour
         _contactManager.AlchemistTableDetected += EngageObject;
         _clickManager.EscClicked += ResetPack;
         _clickManager.RMBClicked += ResetPack;
-        //_clickManager.LMBClicked += NotifyLMBClicked;
+        _clickManager.LMBClicked += NotifyLMBClicked;
         _clickManager.EnterClicked += NotifyEnterClicked;
     }
 
@@ -32,7 +32,7 @@ public class CharacterOccupation : MonoBehaviour
     {
         if (!_isOccupied)
         {
-            //Debug.Log("Engaged alchemist table");
+            Debug.Log("Engaged alchemist table " + engagedObject);
             _isOccupied = true;
             PreventCharacterMovement();
             GetObjectData(engagedObject);
@@ -108,18 +108,26 @@ public class CharacterOccupation : MonoBehaviour
         }
     }
 
-    /*
+    
     void NotifyLMBClicked()
     {
         switch (_engagedObjectName)
         {
             case "alchemist table":
                 if (LMBClicked != null) LMBClicked(_engagedObject);
-                DisengageObject();
+                StartCoroutine(DelayDisengageObject());
+                //DisengageObject();
                 break;
         }
     }
-    */
+
+    IEnumerator DelayDisengageObject()
+    {
+        yield return new WaitForSeconds(0.2f);
+        DisengageObject();
+        yield return null;
+    }
+    
     void NotifyEnterClicked()
     {
         switch (_engagedObjectName)

@@ -41,7 +41,7 @@ public class PortalOpener : MonoBehaviour
         if (!portalOpened)
         {
             portalOpened = true;
-            Debug.Log("OpeningPortal");
+            //Debug.Log("OpeningPortal");
             if (!cycleRunning && eClickVariations.IsOpeningPortal)
             {
                 cycleRunning = true;
@@ -55,7 +55,7 @@ public class PortalOpener : MonoBehaviour
                 StartCoroutine(OpenPortal());
             }
         } else { portalOpened = false;
-            Debug.Log("ClosingPortal");
+            //Debug.Log("ClosingPortal");
             if (cycleRunning)
             {
                 cycleRunning = false;

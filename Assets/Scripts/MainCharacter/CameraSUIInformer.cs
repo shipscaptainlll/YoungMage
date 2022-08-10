@@ -101,7 +101,7 @@ public class CameraSUIInformer : MonoBehaviour
                 
                 if (cursorCircleAnimation.IsFinished)
                 {
-                    Debug.Log("Hello tdwad");
+                    //Debug.Log("Hello tdwad");
                     cursorCircleAnimation.StopCircleAnimation();
                 }
             }

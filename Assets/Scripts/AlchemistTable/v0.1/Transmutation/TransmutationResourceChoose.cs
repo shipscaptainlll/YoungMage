@@ -302,8 +302,10 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
 
     void ChooseResource(Transform engagedResourcePack)
     {
+        //Debug.Log(engagedResourcePack + " engaged resource pack");
         if (engagedResourcePack.parent.Find("ChooseResource") == transform)
         {
+            //Debug.Log("found");
             StopResourceChoosing(engagedResourcePack);
         }
     }
@@ -319,6 +321,7 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
 
     public void Show()
     {
+        Debug.Log("Hello there");
         if (!_transmutationEnabled)
         {
             foreach (GameObject resource in _accessibleResources)

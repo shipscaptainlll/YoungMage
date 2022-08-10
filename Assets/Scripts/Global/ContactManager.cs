@@ -31,7 +31,7 @@ public class ContactManager : MonoBehaviour
         if (!cursorManager.SomethingOpened)
         {
             Transform contactedObject = CameraController.ObservedObject.transform;
-            //Debug.Log(contactedObject);
+            Debug.Log(contactedObject);
             if (contactedObject != null)
             {
                 //Debug.Log(contactedObject);
@@ -105,6 +105,13 @@ public class ContactManager : MonoBehaviour
                 else if (contactedObject.GetComponent<AlchemistPotentialProduct>() != null)
                 {
                     //Debug.Log("Potential product is visible");
+                }
+                else if (contactedObject.parent.Find("ChooseResource") != null && contactedObject.parent.Find("ChooseResource").GetComponent<TransmutationResourceChoose>() != null)
+                {
+                    if (AlchemistTableDetected != null)
+                    {
+                        AlchemistTableDetected(contactedObject.parent.Find("ChooseResource"));
+                    }
                 }
                 else if (contactedObject.GetComponent<Portal2>() != null)
                 {

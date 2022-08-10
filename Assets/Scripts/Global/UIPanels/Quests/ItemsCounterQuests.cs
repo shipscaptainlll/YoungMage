@@ -14,13 +14,13 @@ public class ItemsCounterQuests : MonoBehaviour
     int collectedMagicstoneoreCount;
     int collectedWaterstoneoreCount;
     int collectedWindstoneoreCount;
-    int collectedStonehandsCount;
-    int collectedLeggingsCount;
-    int collectedPlatearmorCount;
-    int collectedShoesCount;
-    int collectedHelmsCount;
-    int collectedGlovesCount;
-    int collectedBracersCount;
+    int createdStonehandsCount;
+    int createdLeggingsCount;
+    int createdPlatearmorCount;
+    int createdShoesCount;
+    int createdHelmsCount;
+    int createdGlovesCount;
+    int createdBracersCount;
     int collectedStonebricksCount;
     int collectedMetalingotsCount;
     int collectedCursedingotsCount;
@@ -39,13 +39,13 @@ public class ItemsCounterQuests : MonoBehaviour
     public int CollectedMagicstoneoreCount { get { return collectedMagicstoneoreCount; } }
     public int CollectedWaterstoneoreCount { get { return collectedWaterstoneoreCount; } }
     public int CollectedWindstoneoreCount { get { return collectedWindstoneoreCount; } }
-    public int CollectedStonehandsCount { get { return collectedStonehandsCount; } }
-    public int CollectedLeggingsCount { get { return collectedLeggingsCount; } }
-    public int CollectedPlatearmorCount { get { return collectedPlatearmorCount; } }
-    public int CollectedShoesCount { get { return collectedShoesCount; } }
-    public int CollectedHelmsCount { get { return collectedHelmsCount; } }
-    public int CollectedGlovesCount { get { return collectedGlovesCount; } }
-    public int CollectedBracersCount { get { return collectedBracersCount; } }
+    public int CreatedStonehandsCount { get { return createdStonehandsCount; } }
+    public int CreatedLeggingsCount { get { return createdLeggingsCount; } }
+    public int CreatedPlatearmorCount { get { return createdPlatearmorCount; } }
+    public int CreatedShoesCount { get { return createdShoesCount; } }
+    public int CreatedHelmsCount { get { return createdHelmsCount; } }
+    public int CreatedGlovesCount { get { return createdGlovesCount; } }
+    public int CreatedBracersCount { get { return createdBracersCount; } }
     public int CollectedStonebricksCount { get { return collectedStonebricksCount; } }
     public int CollectedMetalingotsCount { get { return collectedMetalingotsCount; } }
     public int CollectedCursedingotsCount { get { return collectedCursedingotsCount; } }
@@ -65,13 +65,13 @@ public class ItemsCounterQuests : MonoBehaviour
     public event Action<int> magicstoneoreCollected = delegate { };
     public event Action<int> waterstoneoreCollected = delegate { };
     public event Action<int> windstoneoreCollected = delegate { };
-    public event Action<int> stonehandsCollected = delegate { };
-    public event Action<int> leggingsCollected = delegate { };
-    public event Action<int> platearmorsCollected = delegate { };
-    public event Action<int> shoesCollected = delegate { };
-    public event Action<int> helmsCollected = delegate { };
-    public event Action<int> glovesCollected = delegate { };
-    public event Action<int> bracersCollected = delegate { };
+    public event Action<int> stonehandsCreated = delegate { };
+    public event Action<int> leggingsCreated = delegate { };
+    public event Action<int> platearmorsCreated = delegate { };
+    public event Action<int> shoesCreated = delegate { };
+    public event Action<int> helmsCreated = delegate { };
+    public event Action<int> glovesCreated = delegate { };
+    public event Action<int> bracersCreated = delegate { };
     public event Action<int> stonebricksCollected = delegate { };
     public event Action<int> metalingotsCollected = delegate { };
     public event Action<int> cursedingotsCollected = delegate { };
@@ -83,13 +83,13 @@ public class ItemsCounterQuests : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void countQuestItem(int id)
@@ -140,41 +140,6 @@ public class ItemsCounterQuests : MonoBehaviour
                 collectedWindstoneoreCount++;
                 if (windstoneoreCollected != null) { windstoneoreCollected(collectedWindstoneoreCount); }
                 //windStoneOre
-                break;
-            case 11:
-                collectedStonehandsCount++;
-                if (stonehandsCollected != null) { stonehandsCollected(collectedStonehandsCount); }
-                //stoneHands
-                break;
-            case 12:
-                collectedLeggingsCount++;
-                if (leggingsCollected != null) { leggingsCollected(collectedLeggingsCount); }
-                //leggings
-                break;
-            case 13:
-                collectedPlatearmorCount++;
-                if (platearmorsCollected != null) { platearmorsCollected(collectedPlatearmorCount); }
-                //plateArmor
-                break;
-            case 14:
-                collectedShoesCount++;
-                if (shoesCollected != null) { shoesCollected(collectedShoesCount); }
-                //shoes
-                break;
-            case 15:
-                collectedHelmsCount++;
-                if (helmsCollected != null) { helmsCollected(collectedHelmsCount); }
-                //helm
-                break;
-            case 16:
-                collectedGlovesCount++;
-                if (glovesCollected != null) { glovesCollected(collectedGlovesCount); }
-                //gloves
-                break;
-            case 17:
-                collectedBracersCount++;
-                if (bracersCollected != null) { bracersCollected(collectedBracersCount); }
-                //bracers
                 break;
             case 18:
                 collectedStonebricksCount++;
@@ -266,6 +231,49 @@ public class ItemsCounterQuests : MonoBehaviour
                 //windStoneDust
                 break;
 
+        }
+    }
+
+    public void countCreatedQuest(int id)
+    {
+        Debug.Log(id);
+        switch (id)
+        {
+            case 11:
+                createdStonehandsCount++;
+                if (stonehandsCreated != null) { stonehandsCreated(createdStonehandsCount); Debug.Log("stone hands created"); }
+                //stoneHands
+                break;
+            case 12:
+                createdLeggingsCount++;
+                if (leggingsCreated != null) { leggingsCreated(createdLeggingsCount); }
+                //leggings
+                break;
+            case 13:
+                createdPlatearmorCount++;
+                if (platearmorsCreated != null) { platearmorsCreated(createdPlatearmorCount); }
+                //plateArmor
+                break;
+            case 14:
+                createdShoesCount++;
+                if (shoesCreated != null) { shoesCreated(createdShoesCount); }
+                //shoes
+                break;
+            case 15:
+                createdHelmsCount++;
+                if (helmsCreated != null) { helmsCreated(createdHelmsCount); }
+                //helm
+                break;
+            case 16:
+                createdGlovesCount++;
+                if (glovesCreated != null) { glovesCreated(createdGlovesCount); }
+                //gloves
+                break;
+            case 17:
+                createdBracersCount++;
+                if (bracersCreated != null) { bracersCreated(createdBracersCount); }
+                //bracers
+                break;
         }
     }
 }

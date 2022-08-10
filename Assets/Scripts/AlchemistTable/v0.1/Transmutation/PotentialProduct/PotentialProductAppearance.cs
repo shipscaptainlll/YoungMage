@@ -15,6 +15,7 @@ public class PotentialProductAppearance : MonoBehaviour
     [SerializeField] Transform amuletsHolder;
     [SerializeField] PotentialProductLibrary potentialProductLibrary;
     [SerializeField] Transform resourcePacksHolder;
+    [SerializeField] ItemsCounterQuests itemsCounterQuests;
 
     [SerializeField] EClickVariations eClickVariations;
     Transform createdObject;
@@ -53,6 +54,8 @@ public class PotentialProductAppearance : MonoBehaviour
                 {
                     isCreated = true;
                     ObjectCreated();
+                    Debug.Log("Creating object with id3 :" + element.GetComponent<TransmutationProduct>().ID);
+                    itemsCounterQuests.countCreatedQuest(element.GetComponent<TransmutationProduct>().ID);
                     createdObject = Instantiate(element, element.position, element.rotation);
                     createdObject.GetComponent<TransmutationProduct>().EnteredPortal += DestroyObject;
                     createdObject.GetComponent<MeshRenderer>().enabled = true;
@@ -80,7 +83,9 @@ public class PotentialProductAppearance : MonoBehaviour
                         {
                             isCreated = true;
                             ObjectCreated();
+                            Debug.Log("Creating object with id1 :" + element.GetComponent<TransmutationProduct>().ID);
                             createdObject = Instantiate(element, element.position, element.rotation);
+                            itemsCounterQuests.countCreatedQuest(element.GetComponent<TransmutationProduct>().ID);
                             createdObject.GetComponent<TransmutationProduct>().EnteredPortal += DestroyObject;
                             createdObject.GetComponent<MeshRenderer>().enabled = true;
                             createdObject.GetComponent<Rigidbody>().useGravity = true;
@@ -115,7 +120,9 @@ public class PotentialProductAppearance : MonoBehaviour
                         {
                             isCreated = true;
                             ObjectCreated();
+                            Debug.Log("Creating object with id2 " + element.GetComponent<TransmutationProduct>().ID);
                             createdObject = Instantiate(element, element.position, element.rotation);
+                            itemsCounterQuests.countCreatedQuest(element.GetComponent<TransmutationProduct>().ID);
                             createdObject.GetComponent<TransmutationProduct>().EnteredPortal += DestroyObject;
                             createdObject.GetComponent<MeshRenderer>().enabled = true;
                             createdObject.GetComponent<Rigidbody>().useGravity = true;
