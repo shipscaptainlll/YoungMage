@@ -74,7 +74,7 @@ public class OnHoverHandler2D : MonoBehaviour, IPointerEnterHandler, IPointerExi
             }
         }
 
-        Debug.Log(hitObjects[0].gameObject);
+        //Debug.Log(hitObjects[0].gameObject);
         return hitObjects[0].gameObject;
     }
 }

@@ -77,8 +77,12 @@ public class SUISkeleton : MonoBehaviour
 
     void UpdateElementPosition()
     {
-        Vector3 objectPosition = Camera.main.WorldToScreenPoint(objectReference.transform.position);
-        borderedCanvas.transform.position = objectPosition;
+        if (cameraSUIInformer.ObservedType == "Skeleton")
+        {
+            Vector3 objectPosition = Camera.main.WorldToScreenPoint(objectReference.transform.position);
+            borderedCanvas.transform.position = objectPosition;
+        }
+        
     }
 
     void HideElement()

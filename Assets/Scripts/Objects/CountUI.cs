@@ -49,7 +49,7 @@ public class CountUI : MonoBehaviour
             currentCoroutine = StartCoroutine(PopupText());
         } else { currentCoroutine = StartCoroutine(PopupText()); }
 
-        Debug.Log("Count updated");
+        //Debug.Log("Count updated");
     }
 
     IEnumerator PopupText()

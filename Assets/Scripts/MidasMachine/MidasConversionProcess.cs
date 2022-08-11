@@ -25,6 +25,7 @@ public class MidasConversionProcess : MonoBehaviour
 
     void StartConversion(int resourceID)
     {
+        Debug.Log("Resource entered collector " + resourceID);
         int countOfCoins = midasResourcesCosts.GetCost(resourceID);
         StartCoroutine(PushIntoProcess(countOfCoins));
     }

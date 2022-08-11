@@ -75,13 +75,25 @@ public class QuestsSubscriptionsManager : MonoBehaviour
                 itemsCounterQuests.stonebricksCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedStonebricksCount);
                 break;
+            case 0103:
+                itemsCounterQuests.stoneoreTransmutated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.TransmutatedStoneoreCount);
+                break;
             case 0104:
                 itemsCounterQuests.stonebricksCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedStonebricksCount);
                 break;
+            case 0105:
+                itemsCounterQuests.stonebricksTransmutated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.TransmutatedStonebricksCount);
+                break;
             case 0106:
                 itemsCounterQuests.stonehandsCreated += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CreatedStonehandsCount);
+                break;
+            case 0107:
+                itemsCounterQuests.stonehandsTransmutated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.TransmutatedStonehandsCount);
                 break;
             case 0201:
                 itemsCounterQuests.metaloreCollected += questElement.UpdateProgress;
@@ -91,9 +103,17 @@ public class QuestsSubscriptionsManager : MonoBehaviour
                 itemsCounterQuests.metalingotsCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedMetalingotsCount);
                 break;
+            case 0203:
+                itemsCounterQuests.metaloreTransmutated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.TransmutatedMetaloreCount);
+                break;
             case 0204:
                 itemsCounterQuests.metalingotsCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedMetalingotsCount);
+                break;
+            case 0205:
+                itemsCounterQuests.metalingotsTransmutated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.TransmutatedMetalingotsCount);
                 break;
             case 0206:
                 itemsCounterQuests.leggingsCreated += questElement.UpdateProgress;
@@ -111,6 +131,22 @@ public class QuestsSubscriptionsManager : MonoBehaviour
                 itemsCounterQuests.helmsCreated += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CreatedHelmsCount);
                 break;
+            case 0210:
+                itemsCounterQuests.leggingsTransmutated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.TransmutatedLeggingsCount);
+                break;
+            case 0211:
+                itemsCounterQuests.platearmorsTransmutated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.TransmutatedPlatearmorCount);
+                break;
+            case 0212:
+                itemsCounterQuests.shoesTransmutated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.TransmutatedShoesCount);
+                break;
+            case 0213:
+                itemsCounterQuests.helmsTransmutated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.TransmutatedHelmsCount);
+                break;
             case 0301:
                 itemsCounterQuests.cursedoreCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedCursedoreCount);
@@ -119,13 +155,25 @@ public class QuestsSubscriptionsManager : MonoBehaviour
                 itemsCounterQuests.cursedingotsCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedCursedingotsCount);
                 break;
+            case 0303:
+                itemsCounterQuests.cursedoreTransmutated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.TransmutatedCursedoreCount);
+                break;
             case 0304:
                 itemsCounterQuests.cursedingotsCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedCursedingotsCount);
                 break;
+            case 0305:
+                itemsCounterQuests.cursedingotsTransmutated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.TransmutatedCursedingotsCount);
+                break;
             case 0306:
                 itemsCounterQuests.bracersCreated += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CreatedBracersCount);
+                break;
+            case 0307:
+                itemsCounterQuests.bracersTransmutated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.TransmutatedBracersCount);
                 break;
             case 0401:
                 itemsCounterQuests.magicstoneoreCollected += questElement.UpdateProgress;
@@ -135,13 +183,25 @@ public class QuestsSubscriptionsManager : MonoBehaviour
                 itemsCounterQuests.magicstonedustCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedMagicstonedustCount);
                 break;
+            case 0403:
+                itemsCounterQuests.magicstoneoreTransmutated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.TransmutatedMagicstoneoreCount);
+                break;
             case 0404:
                 itemsCounterQuests.magicstonedustCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedMagicstonedustCount);
                 break;
+            case 0405:
+                itemsCounterQuests.magicstonedustTransmutated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.TransmutatedMagicstonedustCount);
+                break;
             case 0406:
                 itemsCounterQuests.glovesCreated += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CreatedGlovesCount);
+                break;
+            case 0407:
+                itemsCounterQuests.glovesTransmutated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.TransmutatedGlovesCount);
                 break;
             case 0501:
                 itemsCounterQuests.windstoneoreCollected += questElement.UpdateProgress;
@@ -151,9 +211,17 @@ public class QuestsSubscriptionsManager : MonoBehaviour
                 itemsCounterQuests.windstonedustCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedWindstonedustCount);
                 break;
+            case 0503:
+                itemsCounterQuests.windstoneoreTransmutated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.TransmutatedWindstoneoreCount);
+                break;
             case 0504:
                 itemsCounterQuests.windstonedustCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedWindstonedustCount);
+                break;
+            case 0505:
+                itemsCounterQuests.windstonedustTransmutated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.TransmutatedWindstonedustCount);
                 break;
             case 0601:
                 itemsCounterQuests.waterstoneoreCollected += questElement.UpdateProgress;
@@ -163,9 +231,17 @@ public class QuestsSubscriptionsManager : MonoBehaviour
                 itemsCounterQuests.waterstonedustCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedWaterstonedustCount);
                 break;
+            case 0603:
+                itemsCounterQuests.waterstoneoreTransmutated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.TransmutatedWaterstoneoreCount);
+                break;
             case 0604:
                 itemsCounterQuests.waterstonedustCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedWaterstonedustCount);
+                break;
+            case 0605:
+                itemsCounterQuests.waterstonedustTransmutated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.TransmutatedWaterstonedustCount);
                 break;
             case 0701:
                 itemsCounterQuests.earthstoneoreCollected += questElement.UpdateProgress;
@@ -175,9 +251,17 @@ public class QuestsSubscriptionsManager : MonoBehaviour
                 itemsCounterQuests.earthstonedustCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedEarthstonedustCount);
                 break;
+            case 0703:
+                itemsCounterQuests.earthstoneoreTransmutated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.TransmutatedEarthstoneoreCount);
+                break;
             case 0704:
                 itemsCounterQuests.earthstonedustCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedEarthstonedustCount);
+                break;
+            case 0705:
+                itemsCounterQuests.earthstoneoreTransmutated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.TransmutatedEarthstonedustCount);
                 break;
             case 0801:
                 itemsCounterQuests.lavastoneoreCollected += questElement.UpdateProgress;
@@ -187,9 +271,17 @@ public class QuestsSubscriptionsManager : MonoBehaviour
                 itemsCounterQuests.lavastonedustCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedLavastonedustCount);
                 break;
+            case 0803:
+                itemsCounterQuests.lavastoneoreTransmutated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.TransmutatedLavastoneoreCount);
+                break;
             case 0804:
                 itemsCounterQuests.lavastonedustCollected += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.CollectedLavastonedustCount);
+                break;
+            case 0805:
+                itemsCounterQuests.lavastonedustTransmutated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.TransmutatedLavastonedustCount);
                 break;
             case 1001:
                 contactedSkeletonsCounter.ContactedSkeleton += questElement.UpdateProgress;
@@ -249,11 +341,20 @@ public class QuestsSubscriptionsManager : MonoBehaviour
             case 0102:
                 itemsCounterQuests.stonebricksCollected -= questElement.UpdateProgress;
                 break;
+            case 0103:
+                itemsCounterQuests.stoneoreTransmutated -= questElement.UpdateProgress;
+                break;
             case 0104:
                 itemsCounterQuests.stonebricksCollected -= questElement.UpdateProgress;
                 break;
+            case 0105:
+                itemsCounterQuests.stonebricksTransmutated -= questElement.UpdateProgress;
+                break;
             case 0106:
                 itemsCounterQuests.stonehandsCreated -= questElement.UpdateProgress;
+                break;
+            case 0107:
+                itemsCounterQuests.stonehandsTransmutated -= questElement.UpdateProgress;
                 break;
             case 0201:
                 itemsCounterQuests.metaloreCollected -= questElement.UpdateProgress;
@@ -261,8 +362,14 @@ public class QuestsSubscriptionsManager : MonoBehaviour
             case 0202:
                 itemsCounterQuests.metalingotsCollected -= questElement.UpdateProgress;
                 break;
+            case 0203:
+                itemsCounterQuests.metaloreTransmutated -= questElement.UpdateProgress;
+                break;
             case 0204:
                 itemsCounterQuests.metalingotsCollected -= questElement.UpdateProgress;
+                break;
+            case 0205:
+                itemsCounterQuests.metalingotsTransmutated -= questElement.UpdateProgress;
                 break;
             case 0206:
                 itemsCounterQuests.leggingsCreated -= questElement.UpdateProgress;
@@ -276,17 +383,38 @@ public class QuestsSubscriptionsManager : MonoBehaviour
             case 0209:
                 itemsCounterQuests.helmsCreated -= questElement.UpdateProgress;
                 break;
+            case 0210:
+                itemsCounterQuests.leggingsTransmutated -= questElement.UpdateProgress;
+                break;
+            case 0211:
+                itemsCounterQuests.platearmorsTransmutated -= questElement.UpdateProgress;
+                break;
+            case 0212:
+                itemsCounterQuests.shoesTransmutated -= questElement.UpdateProgress;
+                break;
+            case 0213:
+                itemsCounterQuests.helmsTransmutated -= questElement.UpdateProgress;
+                break;
             case 0301:
                 itemsCounterQuests.cursedoreCollected -= questElement.UpdateProgress;
                 break;
             case 0302:
                 itemsCounterQuests.cursedingotsCollected -= questElement.UpdateProgress;
                 break;
+            case 0303:
+                itemsCounterQuests.cursedoreTransmutated -= questElement.UpdateProgress;
+                break;
             case 0304:
                 itemsCounterQuests.cursedingotsCollected -= questElement.UpdateProgress;
                 break;
+            case 0305:
+                itemsCounterQuests.cursedingotsTransmutated -= questElement.UpdateProgress;
+                break;
             case 0306:
                 itemsCounterQuests.bracersCreated -= questElement.UpdateProgress;
+                break;
+            case 0307:
+                itemsCounterQuests.bracersTransmutated -= questElement.UpdateProgress;
                 break;
             case 0401:
                 itemsCounterQuests.magicstoneoreCollected -= questElement.UpdateProgress;
@@ -294,11 +422,20 @@ public class QuestsSubscriptionsManager : MonoBehaviour
             case 0402:
                 itemsCounterQuests.magicstonedustCollected -= questElement.UpdateProgress;
                 break;
+            case 0403:
+                itemsCounterQuests.magicstoneoreTransmutated -= questElement.UpdateProgress;
+                break;
             case 0404:
                 itemsCounterQuests.magicstonedustCollected -= questElement.UpdateProgress;
                 break;
+            case 0405:
+                itemsCounterQuests.magicstonedustTransmutated -= questElement.UpdateProgress;
+                break;
             case 0406:
                 itemsCounterQuests.glovesCreated -= questElement.UpdateProgress;
+                break;
+            case 0407:
+                itemsCounterQuests.glovesTransmutated -= questElement.UpdateProgress;
                 break;
             case 0501:
                 itemsCounterQuests.windstoneoreCollected -= questElement.UpdateProgress;
@@ -306,8 +443,14 @@ public class QuestsSubscriptionsManager : MonoBehaviour
             case 0502:
                 itemsCounterQuests.windstonedustCollected -= questElement.UpdateProgress;
                 break;
+            case 0503:
+                itemsCounterQuests.windstoneoreTransmutated -= questElement.UpdateProgress;
+                break;
             case 0504:
                 itemsCounterQuests.windstonedustCollected -= questElement.UpdateProgress;
+                break;
+            case 0505:
+                itemsCounterQuests.windstonedustTransmutated -= questElement.UpdateProgress;
                 break;
             case 0601:
                 itemsCounterQuests.waterstoneoreCollected -= questElement.UpdateProgress;
@@ -315,8 +458,14 @@ public class QuestsSubscriptionsManager : MonoBehaviour
             case 0602:
                 itemsCounterQuests.waterstonedustCollected -= questElement.UpdateProgress;
                 break;
+            case 0603:
+                itemsCounterQuests.waterstoneoreTransmutated -= questElement.UpdateProgress;
+                break;
             case 0604:
                 itemsCounterQuests.waterstonedustCollected -= questElement.UpdateProgress;
+                break;
+            case 0605:
+                itemsCounterQuests.waterstonedustTransmutated -= questElement.UpdateProgress;
                 break;
             case 0701:
                 itemsCounterQuests.earthstoneoreCollected -= questElement.UpdateProgress;
@@ -324,8 +473,14 @@ public class QuestsSubscriptionsManager : MonoBehaviour
             case 0702:
                 itemsCounterQuests.earthstonedustCollected -= questElement.UpdateProgress;
                 break;
+            case 0703:
+                itemsCounterQuests.earthstoneoreTransmutated -= questElement.UpdateProgress;
+                break;
             case 0704:
                 itemsCounterQuests.earthstonedustCollected -= questElement.UpdateProgress;
+                break;
+            case 0705:
+                itemsCounterQuests.earthstoneoreTransmutated -= questElement.UpdateProgress;
                 break;
             case 0801:
                 itemsCounterQuests.lavastoneoreCollected -= questElement.UpdateProgress;
@@ -333,8 +488,14 @@ public class QuestsSubscriptionsManager : MonoBehaviour
             case 0802:
                 itemsCounterQuests.lavastonedustCollected -= questElement.UpdateProgress;
                 break;
+            case 0803:
+                itemsCounterQuests.lavastoneoreTransmutated -= questElement.UpdateProgress;
+                break;
             case 0804:
                 itemsCounterQuests.lavastonedustCollected -= questElement.UpdateProgress;
+                break;
+            case 0805:
+                itemsCounterQuests.lavastonedustTransmutated -= questElement.UpdateProgress;
                 break;
             case 1001:
                 contactedSkeletonsCounter.ContactedSkeleton -= questElement.UpdateProgress;
@@ -356,65 +517,65 @@ public class QuestsSubscriptionsManager : MonoBehaviour
         /*
         InstantiatePotentialQuest(0101, "Collect stone ore", 10, 10);+
         InstantiatePotentialQuest(0102, "Defract stone ore", 20, 15);+
-        InstantiatePotentialQuest(0103, "Transmutate to gold stone ore", 10, 10);
+        InstantiatePotentialQuest(0103, "Transmutate to gold stone ore", 10, 10);+
         InstantiatePotentialQuest(0104, "Collect processed stone", 50, 20);+
-        InstantiatePotentialQuest(0105, "Transmutate to gold processed stone", 10, 10);
+        InstantiatePotentialQuest(0105, "Transmutate to gold processed stone", 10, 10);+
         InstantiatePotentialQuest(0106, "Create stone gloves", 1, 25);+
-        InstantiatePotentialQuest(0107, "Transmutate to gold gloves", 1, 10);
+        InstantiatePotentialQuest(0107, "Transmutate to gold gloves", 1, 10);+
 
         InstantiatePotentialQuest(0201, "Collect metal ore", 10, 25);+
         InstantiatePotentialQuest(0202, "Defract metal ore", 20, 40);+
-        InstantiatePotentialQuest(0203, "Transmutate to gold metal ore", 10, 20);
+        InstantiatePotentialQuest(0203, "Transmutate to gold metal ore", 10, 20);+
         InstantiatePotentialQuest(0204, "Collect processed metal", 50, 40);+
-        InstantiatePotentialQuest(0205, "Transmutate to gold processed metal", 10, 30);
+        InstantiatePotentialQuest(0205, "Transmutate to gold processed metal", 10, 30);+
         InstantiatePotentialQuest(0206, "Create metal leggings", 1, 30);+
         InstantiatePotentialQuest(0207, "Create metal breast plate", 1, 50);+
         InstantiatePotentialQuest(0208, "Create metal shoes", 1, 20);+
         InstantiatePotentialQuest(0209, "Create metal helm", 1, 40);+
-        InstantiatePotentialQuest(0210, "Transmutate to gold leggings", 1, 30);
-        InstantiatePotentialQuest(0211, "Transmutate to gold breast plate", 1, 50);
-        InstantiatePotentialQuest(0212, "Transmutate to gold shoes", 1, 20);
-        InstantiatePotentialQuest(0213, "Transmutate to gold helm", 1, 40);
+        InstantiatePotentialQuest(0210, "Transmutate to gold leggings", 1, 30);+
+        InstantiatePotentialQuest(0211, "Transmutate to gold breast plate", 1, 50);+
+        InstantiatePotentialQuest(0212, "Transmutate to gold shoes", 1, 20);+
+        InstantiatePotentialQuest(0213, "Transmutate to gold helm", 1, 40);+
 
         InstantiatePotentialQuest(0301, "Collect cursed ore", 5, 30);+
         InstantiatePotentialQuest(0302, "Defract cursed ore", 10, 60);+
-        InstantiatePotentialQuest(0303, "Transmutate to gold cursed ore", 10, 40);
+        InstantiatePotentialQuest(0303, "Transmutate to gold cursed ore", 10, 40);+
         InstantiatePotentialQuest(0304, "Collect cursed gem", 20, 10);+
-        InstantiatePotentialQuest(0305, "Transmutate to gold cursed gem", 10, 80);
+        InstantiatePotentialQuest(0305, "Transmutate to gold cursed gem", 10, 80);+
         InstantiatePotentialQuest(0306, "Create cursed wrings", 1, 100);+
-        InstantiatePotentialQuest(0307, "Transmutate to gold wrings", 1, 100);
+        InstantiatePotentialQuest(0307, "Transmutate to gold wrings", 1, 100);+
 
         InstantiatePotentialQuest(0401, "Collect magicstone ore", 1, 100);+
         InstantiatePotentialQuest(0402, "Defract magicstone ore", 1, 100);+
-        InstantiatePotentialQuest(0403, "Transmutate to gold magicstone ore", 1, 100);
+        InstantiatePotentialQuest(0403, "Transmutate to gold magicstone ore", 1, 100);+
         InstantiatePotentialQuest(0404, "Collect magic crystall", 1, 100);+
-        InstantiatePotentialQuest(0405, "Transmutate to gold magic crystall", 1, 150);
-        InstantiatePotentialQuest(0406, "Create magic gloves", 1, 200);
-        InstantiatePotentialQuest(0407, "Transmutate to gold magic gloves", 1, 1000);
+        InstantiatePotentialQuest(0405, "Transmutate to gold magic crystall", 1, 150);+
+        InstantiatePotentialQuest(0406, "Create magic gloves", 1, 200);+++++
+        InstantiatePotentialQuest(0407, "Transmutate to gold magic gloves", 1, 1000);+
 
         InstantiatePotentialQuest(0501, "Collect windstone ore", 1, 100);+
         InstantiatePotentialQuest(0502, "Defract windstone ore", 1, 100);+
-        InstantiatePotentialQuest(0503, "Transmutate to gold windstone ore", 1, 100);
+        InstantiatePotentialQuest(0503, "Transmutate to gold windstone ore", 1, 100);+
         InstantiatePotentialQuest(0504, "Collect wind crystall", 1, 100);+
-        InstantiatePotentialQuest(0505, "Transmutate to gold wind crystall", 1, 1000);
+        InstantiatePotentialQuest(0505, "Transmutate to gold wind crystall", 1, 1000);+
 
         InstantiatePotentialQuest(0601, "Collect waterstone ore", 1, 100);+
         InstantiatePotentialQuest(0602, "Defract waterstone ore", 1, 100);+
-        InstantiatePotentialQuest(0603, "Transmutate to gold waterstone ore", 1, 100);
+        InstantiatePotentialQuest(0603, "Transmutate to gold waterstone ore", 1, 100);+
         InstantiatePotentialQuest(0604, "Collect water crystall", 1, 100);+
-        InstantiatePotentialQuest(0605, "Transmutate to gold water crystall", 1, 1000);
+        InstantiatePotentialQuest(0605, "Transmutate to gold water crystall", 1, 1000);+
 
         InstantiatePotentialQuest(0701, "Collect earthstone ore", 1, 100);+
         InstantiatePotentialQuest(0702, "Defract earthstone ore", 1, 100);+
-        InstantiatePotentialQuest(0703, "Transmutate to gold earthstone ore", 1, 100);
+        InstantiatePotentialQuest(0703, "Transmutate to gold earthstone ore", 1, 100);+
         InstantiatePotentialQuest(0704, "Collect earth crystall", 1, 100);+
-        InstantiatePotentialQuest(0705, "Transmutate to gold earth crystall", 1, 1000);
+        InstantiatePotentialQuest(0705, "Transmutate to gold earth crystall", 1, 1000);+
 
         InstantiatePotentialQuest(0801, "Collect blackstone ore", 1, 100);+
         InstantiatePotentialQuest(0802, "Defract blackstone ore", 1, 100);
-        InstantiatePotentialQuest(0803, "Transmutate to gold blackstone ore", 1, 100);
+        InstantiatePotentialQuest(0803, "Transmutate to gold blackstone ore", 1, 100);+
         InstantiatePotentialQuest(0804, "Collect black crystall", 1, 100);+
-        InstantiatePotentialQuest(0805, "Transmutate to gold black crystall", 1, 1000);
+        InstantiatePotentialQuest(0805, "Transmutate to gold black crystall", 1, 1000);+
 
         InstantiatePotentialQuest(0001, "Walk", 10, 10);
         InstantiatePotentialQuest(0002, "Crouch with skeleton arch mage", 10, 20);
