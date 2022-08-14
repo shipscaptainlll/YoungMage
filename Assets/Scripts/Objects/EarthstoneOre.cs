@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EarthstoneOre : MonoBehaviour, IOre
 {
+    [SerializeField] Transform firstProductInstance;
+    [SerializeField] Transform secondProductInstance;
     [SerializeField] string objectType;
     [SerializeField] string type;
     [SerializeField] int health;
@@ -13,11 +15,14 @@ public class EarthstoneOre : MonoBehaviour, IOre
     [SerializeField] Sprite secondProductImage;
     [SerializeField] int firstProductChances;
     [SerializeField] int secondProductChances;
+    
 
     string objectOccupation;
 
 
     string occupation;
+    public Transform FirstProductInstance { get { return firstProductInstance; } }
+    public Transform SecondProductInstance { get { return secondProductInstance; } }
     public string ObjectType { get { return objectType; } }
     public string Type { get { return type; } }
     public int Health { get { return health; } }

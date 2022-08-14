@@ -17,6 +17,7 @@ public class CursedIngotCounter : MonoBehaviour, ICounter
         {
             return count;
         }
+        set { count = value; }
     }
 
     public bool ItemOpened

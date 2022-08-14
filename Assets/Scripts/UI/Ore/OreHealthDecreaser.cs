@@ -14,6 +14,7 @@ public class OreHealthDecreaser : MonoBehaviour
     RectTransform healthTransform;
     public event Action HealthReachedZero = delegate { };
 
+    public float CurrentHealth { get { return currentHealth; } set { currentHealth = value; } }
     // Start is called before the first frame update
     void Start()
     {
@@ -30,7 +31,7 @@ public class OreHealthDecreaser : MonoBehaviour
 
         currentHealth -= damage;
         float leftHealthPercent = ((currentHealth - damage) / maximumWidth) * 100;
-        //Debug.Log(leftHealthPercent);
+        Debug.Log("hello there");
         leftHealthPercent = Mathf.Clamp(leftHealthPercent, 0, 100);
         int updatedWidth = (int)(leftHealthPercent * maximumWidth / 100);
         StartCoroutine(SmoothHealthDecrease(updatedWidth));

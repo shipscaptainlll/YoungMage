@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class SavePanel : MonoBehaviour
 {
     [Header("Basic")]
+    [SerializeField] SaveSystemSerialization saveSystemSerialization;
+    [SerializeField] TakeScreenShot takeScreenShot;
     [SerializeField] Transform savesHolder;
     [SerializeField] Transform loadsHolder;
     [SerializeField] ClickManager clickManager;
@@ -35,6 +37,11 @@ public class SavePanel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            saveSystemSerialization.SaveProgress();
+        }
+
         
     }
 
@@ -60,7 +67,7 @@ public class SavePanel : MonoBehaviour
         loadMenuCopy.Find("Content").Find("SaveNumber").Find("Text").GetComponent<Text>().text = "Save #" + currentSavesCount;
         newSavedGame.name = "Save" + currentSavesCount;
         loadMenuCopy.name = "Load" + currentSavesCount;
-
+        takeScreenShot.MakeScreenShot(newSavedGame.gameObject, (int) currentSavesCount);
 
         Debug.Log("New game saved");
     }

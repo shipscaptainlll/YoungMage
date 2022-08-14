@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class RockOre : MonoBehaviour, IOre
 {
+    [SerializeField] Transform firstProductInstance;
+    [SerializeField] Transform secondProductInstance;
     [SerializeField] string objectType;
     [SerializeField] string type;
     [SerializeField] int health;
@@ -18,6 +20,8 @@ public class RockOre : MonoBehaviour, IOre
 
 
     string occupation;
+    public Transform FirstProductInstance { get { return firstProductInstance; } }
+    public Transform SecondProductInstance { get { return secondProductInstance; } }
     public string ObjectType { get { return objectType; } }
     public string Type { get { return type; } }
     public int Health { get { return health; } }

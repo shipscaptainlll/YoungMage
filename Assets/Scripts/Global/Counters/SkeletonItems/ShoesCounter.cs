@@ -19,6 +19,7 @@ public class ShoesCounter : MonoBehaviour, ICounter, ISkeletonItems
         {
             return count;
         }
+        set { count = value; }
     }
 
     public bool ItemOpened

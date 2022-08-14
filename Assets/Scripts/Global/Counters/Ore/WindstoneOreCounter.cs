@@ -19,6 +19,7 @@ public class WindstoneOreCounter : MonoBehaviour, ICounter
         {
             return count;
         }
+        set { count = value; }
     }
 
     public bool ItemOpened

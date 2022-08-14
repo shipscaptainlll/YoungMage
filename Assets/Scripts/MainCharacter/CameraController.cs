@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CameraController : MonoBehaviour
@@ -17,7 +18,7 @@ public class CameraController : MonoBehaviour
     float yRotation;
     RaycastHit hit = new RaycastHit();
 
-    public float YRotation { get { return yRotation; } }
+    public float YRotation { get { return yRotation; } set { yRotation = value; } }
     public RaycastHit ObservedObject
     {
         get
@@ -28,7 +29,6 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
         StartCoroutine(SeeObject());
         OnDrawGizmosSelected();
     }
@@ -42,6 +42,8 @@ public class CameraController : MonoBehaviour
             RotateHead();
             DetectObject();
         }
+        Debug.Log(transform.rotation.eulerAngles);
+        Debug.Log(transform.rotation);
         //
     }
 

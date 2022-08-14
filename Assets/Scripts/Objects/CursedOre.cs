@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CursedOre : MonoBehaviour, IOre
 {
+    [SerializeField] Transform firstProductInstance;
+    [SerializeField] Transform secondProductInstance;
     [SerializeField] string objectType;
     [SerializeField] string type;
     [SerializeField] int health;
@@ -17,7 +19,9 @@ public class CursedOre : MonoBehaviour, IOre
     string objectOccupation;
 
 
-    string occupation; 
+    string occupation;
+    public Transform FirstProductInstance { get { return firstProductInstance; } }
+    public Transform SecondProductInstance { get { return secondProductInstance; } }
     public string ObjectType { get { return objectType; } }
     public string Type { get { return type; } }
     public int Health { get { return health; } }

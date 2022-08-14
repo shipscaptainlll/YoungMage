@@ -17,6 +17,7 @@ public class EarthstoneDustCounter : MonoBehaviour, ICounter
         {
             return count;
         }
+        set { count = value; }
     }
 
     public bool ItemOpened

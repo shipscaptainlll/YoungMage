@@ -4,6 +4,14 @@ using UnityEngine;
 
 public interface IOre
 {
+    public Transform FirstProductInstance
+    {
+        get;
+    }
+    public Transform SecondProductInstance
+    {
+        get;
+    }
     public string ObjectType
     {
         get;

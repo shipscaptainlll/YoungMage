@@ -53,6 +53,26 @@ public class QuestsSubscriptionsManager : MonoBehaviour
                 personMovement.CharacterShifted += questElement.UpdateProgress;
                 questElement.UpdateProgress(personMovement.ProgressParameterThird);
                 break;
+            case 0017:
+                itemsCounterQuests.thingsCollected += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.CollectedThingsCount);
+                break;
+            case 0018:
+                itemsCounterQuests.thingsDefracted += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.DefractedThingsCount);
+                break;
+            case 0019:
+                itemsCounterQuests.oreTransmutated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.TransmutatedOreCount);
+                break;
+            case 0020:
+                itemsCounterQuests.processedTransmutated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.TransmutatedProcessedCount);
+                break;
+            case 0021:
+                itemsCounterQuests.wearableTransmutated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.TransmutatedWearablesCount);
+                break;
             case 0027:
                 graphicsPanel.SettingChanged += questElement.UpdateProgress;
                 audioPanel.SettingChanged += questElement.UpdateProgress;
@@ -323,6 +343,21 @@ public class QuestsSubscriptionsManager : MonoBehaviour
             case 0007:
                 personMovement.CharacterShifted -= questElement.UpdateProgress;
                 break;
+            case 0017:
+                itemsCounterQuests.thingsCollected -= questElement.UpdateProgress;
+                break;
+            case 0018:
+                itemsCounterQuests.thingsDefracted -= questElement.UpdateProgress;
+                break;
+            case 0019:
+                itemsCounterQuests.oreTransmutated -= questElement.UpdateProgress;
+                break;
+            case 0020:
+                itemsCounterQuests.processedTransmutated -= questElement.UpdateProgress;
+                break;
+            case 0021:
+                itemsCounterQuests.wearableTransmutated -= questElement.UpdateProgress;
+                break;
             case 0027:
                 graphicsPanel.SettingChanged -= questElement.UpdateProgress;
                 audioPanel.SettingChanged -= questElement.UpdateProgress;
@@ -572,7 +607,7 @@ public class QuestsSubscriptionsManager : MonoBehaviour
         InstantiatePotentialQuest(0705, "Transmutate to gold earth crystall", 1, 1000);+
 
         InstantiatePotentialQuest(0801, "Collect blackstone ore", 1, 100);+
-        InstantiatePotentialQuest(0802, "Defract blackstone ore", 1, 100);
+        InstantiatePotentialQuest(0802, "Defract blackstone ore", 1, 100);+
         InstantiatePotentialQuest(0803, "Transmutate to gold blackstone ore", 1, 100);+
         InstantiatePotentialQuest(0804, "Collect black crystall", 1, 100);+
         InstantiatePotentialQuest(0805, "Transmutate to gold black crystall", 1, 1000);+
@@ -593,21 +628,22 @@ public class QuestsSubscriptionsManager : MonoBehaviour
         InstantiatePotentialQuest(0014, "Jump on the chair", 1, 10);
         InstantiatePotentialQuest(0015, "Regenerate objects", 1, 50);
         InstantiatePotentialQuest(0016, "Hit your head", 1, 10);
-        InstantiatePotentialQuest(0017, "Collect objects", 50, 15); InstantiatePotentialQuest(0029, "Cast a tornado spell", 1, 10); InstantiatePotentialQuest(1010, "Attach a skeleton to ore", 1, 10);
-        InstantiatePotentialQuest(0018, "Defract objects", 50, 25);
-        InstantiatePotentialQuest(0019, "Transmutate to gold ore", 50, 25);
-        InstantiatePotentialQuest(0020, "Transmutate to gold processed objects", 25, 25);
-        InstantiatePotentialQuest(0021, "Transmutate to gold wearable items", 5, 30);
+        InstantiatePotentialQuest(0017, "Collect objects", 50, 15);
+        InstantiatePotentialQuest(0029, "Cast a tornado spell", 1, 10); InstantiatePotentialQuest(1010, "Attach a skeleton to ore", 1, 10);
+        InstantiatePotentialQuest(0018, "Defract objects", 50, 25); InstantiatePotentialQuest(0019, "Transmutate to gold ore", 50, 25); InstantiatePotentialQuest(0020, "Transmutate to gold processed objects", 25, 25); InstantiatePotentialQuest(0021, "Transmutate to gold wearable items", 5, 30);
         InstantiatePotentialQuest(0022, "Create something", 1, 25);
+        
+        
+        
         InstantiatePotentialQuest(0023, "Open portal", 1, 10);
         InstantiatePotentialQuest(0024, "Try to wake an old mage", 1, 10);
         InstantiatePotentialQuest(0025, "Scare pegions", 1, 10);
         InstantiatePotentialQuest(0026, "Cast spells", 100, 10);
         InstantiatePotentialQuest(0027, "Play around with game settings", 1, 10);
-        InstantiatePotentialQuest(0028, "Play game minutes", 1, 10);
+        InstantiatePotentialQuest(0028, "Play game minutes", 1, 10);+
         InstantiatePotentialQuest(0029, "Cast a tornado spell", 1, 10);
         InstantiatePotentialQuest(0030, "Refresh your senses with tasty gulash", 1, 10);
-        InstantiatePotentialQuest(0031, "Enter dungeons", 5, 10);
+        InstantiatePotentialQuest(0031, "Enter dungeons", 5, 10);+
         InstantiatePotentialQuest(0032, "Work with ores simultaneously", 2, 10);
 
         InstantiatePotentialQuest(1001, "Conjure a skeleton", 1, 10);

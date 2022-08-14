@@ -10,6 +10,7 @@ public class LoadGameScene : MonoBehaviour
     [SerializeField] Transform progressCanvas;
     [SerializeField] Image progressBar;
     [SerializeField] GameObject backgroundEnvironment;
+    [SerializeField] LoadGameData loadGameData;
     float targetFill;
     // Start is called before the first frame update
     void Start()

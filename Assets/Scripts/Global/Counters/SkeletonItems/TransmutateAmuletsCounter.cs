@@ -19,6 +19,7 @@ public class TransmutateAmuletsCounter : MonoBehaviour, ICounter, ISkeletonItems
         {
             return count;
         }
+        set { count = value; }
     }
 
     public event Action AmuletAdded = delegate { };

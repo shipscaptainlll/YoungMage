@@ -5,7 +5,7 @@ using UnityEngine;
 
 public interface ICounter
 {
-    public int Count { get; }
+    public int Count { get; set; }
     public int ID { get; }
     
     public event Action<int> AmountChanged;

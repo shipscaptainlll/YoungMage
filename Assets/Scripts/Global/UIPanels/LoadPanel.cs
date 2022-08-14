@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LoadPanel : MonoBehaviour
 {
+    [SerializeField] SaveSystemSerialization saveSystemSerialization;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -13,7 +15,10 @@ public class LoadPanel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            saveSystemSerialization.LoadProgress(1);
+        }
     }
 
     public void LoadGame(Transform buttonTransform)

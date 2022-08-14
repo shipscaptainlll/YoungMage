@@ -65,11 +65,11 @@ public class SUISkeleton : MonoBehaviour
     {
         if (cameraSUIInformer.ObservedType == "Skeleton")
         {
-            Debug.Log(currentDistance);
+            //Debug.Log(currentDistance);
             float koefficient = 2 / currentDistance;
-            Debug.Log(koefficient);
+            //Debug.Log(koefficient);
             koefficient = Mathf.Clamp(koefficient, 0.3f, 1);
-            Debug.Log(koefficient);
+            //Debug.Log(koefficient);
             transform.localScale = new Vector3(koefficient * 1, koefficient * 1, koefficient * 1);
         }
         UpdateElementPosition();
