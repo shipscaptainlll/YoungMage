@@ -24,6 +24,16 @@ public class CursorManager : MonoBehaviour
         somethingOpened = false;
     }
 
+    public static void ForceCursorEnabled()
+    {
+        Cursor.lockState = CursorLockMode.Confined;
+    }
+
+    public static void ForceCursorDisabled()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
     void CheckSomethingOpened()
     {
         if (panelsManager.CurrentlyOpened != null)

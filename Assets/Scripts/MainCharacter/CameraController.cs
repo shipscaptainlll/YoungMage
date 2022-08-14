@@ -29,6 +29,7 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         StartCoroutine(SeeObject());
         OnDrawGizmosSelected();
     }
@@ -42,8 +43,8 @@ public class CameraController : MonoBehaviour
             RotateHead();
             DetectObject();
         }
-        Debug.Log(transform.rotation.eulerAngles);
-        Debug.Log(transform.rotation);
+        //Debug.Log(transform.rotation.eulerAngles);
+        //Debug.Log(transform.rotation);
         //
     }
 

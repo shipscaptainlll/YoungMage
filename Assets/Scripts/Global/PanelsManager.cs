@@ -31,6 +31,7 @@ public class PanelsManager : MonoBehaviour
     Transform nextToOpen;
     float updateSpeed;
 
+    bool escapeMenuBlocked;
     public Transform CurrentlyOpened
     {
         get
@@ -39,6 +40,7 @@ public class PanelsManager : MonoBehaviour
         }
     }
 
+    public bool EscapeMenuBlocked { get { return escapeMenuBlocked; } set { escapeMenuBlocked = value; } }
     public event Action PanelsUpdated = delegate { };
     void Start()
     {
@@ -150,8 +152,11 @@ public class PanelsManager : MonoBehaviour
 
     void OpenEscapemenuPanel()
     {
-        nextToOpen = escapeMenuPanel;
-        decideNextState();
+        if (!escapeMenuBlocked)
+        {
+            nextToOpen = escapeMenuPanel;
+            decideNextState();
+        }
     }
 
     public void OpenSettingsPanel()

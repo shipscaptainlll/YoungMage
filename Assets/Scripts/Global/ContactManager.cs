@@ -21,6 +21,7 @@ public class ContactManager : MonoBehaviour
     public event Action MidasCauldronDetected = delegate { };
     public event Action PotentialPositionerActivated = delegate { };
     public event Action PotentialPositionerDeactivated = delegate { };
+    public event Action CityRegenerationEntered = delegate { };
     private void Start()
     {
         ClickManager.LMBClicked += ContactObject;
@@ -60,10 +61,10 @@ public class ContactManager : MonoBehaviour
                 }
                 else if (contactedObject.GetComponent<Skeleton>() != null && quickAccessHandController.CurrentCustomID == 10)
                 {
-                    
+
                     if (SkeletonDetected != null)
                     {
-                        
+
                         TriggerPotentialPositioner(contactedObject);
                         SkeletonDetected(contactedObject, mainCharacter);
                     }
@@ -76,7 +77,7 @@ public class ContactManager : MonoBehaviour
                     else if (skeletonScript.NavigationTarget == mainCharacter) { skeletonScript.NavigationTarget = null; contactedSkeleton = null; Debug.Log("told skeleton to stop following mage"); }
                     if (SkeletonDetected != null)
                     {
-                        
+
                         TriggerPotentialPositioner(contactedObject.parent);
                         SkeletonDetected(contactedObject.parent, mainCharacter);
                     }
@@ -116,6 +117,18 @@ public class ContactManager : MonoBehaviour
                 else if (contactedObject.GetComponent<Portal2>() != null)
                 {
                     //Debug.Log("looking at portal");
+                }
+                else if (contactedObject.GetComponent<CityRegenerationEnter>() != null)
+                {
+                    if (CameraController.ObservedObject.distance < CityRegenerationEnter.CameraMinimalDistance)
+                    {
+                        {
+                            if (CityRegenerationEntered != null) { CityRegenerationEntered(); }
+                        }
+                    }
+                    
+                    
+                    
                 }
             }
         }

@@ -321,7 +321,7 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
 
     public void Show()
     {
-        Debug.Log("Hello there");
+        //Debug.Log("Hello there");
         if (!_transmutationEnabled)
         {
             foreach (GameObject resource in _accessibleResources)
