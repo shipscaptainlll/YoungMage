@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CityRegenerationMouse : MonoBehaviour
 {
-
+    [SerializeField] RegenerationPanelsOpener regenerationPanelsOpener;
     static bool isActive;
 
     bool elementIsActive;
@@ -30,9 +30,15 @@ public class CityRegenerationMouse : MonoBehaviour
             {
                 TurnOff();
             }
+            if (Input.GetMouseButtonDown(0))
+            {
+                Transform clickedObject = FindObjectUnderMouse();
+                regenerationPanelsOpener.AnalyseClickedElement(clickedObject);
+            }
         }
     }
 
+    
     Transform FindObjectUnderMouse()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -52,7 +58,7 @@ public class CityRegenerationMouse : MonoBehaviour
     {
         if (!elementIsActive)
         {
-            Debug.Log("hello1");
+            //Debug.Log("hello1");
             elementIsActive = true;
             lastEncounteredElement = foundObject.GetComponent<RegenerationElementOutline>();
             lastEncounteredType = foundObject.GetComponent<RegenerationElementOutline>().ElementType;
@@ -63,7 +69,7 @@ public class CityRegenerationMouse : MonoBehaviour
         {
             if (foundObject.GetComponent<RegenerationElementOutline>().ElementType != lastEncounteredType)
             {
-                Debug.Log("hello2");
+                //Debug.Log("hello2");
                 lastEncounteredElement.StopShowingOutline();
                 lastEncounteredElement.transform.GetComponent<IRegenerationSUI>().Deactivate();
                 lastEncounteredType = foundObject.GetComponent<RegenerationElementOutline>().ElementType;
@@ -77,7 +83,7 @@ public class CityRegenerationMouse : MonoBehaviour
 
     void TurnOff()
     {
-        Debug.Log("hello3");
+        //Debug.Log("hello3");
         elementIsActive = false;
         if (lastEncounteredElement != null)
         {

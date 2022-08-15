@@ -32,6 +32,11 @@ public class CastleHealthDecreaser : MonoBehaviour
         }
     }
 
+    public int MaximumHealth
+    {
+        get { return (int) maximumWidth; }
+    }
+
     public float CalibrationHealth
     {
         get
@@ -40,6 +45,7 @@ public class CastleHealthDecreaser : MonoBehaviour
         }
     }
     public event Action<float> CastleRegenerationStarted = delegate { };
+    public event Action<int> CastleHealthChanged = delegate { };
     // Start is called before the first frame update
     void Start()
     {
@@ -58,12 +64,16 @@ public class CastleHealthDecreaser : MonoBehaviour
 
     public void DealDamage(float damage)
     {
+        if (currentHealth - damage >= 0)
+        {
+            currentHealth -= damage;
+        }
         
-        currentHealth -= damage;
         float leftHealthPercent = ((currentHealth - damage) / maximumWidth) * 100;
         //Debug.Log(leftHealthPercent);
         leftHealthPercent = Mathf.Clamp(leftHealthPercent, 0, 100);
         UpdateCastleHealth(leftHealthPercent);
+        CastleHealthChanged((int)currentHealth);
     }
 
     void UpdateCastleHealth(float healthPercent)
@@ -75,10 +85,18 @@ public class CastleHealthDecreaser : MonoBehaviour
     public void RegenerateHealth(float health)
     {
         calibrationHealth = currentHealth;
-        currentHealth += health;
+        if (currentHealth + health <= maximumWidth)
+        {
+            currentHealth += health;
+        } else
+        {
+            currentHealth = maximumWidth;
+        }
+        
         
         float leftHealthPercent = ((currentHealth) / maximumWidth) * 100;
         leftHealthPercent = Mathf.Clamp(leftHealthPercent, 0, 100);
         if (CastleRegenerationStarted != null) { CastleRegenerationStarted(leftHealthPercent); }
+        CastleHealthChanged((int)currentHealth);
     }
 }

@@ -27,12 +27,12 @@ public class CastleDamageCalculator : MonoBehaviour
 
     void CalculateDPS()
     {
-        dps = skeletonsNumber * 5.11f;
+        dps = skeletonsNumber * 10.1f;
     }
 
     void CalculateDamage()
     {
-        dps = 1;
+        dps = 10f;
     }
 
     IEnumerator DecreaseHealth()
@@ -40,7 +40,7 @@ public class CastleDamageCalculator : MonoBehaviour
         while (true)
         {
             castleHealthDecreaser.DealDamage(dps);
-            yield return new WaitForSeconds(0.033f);
+            yield return new WaitForSeconds(1f);
         }
     }
 

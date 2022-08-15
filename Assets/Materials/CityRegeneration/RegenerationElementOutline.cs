@@ -22,6 +22,7 @@ public class RegenerationElementOutline : MonoBehaviour
     Coroutine castleCoroutine;
     public enum RegenerationElementType
     {
+        nothing,
         house,
         wall,
         castle

@@ -24,7 +24,10 @@ public class CityRegenerationEnter : MonoBehaviour
 
     [SerializeField] ParticleSystem enterPartycleSystem;
 
-    
+    [Header("Cache - delete safely")]
+    [SerializeField] Transform cityWallUpgrade;
+    [SerializeField] Transform cityCastleUpgrade;
+    [SerializeField] Transform cityBlacksmithUpgrade;
 
     Coroutine cameraRepositioningCoroutine;
 
@@ -56,6 +59,9 @@ public class CityRegenerationEnter : MonoBehaviour
     {
         if (!isActive)
         {
+            cityWallUpgrade.GetComponent<CanvasGroup>().alpha = 1;
+            cityCastleUpgrade.GetComponent<CanvasGroup>().alpha = 1;
+            cityBlacksmithUpgrade.GetComponent<CanvasGroup>().alpha = 1;
             enterPartycleSystem.gameObject.SetActive(true);
             enterPartycleSystem.Play();
             camera.enabled = false;
@@ -116,6 +122,9 @@ public class CityRegenerationEnter : MonoBehaviour
     {
         if (isActive && !isEntering)
         {
+            cityWallUpgrade.GetComponent<CanvasGroup>().alpha = 0;
+            cityCastleUpgrade.GetComponent<CanvasGroup>().alpha = 0;
+            cityBlacksmithUpgrade.GetComponent<CanvasGroup>().alpha = 0;
             isEscaping = true;
             CursorManager.ForceCursorDisabled();
             CityRegenerationMouse.IsActive = false;
