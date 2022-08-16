@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class CityBlacksmithUpgrade : MonoBehaviour
 {
@@ -22,6 +23,10 @@ public class CityBlacksmithUpgrade : MonoBehaviour
 
     bool coroutineIsRunning;
     Coroutine scrollingCoroutine;
+
+    int countUpgradesQuests;
+    public int CountUpgradesQuests { get { return countUpgradesQuests; } }
+    public event Action<int> BlacksmithUpgradedQuests = delegate { };
     // Start is called before the first frame update
     void Start()
     {

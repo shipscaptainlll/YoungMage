@@ -336,6 +336,7 @@ public class QuestsDatabase : MonoBehaviour
         InstantiatePotentialQuest(1102, "Upgrade castle wall", 1, 25);
         InstantiatePotentialQuest(1103, "Upgrade castle forge", 1, 50);
         InstantiatePotentialQuest(1104, "Upgrade castle temple", 1, 100);
+        InstantiatePotentialQuest(1105, "Upgrade castle temple shards", 1, 100);
     }
 
     void InstantiatePotentialQuest(int id, string description, int goal, int reward)

@@ -14,6 +14,10 @@ public class QuestsSubscriptionsManager : MonoBehaviour
     [SerializeField] ContactedSkeletonsCounter contactedSkeletonsCounter;
     [SerializeField] DestroyedSkeletonsCounter destroyedSkeletonsCounter;
     [SerializeField] ItemsCounterQuests itemsCounterQuests;
+    [SerializeField] TornadoInstantiator tornadoInstantiator;
+    [SerializeField] CityCastleUpgrade cityCastleUpgrade;
+    [SerializeField] CityWallUpgrade cityWallUpgrade;
+    [SerializeField] CityBlacksmithUpgrade cityBlacksmithUpgrade;
 
     // Start is called before the first frame update
     void Start()
@@ -73,6 +77,10 @@ public class QuestsSubscriptionsManager : MonoBehaviour
                 itemsCounterQuests.wearableTransmutated += questElement.UpdateProgress;
                 questElement.UpdateProgress(itemsCounterQuests.TransmutatedWearablesCount);
                 break;
+            case 0022:
+                itemsCounterQuests.thingsCreated += questElement.UpdateProgress;
+                questElement.UpdateProgress(itemsCounterQuests.CreatedThingsCount);
+                break;
             case 0027:
                 graphicsPanel.SettingChanged += questElement.UpdateProgress;
                 audioPanel.SettingChanged += questElement.UpdateProgress;
@@ -82,6 +90,10 @@ public class QuestsSubscriptionsManager : MonoBehaviour
             case 0028:
                 gameTimeManager.MinutesIngamePassed += questElement.UpdateProgress;
                 questElement.UpdateProgress(gameTimeManager.ProgressParameter);
+                break;
+            case 0029:
+                tornadoInstantiator.TornadoInstantiatedQuests += questElement.UpdateProgress;
+                questElement.UpdateProgress(tornadoInstantiator.TornadoCountQuests);
                 break;
             case 0031:
                 mineCharacterCatcher.CharacterEnteredDungeon += questElement.UpdateProgress;
@@ -319,6 +331,22 @@ public class QuestsSubscriptionsManager : MonoBehaviour
                 destroyedSkeletonsCounter.DestroyedSmallSkeleton += questElement.UpdateProgress;
                 questElement.UpdateProgress(destroyedSkeletonsCounter.CountSmallSkeletons);
                 break;
+            case 1101:
+                cityWallUpgrade.HealthRegeneratedQuests += questElement.UpdateProgress;
+                questElement.UpdateProgress(cityWallUpgrade.CountReneratedQuests);
+                break;
+            case 1103:
+                cityBlacksmithUpgrade.BlacksmithUpgradedQuests += questElement.UpdateProgress;
+                questElement.UpdateProgress(cityBlacksmithUpgrade.CountUpgradesQuests);
+                break;
+            case 1104:
+                cityCastleUpgrade.CastleUpgradedQuests += questElement.UpdateProgress;
+                questElement.UpdateProgress(cityCastleUpgrade.CountUpgradesQuests);
+                break;
+            case 1105:
+                cityCastleUpgrade.ShardsUpgradedQuests += questElement.UpdateProgress;
+                questElement.UpdateProgress(cityCastleUpgrade.CountShardsQuests);
+                break;
         }
     }
 
@@ -358,6 +386,9 @@ public class QuestsSubscriptionsManager : MonoBehaviour
             case 0021:
                 itemsCounterQuests.wearableTransmutated -= questElement.UpdateProgress;
                 break;
+            case 0022:
+                itemsCounterQuests.thingsCreated -= questElement.UpdateProgress;
+                break;
             case 0027:
                 graphicsPanel.SettingChanged -= questElement.UpdateProgress;
                 audioPanel.SettingChanged -= questElement.UpdateProgress;
@@ -366,6 +397,9 @@ public class QuestsSubscriptionsManager : MonoBehaviour
                 break;
             case 0028:
                 gameTimeManager.MinutesIngamePassed -= questElement.UpdateProgress;
+                break;
+            case 0029:
+                tornadoInstantiator.TornadoInstantiatedQuests -= questElement.UpdateProgress;
                 break;
             case 0031:
                 mineCharacterCatcher.CharacterEnteredDungeon -= questElement.UpdateProgress;
@@ -544,7 +578,24 @@ public class QuestsSubscriptionsManager : MonoBehaviour
             case 1007:
                 destroyedSkeletonsCounter.DestroyedSmallSkeleton -= questElement.UpdateProgress;
                 break;
+            case 1101:
+                cityWallUpgrade.HealthRegeneratedQuests -= questElement.UpdateProgress;
+                break;
+            case 1103:
+                cityBlacksmithUpgrade.BlacksmithUpgradedQuests -= questElement.UpdateProgress;
+                break;
+            case 1104:
+                cityCastleUpgrade.CastleUpgradedQuests -= questElement.UpdateProgress;
+                break;
+            case 1105:
+                cityCastleUpgrade.ShardsUpgradedQuests -= questElement.UpdateProgress;
+                break;
         }
+    }
+
+    public void SayHello(int there)
+    {
+        Debug.Log("well hello ther");
     }
 
     public void HelloThere()
@@ -612,10 +663,10 @@ public class QuestsSubscriptionsManager : MonoBehaviour
         InstantiatePotentialQuest(0804, "Collect black crystall", 1, 100);+
         InstantiatePotentialQuest(0805, "Transmutate to gold black crystall", 1, 1000);+
 
-        InstantiatePotentialQuest(0001, "Walk", 10, 10);
+        InstantiatePotentialQuest(0001, "Walk", 10, 10);+
         InstantiatePotentialQuest(0002, "Crouch with skeleton arch mage", 10, 20);
-        InstantiatePotentialQuest(0003, "Run", 10, 10);
-        InstantiatePotentialQuest(0004, "Jump", 2, 10);
+        InstantiatePotentialQuest(0003, "Run", 10, 10);+
+        InstantiatePotentialQuest(0004, "Jump", 2, 10);+
         InstantiatePotentialQuest(0005, "Try double jump", 1, 10);
         InstantiatePotentialQuest(0006, "Jump on the bed", 5, 10);
         InstantiatePotentialQuest(0007, "Use shift spell", 1, 10);
@@ -631,7 +682,7 @@ public class QuestsSubscriptionsManager : MonoBehaviour
         InstantiatePotentialQuest(0017, "Collect objects", 50, 15);
         InstantiatePotentialQuest(0029, "Cast a tornado spell", 1, 10); InstantiatePotentialQuest(1010, "Attach a skeleton to ore", 1, 10);
         InstantiatePotentialQuest(0018, "Defract objects", 50, 25); InstantiatePotentialQuest(0019, "Transmutate to gold ore", 50, 25); InstantiatePotentialQuest(0020, "Transmutate to gold processed objects", 25, 25); InstantiatePotentialQuest(0021, "Transmutate to gold wearable items", 5, 30);
-        InstantiatePotentialQuest(0022, "Create something", 1, 25);
+        InstantiatePotentialQuest(0022, "Create something", 1, 25);+
         
         
         
@@ -663,9 +714,9 @@ public class QuestsSubscriptionsManager : MonoBehaviour
         InstantiatePotentialQuest(1015, "Equip skeletons with 5 object", 1, 100);
 
         InstantiatePotentialQuest(1101, "Regenerate health to castle", 1, 50);
-        InstantiatePotentialQuest(1102, "Upgrade castle wall", 1, 25);
         InstantiatePotentialQuest(1103, "Upgrade castle forge", 1, 50);
         InstantiatePotentialQuest(1104, "Upgrade castle temple", 1, 100);
+        (1105, "Upgrade castle temple shards", 1, 100);
         */
     }
 

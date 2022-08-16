@@ -44,6 +44,15 @@ public class PanelsManager : MonoBehaviour
     public event Action PanelsUpdated = delegate { };
     void Start()
     {
+        RelocateFarAway(settingsMenuPanel);
+        RelocateFarAway(inventoryPanel);
+        RelocateFarAway(escapeMenuPanel);
+        RelocateFarAway(saveMenuPanel);
+        RelocateFarAway(loadMenuPanel);
+        RelocateFarAway(questPanel);
+        RelocateFarAway(upgradeTablePanel);
+        RelocateFarAway(midasCauldronTablePanel);
+        RelocateFarAway(defractorTablePanel);
         currentSettingsSubpanel = graphicsSettingPanel;
         updateSpeed = 0.1f;
         clickManager.IClicked += openInventory;

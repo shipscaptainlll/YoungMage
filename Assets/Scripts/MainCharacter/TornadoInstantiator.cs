@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.VFX;
+using UnityEngine.Events;
+using System;
 
 public class TornadoInstantiator : MonoBehaviour
 {
@@ -10,9 +12,11 @@ public class TornadoInstantiator : MonoBehaviour
     RaycastHit[] hitObjects;
     RaycastHit hit;
 
-
-    // Start is called before the first frame update
-    void Start()
+    int tornadoCountQuests;
+    public int TornadoCountQuests { get { return tornadoCountQuests; } }
+    public event Action<int> TornadoInstantiatedQuests = delegate { };
+// Start is called before the first frame update
+void Start()
     {
         
     }
@@ -22,7 +26,10 @@ public class TornadoInstantiator : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            
+            Debug.Log("hello there");
+            tornadoCountQuests++;
+            if (TornadoInstantiatedQuests != null) { TornadoInstantiatedQuests(TornadoCountQuests); }
+
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             
             hitObjects = Physics.RaycastAll(transform.position, transform.forward);

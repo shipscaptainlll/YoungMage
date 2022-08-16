@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class CityWallUpgrade : MonoBehaviour
 {
@@ -16,6 +17,11 @@ public class CityWallUpgrade : MonoBehaviour
 
     int wallMaximumHealth;
     float healthCost;
+
+    int hpRegeneratedQuests;
+
+    public int CountReneratedQuests { get { return hpRegeneratedQuests; } }
+    public event Action<int> HealthRegeneratedQuests = delegate { };
     // Start is called before the first frame update
     void Start()
     {

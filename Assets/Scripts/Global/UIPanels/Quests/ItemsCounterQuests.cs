@@ -28,6 +28,7 @@ public class ItemsCounterQuests : MonoBehaviour
     int transmutatedWaterstoneoreCount;
     int collectedWindstoneoreCount;
     int transmutatedWindstoneoreCount;
+    int createCount;
     int createdStonehandsCount;
     int transmutatedStonehandsCount;
     int createdLeggingsCount;
@@ -82,6 +83,7 @@ public class ItemsCounterQuests : MonoBehaviour
     public int TransmutatedWaterstoneoreCount { get { return transmutatedWaterstoneoreCount; } }
     public int CollectedWindstoneoreCount { get { return collectedWindstoneoreCount; } }
     public int TransmutatedWindstoneoreCount { get { return transmutatedWindstoneoreCount; } }
+    //public int CreatedCount { get { return createdCount; } }
     public int CreatedStonehandsCount { get { return createdStonehandsCount; } }
     public int TransmutatedStonehandsCount { get { return transmutatedStonehandsCount; } }
     public int CreatedLeggingsCount { get { return createdLeggingsCount; } }
@@ -137,6 +139,7 @@ public class ItemsCounterQuests : MonoBehaviour
     public event Action<int> waterstoneoreTransmutated = delegate { };
     public event Action<int> windstoneoreCollected = delegate { };
     public event Action<int> windstoneoreTransmutated = delegate { };
+    public event Action<int> itemsObjectsCreated = delegate { };
     public event Action<int> stonehandsCreated = delegate { };
     public event Action<int> stonehandsTransmutated = delegate { };
     public event Action<int> leggingsCreated = delegate { };

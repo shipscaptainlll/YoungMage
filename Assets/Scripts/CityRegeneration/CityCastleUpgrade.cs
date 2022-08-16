@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class CityCastleUpgrade : MonoBehaviour
 {
@@ -35,15 +36,24 @@ public class CityCastleUpgrade : MonoBehaviour
     int fillCost;
     int fillAmmount;
 
-    List<Transform> availableButtons;
+    List<Transform> availableButtons = new List<Transform>();
     List<Transform> availableShards;
     Transform currentShard;
     bool coroutineIsRunning;
     Coroutine scrollingCoroutine;
+
+    int countUpgradesQuests;
+    int countShardsQuests;
+    public int CountUpgradesQuests { get { return countUpgradesQuests; } }
+    public int CountShardsQuests { get { return countShardsQuests; } }
+    public event Action<int> CastleUpgradedQuests = delegate { };
+    public event Action<int> ShardsUpgradedQuests = delegate { };
     // Start is called before the first frame update
     void Start()
     {
         sphereUpgradeCurrentCount = 1;
+        Debug.Log(sphereUpgradeCurrentCount);
+        Debug.Log(sphereUpgradesMaxCount);
         countUpgradeCurrentCount = 1;
         offsetUpgrade = 0.075f;
         sphereUpgradeCost = 100;
@@ -51,17 +61,14 @@ public class CityCastleUpgrade : MonoBehaviour
         countUpgradeCost = 1000;
         countcostModifier = 2f;
         sphereUpgradesMaxCount = contentHolder.childCount - 4;
-        countUpgradesMaxCount = 4;
+        countUpgradesMaxCount = 5;
         foreach (Transform button in countButtonsHolder)
         {
             availableButtons.Add(button);
         }
-        foreach (Transform shard in fillShardsHolder)
-        {
-            availableShards.Add(shard);
-        }
         upgradesBar.value = ((float)(sphereUpgradeCurrentCount) / (float)(sphereUpgradesMaxCount + 2.5f)) + offsetUpgrade;
-        
+        Debug.Log(sphereUpgradeCurrentCount);
+        Debug.Log(sphereUpgradesMaxCount);
     }
 
     // Update is called once per frame
@@ -72,15 +79,18 @@ public class CityCastleUpgrade : MonoBehaviour
 
     public void UpgradeSpheresEnergy()
     {
-        Debug.Log("there hello if");
+        Debug.Log(sphereUpgradeCurrentCount);
+        Debug.Log(sphereUpgradesMaxCount);
         if (sphereUpgradeCurrentCount < sphereUpgradesMaxCount)
         {
+            Debug.Log("there hello if");
             if (TakeUpgradeMoney(sphereUpgradeCost))
             {
+                Debug.Log("there hello if1");
                 sphereUpgradeCurrentCount++;
                 InitiateScrolling();
 
-                UpgradeCost(sphereUpgradeCost, sphereCostModifier);
+                UpgradeCost(ref sphereUpgradeCost, sphereCostModifier);
                 UpdateCostText(sphereGoldText, sphereUpgradeCost, sphereUpgradeCurrentCount, sphereUpgradesMaxCount);
             }
         }
@@ -90,13 +100,15 @@ public class CityCastleUpgrade : MonoBehaviour
     {
         if (countUpgradeCurrentCount < countUpgradesMaxCount)
         {
+            Debug.Log("there hello if22");
             if (TakeUpgradeMoney(countUpgradeCost))
             {
                 countUpgradeCurrentCount++;
-                availableShards[countUpgradeCurrentCount - 1].GetComponent<CanvasGroup>().alpha = 1;
+                //availableShards[countUpgradeCurrentCount - 1].GetComponent<CanvasGroup>().alpha = 1;
                 ShowNextButton();
-                ShowNextShard();
-                UpgradeCost(countUpgradeCost, countcostModifier);
+                Debug.Log("there hello if2");
+                //ShowNextShard();
+                UpgradeCost(ref countUpgradeCost, countcostModifier);
                 UpdateCostText(countGoldText, countUpgradeCost, countUpgradeCurrentCount, countUpgradesMaxCount);
             }
         }
@@ -104,15 +116,17 @@ public class CityCastleUpgrade : MonoBehaviour
 
     bool TakeUpgradeMoney(int upgradeCost)
     {
+        Debug.Log(goldCoinsCounter.Count);
         if (goldCoinsCounter.Count <= upgradeCost)
         {
+            
             goldCoinsCounter.AddResource(-(int)upgradeCost);
             return true;
         }
         return false;
     }
 
-    void UpgradeCost(float upgradeCost, float costModifier)
+    void UpgradeCost(ref int upgradeCost, float costModifier)
     {
         upgradeCost = (int)(upgradeCost * costModifier);
     }
@@ -150,15 +164,15 @@ public class CityCastleUpgrade : MonoBehaviour
 
     void ShowNextButton()
     {
-        var color = availableButtons[countUpgradeCurrentCount].GetComponent<Image>().color;
+        var color = availableButtons[countUpgradeCurrentCount-2].GetComponent<Image>().color;
         color.a = 1f;
-        availableButtons[countUpgradeCurrentCount].GetComponent<Image>().color = color;
+        availableButtons[countUpgradeCurrentCount-2].GetComponent<Image>().color = color;
         if (countUpgradeCurrentCount != countUpgradesMaxCount)
         {
-            color = availableButtons[countUpgradeCurrentCount + 1].GetComponent<Image>().color;
+            color = availableButtons[countUpgradeCurrentCount-1].GetComponent<Image>().color;
             color.a = 0.25f;
-            availableButtons[countUpgradeCurrentCount + 1].GetComponent<Image>().color = color;
-            availableButtons[countUpgradeCurrentCount + 1].GetComponent<Button>().enabled = true;
+            availableButtons[countUpgradeCurrentCount-1].GetComponent<Image>().color = color;
+            availableButtons[countUpgradeCurrentCount-1].GetComponent<Button>().enabled = true;
         }
     }
 
