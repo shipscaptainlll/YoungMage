@@ -94,6 +94,24 @@ public class SkeletonBehavior : MonoBehaviour
     Coroutine changeColorCounter;
     Coroutine changeScaleCounter;
 
+    int connectedObjects;
+    bool isConnectedHands;
+    bool isConnectedLeggings;
+    bool isConnectedArmor;
+    bool isConnectedShoes;
+    bool isConnectedHelm;
+    bool isConnectedGloves;
+    bool isConnectedBracers;
+
+    public int ConnectedObjects { get { return connectedObjects; } set { connectedObjects = value; } }
+    public bool IsConnectedHands { get { return isConnectedHands; } set { isConnectedHands = value; } }
+    public bool IsConnectedLeggings { get { return isConnectedLeggings; } set { isConnectedLeggings = value; } }
+    public bool IsConnectedArmor { get { return isConnectedArmor; } set { isConnectedArmor = value; } }
+    public bool IsConnectedShoes { get { return isConnectedShoes; } set { isConnectedShoes = value; } }
+    public bool IsConnectedHelm { get { return isConnectedHelm; } set { isConnectedHelm = value; } }
+    public bool IsConnectedGloves { get { return isConnectedGloves; } set { isConnectedGloves = value; } }
+    public bool IsConnectedBracers { get { return isConnectedBracers; } set { isConnectedBracers = value; } }
+
     public int ProgressParameter { get { return countConjuredSkeletons; } }
     public int ProgressParameterSecond { get { return countSmallSkeletons; } }
     public int CountDestroyedSkeletons { get { return countDestroyedSkeletons; } }

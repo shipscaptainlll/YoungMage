@@ -11,6 +11,7 @@ public class ContactManager : MonoBehaviour
     [SerializeField] CameraController CameraController;
     [SerializeField] Transform mainCharacter;
     [SerializeField] PotentialPositioner potentialPositioner;
+    [SerializeField] AttachObjectSkeleton attachObjectSkeleton;
 
     Transform contactedSkeleton;
     public event Action<Transform> TeleporterDetected = delegate { };
@@ -81,6 +82,17 @@ public class ContactManager : MonoBehaviour
                         TriggerPotentialPositioner(contactedObject.parent);
                         SkeletonDetected(contactedObject.parent, mainCharacter);
                     }
+                }
+                else if (contactedObject.parent.GetComponent<Skeleton>() != null
+                    && (quickAccessHandController.CurrentCustomID == 11
+                    || quickAccessHandController.CurrentCustomID == 12
+                    || quickAccessHandController.CurrentCustomID == 13
+                    || quickAccessHandController.CurrentCustomID == 14
+                    || quickAccessHandController.CurrentCustomID == 15
+                    || quickAccessHandController.CurrentCustomID == 16
+                    || quickAccessHandController.CurrentCustomID == 17))
+                {
+                    attachObjectSkeleton.AttachObject(contactedObject.parent.GetComponent<SkeletonBehavior>(), quickAccessHandController.CurrentCustomID);
                 }
                 else if (contactedObject.parent.GetComponent<Defractor>() != null)
                 {

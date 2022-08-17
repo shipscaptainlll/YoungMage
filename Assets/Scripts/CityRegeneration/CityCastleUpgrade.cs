@@ -173,6 +173,7 @@ public class CityCastleUpgrade : MonoBehaviour
             color.a = 0.25f;
             availableButtons[countUpgradeCurrentCount-1].GetComponent<Image>().color = color;
             availableButtons[countUpgradeCurrentCount-1].GetComponent<Button>().enabled = true;
+            availableButtons[countUpgradeCurrentCount - 1].GetComponent<Regeneration2DSUI>().enabled = true;
         }
     }
 
