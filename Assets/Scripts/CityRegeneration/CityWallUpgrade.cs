@@ -9,6 +9,7 @@ public class CityWallUpgrade : MonoBehaviour
     [Header("Attached main scripts")]
     [SerializeField] CastleHealthDecreaser castleHealthDecreaser;
     [SerializeField] GoldCoinsCounter goldCoinsCounter;
+    [SerializeField] SUINotificator suiNotificator;
 
     [Header("Roates to inner elements")]
     [SerializeField] Text healthText;
@@ -41,11 +42,15 @@ public class CityWallUpgrade : MonoBehaviour
     public void TransformMoneyHealth()
     {
         float healthRegenerate = wallRegenerationButton.ButtonDownTime;
-        float goldNeeded = wallRegenerationButton.ButtonDownTime * healthCost;
-        if (goldCoinsCounter.Count >= goldNeeded)
+        int goldNeeded = Mathf.RoundToInt(wallRegenerationButton.ButtonDownTime * healthCost);
+        if (goldCoinsCounter.Count <= goldNeeded)
         {
+            suiNotificator.Notify("-" + goldNeeded);
             goldCoinsCounter.AddResource(-(int)goldNeeded);
             castleHealthDecreaser.RegenerateHealth(healthRegenerate);
+        } else
+        {
+            suiNotificator.Notify("not enough gold");
         }
         
     }

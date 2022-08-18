@@ -104,13 +104,13 @@ public class SkeletonBehavior : MonoBehaviour
     bool isConnectedBracers;
 
     public int ConnectedObjects { get { return connectedObjects; } set { connectedObjects = value; } }
-    public bool IsConnectedHands { get { return isConnectedHands; } set { isConnectedHands = value; } }
-    public bool IsConnectedLeggings { get { return isConnectedLeggings; } set { isConnectedLeggings = value; } }
-    public bool IsConnectedArmor { get { return isConnectedArmor; } set { isConnectedArmor = value; } }
-    public bool IsConnectedShoes { get { return isConnectedShoes; } set { isConnectedShoes = value; } }
-    public bool IsConnectedHelm { get { return isConnectedHelm; } set { isConnectedHelm = value; } }
-    public bool IsConnectedGloves { get { return isConnectedGloves; } set { isConnectedGloves = value; } }
-    public bool IsConnectedBracers { get { return isConnectedBracers; } set { isConnectedBracers = value; } }
+    public bool IsConnectedHands { get { return isConnectedHands; } set { isConnectedHands = value; NotifyObjectConnected(); } }
+    public bool IsConnectedLeggings { get { return isConnectedLeggings; } set { isConnectedLeggings = value; NotifyObjectConnected(); } }
+    public bool IsConnectedArmor { get { return isConnectedArmor; } set { isConnectedArmor = value; NotifyObjectConnected(); } }
+    public bool IsConnectedShoes { get { return isConnectedShoes; } set { isConnectedShoes = value; NotifyObjectConnected(); } }
+    public bool IsConnectedHelm { get { return isConnectedHelm; } set { isConnectedHelm = value; NotifyObjectConnected(); } }
+    public bool IsConnectedGloves { get { return isConnectedGloves; } set { isConnectedGloves = value; NotifyObjectConnected(); } }
+    public bool IsConnectedBracers { get { return isConnectedBracers; } set { isConnectedBracers = value; NotifyObjectConnected(); } }
 
     public int ProgressParameter { get { return countConjuredSkeletons; } }
     public int ProgressParameterSecond { get { return countSmallSkeletons; } }
@@ -122,7 +122,8 @@ public class SkeletonBehavior : MonoBehaviour
     public Transform CastlePosition { set { castlePosition = value; } }
     public event Action<Transform> OriginRotated = delegate { };
     public event Action OreHitted = delegate { };
-    
+    public event Action ObjectConnected = delegate { };
+
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -262,6 +263,11 @@ public class SkeletonBehavior : MonoBehaviour
         }
         CheckIfStopped();
         if (isConjured) { CheckIfUnused(); }
+    }
+
+    void NotifyObjectConnected()
+    {
+        if (ObjectConnected != null) { ObjectConnected(); }
     }
 
     void GotoCastle()

@@ -110,6 +110,7 @@ public class PanelsManager : MonoBehaviour
         if (currentlyOpened != null)
         {
             closeCurrentPanel();
+            CameraVolumeController.UnBlurScreen();
         } else
         {
             OpenEscapemenuPanel();
@@ -163,6 +164,7 @@ public class PanelsManager : MonoBehaviour
     {
         if (!escapeMenuBlocked)
         {
+            CameraVolumeController.BlurScreen();
             nextToOpen = escapeMenuPanel;
             decideNextState();
         }

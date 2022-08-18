@@ -16,8 +16,13 @@ public class CameraController : MonoBehaviour
     [SerializeField] ObjectOutliner objectOutliner;
     [SerializeField] float contactingRayDistance;
     float yRotation;
+    float xRotation;
     RaycastHit hit = new RaycastHit();
 
+    Vector3 startRotation;
+    bool cityRegenerationMode;
+    public bool CityRegenerationMode { get { return cityRegenerationMode; } set { startRotation = transform.localRotation.eulerAngles;  cityRegenerationMode = value; yRotation = startRotation.y; xRotation = startRotation.x; } }
+    Vector3 StartRotation { get { return startRotation; } set { startRotation = value; } }
     public float YRotation { get { return yRotation; } set { yRotation = value; } }
     public RaycastHit ObservedObject
     {
@@ -53,12 +58,31 @@ public class CameraController : MonoBehaviour
         float xRot = Input.GetAxis("Mouse X") * Time.deltaTime * mouseSensitivity;
         float yRot = Input.GetAxis("Mouse Y") * Time.deltaTime * mouseSensitivity;
 
-        yRotation -= yRot * 2;
-        yRotation = Mathf.Clamp(yRotation, -90f, 50f);
+       
+        
+        if (!cityRegenerationMode)
+        {
+            yRotation -= yRot * 2;
+            xRotation += xRot;
+            yRotation = Mathf.Clamp(yRotation, -90f, 50f);
+            //yRotation = Mathf.Clamp(yRotation, -90f, 50f);
+            transform.localRotation = Quaternion.Euler(yRotation, 0, 0f);
 
-        transform.localRotation = Quaternion.Euler(yRotation, 0, 0f);
+            characterBody.Rotate(Vector3.up * xRot * 3);
+        } else
+        {
+            yRotation += xRot * 0.25f;
+            xRotation -= yRot * 0.25f;
+            Debug.Log(startRotation);
+            yRotation = Mathf.Clamp(yRotation, startRotation.y - 6.5f, startRotation.y + 6.5f);
+            xRotation = Mathf.Clamp(xRotation, startRotation.x - 6.5f, startRotation.x + 6.5f);
+            transform.localRotation = Quaternion.Euler(xRotation, yRotation, startRotation.z);
+            Debug.Log(transform.localRotation.eulerAngles);
+        }
 
-        characterBody.Rotate(Vector3.up * xRot * 3);
+
+
+
     }
 
     

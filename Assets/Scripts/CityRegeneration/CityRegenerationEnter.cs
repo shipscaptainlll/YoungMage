@@ -64,6 +64,7 @@ public class CityRegenerationEnter : MonoBehaviour
             cityBlacksmithUpgrade.GetComponent<CanvasGroup>().alpha = 1;
             enterPartycleSystem.gameObject.SetActive(true);
             enterPartycleSystem.Play();
+            
             camera.enabled = false;
             isActive = true;
             isEntering = true;
@@ -107,12 +108,15 @@ public class CityRegenerationEnter : MonoBehaviour
             CursorManager.ForceCursorEnabled();
             CityRegenerationMouse.IsActive = true;
             enterPartycleSystem.gameObject.SetActive(false);
+            camera.enabled = true;
+            camera.CityRegenerationMode = true;
         } else if (isEscaping) { 
             isEscaping = false;
             isActive = false;
             panelsManager.EscapeMenuBlocked = false;
+            camera.CityRegenerationMode = false;
             personMovement.enabled = true;
-            camera.enabled = true;
+            //camera.CityRegenerationMode = false;
             quickAccessPanel.GetComponent<CanvasGroup>().alpha = 1;
         }
         yield return null;
@@ -126,6 +130,7 @@ public class CityRegenerationEnter : MonoBehaviour
             cityCastleUpgrade.GetComponent<CanvasGroup>().alpha = 0;
             cityBlacksmithUpgrade.GetComponent<CanvasGroup>().alpha = 0;
             isEscaping = true;
+            
             CursorManager.ForceCursorDisabled();
             CityRegenerationMouse.IsActive = false;
             if (cameraRepositioningCoroutine != null)

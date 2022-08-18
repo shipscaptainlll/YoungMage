@@ -82,11 +82,17 @@ public class OreMiningManager : MonoBehaviour
     {
         
         connectingSkeleton.OreHitted += DecreaseOreHealth;
+        connectingSkeleton.ObjectConnected += NotifyHealthDecreser;
+    }
+
+    void NotifyHealthDecreser()
+    {
+        oreHealthDecreaser.CalculateDamage(connectedSkeleton);
     }
 
     void HideOreHealthbar()
     {
-        oreHealthDecreaser.gameObject.SetActive(false);
+        oreHealthDecreaser.gameObject.GetComponent<CanvasGroup>().alpha = 0;
     }
 
     void DisconnectScriptsInterraction(SkeletonBehavior connectingSkeleton)

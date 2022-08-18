@@ -8,6 +8,7 @@ public class CityBlacksmithUpgrade : MonoBehaviour
 {
     [Header("Attached main scripts")]
     [SerializeField] GoldCoinsCounter goldCoinsCounter;
+    [SerializeField] SUINotificator suiNotificator;
 
     [Header("Roates to inner elements")]
     [SerializeField] Scrollbar upgradesBar;
@@ -51,12 +52,19 @@ public class CityBlacksmithUpgrade : MonoBehaviour
         {
             if (TakeUpgradeMoney())
             {
+                suiNotificator.Notify("-" + upgradeCost);
                 upgradeCurrentCount++;
                 InitiateScrolling();
                 
                 UpgradeCost();
                 UpdateCostText();
+            } else
+            {
+                suiNotificator.Notify("not enough gold");
             }
+        } else
+        {
+            suiNotificator.Notify("already maxed level");
         }
     }
 

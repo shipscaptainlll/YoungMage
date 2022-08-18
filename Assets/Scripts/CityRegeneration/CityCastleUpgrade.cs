@@ -8,6 +8,7 @@ public class CityCastleUpgrade : MonoBehaviour
 {
     [Header("Attached main scripts")]
     [SerializeField] GoldCoinsCounter goldCoinsCounter;
+    [SerializeField] SUINotificator suiNotificator;
 
     [Header("Roates to inner elements")]
     [SerializeField] Scrollbar upgradesBar;
@@ -18,6 +19,7 @@ public class CityCastleUpgrade : MonoBehaviour
     [SerializeField] Text countGoldText;
     [SerializeField] Text fillGoldText;
     [SerializeField] Text fillText;
+    [SerializeField] Transform SUINotificator;
 
 
     int sphereUpgradesMaxCount;
@@ -83,16 +85,24 @@ public class CityCastleUpgrade : MonoBehaviour
         Debug.Log(sphereUpgradesMaxCount);
         if (sphereUpgradeCurrentCount < sphereUpgradesMaxCount)
         {
+            
             Debug.Log("there hello if");
             if (TakeUpgradeMoney(sphereUpgradeCost))
             {
+                suiNotificator.Notify("-" + sphereUpgradeCost);
                 Debug.Log("there hello if1");
                 sphereUpgradeCurrentCount++;
                 InitiateScrolling();
 
                 UpgradeCost(ref sphereUpgradeCost, sphereCostModifier);
                 UpdateCostText(sphereGoldText, sphereUpgradeCost, sphereUpgradeCurrentCount, sphereUpgradesMaxCount);
+            } else
+            {
+                suiNotificator.Notify("not enough gold");
             }
+        } else
+        {
+            suiNotificator.Notify("alreaady maxed");
         }
     }
 
@@ -103,6 +113,7 @@ public class CityCastleUpgrade : MonoBehaviour
             Debug.Log("there hello if22");
             if (TakeUpgradeMoney(countUpgradeCost))
             {
+                suiNotificator.Notify("-" + countUpgradeCost);
                 countUpgradeCurrentCount++;
                 //availableShards[countUpgradeCurrentCount - 1].GetComponent<CanvasGroup>().alpha = 1;
                 ShowNextButton();
@@ -110,7 +121,13 @@ public class CityCastleUpgrade : MonoBehaviour
                 //ShowNextShard();
                 UpgradeCost(ref countUpgradeCost, countcostModifier);
                 UpdateCostText(countGoldText, countUpgradeCost, countUpgradeCurrentCount, countUpgradesMaxCount);
+            } else
+            {
+                suiNotificator.Notify("not enough gold");
             }
+        } else
+        {
+            suiNotificator.Notify("alreaady maxed");
         }
     }
 
@@ -167,11 +184,13 @@ public class CityCastleUpgrade : MonoBehaviour
         var color = availableButtons[countUpgradeCurrentCount-2].GetComponent<Image>().color;
         color.a = 1f;
         availableButtons[countUpgradeCurrentCount-2].GetComponent<Image>().color = color;
+        availableButtons[countUpgradeCurrentCount - 2].GetComponent<Button>().enabled = false;
         if (countUpgradeCurrentCount != countUpgradesMaxCount)
         {
             color = availableButtons[countUpgradeCurrentCount-1].GetComponent<Image>().color;
             color.a = 0.25f;
             availableButtons[countUpgradeCurrentCount-1].GetComponent<Image>().color = color;
+            
             availableButtons[countUpgradeCurrentCount-1].GetComponent<Button>().enabled = true;
             availableButtons[countUpgradeCurrentCount - 1].GetComponent<Regeneration2DSUI>().enabled = true;
         }

@@ -11,6 +11,7 @@ public class OreHealthDecreaser : MonoBehaviour
     float maximumHealth = 1000;
     float currentHealth = 1000;
 
+    int currentDamage;
     RectTransform healthTransform;
     public event Action HealthReachedZero = delegate { };
 
@@ -18,6 +19,7 @@ public class OreHealthDecreaser : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        currentDamage = 50;
         healthTransform = transform.Find("Borders").Find("Foreground").GetComponent<RectTransform>();
     }
 
@@ -26,10 +28,43 @@ public class OreHealthDecreaser : MonoBehaviour
         
     }
 
+    public void CalculateDamage(SkeletonBehavior skeleton)
+    {
+        currentDamage = 50;
+        if (skeleton.IsConnectedHands)
+        {
+            currentDamage += 10;
+        }
+        if (skeleton.IsConnectedLeggings)
+        {
+            currentDamage += 10;
+        }
+        if (skeleton.IsConnectedArmor)
+        {
+            currentDamage += 10;
+        }
+        if (skeleton.IsConnectedShoes)
+        {
+            currentDamage += 10;
+        }
+        if (skeleton.IsConnectedHelm)
+        {
+            currentDamage += 10;
+        }
+        if (skeleton.IsConnectedGloves)
+        {
+            currentDamage += 10;
+        }
+        if (skeleton.IsConnectedBracers)
+        {
+            currentDamage += 10;
+        }
+    }
+
     public void DealDamage(float damage)
     {
-
-        currentHealth -= damage;
+        Debug.Log(currentDamage);
+        currentHealth -= currentDamage;
         float leftHealthPercent = ((currentHealth - damage) / maximumWidth) * 100;
         Debug.Log("hello there");
         leftHealthPercent = Mathf.Clamp(leftHealthPercent, 0, 100);
