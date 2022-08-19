@@ -331,6 +331,38 @@ public class QuestsSubscriptionsManager : MonoBehaviour
                 destroyedSkeletonsCounter.DestroyedSmallSkeleton += questElement.UpdateProgress;
                 questElement.UpdateProgress(destroyedSkeletonsCounter.CountSmallSkeletons);
                 break;
+            case 1008:
+                destroyedSkeletonsCounter.DestroyedBigSkeleton += questElement.UpdateProgress;
+                questElement.UpdateProgress(destroyedSkeletonsCounter.CountBigSkeletons);
+                break;
+            case 1009:
+                destroyedSkeletonsCounter.DestroyedLizardSkeleton += questElement.UpdateProgress;
+                questElement.UpdateProgress(destroyedSkeletonsCounter.CountLizardSkeletons);
+                break;
+            case 1011:
+                SkeletonObjectQuests.FirstObjectConnected += questElement.UpdateProgress;
+                questElement.UpdateProgress(SkeletonObjectQuests.FirstConnectedCount);
+                break;
+            case 1012:
+                SkeletonObjectQuests.SecondObjectConnected += questElement.UpdateProgress;
+                questElement.UpdateProgress(SkeletonObjectQuests.SecondConnectedCount);
+                break;
+            case 1013:
+                SkeletonObjectQuests.ThirdObjectConnected += questElement.UpdateProgress;
+                questElement.UpdateProgress(SkeletonObjectQuests.ThirdConnectedCount);
+                break;
+            case 1014:
+                SkeletonObjectQuests.FourthObjectConnected += questElement.UpdateProgress;
+                questElement.UpdateProgress(SkeletonObjectQuests.FourthConnectedCount);
+                break;
+            case 1015:
+                SkeletonObjectQuests.FifthObjectConnected += questElement.UpdateProgress;
+                questElement.UpdateProgress(SkeletonObjectQuests.FifthConnectedCount);
+                break;
+            case 1016:
+                SkeletonObjectQuests.SixthObjectConnected += questElement.UpdateProgress;
+                questElement.UpdateProgress(SkeletonObjectQuests.SixthConnectedCount);
+                break;
             case 1101:
                 cityWallUpgrade.HealthRegeneratedQuests += questElement.UpdateProgress;
                 questElement.UpdateProgress(cityWallUpgrade.CountReneratedQuests);
@@ -578,6 +610,30 @@ public class QuestsSubscriptionsManager : MonoBehaviour
             case 1007:
                 destroyedSkeletonsCounter.DestroyedSmallSkeleton -= questElement.UpdateProgress;
                 break;
+            case 1008:
+                destroyedSkeletonsCounter.DestroyedBigSkeleton -= questElement.UpdateProgress;
+                break;
+            case 1009:
+                destroyedSkeletonsCounter.DestroyedLizardSkeleton -= questElement.UpdateProgress;
+                break;
+            case 1011:
+                SkeletonObjectQuests.FirstObjectConnected -= questElement.UpdateProgress;
+                break;
+            case 1012:
+                SkeletonObjectQuests.SecondObjectConnected -= questElement.UpdateProgress;
+                break;
+            case 1013:
+                SkeletonObjectQuests.ThirdObjectConnected -= questElement.UpdateProgress;
+                break;
+            case 1014:
+                SkeletonObjectQuests.FourthObjectConnected -= questElement.UpdateProgress;
+                break;
+            case 1015:
+                SkeletonObjectQuests.FifthObjectConnected -= questElement.UpdateProgress;
+                break;
+            case 1016:
+                SkeletonObjectQuests.SixthObjectConnected -= questElement.UpdateProgress;
+                break;
             case 1101:
                 cityWallUpgrade.HealthRegeneratedQuests -= questElement.UpdateProgress;
                 break;
@@ -712,6 +768,7 @@ public class QuestsSubscriptionsManager : MonoBehaviour
         InstantiatePotentialQuest(1013, "Equip skeletons with 3 object", 1, 50);
         InstantiatePotentialQuest(1014, "Equip skeletons with 4 object", 1, 60);
         InstantiatePotentialQuest(1015, "Equip skeletons with 5 object", 1, 100);
+        InstantiatePotentialQuest(1016, "Equip skeletons with 6 object", 1, 120);
 
         InstantiatePotentialQuest(1101, "Regenerate health to castle", 1, 50);
         InstantiatePotentialQuest(1103, "Upgrade castle forge", 1, 50);

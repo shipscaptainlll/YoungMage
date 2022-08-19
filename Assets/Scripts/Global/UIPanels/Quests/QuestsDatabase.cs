@@ -331,6 +331,7 @@ public class QuestsDatabase : MonoBehaviour
         InstantiatePotentialQuest(1013, "Equip skeletons with 3 object", 1, 50);
         InstantiatePotentialQuest(1014, "Equip skeletons with 4 object", 1, 60);
         InstantiatePotentialQuest(1015, "Equip skeletons with 5 object", 1, 100);
+        InstantiatePotentialQuest(1016, "Equip skeletons with 6 object", 1, 120);
 
         InstantiatePotentialQuest(1101, "Regenerate health to castle", 1, 50);
         InstantiatePotentialQuest(1102, "Upgrade castle wall", 1, 25);

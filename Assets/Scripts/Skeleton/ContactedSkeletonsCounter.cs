@@ -17,6 +17,8 @@ public class ContactedSkeletonsCounter : MonoBehaviour
 
     public event Action<int> ContactedSkeleton = delegate { };
     public event Action<int> ContactedSmallSkeleton = delegate { };
+    public event Action<int> ContactedBigSkeleton = delegate { };
+    public event Action<int> ContactedLizardSkeleton = delegate { };
 
     // Start is called before the first frame update
     void Start()
@@ -33,12 +35,25 @@ public class ContactedSkeletonsCounter : MonoBehaviour
     public void CountContactedSkeleton(Transform contactedSkeleton)
     {
         contactedSkeletonsCount = contactedSkeleton.GetComponent<SkeletonBehavior>().ProgressParameter;
+        if (ContactedSkeleton != null) { ContactedSkeleton(contactedSkeletonsCount); }
+
         if (contactedSkeleton.GetComponent<SmallSkeleton>() != null)
         {
             countSmallSkeletons = contactedSkeleton.GetComponent<SkeletonBehavior>().ProgressParameterSecond;
+            if (ContactedSmallSkeleton != null) { ContactedSmallSkeleton(countSmallSkeletons); }
+        } else if (contactedSkeleton.GetComponent<BigSkeleton>() != null)
+        {
+            countBigSkeletons = contactedSkeleton.GetComponent<SkeletonBehavior>().ProgressParameterThird;
+            if (ContactedBigSkeleton != null) { ContactedBigSkeleton(countBigSkeletons); }
+        } else if (contactedSkeleton.GetComponent<LizardSkeleton>() != null)
+        {
+            countLizardSkeletons = contactedSkeleton.GetComponent<SkeletonBehavior>().ProgressParameterFourth;
+            if (ContactedLizardSkeleton != null) { ContactedLizardSkeleton(countLizardSkeletons); }
         }
 
-        if (ContactedSkeleton != null) { ContactedSkeleton(contactedSkeletonsCount);  }
-        if (ContactedSmallSkeleton != null) { ContactedSmallSkeleton(countSmallSkeletons); }
+        
+        
+        
+        
     }
 }

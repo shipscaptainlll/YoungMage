@@ -17,6 +17,8 @@ public class DestroyedSkeletonsCounter : MonoBehaviour
 
     public event Action<int> DestroyedSkeleton = delegate { };
     public event Action<int> DestroyedSmallSkeleton = delegate { };
+    public event Action<int> DestroyedBigSkeleton = delegate { };
+    public event Action<int> DestroyedLizardSkeleton = delegate { };
 
     // Start is called before the first frame update
     void Start()
@@ -33,12 +35,25 @@ public class DestroyedSkeletonsCounter : MonoBehaviour
     public void CountDestroyedSkeleton(Transform destroyedSkeleton)
     {
         destroyedSkeletonsCount = destroyedSkeleton.GetComponent<SkeletonBehavior>().CountDestroyedSkeletons;
+        if (DestroyedSkeleton != null) { DestroyedSkeleton(destroyedSkeletonsCount); }
+
         if (destroyedSkeleton.GetComponent<SmallSkeleton>() != null)
         {
             countSmallSkeletons = destroyedSkeleton.GetComponent<SkeletonBehavior>().DestroyedSmallSkeletons;
+            if (DestroyedSmallSkeleton != null) { DestroyedSmallSkeleton(countSmallSkeletons); }
+        }
+        else if (destroyedSkeleton.GetComponent<BigSkeleton>() != null)
+        {
+            countBigSkeletons = destroyedSkeleton.GetComponent<SkeletonBehavior>().DestroyedBigSkeletons;
+            if (DestroyedBigSkeleton != null) { DestroyedBigSkeleton(countBigSkeletons); }
+        }
+        else if (destroyedSkeleton.GetComponent<LizardSkeleton>() != null)
+        {
+            countLizardSkeletons = destroyedSkeleton.GetComponent<SkeletonBehavior>().DestroyedLizardSkeletons;
+            if (DestroyedLizardSkeleton != null) { DestroyedLizardSkeleton(countLizardSkeletons); }
         }
 
-        if (DestroyedSkeleton != null) { DestroyedSkeleton(destroyedSkeletonsCount);  }
-        if (DestroyedSmallSkeleton != null) { DestroyedSmallSkeleton(countSmallSkeletons); }
+        
+        
     }
 }

@@ -44,6 +44,8 @@ public class SkeletonBehavior : MonoBehaviour
     Material lowerPartMaterial;
     static int countConjuredSkeletons;
     static int countSmallSkeletons;
+    static int countBigSkeletons;
+    static int countLizardSkeletons;
     bool wasOnceConjured;
 
     [Header("VFX unconjuration")]
@@ -51,6 +53,8 @@ public class SkeletonBehavior : MonoBehaviour
     Text unusedCounterText;
     static int countDestroyedSkeletons;
     static int destroyedSmallSkeletons;
+    static int destroyedBigSkeletons;
+    static int destroyedLizardSkeletons;
     bool isConjured;
     bool beingUnconjured;
     Coroutine unconjuration;
@@ -103,6 +107,13 @@ public class SkeletonBehavior : MonoBehaviour
     bool isConnectedGloves;
     bool isConnectedBracers;
 
+    bool firstConnectedNotified;
+    bool secondConnectedNotified;
+    bool thirdConnectedNotified;
+    bool fourthConnectedNotified;
+    bool fifthConnectedNotified;
+    bool sixthConnectedNotified;
+
     public int ConnectedObjects { get { return connectedObjects; } set { connectedObjects = value; } }
     public bool IsConnectedHands { get { return isConnectedHands; } set { isConnectedHands = value; NotifyObjectConnected(); } }
     public bool IsConnectedLeggings { get { return isConnectedLeggings; } set { isConnectedLeggings = value; NotifyObjectConnected(); } }
@@ -114,8 +125,12 @@ public class SkeletonBehavior : MonoBehaviour
 
     public int ProgressParameter { get { return countConjuredSkeletons; } }
     public int ProgressParameterSecond { get { return countSmallSkeletons; } }
+    public int ProgressParameterThird { get { return countBigSkeletons; } }
+    public int ProgressParameterFourth { get { return countLizardSkeletons; } }
     public int CountDestroyedSkeletons { get { return countDestroyedSkeletons; } }
     public int DestroyedSmallSkeletons { get { return destroyedSmallSkeletons; } }
+    public int DestroyedBigSkeletons { get { return destroyedBigSkeletons; } }
+    public int DestroyedLizardSkeletons { get { return destroyedLizardSkeletons; } }
     public bool ReachedPosition { get { return reachedPosition; } }
     //cache
     [SerializeField] Transform targetMage1;
@@ -123,7 +138,6 @@ public class SkeletonBehavior : MonoBehaviour
     public event Action<Transform> OriginRotated = delegate { };
     public event Action OreHitted = delegate { };
     public event Action ObjectConnected = delegate { };
-
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -153,6 +167,12 @@ public class SkeletonBehavior : MonoBehaviour
         if (transform.GetComponent<SmallSkeleton>() != null)
         {
             isSmallSkeleton = true;
+        } else if (transform.GetComponent<BigSkeleton>() != null)
+        {
+            isBigSkeleton = true;
+        } else if (transform.GetComponent<LizardSkeleton>() != null)
+        {
+            isLizardSkeleton = true;
         }
         contactManager.GetComponent<ContactManager>().OreDetected += AddTarget;
         connectedTeleport.GetComponent<Teleporter>().TeleportFound += StopGravity;
@@ -221,6 +241,16 @@ public class SkeletonBehavior : MonoBehaviour
                     //Debug.Log("hello there");
                     countSmallSkeletons++;
                     contactedSkeletonsCounter.CountContactedSkeleton(this.transform);
+                } else if (isBigSkeleton)
+                {
+                    //Debug.Log("hello there");
+                    countBigSkeletons++;
+                    contactedSkeletonsCounter.CountContactedSkeleton(this.transform);
+                } else if (isLizardSkeleton)
+                {
+                    //Debug.Log("hello there");
+                    countLizardSkeletons++;
+                    contactedSkeletonsCounter.CountContactedSkeleton(this.transform);
                 }
             }
             navigationTarget = value;
@@ -267,7 +297,38 @@ public class SkeletonBehavior : MonoBehaviour
 
     void NotifyObjectConnected()
     {
+        CountConnectedObjects();
+        if (connectedObjects == 1 && !firstConnectedNotified)
+        {
+            firstConnectedNotified = true;
+            SkeletonObjectQuests.CountFirstConnected();
+        } else if (connectedObjects == 2 && !secondConnectedNotified)
+        {
+            secondConnectedNotified = true;
+            SkeletonObjectQuests.CountSecondConnected();
+        } else if (connectedObjects == 3 && !thirdConnectedNotified)
+        {
+            thirdConnectedNotified = true;
+            SkeletonObjectQuests.CountThirdConnected();
+        } else if (connectedObjects == 4 && !fourthConnectedNotified)
+        {
+            fourthConnectedNotified = true;
+            SkeletonObjectQuests.CountFourthConnected();
+        } else if (connectedObjects == 5 && !fifthConnectedNotified)
+        {
+            fifthConnectedNotified = true;
+            SkeletonObjectQuests.CountFifthConnected();
+        } else if (connectedObjects == 6 && !sixthConnectedNotified)
+        {
+            sixthConnectedNotified = true;
+            SkeletonObjectQuests.CountSixthConnected();
+        }
         if (ObjectConnected != null) { ObjectConnected(); }
+    }
+
+    void CountConnectedObjects()
+    {
+        connectedObjects++;
     }
 
     void GotoCastle()
@@ -458,6 +519,14 @@ public class SkeletonBehavior : MonoBehaviour
         if (isSmallSkeleton)
         {
             destroyedSmallSkeletons++;
+            destroyedSkeletonsCounter.CountDestroyedSkeleton(this.transform);
+        } else if (isSmallSkeleton)
+        {
+            destroyedBigSkeletons++;
+            destroyedSkeletonsCounter.CountDestroyedSkeleton(this.transform);
+        } else if (isSmallSkeleton)
+        {
+            destroyedBigSkeletons++;
             destroyedSkeletonsCounter.CountDestroyedSkeleton(this.transform);
         }
         Destroy(instantiatedDestroyedSkeleton);
