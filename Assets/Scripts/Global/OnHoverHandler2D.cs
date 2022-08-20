@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class OnHoverHandler2D : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-
     GameObject currentObject;
 
     List<RaycastResult> hitObjects = new List<RaycastResult>();
@@ -31,12 +30,15 @@ public class OnHoverHandler2D : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        Debug.Log(transform);
         if (currentObject == null)
         {
             currentObject = DetectObject();
-            if (currentObject.GetComponent<Element>() != null) { 
+            Debug.Log(currentObject);
+            if (currentObject.GetComponent<Element>() != null) {
+                Debug.Log(currentObject.GetComponent<Image>().sprite.name);
                 if (currentObject.GetComponent<Image>().sprite.name != "Nothing" && InventoryElementFound != null) { 
-                    //Debug.Log(currentObject.GetComponent<Image>().sprite); 
+                    Debug.Log(currentObject.GetComponent<Image>().sprite); 
                     InventoryElementFound(transform); } }
             if (currentObject.GetComponent<SettingsElement>() != null)
             {
@@ -51,7 +53,6 @@ public class OnHoverHandler2D : MonoBehaviour, IPointerEnterHandler, IPointerExi
         currentObject = null;
         if (InventoryElementExited != null) { InventoryElementExited(); }
         if (SettingsElementExited != null) { SettingsElementExited(); }
-
     }
 
     GameObject DetectObject()

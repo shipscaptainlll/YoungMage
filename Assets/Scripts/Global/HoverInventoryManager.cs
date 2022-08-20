@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class HoverInventoryManager : MonoBehaviour
 {
     [SerializeField] Transform inventoryElementsHolder;
+    [SerializeField] Transform quickinventoryElementsHolder;
     [SerializeField] Transform UIMainHolder;
     [SerializeField] Transform SUIMainHolder;
     [SerializeField] Transform descriptionCanvas;
@@ -19,7 +20,17 @@ public class HoverInventoryManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Debug.Log(transform);
         foreach (Transform row in inventoryElementsHolder)
+        {
+            foreach (Transform slot in row)
+            {
+                slot.GetComponent<OnHoverHandler2D>().InventoryElementFound += Process;
+                slot.GetComponent<OnHoverHandler2D>().InventoryElementExited += Unprocess;
+            }
+        }
+
+        foreach (Transform row in quickinventoryElementsHolder)
         {
             foreach (Transform slot in row)
             {
@@ -40,13 +51,14 @@ public class HoverInventoryManager : MonoBehaviour
 
     void Process(Transform element)
     {
-        //Debug.Log("Started process");
+        Debug.Log("Started process");
         
         if (foundObject == null)
         {
             foundObject = element;
-
+            Debug.Log(element);
             descriptionText.text = element.Find("Borders").Find("Element").GetComponent<Image>().sprite.name;
+            Debug.Log(descriptionText);
             descriptionCanvas.parent = UIMainHolder;
             descriptionSizes = new Vector2(descriptionTransform.GetComponent<RectTransform>().rect.width, descriptionTransform.GetComponent<RectTransform>().rect.height);
             descriptionCanvas.SetAsLastSibling();

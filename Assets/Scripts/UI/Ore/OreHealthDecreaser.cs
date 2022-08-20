@@ -63,10 +63,10 @@ public class OreHealthDecreaser : MonoBehaviour
 
     public void DealDamage(float damage)
     {
-        Debug.Log(currentDamage);
+        //Debug.Log(currentDamage);
         currentHealth -= currentDamage;
         float leftHealthPercent = ((currentHealth - damage) / maximumWidth) * 100;
-        Debug.Log("hello there");
+        //Debug.Log("hello there");
         leftHealthPercent = Mathf.Clamp(leftHealthPercent, 0, 100);
         int updatedWidth = (int)(leftHealthPercent * maximumWidth / 100);
         StartCoroutine(SmoothHealthDecrease(updatedWidth));

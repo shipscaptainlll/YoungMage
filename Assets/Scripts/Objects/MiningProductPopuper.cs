@@ -34,10 +34,11 @@ public class MiningProductPopuper : MonoBehaviour
         //Transform objectReference = objectManager.TakeObject(quickAccessHandController.CurrentCustomID).transform;
 
         var newObject = Instantiate(oreReference, popupOrigin, popupOrigin);
-        if (newObject.GetChild(0) != null)
+        if (newObject.GetChild(0).GetChild(0) != null)
         {
-            var newObjectFine = newObject.GetChild(1);
+            var newObjectFine = newObject.GetChild(0);
             newObject.localPosition = new Vector3(0, 0, 0);
+            newObjectFine.localPosition = new Vector3(0, 0, 0);
             newObjectFine.gameObject.AddComponent<Rigidbody>();
             newObjectFine.gameObject.GetComponent<Rigidbody>().mass = 1;
             newObjectFine.gameObject.GetComponent<Rigidbody>().drag = 1;

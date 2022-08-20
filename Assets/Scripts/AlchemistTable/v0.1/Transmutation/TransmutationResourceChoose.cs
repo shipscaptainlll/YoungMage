@@ -322,7 +322,7 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
     public void Show()
     {
         //Debug.Log("Hello there");
-        if (!_transmutationEnabled)
+        if (!_transmutationEnabled && !_characterOccupation.IsOccupied)
         {
             foreach (GameObject resource in _accessibleResources)
             {

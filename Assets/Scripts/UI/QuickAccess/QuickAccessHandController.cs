@@ -115,8 +115,11 @@ public class QuickAccessHandController : MonoBehaviour
 
     void UnMarkUsedSlot(int slotNumber)
     {
-        quickAccessPanel.GetChild(slotNumber - 1).GetComponent<Image>().color = new Color(0.87f, 0.87f, 0.87f);
-        inventoryQuickAccessPanel.GetChild(slotNumber - 1).GetComponent<Image>().color = new Color(0.87f, 0.87f, 0.87f);
+        Color quickAccessColor = quickAccessPanel.GetChild(slotNumber - 1).GetComponent<Image>().color;
+        quickAccessColor = new Color(0.6792453f, 0.4657796f, 0.2210751f);
+        quickAccessColor.a = 0.7294118f;
+        quickAccessPanel.GetChild(slotNumber - 1).GetComponent<Image>().color = quickAccessColor;
+        inventoryQuickAccessPanel.GetChild(slotNumber - 1).GetComponent<Image>().color = quickAccessColor;
     }
 
     void SetCurrentCustomID(int slotNumber)

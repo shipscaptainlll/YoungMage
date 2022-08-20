@@ -14,6 +14,7 @@ public class SUISkeleton : MonoBehaviour
     [SerializeField] Text objectInventorySpeed;
     [SerializeField] Text objectAppliedInventory;
     [SerializeField] Text objectOccupation;
+    [SerializeField] Text appliedObjects;
     [SerializeField] Transform borderedCanvas;
 
     GameObject objectReference;
@@ -36,18 +37,19 @@ public class SUISkeleton : MonoBehaviour
     {
         if (cameraSUIInformer.ObservedType == "Skeleton" && !isActivated)
         {
+            Skeleton skeletonBasicInfo = newGameObject.transform.parent.GetComponent<Skeleton>();
             isActivated = true;
             transform.localScale = new Vector3(1, 1, 1);
             transform.GetComponent<CanvasGroup>().alpha = 1;
-            objectName.text = newGameObject.transform.parent.GetComponent<Skeleton>().ObjectType;
-            objectImage.sprite = newGameObject.transform.parent.GetComponent<Skeleton>().SkeletonImage;
-            objectPower.text = newGameObject.transform.parent.GetComponent<Skeleton>().Power.ToString();
-            objectInventoryPower.text = "(+" + newGameObject.transform.parent.GetComponent<Skeleton>().InventoryPower.ToString() + ")";
-            objectSpeed.text = newGameObject.transform.parent.GetComponent<Skeleton>().Speed.ToString();
-            objectInventorySpeed.text = "(+" + newGameObject.transform.parent.GetComponent<Skeleton>().InventorySpeed.ToString() + ")";
+            objectName.text = skeletonBasicInfo.ObjectType;
+            objectImage.sprite = skeletonBasicInfo.SkeletonImage;
+            objectPower.text = skeletonBasicInfo.Power.ToString();
+            objectInventoryPower.text = "(+" + skeletonBasicInfo.InventoryPower.ToString() + ")";
+            objectSpeed.text = skeletonBasicInfo.Speed.ToString();
+            objectInventorySpeed.text = "(+" + skeletonBasicInfo.InventorySpeed.ToString() + ")";
             objectReference = newGameObject.transform.parent.Find("Point").gameObject;
 
-
+            CountSkeletonItems(newGameObject.transform.parent.GetComponent<SkeletonBehavior>());
             string appliedInventoryItems = "";
             if (newGameObject.transform.parent.GetComponent<Skeleton>().AppliedInventory != null)
             {
@@ -56,9 +58,45 @@ public class SUISkeleton : MonoBehaviour
                     appliedInventoryItems += (item.name + "\n").ToString();
                 }
             }
-            objectAppliedInventory.text = appliedInventoryItems;
+            //objectAppliedInventory.text = appliedInventoryItems;
             objectOccupation.text = newGameObject.transform.parent.GetComponent<Skeleton>().Occupation.ToString();
         }
+    }
+
+    void CountSkeletonItems(SkeletonBehavior skeletonInfo)
+    {
+        string itemsString = "";
+        if (skeletonInfo.IsConnectedHands)
+        {
+            itemsString += "\nhands";
+        }
+        if (skeletonInfo.IsConnectedLeggings)
+        {
+            itemsString += "\nleggings";
+        }
+        if (skeletonInfo.IsConnectedArmor)
+        {
+            itemsString += "\narmor";
+        }
+        if (skeletonInfo.IsConnectedShoes)
+        {
+            itemsString += "\nshoes";
+        }
+        if (skeletonInfo.IsConnectedHelm)
+        {
+            itemsString += "\nhelm";
+        }
+        if (skeletonInfo.IsConnectedGloves)
+        {
+            itemsString += "\ngloves";
+        }
+        if (skeletonInfo.IsConnectedBracers)
+        {
+            itemsString += "\nbracers";
+        }
+        Debug.Log(appliedObjects.text);
+        appliedObjects.text = itemsString;
+        Debug.Log(appliedObjects.text);
     }
 
     void UpdateElementSize(float currentDistance)

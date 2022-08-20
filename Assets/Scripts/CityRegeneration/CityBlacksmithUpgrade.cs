@@ -37,7 +37,7 @@ public class CityBlacksmithUpgrade : MonoBehaviour
         costModifier = 2.5f;
         upgradesMaxCount = contentHolder.childCount - 4;
         upgradesBar.value = ((float)(upgradeCurrentCount) / (float)(upgradesMaxCount+2.5f)) + offsetUpgrade;
-        Debug.Log(upgradesBar.value);
+        //Debug.Log(upgradesBar.value);
     }
 
     // Update is called once per frame

@@ -9,6 +9,8 @@ using System;
 public class TornadoInstantiator : MonoBehaviour
 {
     [SerializeField] VisualEffect tornadoVFX;
+    [SerializeField] Transform body;
+    [SerializeField] Vector3 offsetRotation;
     RaycastHit[] hitObjects;
     RaycastHit hit;
 
@@ -38,6 +40,7 @@ void Start()
                 if (result.transform.gameObject.layer == 6 && result.transform.name != "Terrain")
                 {
                     tornadoVFX.transform.gameObject.SetActive(true);
+                    
                     tornadoVFX.Play();
                     return;
                 }
@@ -56,6 +59,7 @@ void Start()
                 {
                     //Debug.Log(result.transform);
                     tornadoVFX.transform.position = result.point + new Vector3(0, 0.5f, 0);
+                    tornadoVFX.transform.rotation = Quaternion.Euler(body.rotation.eulerAngles + offsetRotation);
                     return;
                 } else { tornadoVFX.transform.position = tornadoVFX.transform.position; }
             }

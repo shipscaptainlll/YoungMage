@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class QuestElement : MonoBehaviour
+public class QuestElement : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("Main settings")]
     [SerializeField] QuestsDatabase questDatabase;
@@ -16,8 +17,11 @@ public class QuestElement : MonoBehaviour
     [SerializeField] Button questFinishingButton;
     [SerializeField] Color normalQuestColor;
     [SerializeField] Color completedQuestColor;
-    
 
+    [Header("Cancel quest")]
+    [SerializeField] Transform cancelQuestButton;
+
+    Coroutine waitTransformVisible;
     Coroutine smoothIncreasement;
     float iteratedPercent;
     float increasementLeft;
@@ -123,6 +127,23 @@ public class QuestElement : MonoBehaviour
         }
         
     }
+    public void StopQuest()
+    {
+        //Debug.Log(1);
+        isHoldingQuest = false;
+        isCompleted = false;
+        questDatabase.TryReuploadQuest(id);
+        subscriptionsManager.UnsubscribeFromProgress(this.GetComponent<QuestElement>());
+        //Debug.Log(2);
+        //SynchronizeUI();
+        //Debug.Log(3);
+        VisualizeQuestUncompleted();
+        //Debug.Log(4);
+        ShowEffects();
+
+        //UploadNextQuest();
+    }
+
 
     void UpdateQuestsDatabase()
     {
@@ -132,6 +153,8 @@ public class QuestElement : MonoBehaviour
         requiredQuest.Level = level;
         questDatabase.TryReuploadQuest(id);
     }
+
+    
 
     void UploadNextQuest()
     {
@@ -308,6 +331,66 @@ public class QuestElement : MonoBehaviour
         
         progressImage.fillAmount = iteratedPercent;
         smoothIncreasement = null;
+        yield return null;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (transform.GetComponent<CanvasGroup>().alpha > 0)
+        {
+            cancelQuestButton.GetComponent<QuestCancelButton>().CurrentQuestElement = this;
+            cancelQuestButton.position = transform.position + new Vector3(139, 100, 0);
+            cancelQuestButton.GetComponent<CanvasGroup>().alpha = 1;
+        } else
+        {
+            waitTransformVisible = StartCoroutine(WaitTransformVisible());
+        }
+        
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        GameObject objectUnderMouse = eventData.pointerCurrentRaycast.gameObject;
+        if (objectUnderMouse != null)
+        {
+            if (objectUnderMouse.GetComponent<QuestCancelButton>() != null)
+            {
+
+            }
+            else
+            {
+                cancelQuestButton.position = new Vector3(1500, 0, 0);
+                cancelQuestButton.GetComponent<CanvasGroup>().alpha = 0;
+                cancelQuestButton.GetComponent<QuestCancelButton>().CurrentQuestElement = null;
+                if (waitTransformVisible != null) { StopCoroutine(waitTransformVisible); waitTransformVisible = null; }
+            }
+        } else
+        {
+            cancelQuestButton.position = new Vector3(1500, 0, 0);
+            cancelQuestButton.GetComponent<CanvasGroup>().alpha = 0;
+            cancelQuestButton.GetComponent<QuestCancelButton>().CurrentQuestElement = null;
+            if (waitTransformVisible != null) { StopCoroutine(waitTransformVisible); waitTransformVisible = null; }
+        }
+    }
+
+    IEnumerator WaitTransformVisible()
+    {
+        CanvasGroup transformCanvasGroup = transform.GetComponent<CanvasGroup>();
+        
+        bool isVisible = false;
+        while (!isVisible)
+        {
+            if (transformCanvasGroup.alpha == 1)
+            {
+                Debug.Log("Left coroutine");
+                cancelQuestButton.GetComponent<QuestCancelButton>().CurrentQuestElement = this;
+                cancelQuestButton.position = transform.position + new Vector3(139, 100, 0);
+                cancelQuestButton.GetComponent<CanvasGroup>().alpha = 1;
+                isVisible = true;
+                waitTransformVisible = null;
+                yield return null;
+            }
+            yield return null;
+        }
         yield return null;
     }
 }

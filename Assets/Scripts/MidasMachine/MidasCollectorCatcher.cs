@@ -2,10 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class MidasCollectorCatcher : MonoBehaviour
 {
-
+    [SerializeField] Material dematerializeMaterial;
 
     public event Action<int> ResourceEnteredCollector = delegate { };
     // Start is called before the first frame update

@@ -13,6 +13,9 @@ public class OreMiningManager : MonoBehaviour
     float firstProductChances;
     float secondProductChances;
 
+    static int firstProductCount = 0;
+    static int secondProductCount = 0;
+
     System.Random random;
     public Transform FirstProductInstance { get { return firstProductInstance; } }
     public Transform SecondProductInstance { get { return secondProductInstance; } }
@@ -46,6 +49,7 @@ public class OreMiningManager : MonoBehaviour
         firstProductInstance = transform.GetComponent<IOre>().FirstProductInstance;
         secondProductInstance = transform.GetComponent<IOre>().SecondProductInstance;
         random = new System.Random();
+        StartCoroutine(CountChances());
     }
 
     // Update is called once per frame
@@ -69,7 +73,7 @@ public class OreMiningManager : MonoBehaviour
 
     void DecreaseOreHealth()
     {
-        Debug.Log("Hitted");
+        //Debug.Log("Hitted");
         oreHealthDecreaser.DealDamage(100);
     }
 
@@ -109,14 +113,29 @@ public class OreMiningManager : MonoBehaviour
     Transform ChooseProduct()
     {
         float randomValue = Random.value;
-        Debug.Log("random value " + randomValue);
+        Debug.Log("random value " + randomValue + " first chances " + firstProductChances/100);
+
         if (randomValue < firstProductChances/100)
         {
+            firstProductCount++;
+            Debug.Log("first product count " + firstProductCount + " second product count " + secondProductCount + " analyzed chances " + 100 * (firstProductCount/(firstProductCount + secondProductCount)));
             return firstProductInstance;
         } else
         {
+            secondProductCount++;
+            Debug.Log("first product count " + firstProductCount + " second product count " + secondProductCount + " analyzed chances " + 100 * (firstProductCount / (firstProductCount + secondProductCount)));
             return secondProductInstance;
         }
 
+    }
+
+    IEnumerator CountChances()
+    {
+        while (true)
+        {
+            ChooseProduct();
+            yield return new WaitForSeconds(0.033f);
+        }
+        
     }
 }

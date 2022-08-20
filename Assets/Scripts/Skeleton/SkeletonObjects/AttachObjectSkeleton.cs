@@ -25,6 +25,14 @@ public class AttachObjectSkeleton : MonoBehaviour
     [SerializeField] Transform helmPosition;
     [SerializeField] Transform bracersPosition;
 
+    [SerializeField] Vector3 stoneHandsRotation;
+    [SerializeField] Vector3 glovesRotation;
+    [SerializeField] Vector3 leggingsRotation;
+    [SerializeField] Vector3 plateArmorRotation;
+    [SerializeField] Vector3 shoesRotation;
+    [SerializeField] Vector3 helmRotation;
+    [SerializeField] Vector3 bracersRotation;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,6 +57,7 @@ public class AttachObjectSkeleton : MonoBehaviour
                     Transform item = Instantiate(objectManager.TakeObject(id).transform);
                     item.parent = stoneHandsPosition;
                     item.localPosition = new Vector3(0, 0, 0);
+                    item.localRotation = Quaternion.Euler(stoneHandsRotation);
                 }
                 break;
             case 16:
@@ -59,6 +68,7 @@ public class AttachObjectSkeleton : MonoBehaviour
                     Transform item = Instantiate(objectManager.TakeObject(id).transform);
                     item.parent = glovesPosition;
                     item.localPosition = new Vector3(0, 0, 0);
+                    item.localRotation = Quaternion.Euler(glovesRotation);
                 }
                 break;
             case 12:
@@ -69,6 +79,7 @@ public class AttachObjectSkeleton : MonoBehaviour
                     Transform item = Instantiate(objectManager.TakeObject(id).transform);
                     item.parent = leggingsPosition;
                     item.localPosition = new Vector3(0, 0, 0);
+                    item.localRotation = Quaternion.Euler(leggingsRotation);
                 }
                 break;
             case 13:
@@ -78,7 +89,8 @@ public class AttachObjectSkeleton : MonoBehaviour
                     skeleton.IsConnectedArmor = true;
                     Transform item = Instantiate(objectManager.TakeObject(id).transform);
                     item.parent = plateArmorPosition;
-                    item.localPosition = new Vector3(0, 0, 0);
+                    item.localPosition = new Vector3(0, -5.5f, -2.2f);
+                    item.localRotation = Quaternion.Euler(plateArmorRotation);
                 }
                 break;
             case 14:
@@ -88,7 +100,8 @@ public class AttachObjectSkeleton : MonoBehaviour
                     skeleton.IsConnectedShoes = true;
                     Transform item = Instantiate(objectManager.TakeObject(id).transform);
                     item.parent = shoesPosition;
-                    item.localPosition = new Vector3(0, 0, 0);
+                    item.localPosition = new Vector3(-6.1f, 4.9f, -5.9f);
+                    item.localRotation = Quaternion.Euler(shoesRotation);
                 }
                 break;
             case 15:
@@ -99,6 +112,7 @@ public class AttachObjectSkeleton : MonoBehaviour
                     Transform item = Instantiate(objectManager.TakeObject(id).transform);
                     item.parent = helmPosition;
                     item.localPosition = new Vector3(0, 0, 0);
+                    item.localRotation = Quaternion.Euler(helmRotation);
                 }
                 break;
             case 17:
@@ -108,7 +122,8 @@ public class AttachObjectSkeleton : MonoBehaviour
                     skeleton.IsConnectedBracers = true;
                     Transform item = Instantiate(objectManager.TakeObject(id).transform);
                     item.parent = bracersPosition;
-                    item.localPosition = new Vector3(0, 0, 0);
+                    item.localPosition = new Vector3(0, 7.6f, 0);
+                    item.localRotation = Quaternion.Euler(bracersRotation);
                 }
                 break;
         }

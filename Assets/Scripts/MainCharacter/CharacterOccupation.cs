@@ -11,6 +11,8 @@ public class CharacterOccupation : MonoBehaviour
     Transform _engagedObject;
     bool _isOccupied;
 
+    public bool IsOccupied { get { return _isOccupied; } }
+
     public event Action CharacterEngagedSomething = delegate { };
     public event Action CharacterDisengagedSomething = delegate { };
     public event Action<Transform> LMBClicked = delegate { };

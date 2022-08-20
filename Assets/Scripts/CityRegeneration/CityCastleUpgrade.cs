@@ -54,8 +54,8 @@ public class CityCastleUpgrade : MonoBehaviour
     void Start()
     {
         sphereUpgradeCurrentCount = 1;
-        Debug.Log(sphereUpgradeCurrentCount);
-        Debug.Log(sphereUpgradesMaxCount);
+        //Debug.Log(sphereUpgradeCurrentCount);
+        //Debug.Log(sphereUpgradesMaxCount);
         countUpgradeCurrentCount = 1;
         offsetUpgrade = 0.075f;
         sphereUpgradeCost = 100;
@@ -69,8 +69,8 @@ public class CityCastleUpgrade : MonoBehaviour
             availableButtons.Add(button);
         }
         upgradesBar.value = ((float)(sphereUpgradeCurrentCount) / (float)(sphereUpgradesMaxCount + 2.5f)) + offsetUpgrade;
-        Debug.Log(sphereUpgradeCurrentCount);
-        Debug.Log(sphereUpgradesMaxCount);
+        //Debug.Log(sphereUpgradeCurrentCount);
+        //Debug.Log(sphereUpgradesMaxCount);
     }
 
     // Update is called once per frame
@@ -81,12 +81,12 @@ public class CityCastleUpgrade : MonoBehaviour
 
     public void UpgradeSpheresEnergy()
     {
-        Debug.Log(sphereUpgradeCurrentCount);
-        Debug.Log(sphereUpgradesMaxCount);
+        //Debug.Log(sphereUpgradeCurrentCount);
+        //Debug.Log(sphereUpgradesMaxCount);
         if (sphereUpgradeCurrentCount < sphereUpgradesMaxCount)
         {
             
-            Debug.Log("there hello if");
+            //Debug.Log("there hello if");
             if (TakeUpgradeMoney(sphereUpgradeCost))
             {
                 suiNotificator.Notify("-" + sphereUpgradeCost);
