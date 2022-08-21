@@ -12,6 +12,9 @@ public class Element : MonoBehaviour
     Transform attachedCounter;
     Text textBox;
 
+    Coroutine resizeCoroutine;
+    bool coroutineActive;
+
     public int CustomID
     {
         get
@@ -76,9 +79,40 @@ public class Element : MonoBehaviour
             UpdateCounter(attachedCounter.GetComponent<ICounter>().Count);
         }
         RegulateCounterVisibility();
+        
+        
     }
 
-    
+    IEnumerator ResizeChangeCount(float duration, float multiplier)
+    {
+        coroutineActive = true;
+        float elapsed = 0;
+        RectTransform elementRect = transform.parent.parent.GetComponent<RectTransform>();
+        Vector2 elementSize = transform.parent.GetComponent<RectTransform>().sizeDelta;
+        float currentSize = 0;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            currentSize = Mathf.Lerp(elementSize.x, elementSize.x * multiplier, elapsed / duration);
+            elementRect.sizeDelta = new Vector2(currentSize, currentSize);
+            yield return null;
+        }
+        elementRect.sizeDelta = new Vector2(currentSize * multiplier, currentSize * multiplier);
+
+        elapsed = 0;
+
+        while (elapsed < duration/1.5f)
+        {
+            elapsed += Time.deltaTime;
+            currentSize = Mathf.Lerp(elementSize.x * multiplier, elementSize.x, elapsed / duration);
+            elementRect.sizeDelta = new Vector2(currentSize, currentSize);
+            yield return null;
+        }
+
+        elementRect.sizeDelta = new Vector2(currentSize, currentSize);
+        coroutineActive = false;
+        yield return null;
+    }
 
     void UpdateImage()
     {
@@ -89,6 +123,16 @@ public class Element : MonoBehaviour
     {
         textBox.text = count.ToString();
         RegulateCounterVisibility();
+
+        if (!coroutineActive)
+        {
+            resizeCoroutine = StartCoroutine(ResizeChangeCount(0.25f, 1.05f));
+        }
+        else
+        {
+            StopCoroutine(resizeCoroutine);
+            resizeCoroutine = StartCoroutine(ResizeChangeCount(0.25f, 1.05f));
+        }
     }
 
     void RegulateCounterVisibility()

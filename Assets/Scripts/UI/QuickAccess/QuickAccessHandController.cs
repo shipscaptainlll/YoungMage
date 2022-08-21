@@ -152,7 +152,7 @@ public class QuickAccessHandController : MonoBehaviour
     {
         if (objectInHand != null)
         {
-            objectInHand.GetComponent<MeshRenderer>().enabled = false;
+            objectInHand.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
         }
     }
 
@@ -160,7 +160,7 @@ public class QuickAccessHandController : MonoBehaviour
     {
         if (objectInHand != null)
         {
-            objectInHand.GetComponent<MeshRenderer>().enabled = true;
+            objectInHand.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
         }
     }
 

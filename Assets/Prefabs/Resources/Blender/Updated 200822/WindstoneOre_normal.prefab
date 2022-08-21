@@ -29,7 +29,8 @@ Transform:
   m_LocalPosition: {x: -0.14845219, y: -0.050090253, z: -0.0045175552}
   m_LocalScale: {x: 83.49294, y: 83.49298, z: 83.49296}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8807424842074901788}
   m_Father: {fileID: 8661723456271971360}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -61,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1f9e717b3f4b5634e9b6b91a3412f5cd, type: 2}
+  - {fileID: 2100000, guid: c799e7ada5a16c74189950856dd1685e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -112,7 +113,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 753006436956117055}
-  - {fileID: 8807424842074901788}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -141,13 +141,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9221213470719185569}
-  m_LocalRotation: {x: 0.72935367, y: -0.6836337, z: 0.025798248, w: -0.0047604977}
-  m_LocalPosition: {x: -0.13550635, y: -0.020506132, z: 0.012296105}
-  m_LocalScale: {x: 86.83906, y: 86.83906, z: 86.83906}
+  m_LocalRotation: {x: 0.9037408, y: 0.004838839, z: -0.12466037, w: 0.40949836}
+  m_LocalPosition: {x: -0.00030215303, y: 0.0003066757, z: 0.000069138936}
+  m_LocalScale: {x: 1.0400765, y: 1.0400764, z: 1.0400764}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8661723456271971360}
-  m_RootOrder: 1
+  m_Father: {fileID: 753006436956117055}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1215898016552156582
 MeshFilter:
@@ -177,7 +177,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f07f547126ec8124b89db269e6d877a6, type: 2}
+  - {fileID: 2100000, guid: 5425ac9a4d5e40e4dbdcaed75c8d7e68, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

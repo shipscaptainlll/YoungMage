@@ -59,7 +59,8 @@ public class PotentialProductAppearance : MonoBehaviour
                     createdObject = Instantiate(element, element.position, element.rotation);
                     createdObject.GetComponent<TransmutationProduct>().EnteredPortal += DestroyObject;
                     createdObject.GetComponent<MeshRenderer>().enabled = true;
-                    createdObject.GetComponent<Rigidbody>().useGravity = true;
+                    //createdObject.GetComponent<Rigidbody>().useGravity = true;
+                    StartCoroutine(MaterializeProduct(createdObject, 1f));
                     break;
                 }
             }
@@ -88,13 +89,14 @@ public class PotentialProductAppearance : MonoBehaviour
                             itemsCounterQuests.countCreatedQuest(element.GetComponent<TransmutationProduct>().ID);
                             createdObject.GetComponent<TransmutationProduct>().EnteredPortal += DestroyObject;
                             createdObject.GetComponent<MeshRenderer>().enabled = true;
-                            createdObject.GetComponent<Rigidbody>().useGravity = true;
+                            //createdObject.GetComponent<Rigidbody>().useGravity = true;
                             foreach (Transform resourcePack in resourcePacksHolder)
                             {
                                 AmuletRequestedReset(resourcePack.GetChild(1).transform);
                             }
                             amulet.GetComponent<TransmutationAmulet>().ShowAmuletProduct();
                             StartedAutomaticTransmutation(amulet);
+                            StartCoroutine(MaterializeProduct(createdObject, 1f));
                             /*
                             foreach (var potentialProduct in potentialProductLibrary.PotentialProducts)
                             {
@@ -122,11 +124,13 @@ public class PotentialProductAppearance : MonoBehaviour
                             ObjectCreated();
                             Debug.Log("Creating object with id2 " + element.GetComponent<TransmutationProduct>().ID);
                             createdObject = Instantiate(element, element.position, element.rotation);
+                            
                             itemsCounterQuests.countCreatedQuest(element.GetComponent<TransmutationProduct>().ID);
                             createdObject.GetComponent<TransmutationProduct>().EnteredPortal += DestroyObject;
                             createdObject.GetComponent<MeshRenderer>().enabled = true;
-                            createdObject.GetComponent<Rigidbody>().useGravity = true;
+                            //createdObject.GetComponent<Rigidbody>().useGravity = true;
                             amulet.GetComponent<TransmutationAmulet>().ID = element.GetComponent<TransmutationProduct>().ID;
+                            StartCoroutine(MaterializeProduct(createdObject, 1f));
                             break;
                         } else { if (NoResourcesLeft != null) { NoResourcesLeft(); } }
                         
@@ -139,6 +143,30 @@ public class PotentialProductAppearance : MonoBehaviour
             StartedAutomaticTransmutation(null);
         }
         
+    }
+
+    IEnumerator MaterializeProduct(Transform productTransform, float duration)
+    {
+        float elapsed = 0;
+        Debug.Log("hello");
+        MeshRenderer productMeshrenderer = productTransform.GetComponent<MeshRenderer>();
+        Debug.Log("hello");
+        Material productMaterial = productMeshrenderer.material;
+        Debug.Log("hello");
+        float currentMaterialization;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            currentMaterialization = Mathf.Lerp(1, 0, elapsed / duration);
+            productMaterial.SetFloat("_Clip", currentMaterialization);
+            productMeshrenderer.material = productMaterial;
+            Debug.Log(currentMaterialization);
+            yield return null;
+        }
+        productMaterial.SetFloat("_Clip", 0);
+        productMeshrenderer.material = productMaterial;
+        productTransform.GetComponent<Rigidbody>().useGravity = true;
+        yield return null;
     }
 
     void DestroyObject()

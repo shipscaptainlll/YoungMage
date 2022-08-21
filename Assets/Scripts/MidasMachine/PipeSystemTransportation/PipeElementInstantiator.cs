@@ -43,6 +43,7 @@ public class PipeElementInstantiator : MonoBehaviour
         pipeObjectActual.GetComponent<PipeSystemElement>().MidasPipesTransmission = midasPipesTransmission;
         SetTorqueRotation();
         SetAnimationSpeed();
+        StartCoroutine(MaaterializeProduct(pipeObjectActual, 1.5f));
     }
 
     void SetTorqueRotation()
@@ -65,5 +66,25 @@ public class PipeElementInstantiator : MonoBehaviour
     {
         float speedRandom = (float)random.Next(1, 4);
         pipeObjectActual.GetComponent<Animator>().speed = 1f / speedRandom;
+    }
+
+    IEnumerator MaaterializeProduct(Transform productTransform, float duration)
+    {
+        float elapsed = 0;
+        MeshRenderer productMeshrenderer = productTransform.GetComponent<MeshRenderer>();
+        Material productMaterial = productMeshrenderer.material;
+        float currentMaterialization;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            currentMaterialization = Mathf.Lerp(1, 0, elapsed / duration);
+            productMaterial.SetFloat("_Clip", currentMaterialization);
+            productMeshrenderer.material = productMaterial;
+            yield return null;
+        }
+        productMaterial.SetFloat("_Clip", 0);
+        productMeshrenderer.material = productMaterial;
+
+        yield return null;
     }
 }

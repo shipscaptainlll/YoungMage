@@ -113,17 +113,17 @@ public class OreMiningManager : MonoBehaviour
     Transform ChooseProduct()
     {
         float randomValue = Random.value;
-        Debug.Log("random value " + randomValue + " first chances " + firstProductChances/100);
+        //Debug.Log("random value " + randomValue + " first chances " + firstProductChances/100);
 
         if (randomValue < firstProductChances/100)
         {
             firstProductCount++;
-            Debug.Log("first product count " + firstProductCount + " second product count " + secondProductCount + " analyzed chances " + 100 * (firstProductCount/(firstProductCount + secondProductCount)));
+            //Debug.Log("first product count " + firstProductCount + " second product count " + secondProductCount + " analyzed chances " + 100 * (firstProductCount/(firstProductCount + secondProductCount)));
             return firstProductInstance;
         } else
         {
             secondProductCount++;
-            Debug.Log("first product count " + firstProductCount + " second product count " + secondProductCount + " analyzed chances " + 100 * (firstProductCount / (firstProductCount + secondProductCount)));
+            //Debug.Log("first product count " + firstProductCount + " second product count " + secondProductCount + " analyzed chances " + 100 * (firstProductCount / (firstProductCount + secondProductCount)));
             return secondProductInstance;
         }
 

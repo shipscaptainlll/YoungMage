@@ -29,9 +29,10 @@ Transform:
   m_LocalPosition: {x: -0.1484519, y: 0.05326454, z: 0.05350542}
   m_LocalScale: {x: 83.49294, y: 83.49298, z: 83.49296}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4745263218014447265}
   m_Father: {fileID: 8806653535625544337}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2076433129063771186
 MeshFilter:
@@ -61,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1f9e717b3f4b5634e9b6b91a3412f5cd, type: 2}
+  - {fileID: 2100000, guid: c799e7ada5a16c74189950856dd1685e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -108,12 +109,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6098777150062607057}
-  m_LocalRotation: {x: 0.54189867, y: -0.44014096, z: 0.41383004, w: 0.58426577}
-  m_LocalPosition: {x: -0.05453768, y: 0.09618218, z: 0.08243151}
-  m_LocalScale: {x: 61.55767, y: 61.557667, z: 61.55766}
+  m_LocalRotation: {x: 0.6575139, y: 0.36537853, z: 0.5087805, w: 0.41870803}
+  m_LocalPosition: {x: -0.00047745506, y: 0.0010478902, z: -0.00056869886}
+  m_LocalScale: {x: 0.73727965, y: 0.73727965, z: 0.7372798}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8806653535625544337}
+  m_Father: {fileID: 8730982148733858136}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6410565075293818901
@@ -144,7 +145,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f07f547126ec8124b89db269e6d877a6, type: 2}
+  - {fileID: 2100000, guid: 5425ac9a4d5e40e4dbdcaed75c8d7e68, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -194,7 +195,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4745263218014447265}
   - {fileID: 8730982148733858136}
   m_Father: {fileID: 0}
   m_RootOrder: 0

@@ -25,12 +25,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6558975154747095806}
-  m_LocalRotation: {x: 0.040510364, y: 0.98671097, z: 0.1408311, w: 0.07019298}
-  m_LocalPosition: {x: -0.10846796, y: 0.014654463, z: -0.021754934}
-  m_LocalScale: {x: 295.28583, y: 275.44498, z: 258.36276}
+  m_LocalRotation: {x: -0.53668547, y: 0.7251446, z: -0.09639639, w: -0.42052558}
+  m_LocalPosition: {x: -0.0006635012, y: 0.00017634677, z: -0.00042367852}
+  m_LocalScale: {x: 3.5366554, y: 3.2990208, z: 3.0944254}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8739985171587991059}
+  m_Father: {fileID: 8476224935147270185}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7425375643794858572
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2009751542118575558, guid: fd77ed83f4704224f8e5ea35b8eca738, type: 3}
+  - {fileID: 2100000, guid: d8eb0253ee0c4fb42b986bf6c2c7ace2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -112,9 +112,10 @@ Transform:
   m_LocalPosition: {x: -0.1484519, y: -0.03423355, z: 0.0016551018}
   m_LocalScale: {x: 83.49294, y: 83.49298, z: 83.49296}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5474797305152152786}
   m_Father: {fileID: 8739985171587991059}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5764046584741017275
 MeshFilter:
@@ -144,7 +145,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1f9e717b3f4b5634e9b6b91a3412f5cd, type: 2}
+  - {fileID: 2100000, guid: c799e7ada5a16c74189950856dd1685e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -194,7 +195,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5474797305152152786}
   - {fileID: 8476224935147270185}
   m_Father: {fileID: 0}
   m_RootOrder: 0
