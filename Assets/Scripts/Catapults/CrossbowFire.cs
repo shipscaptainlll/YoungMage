@@ -6,9 +6,11 @@ public class CrossbowFire : MonoBehaviour
 {
     [SerializeField] Transform catapultAmmo;
     [SerializeField] Transform shootingStart;
+    CastleHealthDecreaser castleHealthDecreaser;
     Animator catapultAnimator;
     bool isFiring;
 
+    public CastleHealthDecreaser CastleHealthDecreaser { get { return castleHealthDecreaser; } set { castleHealthDecreaser = value; } }
     // Start is called before the first frame update
     void Start()
     {
@@ -42,6 +44,7 @@ public class CrossbowFire : MonoBehaviour
         newAmmo.rotation = shootingStart.rotation;
         newAmmo.GetComponent<Rigidbody>().velocity = -transform.parent.up * 25 + transform.parent.forward * 195;
         newAmmo.GetComponent<Rigidbody>().AddTorque(new Vector3(0, 0, -15));
+        newAmmo.GetComponent<CrossbowCatapultAmmo>().CastleHealthDecreaser = castleHealthDecreaser;
     }
 
     public void CheckNotFiring()
