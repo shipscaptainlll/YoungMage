@@ -36,7 +36,7 @@ public class CrossbowCatapultArenaInstantiator : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(6f);
+            yield return new WaitForSeconds(18f);
             InstantiateCatapult();
         }
         

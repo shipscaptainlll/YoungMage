@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 4178332196000099098}
   - component: {fileID: 2168656631799816144}
   - component: {fileID: 5849541812080980231}
-  - component: {fileID: 3249068390983018007}
+  - component: {fileID: 5854579284093324455}
+  - component: {fileID: 1942072573226373642}
   m_Layer: 0
   m_Name: CatapultProjectile
   m_TagString: Untagged
@@ -102,7 +103,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3249068390983018007
+--- !u!114 &5854579284093324455
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,11 +112,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 367150878107811333}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fc1741f66cad7e4988d07eb844e906d, type: 3}
+  m_Script: {fileID: 11500000, guid: 92899111a852bf24cb8f551e21709c8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blowEffect: {fileID: 0}
-  damage: 1000
+  blowEffect: {fileID: 8154140851881291479, guid: 4cf85fd9bb615be4ea34632f0b08f386, type: 3}
+  damage: 250
+--- !u!65 &1942072573226373642
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 367150878107811333}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.012649609, y: 0.012636057, z: 0.012636056}
+  m_Center: {x: 0.000007418683, y: 0, z: 0.00004525645}
 --- !u!1 &3887649330778914478
 GameObject:
   m_ObjectHideFlags: 0

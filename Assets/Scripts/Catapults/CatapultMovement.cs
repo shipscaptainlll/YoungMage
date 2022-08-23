@@ -9,6 +9,7 @@ public class CatapultMovement : MonoBehaviour
     List<Transform> CastleNavrout = new List<Transform>();
     [SerializeField] Transform CastleNavroutHolder;
     [SerializeField] CastlePositionsManager castlePositionsManager;
+    [SerializeField] Transform potentialTargetsPositions;
     [SerializeField] Transform castlePoint;
 
     bool reachedPosition;
@@ -16,10 +17,13 @@ public class CatapultMovement : MonoBehaviour
     bool lookingOnCastle;
     bool navMeshEnabled;
     bool PotentialpositionsNavroutActive;
+    bool changingTarget;
     int castleNavpointNumber;
     NavMeshAgent navMeshAgent;
     Transform navigationTarget;
+    Transform fireTarget;
 
+    System.Random rand;
     public Transform NavigationTarget
     {
         get
@@ -32,13 +36,19 @@ public class CatapultMovement : MonoBehaviour
         }
     }
 
-
-
+    public bool ChangingTarget {  get { return changingTarget; } }
+    public Transform FireTarget { get { return fireTarget; } }
     // Start is called before the first frame update
     void Start()
     {
+        rand = new System.Random();
+        Debug.Log(potentialTargetsPositions);
+        Debug.Log(potentialTargetsPositions.childCount);
+        int randomIndex = rand.Next(0, (potentialTargetsPositions.childCount - 1));
+        Debug.Log(randomIndex);
         navMeshEnabled = true;
         navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent.avoidancePriority = rand.Next(30, 50);
         GotoCastle();
     }
 
@@ -68,20 +78,7 @@ public class CatapultMovement : MonoBehaviour
             }
 
         }
-        /*
-        if (lookingOnCastle)
-        {
-
-            
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 1 * Time.deltaTime);
-            //if () ;
-            float xAngleDiff = transform.rotation.x - targetRotation.x;
-            float yAngleDiff = transform.rotation.x - targetRotation.x;
-            float zAngleDiff = transform.rotation.x - targetRotation.x;
-            Debug.Log(transform + " " + transform.rotation.eulerAngles + " " + transform.localRotation.eulerAngles + " " + targetRotation.eulerAngles );
-            //transform.LookAt(castlePoint);
-            //lookingOnCastle = false;
-        }*/
+        
         if (navMeshEnabled && PotentialpositionsNavroutActive)
         {
             if (navMeshAgent.velocity.magnitude < 0.15f)
@@ -91,17 +88,34 @@ public class CatapultMovement : MonoBehaviour
                 lookingOnCastle = true;
                 navMeshEnabled = false;
                 navMeshAgent.enabled = false;
-                StartCoroutine(LookAtCastle());
+                StartCoroutine(LookAtCastle(ChooseCurrentTarget(), 5));
                 PotentialpositionsNavroutActive = false;
             }
         }
     }
 
-    IEnumerator LookAtCastle()
+    public void ChooseNewTarget()
     {
+        changingTarget = true;
+        StartCoroutine(LookAtCastle(ChooseCurrentTarget(), 5));
+        
+    }
+
+    Transform ChooseCurrentTarget()
+    {
+        Debug.Log(potentialTargetsPositions);
+        Debug.Log(potentialTargetsPositions.childCount);
+        int randomIndex = rand.Next(0, (potentialTargetsPositions.childCount - 1));
+        
+        return potentialTargetsPositions.GetChild(randomIndex);
+    }
+
+    IEnumerator LookAtCastle(Transform targetPoint, float delay)
+    {
+        fireTarget = targetPoint;
+        yield return new WaitForSeconds(1);
         float elapsed = 0;
-        float delay = 5;
-        var targetRotation = Quaternion.LookRotation(castlePoint.transform.position - transform.position);
+        var targetRotation = Quaternion.LookRotation(targetPoint.transform.position - transform.position);
         Quaternion startRotation = transform.rotation;
         Quaternion currentRotation;
         while (elapsed < delay)
@@ -112,6 +126,7 @@ public class CatapultMovement : MonoBehaviour
             yield return null;
         }
         //transform.rotation = targetRotation;
+        changingTarget = false;
         yield return null;
     }
 

@@ -138,9 +138,14 @@ public class SkeletonBehavior : MonoBehaviour
     public event Action<Transform> OriginRotated = delegate { };
     public event Action OreHitted = delegate { };
     public event Action ObjectConnected = delegate { };
+
+
+    System.Random rand;
     void Start()
     {
+        rand = new System.Random();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent.avoidancePriority = rand.Next(1, 10);
         if (transform.Find("VFX") != null) {
             //Debug.Log(transform.Find("VFX") + " " + transform);
             //Debug.Log(transform.Find("VFX").Find("vfxgraph_StylizedSmoke"));

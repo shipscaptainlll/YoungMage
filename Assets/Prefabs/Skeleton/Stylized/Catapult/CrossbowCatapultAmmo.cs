@@ -30,12 +30,14 @@ public class CrossbowCatapultAmmo : MonoBehaviour, ICatapultAmmo
     void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.transform.name);
-        if (other.transform.name == "towerWall")
+        if (other.transform.GetComponent<CastleCatapultTarget>() != null)
         {
             castleHealthDecreaser.DealDamage(damage);
             ParticleSystem blowNewEffect = Instantiate(blowEffect, transform.position, transform.rotation);
 
             blowNewEffect.Play();
+            transform.GetComponent<MeshRenderer>().enabled = false;
+            transform.GetChild(0).gameObject.SetActive(false);
             if (blowEffect != null)
             {
                 blowEffect.gameObject.SetActive(true);
