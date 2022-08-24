@@ -64,6 +64,8 @@ public class PersonMovement : MonoBehaviour
     public int ProgressParameterFourth { get { return jumps; } }
     public int ProgressParameterFifth { get { return doubleJumps; } }
 
+    
+
     public event Action<int> CharacterStepMade = delegate { };
     public event Action<int> CharacterRunnedStep = delegate { };
     public event Action<int> CharacterShifted = delegate { };

@@ -18,12 +18,16 @@ public class CameraController : MonoBehaviour
     float yRotation;
     float xRotation;
     RaycastHit hit = new RaycastHit();
+    bool isOnStairs;
+    bool upperStairs;
 
     Vector3 startRotation;
     bool cityRegenerationMode;
     public bool CityRegenerationMode { get { return cityRegenerationMode; } set { startRotation = transform.localRotation.eulerAngles;  cityRegenerationMode = value; yRotation = startRotation.y; xRotation = startRotation.x; } }
     Vector3 StartRotation { get { return startRotation; } set { startRotation = value; } }
     public float YRotation { get { return yRotation; } set { yRotation = value; } }
+    public bool IsOnStairs { get { return isOnStairs; } set { isOnStairs = value; } }
+    public bool UpperStairs { get { return upperStairs; } set { upperStairs = value; } }
     public RaycastHit ObservedObject
     {
         get
@@ -58,6 +62,19 @@ public class CameraController : MonoBehaviour
         float xRot = Input.GetAxis("Mouse X") * Time.deltaTime * mouseSensitivity;
         float yRot = Input.GetAxis("Mouse Y") * Time.deltaTime * mouseSensitivity;
 
+        if (isOnStairs)
+        {
+            
+            if (upperStairs)
+            {
+                xRot += -0.75f * Input.GetAxis("Vertical");
+            } else
+            {
+                xRot += 0.75f * Input.GetAxis("Vertical");
+            }
+            
+            
+        }
        
         
         if (!cityRegenerationMode)
