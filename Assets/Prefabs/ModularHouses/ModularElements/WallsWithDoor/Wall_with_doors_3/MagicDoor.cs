@@ -4,58 +4,75 @@ using UnityEngine;
 
 public class MagicDoor : MonoBehaviour
 {
+    [SerializeField] AnimationCurve openingAnimationCurve;
+    [SerializeField] AnimationCurve closingAnimationCurve;
     Coroutine openingCoroutine;
     Coroutine closingCoroutine;
+    Vector3 startRotation;
 
-    // Start is called before the first frame update
+    bool playerInInitiator;
+    bool doorOpened;
+
+    public bool PlayerInInitiator { get { return playerInInitiator; } set { playerInInitiator = value; } }
+
     void Start()
     {
-        Debug.Log(transform.localRotation.x + " " + transform.localRotation.y + " " + transform.localRotation.z);
-        transform.localRotation = Quaternion.Euler(new Vector3(transform.localRotation.x, transform.localRotation.y, transform.localRotation.z));
-        Debug.Log(transform.localRotation.x + " " + transform.localRotation.y + " " + transform.localRotation.z);
+        startRotation = transform.rotation.eulerAngles;
+        StartCoroutine(RandomlyOpenDoor());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator RandomlyOpenDoor()
     {
-        Debug.Log(transform.localRotation.eulerAngles.x);
-        Debug.Log(transform.localRotation.eulerAngles.y);
-        Debug.Log(transform.localRotation.eulerAngles.z);
-        if (Input.GetKeyDown(KeyCode.O))
+        while (true)
         {
+            yield return new WaitForSeconds(10);
+            OpenTheDoor();
+        }
+    }
+
+    void OpenTheDoor()
+    {
+        if (!playerInInitiator && !doorOpened)
+        {
+            doorOpened = true;
             if (openingCoroutine != null)
             {
                 StopCoroutine(openingCoroutine);
             }
-            openingCoroutine = StartCoroutine(OpeningCoroutine());
+            openingCoroutine = StartCoroutine(OpeningCoroutine(5));
         }
-        if (Input.GetKeyDown(KeyCode.P))
+    }
+
+    public void CloseTheDoor()
+    {
+        if (doorOpened)
         {
             if (closingCoroutine != null)
             {
                 StopCoroutine(closingCoroutine);
             }
+            if (openingCoroutine != null)
+            {
+                StopCoroutine(openingCoroutine);
+            }
             closingCoroutine = StartCoroutine(ClosingCoroutine());
         }
     }
 
-    IEnumerator OpeningCoroutine()
+    IEnumerator OpeningCoroutine(float delay)
     {
         float elapsed = 0;
-        float delay = 5;
-        
-        float xRotation = transform.rotation.x;
-        float yRotation = transform.rotation.z;
         float currentRotation = 0;
 
         while (elapsed < delay)
         {
             elapsed += Time.deltaTime;
-            currentRotation = Mathf.Lerp(298, 238, elapsed / delay);
-            transform.rotation = Quaternion.Euler(new Vector3(xRotation, yRotation, currentRotation));
+            currentRotation = Mathf.Lerp(startRotation.z, startRotation.z - 60, openingAnimationCurve.Evaluate(elapsed / delay));
+            transform.rotation = Quaternion.Euler(new Vector3(startRotation.x, startRotation.y, currentRotation));
             yield return null;
         }
-        transform.rotation = Quaternion.Euler(new Vector3(xRotation, yRotation, 238));
+
+        transform.rotation = Quaternion.Euler(new Vector3(startRotation.x, startRotation.y, startRotation.z - 60));
         openingCoroutine = null;
         yield return null;
     }
@@ -64,18 +81,20 @@ public class MagicDoor : MonoBehaviour
     {
         float elapsed = 0;
         float delay = 1;
-        float startRotation = transform.localRotation.z;
-        float currentRotation = 0;
+        float zStartRotation = transform.rotation.eulerAngles.z;
+        float currentRotation;
+        //float currentRotation = 0;
 
         while (elapsed < delay)
         {
             elapsed += Time.deltaTime;
-            currentRotation = Mathf.Lerp(startRotation, -69, elapsed / delay);
-            transform.localRotation = Quaternion.Euler(new Vector3(0, 0, currentRotation));
+            currentRotation = Mathf.Lerp(zStartRotation, startRotation.z, closingAnimationCurve.Evaluate(elapsed / delay));
+            transform.rotation = Quaternion.Euler(new Vector3(startRotation.x, startRotation.y, currentRotation));
             yield return null;
         }
-        transform.localRotation = Quaternion.Euler(new Vector3(0, 0, -69));
+        transform.rotation = Quaternion.Euler(new Vector3(startRotation.x, startRotation.y, startRotation.z));
         closingCoroutine = null;
+        doorOpened = false;
         yield return null;
     }
 }

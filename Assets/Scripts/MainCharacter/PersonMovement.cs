@@ -34,7 +34,7 @@ public class PersonMovement : MonoBehaviour
     VisualEffect landVFX;
     [SerializeField] ParticleSystem doubleShiftPS;
 
-    
+
     bool isWalking = true;
     bool isRunning;
     float keyPushedLength;
@@ -57,6 +57,7 @@ public class PersonMovement : MonoBehaviour
 
     float timeShiftPressed;
 
+    public float Speed { get { return speed; } }
     public bool IsAutoRunning { get { return isAutoRunning; } set { isAutoRunning = value; } }
     public int ProgressParameter { get { return steps; } }
     public int ProgressParameterSecond { get { return runningSteps; } }
@@ -65,7 +66,7 @@ public class PersonMovement : MonoBehaviour
     public int ProgressParameterFifth { get { return doubleJumps; } }
 
     
-
+    
     public event Action<int> CharacterStepMade = delegate { };
     public event Action<int> CharacterRunnedStep = delegate { };
     public event Action<int> CharacterShifted = delegate { };

@@ -15,6 +15,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] CursorManager cursorManager;
     [SerializeField] ObjectOutliner objectOutliner;
     [SerializeField] float contactingRayDistance;
+    [SerializeField] PersonMovement personMovement;
     float yRotation;
     float xRotation;
     RaycastHit hit = new RaycastHit();
@@ -67,10 +68,10 @@ public class CameraController : MonoBehaviour
             
             if (upperStairs)
             {
-                xRot += -0.75f * Input.GetAxis("Vertical");
+                xRot += -0.01f * Input.GetAxis("Vertical") * Time.deltaTime * mouseSensitivity * personMovement.Speed;
             } else
             {
-                xRot += 0.75f * Input.GetAxis("Vertical");
+                xRot += 0.01f * Input.GetAxis("Vertical") * Time.deltaTime * mouseSensitivity * personMovement.Speed;
             }
             
             
