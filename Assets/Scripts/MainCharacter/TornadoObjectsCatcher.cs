@@ -5,15 +5,17 @@ using UnityEngine;
 public class TornadoObjectsCatcher : MonoBehaviour
 {
     [SerializeField] SacketResourceCatcher sacketResourceCatcher;
-
+    [SerializeField] ParticleSystem flyingParticleSystem;
     [SerializeField] Transform countersHolder;
     [SerializeField] SacketMagnetism sacketMagnetism;
     [SerializeField] Transform catchParticles;
     [SerializeField] ItemsCounterQuests itemsCounterQuests;
+
+    BoxCollider transformBoxcollider;
     // Start is called before the first frame update
     void Start()
     {
-        
+        transformBoxcollider = transform.GetComponent<BoxCollider>();
     }
 
     // Update is called once per frame
@@ -22,25 +24,89 @@ public class TornadoObjectsCatcher : MonoBehaviour
         
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        
+        //Debug.Log("Found some " + other.transform);
+        
+        if (other.GetComponent<GlobalResource>() != null ||
+            other.transform.parent != null && other.transform.parent.GetComponent<GlobalResource>() != null)
+        {
+
+            if (Mathf.Abs(other.transform.position.x - transform.TransformPoint(transformBoxcollider.center).x) <= 0.5f
+                && Mathf.Abs(other.transform.position.y - transform.TransformPoint(transformBoxcollider.center).y) <= 0.5f)
+            {
+                if (!other.GetComponent<GlobalResource>().WasCollected)
+                {
+                    itemsCounterQuests.countQuestItem(other.GetComponent<GlobalResource>().ID);
+                }
+                CatchResource(other.transform);
+            } else
+            {
+                float distance = Vector3.Distance(other.transform.position, transform.TransformPoint(transformBoxcollider.center));
+                Vector3 tornadoDirection = -(other.transform.position - transform.TransformPoint(transformBoxcollider.center)).normalized * 15f;
+                tornadoDirection.y = tornadoDirection.y * 1.75f;
+                if (tornadoDirection.y < 0) { tornadoDirection.y = 0; }
+                other.transform.RotateAround(transform.TransformPoint(transformBoxcollider.center), Vector3.up, 100 * Time.deltaTime);
+                other.transform.GetComponent<Rigidbody>().AddForce(tornadoDirection);
+                
+            }
+        }
+
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("Catched some " + other.transform);
-        if (other.GetComponent<GlobalResource>() != null)
+
+        //Debug.Log("Found some " + other.transform);
+
+        if (other.GetComponent<GlobalResource>() != null ||
+            other.transform.parent != null && other.transform.parent.GetComponent<GlobalResource>() != null)
         {
-            if (!other.GetComponent<GlobalResource>().WasCollected)
-            {
-                Debug.Log("Catched new");
-                itemsCounterQuests.countQuestItem(other.GetComponent<GlobalResource>().ID);
-            }
-            CatchResource(other.transform);
+
+            ParticleSystem flyingParticles = Instantiate(flyingParticleSystem, other.transform.position, other.transform.rotation);
+            //flyingParticles.transform.localScale = new Vector3(1, 1, 1);
+            flyingParticles.transform.name = "flying particles";
+            flyingParticles.transform.parent = other.transform;
+            flyingParticles.transform.position = other.transform.position;
         }
+
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+
+        //Debug.Log("Found some " + other.transform);
+
+        if (other.GetComponent<GlobalResource>() != null ||
+            other.transform.parent != null && other.transform.parent.GetComponent<GlobalResource>() != null)
+        {
+            if (other.transform.Find("flying particles") != null)
+            {
+                Destroy(other.transform.Find("flying particles").gameObject);
+            }
+            
+        }
+
     }
 
 
     void CatchResource(Transform resource)
     {
         AddToCounter(resource.GetComponent<GlobalResource>().ID);
+        HoldResource(resource);
+        StartCoroutine(DestroyObject(resource));
         //InstantiateCatchParticles(resource);
+    }
+
+    void HoldResource(Transform resource)
+    {
+        Destroy(resource.GetComponent<Rigidbody>());
+    }
+
+    IEnumerator DestroyObject(Transform resource)
+    {
+        yield return new WaitForSeconds(1);
         Destroy(resource.gameObject);
     }
 

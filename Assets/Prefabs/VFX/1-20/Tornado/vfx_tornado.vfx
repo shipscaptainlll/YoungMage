@@ -279,8 +279,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 62
     y: -2428
-    width: 4003
-    height: 4231
+    width: 4005
+    height: 4243
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -454,6 +454,20 @@ MonoBehaviour:
     max: Infinity
     enumValues: []
     descendantCount: 0
+  - name: TornadoCoreDissolve
+    path: TornadoCoreDissolve
+    tooltip: 
+    sheetType: m_Float
+    realType: Single
+    defaultValue:
+      m_Type:
+        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
+      m_SerializableObject: 0.61
+    min: -Infinity
+    max: Infinity
+    enumValues: []
+    descendantCount: 0
   - name: Scale
     path: Scale
     tooltip: 
@@ -478,20 +492,6 @@ MonoBehaviour:
         m_SerializableType: UnityEngine.AnimationCurve, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
       m_SerializableObject: '{"frames":[{"time":0.012928009033203125,"value":0.01100921630859375,"inTangent":0.0,"outTangent":0.0,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":0.10758144408464432,"value":1.3082741498947144,"inTangent":0.0,"outTangent":0.0,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":0.2057393342256546,"value":0.8073685169219971,"inTangent":0.3161032199859619,"outTangent":0.3161032199859619,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":0.4076375365257263,"value":1.1506091356277466,"inTangent":0.021493420004844667,"outTangent":0.021493420004844667,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":0.6652706861495972,"value":0.9804709553718567,"inTangent":-0.017070896923542024,"outTangent":-0.017070896923542024,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":0.9918867349624634,"value":0.9874643087387085,"inTangent":0.0,"outTangent":0.0,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false}],"preWrapMode":8,"postWrapMode":8,"version":1}'
-    min: -Infinity
-    max: Infinity
-    enumValues: []
-    descendantCount: 0
-  - name: TornadoCoreDissolve
-    path: TornadoCoreDissolve
-    tooltip: 
-    sheetType: m_Float
-    realType: Single
-    defaultValue:
-      m_Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 0.61
     min: -Infinity
     max: Infinity
     enumValues: []
@@ -2684,7 +2684,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614652}
   m_ExposedName: Scale
   m_Exposed: 1
-  m_Order: 7
+  m_Order: 8
   m_Category: 
   m_Min:
     m_Type:
@@ -2936,7 +2936,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614661}
   m_ExposedName: ScaleOverLifeX
   m_Exposed: 1
-  m_Order: 8
+  m_Order: 9
   m_Category: 
   m_Min:
     m_Type:
@@ -3361,7 +3361,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614676}
   m_ExposedName: TornadoCoreDissolve
   m_Exposed: 1
-  m_Order: 9
+  m_Order: 7
   m_Category: 
   m_Min:
     m_Type:

@@ -44,7 +44,7 @@ public class GameTimeManager : MonoBehaviour
     {
         yield return new WaitForSeconds(60.5f);
         GetTimeIngame();
-        Debug.Log("Minute passed " + restMinutes);
+        //Debug.Log("Minute passed " + restMinutes);
         if (MinutesIngamePassed != null) { MinutesIngamePassed(restMinutes); }
         if (restMinutes < 5)
         {

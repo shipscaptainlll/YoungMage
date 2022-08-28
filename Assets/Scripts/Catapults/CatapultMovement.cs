@@ -83,7 +83,7 @@ public class CatapultMovement : MonoBehaviour
         {
             if (navMeshAgent.velocity.magnitude < 0.15f)
             {
-                Debug.Log("Reached Position");
+                //Debug.Log("Reached Position");
                 reachedPosition = true;
                 lookingOnCastle = true;
                 navMeshEnabled = false;
@@ -103,8 +103,8 @@ public class CatapultMovement : MonoBehaviour
 
     Transform ChooseCurrentTarget()
     {
-        Debug.Log(potentialTargetsPositions);
-        Debug.Log(potentialTargetsPositions.childCount);
+        //Debug.Log(potentialTargetsPositions);
+        //Debug.Log(potentialTargetsPositions.childCount);
         int randomIndex = rand.Next(0, (potentialTargetsPositions.childCount - 1));
         
         return potentialTargetsPositions.GetChild(randomIndex);

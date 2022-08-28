@@ -180,6 +180,7 @@ public class SkeletonBehavior : MonoBehaviour
             isLizardSkeleton = true;
         }
         contactManager.GetComponent<ContactManager>().OreDetected += AddTarget;
+        contactManager.GetComponent<ContactManager>().MinesDoorDetected += AddTarget;
         connectedTeleport.GetComponent<Teleporter>().TeleportFound += StopGravity;
         if (hasPortal)
         {
@@ -230,11 +231,19 @@ public class SkeletonBehavior : MonoBehaviour
             {
                 Debug.Log("Connected to the ore");
                 value.GetComponent<OreMiningManager>().ConnectedSkeleton = this;
+            } else if (value != null && value.name == "MinesDoor")
+            {
+                Debug.Log("Connected to the main door");
+                value.GetComponent<DoorTacklingManager>().ConnectedSkeleton = this;
             }
             if (navigationTarget != null && navigationTarget.GetComponent<IOre>() != null && value.GetComponent<IOre>() == null)
             {
                 Debug.Log("Disconnected from the ore");
                 navigationTarget.GetComponent<OreMiningManager>().ConnectedSkeleton = null;
+            } else if (navigationTarget != null && navigationTarget.name == "MinesDoor" && value != null && value.name != "MinesDoor")
+            {
+                Debug.Log("Disconnected from the ore");
+                navigationTarget.GetComponent<DoorTacklingManager>().ConnectedSkeleton = null;
             }
             if (!wasOnceConjured) {
                 //Debug.Log("hello there");
@@ -259,7 +268,9 @@ public class SkeletonBehavior : MonoBehaviour
                 }
             }
             navigationTarget = value;
-            
+            Debug.Log("updated skeleton target");
+            UpdateAnimation();
+
         }
     }
 
@@ -352,11 +363,13 @@ public class SkeletonBehavior : MonoBehaviour
         
         if (navMeshAgent.velocity.magnitude < 0.15f && isMoving)
         {
-            if (navigationTarget != null && navigationTarget.GetComponent<IOre>() == null)
+            //Debug.Log(navigationTarget.name);
+            if (navigationTarget != null && navigationTarget.GetComponent<IOre>() == null && navigationTarget.name != "MinesDoor")
             {
                 isMoving = false;
                 localAnimator.Play("SkelIdle");
-            } else if (navigationTarget != null && navigationTarget.GetComponent<IOre>() != null)
+            } else if ((navigationTarget != null && navigationTarget.GetComponent<IOre>() != null) ||
+                (navigationTarget != null && navigationTarget.name == "MinesDoor"))
             {
                 isMoving = false;
                 localAnimator.Play("SkelMine");
@@ -367,7 +380,23 @@ public class SkeletonBehavior : MonoBehaviour
             isMoving = true;
             localAnimator.Play("SkelMove");
         }
-        
+    }
+
+    void UpdateAnimation()
+    {
+        if (navigationTarget != null && navigationTarget.GetComponent<IOre>() == null && navigationTarget.name != "MinesDoor")
+        {
+            localAnimator.Play("SkelIdle");
+        }
+        else if ((navigationTarget != null && navigationTarget.GetComponent<IOre>() != null) ||
+          (navigationTarget != null && navigationTarget.name == "MinesDoor"))
+        {
+            localAnimator.Play("SkelMine");
+        }
+        if (navigationTarget == null)
+        {
+            localAnimator.Play("SkelIdle");
+        }
     }
 
     void CheckIfUnused()
@@ -649,6 +678,7 @@ public class SkeletonBehavior : MonoBehaviour
 
     public void AddTarget(Transform targetOre)
     {
+        Debug.Log("new target added " + targetOre);
         if (navigationTarget.GetComponent<PersonMovement>() != null)
         {
             if (targetOre.GetComponent<NavMeshObstacle>() != null)

@@ -11,16 +11,20 @@ public class TornadoInstantiator : MonoBehaviour
     [SerializeField] VisualEffect tornadoVFX;
     [SerializeField] Transform body;
     [SerializeField] Vector3 offsetRotation;
+    ParticleSystem windParticles;
+    ParticleSystem.MainModule windParticlesMainmodule;
     RaycastHit[] hitObjects;
     RaycastHit hit;
 
+    Coroutine turnOffCoroutine;
     int tornadoCountQuests;
     public int TornadoCountQuests { get { return tornadoCountQuests; } }
     public event Action<int> TornadoInstantiatedQuests = delegate { };
 // Start is called before the first frame update
 void Start()
     {
-        
+        windParticles = tornadoVFX.transform.Find("WindParticles").GetComponent<ParticleSystem>();
+        windParticlesMainmodule = tornadoVFX.transform.Find("WindParticles").GetComponent<ParticleSystem>().main;
     }
 
     // Update is called once per frame
@@ -28,6 +32,9 @@ void Start()
     {
         if (Input.GetKeyDown(KeyCode.Y))
         {
+            
+            windParticles.Play();
+
             Debug.Log("hello there");
             tornadoCountQuests++;
             if (TornadoInstantiatedQuests != null) { TornadoInstantiatedQuests(TornadoCountQuests); }
@@ -39,8 +46,14 @@ void Start()
             {
                 if (result.transform.gameObject.layer == 6 && result.transform.name != "Terrain")
                 {
+                    if (turnOffCoroutine != null) { StopCoroutine(turnOffCoroutine); }
+                    tornadoVFX.SetFloat("TornadoLayer1Dissolve1", 0.84f);
+                    tornadoVFX.SetFloat("TornadoLayer1Dissolve2", 0.935f);
+                    tornadoVFX.SetFloat("TornadoCoreDissolve", 0.61f);
                     tornadoVFX.transform.gameObject.SetActive(true);
                     
+
+                    windParticlesMainmodule.loop = true;
                     tornadoVFX.Play();
                     return;
                 }
@@ -67,8 +80,42 @@ void Start()
 
         if (Input.GetKeyUp(KeyCode.Y))
         {
-            tornadoVFX.gameObject.SetActive(false);
+            TurnOffTornado();
+            //tornadoVFX.gameObject.SetActive(false);
 
         }
+    }
+
+    void TurnOffTornado()
+    {
+        if (turnOffCoroutine != null) { StopCoroutine(turnOffCoroutine); }
+        turnOffCoroutine = StartCoroutine(SmoothTurnOff(3f));
+        windParticlesMainmodule.loop = false;
+    }
+
+    IEnumerator SmoothTurnOff(float delay)
+    {
+        float elapsed = 0;
+        float firstLayerStart = tornadoVFX.GetFloat("TornadoLayer1Dissolve1");
+        float secondLayerStart = tornadoVFX.GetFloat("TornadoLayer1Dissolve2");
+        float coreLayerStart = tornadoVFX.GetFloat("TornadoCoreDissolve");
+        float firstLayerValue = 0;
+        float secondLayerValue = 0;
+        float coreLayerValue = 0;
+        while (elapsed < delay)
+        {
+            elapsed += Time.deltaTime;
+            firstLayerValue = Mathf.Lerp(firstLayerStart, 1, elapsed / delay);
+            secondLayerValue = Mathf.Lerp(secondLayerStart, 1, elapsed / delay);
+            coreLayerValue = Mathf.Lerp(coreLayerStart, 1, elapsed / delay);
+            tornadoVFX.SetFloat("TornadoLayer1Dissolve1", firstLayerValue);
+            tornadoVFX.SetFloat("TornadoLayer1Dissolve2", secondLayerValue);
+            tornadoVFX.SetFloat("TornadoCoreDissolve", coreLayerValue);
+            yield return null;
+        }
+        tornadoVFX.SetFloat("TornadoLayer1Dissolve1", 1);
+        tornadoVFX.SetFloat("TornadoLayer1Dissolve2", 1);
+        tornadoVFX.SetFloat("TornadoCoreDissolve", 1);
+        tornadoVFX.gameObject.SetActive(false);
     }
 }

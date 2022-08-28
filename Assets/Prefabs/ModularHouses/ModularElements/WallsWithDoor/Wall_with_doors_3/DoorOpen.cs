@@ -5,6 +5,8 @@ using UnityEngine;
 public class DoorOpen : MonoBehaviour
 {
     [SerializeField] AnimationCurve openingAnimationCurve;
+    [SerializeField] float speed;
+    [SerializeField] float magnitude;
     Coroutine openingCoroutine;
     Vector3 startRotation;
 
@@ -27,10 +29,10 @@ public class DoorOpen : MonoBehaviour
         {
             StopCoroutine(openingCoroutine);
         }
-        openingCoroutine = StartCoroutine(OpeningCoroutine(1));
+        openingCoroutine = StartCoroutine(OpeningCoroutine(speed, magnitude));
     }
 
-    IEnumerator OpeningCoroutine(float delay)
+    IEnumerator OpeningCoroutine(float delay, float magnitude)
     {
         float elapsed = 0;
         float currentRotation = 0;
@@ -38,7 +40,7 @@ public class DoorOpen : MonoBehaviour
         while (elapsed < delay)
         {
             elapsed += Time.deltaTime;
-            currentRotation = Mathf.Lerp(startRotation.z, startRotation.z - 3, openingAnimationCurve.Evaluate(elapsed / delay));
+            currentRotation = Mathf.Lerp(startRotation.z, startRotation.z - magnitude, openingAnimationCurve.Evaluate(elapsed / delay));
             transform.rotation = Quaternion.Euler(new Vector3(startRotation.x, startRotation.y, currentRotation));
             yield return null;
         }

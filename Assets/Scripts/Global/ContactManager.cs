@@ -23,6 +23,7 @@ public class ContactManager : MonoBehaviour
     public event Action PotentialPositionerActivated = delegate { };
     public event Action PotentialPositionerDeactivated = delegate { };
     public event Action CityRegenerationEntered = delegate { };
+    public event Action<Transform> MinesDoorDetected = delegate { };
     private void Start()
     {
         ClickManager.LMBClicked += ContactObject;
@@ -36,7 +37,7 @@ public class ContactManager : MonoBehaviour
             Debug.Log(contactedObject);
             if (contactedObject != null)
             {
-                //Debug.Log(contactedObject);
+                Debug.Log(contactedObject);
                 if (contactedObject.GetComponent<Portal2>() != null)
                 {
                     if (TeleporterDetected != null)
@@ -141,6 +142,14 @@ public class ContactManager : MonoBehaviour
                     
                     
                     
+                }
+                else if (contactedObject.name == "MinesDoor")
+                {
+                    Debug.Log("found mines foor");
+                    if (MinesDoorDetected != null)
+                    {
+                        MinesDoorDetected(contactedObject);
+                    }
                 }
             }
         }

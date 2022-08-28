@@ -723,9 +723,9 @@ public class QuestsSubscriptionsManager : MonoBehaviour
         InstantiatePotentialQuest(0002, "Crouch with skeleton arch mage", 10, 20);
         InstantiatePotentialQuest(0003, "Run", 10, 10);+
         InstantiatePotentialQuest(0004, "Jump", 2, 10);+
-        InstantiatePotentialQuest(0005, "Try double jump", 1, 10);
+        InstantiatePotentialQuest(0005, "Try double jump", 1, 10);+
         InstantiatePotentialQuest(0006, "Jump on the bed", 5, 10);
-        InstantiatePotentialQuest(0007, "Use shift spell", 1, 10);
+        InstantiatePotentialQuest(0007, "Use shift spell", 1, 10);+
         InstantiatePotentialQuest(0008, "Hit wall", 1, 10);
         InstantiatePotentialQuest(0009, "Hit bookshelf", 1, 10);
         InstantiatePotentialQuest(0010, "Hit crates", 1, 10);
@@ -736,11 +736,17 @@ public class QuestsSubscriptionsManager : MonoBehaviour
         InstantiatePotentialQuest(0015, "Regenerate objects", 1, 50);
         InstantiatePotentialQuest(0016, "Hit your head", 1, 10);
         InstantiatePotentialQuest(0017, "Collect objects", 50, 15);
-        InstantiatePotentialQuest(0029, "Cast a tornado spell", 1, 10); InstantiatePotentialQuest(1010, "Attach a skeleton to ore", 1, 10);
-        InstantiatePotentialQuest(0018, "Defract objects", 50, 25); InstantiatePotentialQuest(0019, "Transmutate to gold ore", 50, 25); InstantiatePotentialQuest(0020, "Transmutate to gold processed objects", 25, 25); InstantiatePotentialQuest(0021, "Transmutate to gold wearable items", 5, 30);
+        InstantiatePotentialQuest(0029, "Cast a tornado spell", 1, 10); +
+        -
+        InstantiatePotentialQuest(0018, "Defract objects", 50, 25); +
+        InstantiatePotentialQuest(0019, "Transmutate to gold ore", 50, 25); +
+        InstantiatePotentialQuest(0020, "Transmutate to gold processed objects", 25, 25); +
+        InstantiatePotentialQuest(0021, "Transmutate to gold wearable items", 5, 30); +
         InstantiatePotentialQuest(0022, "Create something", 1, 25);+
         
-        
+        InstantiatePotentialQuest(1003, "Conjure big skeleton", 1, 25); -
+        InstantiatePotentialQuest(1004, "Conjure lizard skeleton", 1, 50); -
+        InstantiatePotentialQuest(1010, "Attach a skeleton to ore", 1, 10); -
         
         InstantiatePotentialQuest(0023, "Open portal", 1, 10);
         InstantiatePotentialQuest(0024, "Try to wake an old mage", 1, 10);
@@ -748,31 +754,31 @@ public class QuestsSubscriptionsManager : MonoBehaviour
         InstantiatePotentialQuest(0026, "Cast spells", 100, 10);
         InstantiatePotentialQuest(0027, "Play around with game settings", 1, 10);
         InstantiatePotentialQuest(0028, "Play game minutes", 1, 10);+
-        InstantiatePotentialQuest(0029, "Cast a tornado spell", 1, 10);
+        InstantiatePotentialQuest(0029, "Cast a tornado spell", 1, 10); +
         InstantiatePotentialQuest(0030, "Refresh your senses with tasty gulash", 1, 10);
         InstantiatePotentialQuest(0031, "Enter dungeons", 5, 10);+
         InstantiatePotentialQuest(0032, "Work with ores simultaneously", 2, 10);
 
-        InstantiatePotentialQuest(1001, "Conjure a skeleton", 1, 10);
-        InstantiatePotentialQuest(1002, "Conjure small skeleton", 1, 10);
-        InstantiatePotentialQuest(1003, "Conjure big skeleton", 1, 25);
-        InstantiatePotentialQuest(1004, "Conjure lizard skeleton", 1, 50);
+        InstantiatePotentialQuest(1001, "Conjure a skeleton", 1, 10); +
+        InstantiatePotentialQuest(1002, "Conjure small skeleton", 1, 10); +
+        -
+        -
         InstantiatePotentialQuest(1005, "Hit a skeleton with something", 1, 10);
-        InstantiatePotentialQuest(1006, "Destroy a skeleton", 1, 10);
-        InstantiatePotentialQuest(1007, "Destroy small skeleton", 1, 10);
-        InstantiatePotentialQuest(1008, "Destroy big skeleton", 1, 25);
-        InstantiatePotentialQuest(1009, "Destroy lizard skeleton", 1, 50);
-        InstantiatePotentialQuest(1010, "Attach a skeleton to ore", 1, 10);
-        InstantiatePotentialQuest(1011, "Equip skeletons with 1 object", 1, 20);
-        InstantiatePotentialQuest(1012, "Equip skeletons with 2 object", 1, 40);
-        InstantiatePotentialQuest(1013, "Equip skeletons with 3 object", 1, 50);
-        InstantiatePotentialQuest(1014, "Equip skeletons with 4 object", 1, 60);
-        InstantiatePotentialQuest(1015, "Equip skeletons with 5 object", 1, 100);
-        InstantiatePotentialQuest(1016, "Equip skeletons with 6 object", 1, 120);
+        InstantiatePotentialQuest(1006, "Destroy a skeleton", 1, 10); +
+        InstantiatePotentialQuest(1007, "Destroy small skeleton", 1, 10); +
+        InstantiatePotentialQuest(1008, "Destroy big skeleton", 1, 25); +
+        InstantiatePotentialQuest(1009, "Destroy lizard skeleton", 1, 50); +
+        -
+        InstantiatePotentialQuest(1011, "Equip skeletons with 1 object", 1, 20); +
+        InstantiatePotentialQuest(1012, "Equip skeletons with 2 object", 1, 40); +
+        InstantiatePotentialQuest(1013, "Equip skeletons with 3 object", 1, 50); +
+        InstantiatePotentialQuest(1014, "Equip skeletons with 4 object", 1, 60); +
+        InstantiatePotentialQuest(1015, "Equip skeletons with 5 object", 1, 100); +
+        InstantiatePotentialQuest(1016, "Equip skeletons with 6 object", 1, 120); +
 
-        InstantiatePotentialQuest(1101, "Regenerate health to castle", 1, 50);
-        InstantiatePotentialQuest(1103, "Upgrade castle forge", 1, 50);
-        InstantiatePotentialQuest(1104, "Upgrade castle temple", 1, 100);
+        InstantiatePotentialQuest(1101, "Regenerate health to castle", 1, 50); +
+        InstantiatePotentialQuest(1103, "Upgrade castle forge", 1, 50); +
+        InstantiatePotentialQuest(1104, "Upgrade castle temple", 1, 100); +
         (1105, "Upgrade castle temple shards", 1, 100);
         */
     }
