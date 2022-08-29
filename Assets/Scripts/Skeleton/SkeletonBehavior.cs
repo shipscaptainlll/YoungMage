@@ -32,6 +32,8 @@ public class SkeletonBehavior : MonoBehaviour
     [SerializeField] CastlePositionsManager castlePositionsManager;
     [SerializeField] ContactedSkeletonsCounter contactedSkeletonsCounter;
     [SerializeField] DestroyedSkeletonsCounter destroyedSkeletonsCounter;
+    [SerializeField] Transform playerTransform;
+    [SerializeField] CameraShake cameraShake;
     VisualEffect movementVFX;
     bool isSmallSkeleton;
     bool isBigSkeleton;
@@ -277,6 +279,14 @@ public class SkeletonBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (cameraShake != null)
+            {
+                ShakePlayerCamera();
+            }
+        }
+
         if (navigationTarget != null) { navMeshAgent.destination = navigationTarget.position; }
         if (CastleNavroutActive)
         {
@@ -539,6 +549,7 @@ public class SkeletonBehavior : MonoBehaviour
         destructionParticleSystem.SetActive(true);
         destructionParticleSystem.GetComponent<ParticleSystem>().Play();
         Debug.Log("DestroyedSkeleton");
+        ShakePlayerCamera();
         lowerPartSkinnedrenderer.gameObject.SetActive(false);
         upperPartSkinnedrenderer.gameObject.SetActive(false);
         GameObject instantiatedDestroyedSkeleton = Instantiate(destroyedSkeleton, transform.position, transform.rotation);
@@ -563,9 +574,19 @@ public class SkeletonBehavior : MonoBehaviour
             destroyedBigSkeletons++;
             destroyedSkeletonsCounter.CountDestroyedSkeleton(this.transform);
         }
+        
         Destroy(instantiatedDestroyedSkeleton);
         Destroy(gameObject);
         yield return null;
+    }
+
+    void ShakePlayerCamera()
+    {
+        Debug.Log(Vector3.Distance(playerTransform.position, this.transform.position));
+        if (Vector3.Distance(playerTransform.position, this.transform.position) < 6
+            && !cameraShake.Activated) {
+            cameraShake.ShakeCamera(0.75f, 0.065f * (1/Vector3.Distance(playerTransform.position, this.transform.position)) * 18);
+        }
     }
 
     IEnumerator MovingDustSpawner()

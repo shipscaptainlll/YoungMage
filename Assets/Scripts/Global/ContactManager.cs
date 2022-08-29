@@ -12,6 +12,7 @@ public class ContactManager : MonoBehaviour
     [SerializeField] Transform mainCharacter;
     [SerializeField] PotentialPositioner potentialPositioner;
     [SerializeField] AttachObjectSkeleton attachObjectSkeleton;
+    [SerializeField] DeattachObjectSkeleton deattachObjectSkeleton;
 
     Transform contactedSkeleton;
     public event Action<Transform> TeleporterDetected = delegate { };
@@ -93,7 +94,12 @@ public class ContactManager : MonoBehaviour
                     || quickAccessHandController.CurrentCustomID == 16
                     || quickAccessHandController.CurrentCustomID == 17))
                 {
+                    Debug.Log("Hello");
                     attachObjectSkeleton.AttachObject(contactedObject.parent.GetComponent<SkeletonBehavior>(), quickAccessHandController.CurrentCustomID);
+                }
+                else if (contactedObject.GetComponent<SkeletonItem>() != null)
+                {
+                    deattachObjectSkeleton.DeattachObject(contactedObject.GetComponent<SkeletonItem>().SkeletonScript, contactedObject.GetComponent<SkeletonItem>().ItemID);
                 }
                 else if (contactedObject.parent.GetComponent<Defractor>() != null)
                 {

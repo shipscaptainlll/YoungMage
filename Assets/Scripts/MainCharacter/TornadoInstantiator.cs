@@ -11,8 +11,11 @@ public class TornadoInstantiator : MonoBehaviour
     [SerializeField] VisualEffect tornadoVFX;
     [SerializeField] Transform body;
     [SerializeField] Vector3 offsetRotation;
+    [SerializeField] CameraShake cameraShake;
     ParticleSystem windParticles;
+    ParticleSystem dustParticles;
     ParticleSystem.MainModule windParticlesMainmodule;
+    ParticleSystem.MainModule dustParticlesMainmodule;
     RaycastHit[] hitObjects;
     RaycastHit hit;
 
@@ -24,7 +27,9 @@ public class TornadoInstantiator : MonoBehaviour
 void Start()
     {
         windParticles = tornadoVFX.transform.Find("WindParticles").GetComponent<ParticleSystem>();
+        dustParticles = tornadoVFX.transform.Find("DustParticles").GetComponent<ParticleSystem>();
         windParticlesMainmodule = tornadoVFX.transform.Find("WindParticles").GetComponent<ParticleSystem>().main;
+        dustParticlesMainmodule = tornadoVFX.transform.Find("DustParticles").GetComponent<ParticleSystem>().main;
     }
 
     // Update is called once per frame
@@ -32,8 +37,9 @@ void Start()
     {
         if (Input.GetKeyDown(KeyCode.Y))
         {
-            
+            cameraShake.Activated = true;
             windParticles.Play();
+            dustParticles.Play();
 
             Debug.Log("hello there");
             tornadoCountQuests++;
@@ -54,6 +60,7 @@ void Start()
                     
 
                     windParticlesMainmodule.loop = true;
+                    dustParticlesMainmodule.loop = true;
                     tornadoVFX.Play();
                     return;
                 }
@@ -81,6 +88,7 @@ void Start()
         if (Input.GetKeyUp(KeyCode.Y))
         {
             TurnOffTornado();
+            cameraShake.Activated = false;
             //tornadoVFX.gameObject.SetActive(false);
 
         }
@@ -89,8 +97,9 @@ void Start()
     void TurnOffTornado()
     {
         if (turnOffCoroutine != null) { StopCoroutine(turnOffCoroutine); }
-        turnOffCoroutine = StartCoroutine(SmoothTurnOff(3f));
+        turnOffCoroutine = StartCoroutine(SmoothTurnOff(2.35f));
         windParticlesMainmodule.loop = false;
+        dustParticlesMainmodule.loop = false;
     }
 
     IEnumerator SmoothTurnOff(float delay)

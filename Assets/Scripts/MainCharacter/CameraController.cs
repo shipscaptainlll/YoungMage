@@ -16,6 +16,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] ObjectOutliner objectOutliner;
     [SerializeField] float contactingRayDistance;
     [SerializeField] PersonMovement personMovement;
+    [SerializeField] CameraShake cameraShake;
     float yRotation;
     float xRotation;
     RaycastHit hit = new RaycastHit();
@@ -24,6 +25,7 @@ public class CameraController : MonoBehaviour
 
     Vector3 startRotation;
     bool cityRegenerationMode;
+    
     public bool CityRegenerationMode { get { return cityRegenerationMode; } set { startRotation = transform.localRotation.eulerAngles;  cityRegenerationMode = value; yRotation = startRotation.y; xRotation = startRotation.x; } }
     Vector3 StartRotation { get { return startRotation; } set { startRotation = value; } }
     public float YRotation { get { return yRotation; } set { yRotation = value; } }
@@ -53,9 +55,11 @@ public class CameraController : MonoBehaviour
             RotateHead();
             DetectObject();
         }
-        //Debug.Log(transform.rotation.eulerAngles);
-        //Debug.Log(transform.rotation);
-        //
+        
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            
+        }
     }
 
     void RotateHead()
@@ -136,4 +140,6 @@ public class CameraController : MonoBehaviour
             yield return new WaitForSeconds(0.033f);
         }        
     }
+
+
 }

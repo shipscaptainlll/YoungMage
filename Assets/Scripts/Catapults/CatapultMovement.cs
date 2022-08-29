@@ -42,10 +42,10 @@ public class CatapultMovement : MonoBehaviour
     void Start()
     {
         rand = new System.Random();
-        Debug.Log(potentialTargetsPositions);
-        Debug.Log(potentialTargetsPositions.childCount);
+        //Debug.Log(potentialTargetsPositions);
+        //Debug.Log(potentialTargetsPositions.childCount);
         int randomIndex = rand.Next(0, (potentialTargetsPositions.childCount - 1));
-        Debug.Log(randomIndex);
+        //Debug.Log(randomIndex);
         navMeshEnabled = true;
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.avoidancePriority = rand.Next(30, 50);
