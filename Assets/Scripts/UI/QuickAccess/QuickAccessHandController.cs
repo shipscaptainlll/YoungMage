@@ -19,6 +19,7 @@ public class QuickAccessHandController : MonoBehaviour
     int currentCustomID;
     int? currentSlot;
 
+    Coroutine materializationCoroutine;
     public GameObject ObjectInHand
     {
         get
@@ -80,8 +81,9 @@ public class QuickAccessHandController : MonoBehaviour
             sacketModel.gameObject.SetActive(true);
             GameObject objectToTake = objectManager.TakeObject(targetCustomID);
             objectInHand = Instantiate(objectToTake, hand.position, hand.rotation);
+            MaterializeEffect(objectInHand.transform, 0.65f);
             SetObjectMovement(objectInHand);
-            sacketEnter.Play("GetSacketAnimation");
+            //sacketEnter.Play("GetSacketAnimation");
             objectInHand.transform.parent = hand;
             if (targetCustomID == 10)
             {
@@ -173,5 +175,39 @@ public class QuickAccessHandController : MonoBehaviour
                 currentCounter = element;
             }
         }
+    }
+
+    void MaterializeEffect(Transform materializedTransform, float duration)
+    {
+        if (materializationCoroutine != null) { StopCoroutine(materializationCoroutine); }
+        materializationCoroutine = StartCoroutine(MaterializeItem(materializedTransform, duration));
+    }
+
+    IEnumerator MaterializeItem(Transform materializedTransform, float duration)
+    {
+        float elapsed = 0;
+        MeshRenderer productMeshrenderer = materializedTransform.GetChild(0).GetComponent<MeshRenderer>();
+        MeshRenderer secondProductMeshrenderer = materializedTransform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>();
+        Material productMaterial = productMeshrenderer.material;
+        Material secondProductMaterial = secondProductMeshrenderer.material;
+
+        float currentMaterialization;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            currentMaterialization = Mathf.Lerp(1f, 0.00f, elapsed / duration);
+            productMaterial.SetFloat("_Clip", currentMaterialization);
+            secondProductMaterial.SetFloat("_Clip", currentMaterialization);
+            productMeshrenderer.material = productMaterial;
+            secondProductMeshrenderer.material = secondProductMaterial;
+            Debug.Log(materializedTransform.GetChild(0).GetComponent<MeshRenderer>().material.GetFloat("_Clip"));
+            yield return null;
+        }
+        productMaterial.SetFloat("_Clip", 0f);
+        secondProductMaterial.SetFloat("_Clip", 0f);
+        productMeshrenderer.material = productMaterial;
+        secondProductMeshrenderer.material = secondProductMaterial;
+        //Destroy(productTransform.gameObject);
+        yield return null;
     }
 }

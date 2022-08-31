@@ -110,7 +110,7 @@ public class DropHandler : MonoBehaviour, IDropHandler
         EventSystem.current.RaycastAll(pointer, hitObjects);
 
         if (hitObjects.Count <= 0) return null;
-
+        
         return hitObjects[2].gameObject;
     }
 

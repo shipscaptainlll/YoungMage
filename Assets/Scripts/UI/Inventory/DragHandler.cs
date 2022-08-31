@@ -5,10 +5,13 @@ using UnityEngine.EventSystems;
 
 public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerDownHandler
 {
+    [SerializeField] Transform quickaccessElementsHolder;
+    [SerializeField] Transform quickAccessPanel;
     int typeSiblingIndex;
     int rowSiblingIndex;
     int slotSiblingIndex;
 
+    List<RaycastResult> hitObjects = new List<RaycastResult>();
     public void OnBeginDrag(PointerEventData eventData)
     {
         typeSiblingIndex = transform.parent.parent.parent.parent.GetSiblingIndex();
@@ -37,14 +40,49 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        
+        Debug.Log(" is free");
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            if (GetObjectUnderMouse().GetComponent<Element>().ElementType == Element.ElementTypeEnum.inventorySlot.ToString() && GetObjectUnderMouse().GetComponent<Element>().CustomID != 0)
+            {
+                Debug.Log(" is free1");
+                foreach (Transform element in quickaccessElementsHolder)
+                {
+                    Debug.Log(" is free2");
+                    if (element.GetChild(0).Find("Element").GetComponent<Element>().CustomID == 0)
+                    {
+                        CopyCustomID(eventData, element.GetChild(0).Find("Element"));
+                        return;
+                    }
+                }
+            }
+            
+        }
     }
-
-    // Start is called before the first frame update
-    void Start()
+    void CopyCustomID(PointerEventData eventData, Transform freeQuickElement)
     {
+        GameObject targetObject = GetObjectUnderMouse();
+        freeQuickElement.GetComponent<Element>().CustomID = targetObject.GetComponent<Element>().CustomID;
+        int slotNumber = freeQuickElement.transform.parent.parent.GetSiblingIndex();
 
+        CopyIDToQuickAccess(eventData, slotNumber, freeQuickElement);
     }
 
-    
+    void CopyIDToQuickAccess(PointerEventData eventData, int slotNumber, Transform freeQuickElement)
+    {
+        quickAccessPanel.GetChild(slotNumber).Find("Borders").Find("Element").GetComponent<QuickAccessElement>().CustomID = freeQuickElement.GetComponent<Element>().CustomID;
+    }
+
+    GameObject GetObjectUnderMouse()
+    {
+        var pointer = new PointerEventData(EventSystem.current);
+
+        pointer.position = Input.mousePosition;
+
+        EventSystem.current.RaycastAll(pointer, hitObjects);
+
+        if (hitObjects.Count <= 0) return null;
+
+        return hitObjects[0].gameObject;
+    }
 }

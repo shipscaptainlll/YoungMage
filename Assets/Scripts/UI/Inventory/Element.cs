@@ -9,9 +9,11 @@ public class Element : MonoBehaviour
     [SerializeField] int customID;
     [SerializeField] SpriteManager spriteManager;
     [SerializeField] ElementTypeEnum elementTypeEnum;
+    [SerializeField] AnimationCurve animationCurve;
     Transform attachedCounter;
     Text textBox;
 
+    Coroutine showElementCoroutine;
     Coroutine resizeCoroutine;
     bool coroutineActive;
 
@@ -27,6 +29,15 @@ public class Element : MonoBehaviour
             customID = value;
             UpdateAttachedCounter();
             UpdateElement();
+            if (!coroutineActive)
+            {
+                showElementCoroutine = StartCoroutine(ShowElement(0.65f));
+            }
+            else
+            {
+                StopCoroutine(resizeCoroutine);
+                showElementCoroutine = StartCoroutine(ShowElement(0.65f));
+            }
             //Debug.Log("chages in " + transform + " with id " + customID);
         }
     }
@@ -83,12 +94,33 @@ public class Element : MonoBehaviour
         
     }
 
+    IEnumerator ShowElement(float duration)
+    {
+        float elapsed = 0;
+        RectTransform elementRect = transform.GetComponent<RectTransform>();
+        float finalSize = transform.GetComponent<RectTransform>().sizeDelta.x;
+        transform.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 0);
+        Vector2 startElementSize = transform.GetComponent<RectTransform>().sizeDelta;
+        float currentSize = 0;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            currentSize = Mathf.Lerp(startElementSize.x, finalSize, animationCurve.Evaluate(elapsed / duration));
+            elementRect.sizeDelta = new Vector2(currentSize, currentSize);
+            yield return null;
+        }
+        elementRect.sizeDelta = new Vector2(finalSize, finalSize);
+
+        showElementCoroutine = null;
+        yield return null;
+    }
+
     IEnumerator ResizeChangeCount(float duration, float multiplier)
     {
         coroutineActive = true;
         float elapsed = 0;
-        RectTransform elementRect = transform.parent.parent.GetComponent<RectTransform>();
-        Vector2 elementSize = transform.parent.GetComponent<RectTransform>().sizeDelta;
+        RectTransform elementRect = transform.GetComponent<RectTransform>();
+        Vector2 elementSize = transform.GetComponent<RectTransform>().sizeDelta;
         float currentSize = 0;
         while (elapsed < duration)
         {
