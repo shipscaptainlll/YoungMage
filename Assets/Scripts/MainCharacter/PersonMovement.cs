@@ -27,6 +27,11 @@ public class PersonMovement : MonoBehaviour
     [Header("Settings Connection")]
     [SerializeField] ControlsPanel controlsPanel;
 
+    [Header("Audio Connection")]
+    [SerializeField] SoundManager soundManager;
+    AudioSource walkingSound;
+    AudioSource runningSound;
+
     float checkRadius;
     bool occupied;
     VisualEffect movementVFX;
@@ -35,7 +40,7 @@ public class PersonMovement : MonoBehaviour
     [SerializeField] ParticleSystem doubleShiftPS;
 
 
-    bool isWalking = true;
+    bool isWalking = false;
     bool isRunning;
     float keyPushedLength;
     bool isShifting;
@@ -86,12 +91,17 @@ public class PersonMovement : MonoBehaviour
         controlsPanel.autorunWasToggled += SetAutorun;
         isAutoRunning = controlsPanel.AutorunToggled;
         StartCoroutine(MovingDustSpawner());
+
+        walkingSound = soundManager.FindSound("Walk");
+        runningSound = soundManager.FindSound("Run");
     }
 
     void LateUpdate()
     {
         if (!occupied)
             MoveCharacter();
+        if (isWalking) { if (!walkingSound.isPlaying) { Debug.Log("started playing walk"); walkingSound.Play(); } } else { if (walkingSound.isPlaying) { Debug.Log("stoped playing walk"); walkingSound.Stop(); } }
+        if (isRunning) { if (!runningSound.isPlaying) { Debug.Log("started playing running"); runningSound.Play(); } } else { if (runningSound.isPlaying) { Debug.Log("stoped playing runnnig"); runningSound.Stop(); } }
     }
 
     IEnumerator DoubleShiftTimer()
@@ -116,6 +126,18 @@ public class PersonMovement : MonoBehaviour
 
     void MoveCharacter()
     {
+        xInput = Input.GetAxis("Horizontal");
+        zInput = Input.GetAxis("Vertical");
+
+        if (Mathf.Abs(xInput) > 0.2f || Mathf.Abs(zInput) > 0.2f)
+        {
+            isWalking = true;
+        }
+        else
+        {
+            isWalking = false;
+        }
+
         if ((!isShifting && Input.GetKey(KeyCode.LeftShift)) || isAutoRunning && !isShifting)
         {
             keyPushedLength += Time.deltaTime;
@@ -135,9 +157,7 @@ public class PersonMovement : MonoBehaviour
             keyPushedLength = 0;
         }
         bool isGroundedOld = isGrounded;
-        xInput = Input.GetAxis("Horizontal");
-        zInput = Input.GetAxis("Vertical");
-
+        
         if (!doubleshiftCooldowned && Input.GetKeyDown(KeyCode.LeftShift))
         {
             var timeCurrentPressed = Time.time;

@@ -374,6 +374,18 @@ public class QuestsDatabase : MonoBehaviour
         yield return new WaitForSeconds(0.24f);
         StartCoroutine(AddNewQuests(1007));
         yield return null;
+        StartCoroutine(AddNewQuests(1001));
+        yield return null;
+        StartCoroutine(AddNewQuests(1003));
+        yield return null;
+        StartCoroutine(AddNewQuests(1002));
+        yield return null;
+        StartCoroutine(AddNewQuests(1004));
+        yield return null;
+        StartCoroutine(AddNewQuests(1005));
+        yield return null;
+        StartCoroutine(AddNewQuests(1006));
+        yield return null;
     }
     IEnumerator InstantiateCompletedQuests()
     {

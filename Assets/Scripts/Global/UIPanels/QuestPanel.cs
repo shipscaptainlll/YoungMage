@@ -57,6 +57,7 @@ public class QuestPanel : MonoBehaviour
 
     public void AddQuestSubpanel()
     {
+        
         questSubpanelsCount++;
         Transform newPanel = Instantiate(typeSubpanel, subpanelsHolder.position, subpanelsHolder.rotation);
         newPanel.parent = subpanelsHolder;
@@ -69,6 +70,7 @@ public class QuestPanel : MonoBehaviour
         newPanel.SetAsLastSibling();
         addTypeSubpanel.SetAsLastSibling();
         
+        Debug.Log("Added subpanel");
 
         AddQuestPanel();
     }

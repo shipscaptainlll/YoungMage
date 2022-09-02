@@ -37,7 +37,6 @@ public class QuestElement : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     float progressValue;
     bool isCompleted;
 
-
     public string Description
     {
         get { return description; }
@@ -76,7 +75,7 @@ public class QuestElement : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     // Start is called before the first frame update
     void Start()
     {
-        isHoldingQuest = false;
+        //isHoldingQuest = false;
     }
 
 
@@ -84,6 +83,7 @@ public class QuestElement : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         //Debug.Log(!isHoldingQuest + " " + !isCompleted + " " + transform.parent);
         //Debug.Log("we arehere " + transform + " " + transform.parent);
+        
         if (!isHoldingQuest && !isCompleted)
         {
             //Debug.Log("hello there");
