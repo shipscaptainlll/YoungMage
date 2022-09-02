@@ -183,6 +183,7 @@ public class SkeletonBehavior : MonoBehaviour
         }
         contactManager.GetComponent<ContactManager>().OreDetected += AddTarget;
         contactManager.GetComponent<ContactManager>().MinesDoorDetected += AddTarget;
+        contactManager.GetComponent<ContactManager>().ObjectOverloaded += ShowEmotion;
         connectedTeleport.GetComponent<Teleporter>().TeleportFound += StopGravity;
         if (hasPortal)
         {
@@ -231,21 +232,22 @@ public class SkeletonBehavior : MonoBehaviour
             }
             if (value != null && value.GetComponent<IOre>() != null)
             {
-                Debug.Log("Connected to the ore");
+                //Debug.Log("Connected to the ore");
                 value.GetComponent<OreMiningManager>().ConnectedSkeleton = this;
-            } else if (value != null && value.name == "MinesDoor")
+            } else if (value != null && value.parent.name == "SkeletonPositions")
             {
-                Debug.Log("Connected to the main door");
-                value.GetComponent<DoorTacklingManager>().ConnectedSkeleton = this;
+                //Debug.Log("Connected to the main door");
+                value.parent.parent.GetComponent<DoorTacklingManager>().ConnectedSkeleton = this;
             }
             if (navigationTarget != null && navigationTarget.GetComponent<IOre>() != null && value.GetComponent<IOre>() == null)
             {
-                Debug.Log("Disconnected from the ore");
+                //Debug.Log("Disconnected from the ore");
                 navigationTarget.GetComponent<OreMiningManager>().ConnectedSkeleton = null;
-            } else if (navigationTarget != null && navigationTarget.name == "MinesDoor" && value != null && value.name != "MinesDoor")
+            } else if (navigationTarget != null && navigationTarget.parent.name == "SkeletonPositions" && value != null && value.parent.name != "SkeletonPositions")
             {
-                Debug.Log("Disconnected from the ore");
-                navigationTarget.GetComponent<DoorTacklingManager>().ConnectedSkeleton = null;
+                //Debug.Log("Disconnected from the ore");
+                DoorConnectionManager.ReturnPosition(navigationTarget);
+                navigationTarget.parent.parent.GetComponent<DoorTacklingManager>().ConnectedSkeleton = null;
             }
             if (!wasOnceConjured) {
                 //Debug.Log("hello there");
@@ -270,7 +272,7 @@ public class SkeletonBehavior : MonoBehaviour
                 }
             }
             navigationTarget = value;
-            Debug.Log("updated skeleton target");
+            //Debug.Log("updated skeleton target");
             UpdateAnimation();
 
         }
@@ -373,13 +375,14 @@ public class SkeletonBehavior : MonoBehaviour
         
         if (navMeshAgent.velocity.magnitude < 0.15f && isMoving)
         {
-            //Debug.Log(navigationTarget.name);
-            if (navigationTarget != null && navigationTarget.GetComponent<IOre>() == null && navigationTarget.name != "MinesDoor")
+            Debug.Log(navigationTarget.name);
+            Debug.Log(navigationTarget.parent.name == "SkeletonPositions");
+            if (navigationTarget != null && navigationTarget.GetComponent<IOre>() == null && navigationTarget.parent.name != "SkeletonPositions")
             {
                 isMoving = false;
                 localAnimator.Play("SkelIdle");
             } else if ((navigationTarget != null && navigationTarget.GetComponent<IOre>() != null) ||
-                (navigationTarget != null && navigationTarget.name == "MinesDoor"))
+                (navigationTarget != null && navigationTarget.parent.name == "SkeletonPositions"))
             {
                 isMoving = false;
                 localAnimator.Play("SkelMine");
@@ -394,12 +397,13 @@ public class SkeletonBehavior : MonoBehaviour
 
     void UpdateAnimation()
     {
-        if (navigationTarget != null && navigationTarget.GetComponent<IOre>() == null && navigationTarget.name != "MinesDoor")
+        //Debug.Log(navigationTarget);
+        if (navigationTarget != null && navigationTarget.GetComponent<IOre>() == null && navigationTarget.parent.name != "SkeletonPositions")
         {
             localAnimator.Play("SkelIdle");
         }
         else if ((navigationTarget != null && navigationTarget.GetComponent<IOre>() != null) ||
-          (navigationTarget != null && navigationTarget.name == "MinesDoor"))
+          (navigationTarget != null && navigationTarget.parent.name == "SkeletonPositions"))
         {
             localAnimator.Play("SkelMine");
         }
@@ -700,6 +704,7 @@ public class SkeletonBehavior : MonoBehaviour
     public void AddTarget(Transform targetOre)
     {
         Debug.Log("new target added " + targetOre);
+        Debug.Log("new target added " + targetOre.parent.name);
         if (navigationTarget.GetComponent<PersonMovement>() != null)
         {
             if (targetOre.GetComponent<NavMeshObstacle>() != null)
@@ -707,7 +712,23 @@ public class SkeletonBehavior : MonoBehaviour
                 targetOre.GetComponent<NavMeshObstacle>().enabled = false;
             }
             
-            NavigationTarget = targetOre;
+            if (targetOre.name == "MinesDoor")
+            {
+                NavigationTarget = DoorConnectionManager.GetPosition();
+            } else
+            {
+                NavigationTarget = targetOre;
+            }
+            //Debug.Log(navigationTarget);
+            
+        }
+    }
+
+    public void ShowEmotion()
+    {
+        if (navigationTarget.GetComponent<PersonMovement>() != null)
+        {
+            transform.GetComponent<SkeletonEmotionsShower>().ShowConfusion();
         }
     }
 

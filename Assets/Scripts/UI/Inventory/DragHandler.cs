@@ -40,15 +40,22 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log(" is free");
+        //Debug.Log(" is free");
         if (Input.GetKey(KeyCode.LeftControl))
         {
             if (GetObjectUnderMouse().GetComponent<Element>().ElementType == Element.ElementTypeEnum.inventorySlot.ToString() && GetObjectUnderMouse().GetComponent<Element>().CustomID != 0)
             {
-                Debug.Log(" is free1");
                 foreach (Transform element in quickaccessElementsHolder)
                 {
-                    Debug.Log(" is free2");
+                    if (element.GetChild(0).Find("Element").GetComponent<Element>().CustomID == GetObjectUnderMouse().GetComponent<Element>().CustomID)
+                    {
+                        return;
+                    }
+                }
+
+                foreach (Transform element in quickaccessElementsHolder)
+                {
+                    //Debug.Log(" is free2");
                     if (element.GetChild(0).Find("Element").GetComponent<Element>().CustomID == 0)
                     {
                         CopyCustomID(eventData, element.GetChild(0).Find("Element"));

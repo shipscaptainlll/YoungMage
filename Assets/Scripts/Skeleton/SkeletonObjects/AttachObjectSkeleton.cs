@@ -16,42 +16,14 @@ public class AttachObjectSkeleton : MonoBehaviour
     [SerializeField] HelmCounter helmCounter;
     [SerializeField] BracersCounter bracersCounter;
 
-    [Header("Skeleton points positions")]
-    [SerializeField] Transform stoneHandsPosition;
-    [SerializeField] Transform glovesPosition;
-    [SerializeField] Transform leggingsPosition;
-    [SerializeField] Transform plateArmorPosition;
-    [SerializeField] Transform shoesPosition;
-    [SerializeField] Transform helmPosition;
-    [SerializeField] Transform bracersPosition;
-
-    [SerializeField] Vector3 stoneHandsRotation;
-    [SerializeField] Vector3 glovesRotation;
-    [SerializeField] Vector3 leggingsRotation;
-    [SerializeField] Vector3 plateArmorRotation;
-    [SerializeField] Vector3 shoesRotation;
-    [SerializeField] Vector3 helmRotation;
-    [SerializeField] Vector3 bracersRotation;
-
     [Header("Other")]
     [SerializeField] float materializationDuration;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-         
-    }
+    [SerializeField] MaterialEquipShower materialEquipShower;
 
     public void AttachObject(SkeletonBehavior skeleton, int id)
     {
-        Debug.Log("Hello1");
         SkeletonAttachedObjects skeletonAttachedObjects = skeleton.transform.GetComponent<SkeletonAttachedObjects>();
+        SkeletonObjectPositions skeletonObjectPositions = skeleton.transform.GetComponent<SkeletonObjectPositions>();
         Transform item = null;
         switch (id)
         {
@@ -61,9 +33,18 @@ public class AttachObjectSkeleton : MonoBehaviour
                     stoneHandsCounter.AddResource(-1);
                     skeleton.IsConnectedHands = true;
                     item = Instantiate(objectManager.TakeObject(id).transform);
-                    item.parent = stoneHandsPosition;
+                    item.parent = skeletonObjectPositions.GetObjectPosition(id);
                     item.localPosition = new Vector3(0, 0, 0);
-                    item.localRotation = Quaternion.Euler(stoneHandsRotation);
+                    item.localRotation = Quaternion.Euler(skeletonObjectPositions.GetObjectRotation(id));
+                    skeletonAttachedObjects.ConnectedHands = item;
+                } else
+                {
+                    stoneHandsCounter.AddResource(-1);
+                    Destroy(skeletonAttachedObjects.ConnectedHands.gameObject);
+                    item = Instantiate(objectManager.TakeObject(id).transform);
+                    item.parent = skeletonObjectPositions.GetObjectPosition(id);
+                    item.localPosition = new Vector3(0, 0, 0);
+                    item.localRotation = Quaternion.Euler(skeletonObjectPositions.GetObjectRotation(id));
                     skeletonAttachedObjects.ConnectedHands = item;
                 }
                 break;
@@ -73,9 +54,19 @@ public class AttachObjectSkeleton : MonoBehaviour
                     glovesCounter.AddResource(-1);
                     skeleton.IsConnectedHands = true;
                     item = Instantiate(objectManager.TakeObject(id).transform);
-                    item.parent = glovesPosition;
+                    item.parent = skeletonObjectPositions.GetObjectPosition(id);
                     item.localPosition = new Vector3(0, 0, 0);
-                    item.localRotation = Quaternion.Euler(glovesRotation);
+                    item.localRotation = Quaternion.Euler(skeletonObjectPositions.GetObjectRotation(id));
+                    skeletonAttachedObjects.ConnectedGloves = item;
+                }
+                else
+                {
+                    stoneHandsCounter.AddResource(-1);
+                    Destroy(skeletonAttachedObjects.ConnectedHands.gameObject);
+                    item = Instantiate(objectManager.TakeObject(id).transform);
+                    item.parent = skeletonObjectPositions.GetObjectPosition(id);
+                    item.localPosition = new Vector3(0, 0, 0);
+                    item.localRotation = Quaternion.Euler(skeletonObjectPositions.GetObjectRotation(id));
                     skeletonAttachedObjects.ConnectedGloves = item;
                 }
                 break;
@@ -85,9 +76,19 @@ public class AttachObjectSkeleton : MonoBehaviour
                     leggingsCounter.AddResource(-1);
                     skeleton.IsConnectedLeggings = true;
                     item = Instantiate(objectManager.TakeObject(id).transform);
-                    item.parent = leggingsPosition;
+                    item.parent = skeletonObjectPositions.GetObjectPosition(id);
                     item.localPosition = new Vector3(0, 0, 0);
-                    item.localRotation = Quaternion.Euler(leggingsRotation);
+                    item.localRotation = Quaternion.Euler(skeletonObjectPositions.GetObjectRotation(id));
+                    skeletonAttachedObjects.ConnectedLeggings = item;
+                }
+                else
+                {
+                    Destroy(skeletonAttachedObjects.ConnectedLeggings.gameObject);
+                    leggingsCounter.AddResource(-1);
+                    item = Instantiate(objectManager.TakeObject(id).transform);
+                    item.parent = skeletonObjectPositions.GetObjectPosition(id);
+                    item.localPosition = new Vector3(0, 0, 0);
+                    item.localRotation = Quaternion.Euler(skeletonObjectPositions.GetObjectRotation(id));
                     skeletonAttachedObjects.ConnectedLeggings = item;
                 }
                 break;
@@ -97,9 +98,19 @@ public class AttachObjectSkeleton : MonoBehaviour
                     plateArmorCounter.AddResource(-1);
                     skeleton.IsConnectedArmor = true;
                     item = Instantiate(objectManager.TakeObject(id).transform);
-                    item.parent = plateArmorPosition;
+                    item.parent = skeletonObjectPositions.GetObjectPosition(id);
                     item.localPosition = new Vector3(0, -5.5f, -2.2f);
-                    item.localRotation = Quaternion.Euler(plateArmorRotation);
+                    item.localRotation = Quaternion.Euler(skeletonObjectPositions.GetObjectRotation(id));
+                    skeletonAttachedObjects.ConnectedArmor = item;
+                }
+                else
+                {
+                    Destroy(skeletonAttachedObjects.ConnectedHands.gameObject);
+                    plateArmorCounter.AddResource(-1);
+                    item = Instantiate(objectManager.TakeObject(id).transform);
+                    item.parent = skeletonObjectPositions.GetObjectPosition(id);
+                    item.localPosition = new Vector3(0, -5.5f, -2.2f);
+                    item.localRotation = Quaternion.Euler(skeletonObjectPositions.GetObjectRotation(id));
                     skeletonAttachedObjects.ConnectedArmor = item;
                 }
                 break;
@@ -109,9 +120,19 @@ public class AttachObjectSkeleton : MonoBehaviour
                     shoesCounter.AddResource(-1);
                     skeleton.IsConnectedShoes = true;
                     item = Instantiate(objectManager.TakeObject(id).transform);
-                    item.parent = shoesPosition;
+                    item.parent = skeletonObjectPositions.GetObjectPosition(id);
                     item.localPosition = new Vector3(-6.1f, 4.9f, -5.9f);
-                    item.localRotation = Quaternion.Euler(shoesRotation);
+                    item.localRotation = Quaternion.Euler(skeletonObjectPositions.GetObjectRotation(id));
+                    skeletonAttachedObjects.ConnectedShoes = item;
+                }
+                else
+                {
+                    Destroy(skeletonAttachedObjects.ConnectedShoes.gameObject);
+                    shoesCounter.AddResource(-1);
+                    item = Instantiate(objectManager.TakeObject(id).transform);
+                    item.parent = skeletonObjectPositions.GetObjectPosition(id);
+                    item.localPosition = new Vector3(-6.1f, 4.9f, -5.9f);
+                    item.localRotation = Quaternion.Euler(skeletonObjectPositions.GetObjectRotation(id));
                     skeletonAttachedObjects.ConnectedShoes = item;
                 }
                 break;
@@ -121,9 +142,19 @@ public class AttachObjectSkeleton : MonoBehaviour
                     helmCounter.AddResource(-1);
                     skeleton.IsConnectedHelm = true;
                     item = Instantiate(objectManager.TakeObject(id).transform);
-                    item.parent = helmPosition;
+                    item.parent = skeletonObjectPositions.GetObjectPosition(id);
                     item.localPosition = new Vector3(0, 0, 0);
-                    item.localRotation = Quaternion.Euler(helmRotation);
+                    item.localRotation = Quaternion.Euler(skeletonObjectPositions.GetObjectRotation(id));
+                    skeletonAttachedObjects.ConnectedHelm = item;
+                }
+                else
+                {
+                    Destroy(skeletonAttachedObjects.ConnectedHelm.gameObject);
+                    helmCounter.AddResource(-1);
+                    item = Instantiate(objectManager.TakeObject(id).transform);
+                    item.parent = skeletonObjectPositions.GetObjectPosition(id);
+                    item.localPosition = new Vector3(0, 0, 0);
+                    item.localRotation = Quaternion.Euler(skeletonObjectPositions.GetObjectRotation(id));
                     skeletonAttachedObjects.ConnectedHelm = item;
                 }
                 break;
@@ -133,19 +164,34 @@ public class AttachObjectSkeleton : MonoBehaviour
                     bracersCounter.AddResource(-1);
                     skeleton.IsConnectedBracers = true;
                     item = Instantiate(objectManager.TakeObject(id).transform);
-                    item.parent = bracersPosition;
+                    item.parent = skeletonObjectPositions.GetObjectPosition(id);
                     item.localPosition = new Vector3(0, 7.6f, 0);
-                    item.localRotation = Quaternion.Euler(bracersRotation);
+                    item.localRotation = Quaternion.Euler(skeletonObjectPositions.GetObjectRotation(id));
+                    skeletonAttachedObjects.ConnectedBracers = item;
+                }
+                else
+                {
+                    Destroy(skeletonAttachedObjects.ConnectedBracers.gameObject);
+                    bracersCounter.AddResource(-1);
+                    item = Instantiate(objectManager.TakeObject(id).transform);
+                    item.parent = skeletonObjectPositions.GetObjectPosition(id);
+                    item.localPosition = new Vector3(0, 7.6f, 0);
+                    item.localRotation = Quaternion.Euler(skeletonObjectPositions.GetObjectRotation(id));
                     skeletonAttachedObjects.ConnectedBracers = item;
                 }
                 break;
         }
-        item.GetChild(0).gameObject.AddComponent<SkeletonItem>();
+
+        if (item.GetChild(0).gameObject.GetComponent<SkeletonItem>() == null)
+        {
+            item.GetChild(0).gameObject.AddComponent<SkeletonItem>();
+        }
+        
         item.GetChild(0).gameObject.AddComponent<MeshCollider>();
 
         item.GetChild(0).GetComponent<SkeletonItem>().ItemID = id;
         item.GetChild(0).GetComponent<SkeletonItem>().SkeletonScript = skeleton;
-
+        
         StartCoroutine(MaterializeItem(item, materializationDuration));
     }
 
@@ -153,11 +199,11 @@ public class AttachObjectSkeleton : MonoBehaviour
     {
         productTransform.GetChild(0).GetComponent<SkeletonItem>().BeingEdited = true;
         float elapsed = 0;
-        Debug.Log("hello");
         MeshRenderer productMeshrenderer = productTransform.GetChild(0).GetComponent<MeshRenderer>();
-        Debug.Log("hello");
         Material productMaterial = productMeshrenderer.material;
-        Debug.Log("hello");
+        productMaterial.SetFloat("_Clip", 0.7f);
+        productMeshrenderer.material = productMaterial;
+        materialEquipShower.AddingItem = null;
         float currentMaterialization;
         while (elapsed < duration)
         {
@@ -165,12 +211,10 @@ public class AttachObjectSkeleton : MonoBehaviour
             currentMaterialization = Mathf.Lerp(0.7f, 0.05f, elapsed / duration);
             productMaterial.SetFloat("_Clip", currentMaterialization);
             productMeshrenderer.material = productMaterial;
-            Debug.Log(productTransform.GetChild(0).GetComponent<MeshRenderer>().material.GetFloat("_Clip"));
             yield return null;
         }
         productMaterial.SetFloat("_Clip", 0f);
         productMeshrenderer.material = productMaterial;
-        //Destroy(productTransform.gameObject);
         yield return null;
     }
 }

@@ -51,17 +51,23 @@ public class HoverInventoryManager : MonoBehaviour
 
     void Process(Transform element)
     {
-        Debug.Log("Started process");
+        //Debug.Log("Started process");
         
         if (foundObject == null)
         {
             foundObject = element;
-            Debug.Log(element);
+            //Debug.Log(element);
+
             descriptionText.text = element.Find("Borders").Find("Element").GetComponent<Image>().sprite.name;
-            Debug.Log(descriptionText);
+            descriptionCanvas.GetComponent<CanvasGroup>().alpha = 1;
+            descriptionCanvas.GetComponent<CanvasGroup>().alpha = 0;
+            //Debug.Log(descriptionText);
+            ResizeContent();
             descriptionCanvas.parent = UIMainHolder;
-            descriptionSizes = new Vector2(descriptionTransform.GetComponent<RectTransform>().rect.width, descriptionTransform.GetComponent<RectTransform>().rect.height);
+            
+            //descriptionSizes = new Vector2(descriptionTransform.GetComponent<RectTransform>().rect.width, descriptionTransform.GetComponent<RectTransform>().rect.height);
             descriptionCanvas.SetAsLastSibling();
+
             waitOnImage = StartCoroutine(CountOnImage());
             
         }
@@ -86,10 +92,13 @@ public class HoverInventoryManager : MonoBehaviour
 
     IEnumerator CountOnImage()
     {
-        //Debug.Log("Started process1");
+        Debug.Log("Started process1");
         float elapsed = 0;
         float target = 0.3f;
         waitedEnough = false;
+        descriptionCanvas.GetComponent<CanvasGroup>().alpha = 1;
+        descriptionTransform.position = new Vector2(Input.mousePosition.x + descriptionCanvas.GetComponent<RectTransform>().sizeDelta.x / 2, Input.mousePosition.y + descriptionCanvas.GetComponent<RectTransform>().sizeDelta.y);
+        ResizeContent();
         while (foundObject != null)
         {
             if (Input.GetAxis("Mouse X") < 0.2f && Input.GetAxis("Mouse Y") < 0.2f)
@@ -98,8 +107,9 @@ public class HoverInventoryManager : MonoBehaviour
                 if (elapsed >= target)
                 {
                     waitedEnough = true;
+                    
                     descriptionCanvas.GetComponent<CanvasGroup>().alpha = 1;
-                    descriptionTransform.position = new Vector2(Input.mousePosition.x + descriptionSizes.x * 1.5f, Input.mousePosition.y + descriptionSizes.y * 3);
+                    descriptionTransform.position = new Vector2(Input.mousePosition.x + descriptionCanvas.GetComponent<RectTransform>().sizeDelta.x / 2, Input.mousePosition.y + descriptionCanvas.GetComponent<RectTransform>().sizeDelta.y);
                 }
             } else
             {
@@ -111,7 +121,15 @@ public class HoverInventoryManager : MonoBehaviour
             }
             yield return null;
         }
-        
+    }
 
+    void ResizeContent()
+    {
+        Vector2 textSize = new Vector2(descriptionText.transform.GetComponent<RectTransform>().sizeDelta.x * 1.2f, descriptionText.transform.GetComponent<RectTransform>().sizeDelta.y * 1.2f);
+        descriptionCanvas.GetComponent<RectTransform>().sizeDelta = textSize;
+        descriptionCanvas.GetChild(0).GetComponent<RectTransform>().sizeDelta = textSize;
+        descriptionCanvas.GetChild(0).GetChild(0).GetComponent<RectTransform>().sizeDelta = textSize;
+        descriptionCanvas.GetChild(0).GetChild(0).GetChild(0).GetComponent<RectTransform>().sizeDelta = textSize;
+        descriptionCanvas.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<RectTransform>().sizeDelta = textSize;
     }
 }

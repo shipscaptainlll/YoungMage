@@ -30,15 +30,15 @@ public class OnHoverHandler2D : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log(transform);
+        //Debug.Log(transform);
         if (currentObject == null)
         {
             currentObject = DetectObject();
-            Debug.Log(currentObject);
+            //Debug.Log(currentObject);
             if (currentObject.GetComponent<Element>() != null) {
-                Debug.Log(currentObject.GetComponent<Image>().sprite.name);
+                //Debug.Log(currentObject.GetComponent<Image>().sprite.name);
                 if (currentObject.GetComponent<Image>().sprite.name != "Nothing" && InventoryElementFound != null) { 
-                    Debug.Log(currentObject.GetComponent<Image>().sprite); 
+                    //Debug.Log(currentObject.GetComponent<Image>().sprite); 
                     InventoryElementFound(transform); } }
             if (currentObject.GetComponent<SettingsElement>() != null)
             {

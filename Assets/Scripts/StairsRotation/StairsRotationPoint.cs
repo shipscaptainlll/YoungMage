@@ -19,10 +19,10 @@ public class StairsRotationPoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other);
+        //Debug.Log(other);
         if (other.GetComponent<PersonMovement>() != null)
         {
-            Debug.Log("Character entered");
+            //Debug.Log("Character entered");
             CameraController cameraController = other.transform.Find("Main Camera").GetComponent<CameraController>();
             if (!cameraController.IsOnStairs)
             {

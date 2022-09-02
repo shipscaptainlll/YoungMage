@@ -42,7 +42,7 @@ public class DoorTacklingManager : MonoBehaviour
     void ConnectSkeleton(SkeletonBehavior connectingSkeleton)
     {
         VisualiseOreHealthbar();
-        Debug.Log("Connected to main door");
+        //Debug.Log("Connected to main door");
         ConnectScriptsInterraction(connectingSkeleton);
     }
 

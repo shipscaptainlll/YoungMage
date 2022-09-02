@@ -7,6 +7,7 @@ public class MaterialEquipShower : MonoBehaviour
     [SerializeField] CameraController cameraController;
     [SerializeField] Material transparentMaterial;
     [SerializeField] Material addingMaterial;
+    [SerializeField] Material swappingMaterial;
     [SerializeField] QuickAccessHandController quickAccessHandController;
     [SerializeField] ObjectManager objectManager;
     Transform lastObservedItem;
@@ -31,6 +32,13 @@ public class MaterialEquipShower : MonoBehaviour
     [SerializeField] Vector3 helmRotation;
     [SerializeField] Vector3 bracersRotation;
 
+    public Transform AddingItem { set {
+            if (addingItem != null)
+            {
+                Destroy(addingItem.gameObject);
+            }
+            
+            addingItem = value; } }
     // Start is called before the first frame update
     void Start()
     {
@@ -82,10 +90,17 @@ public class MaterialEquipShower : MonoBehaviour
             //Debug.Log(contactedObject);
             //Debug.Log(CheckIfAdding());
             //Debug.Log(CheckIfEquiped(contactedObject));
-            if (addingItem == null && CheckIfAdding() && !CheckIfEquiped(contactedObject))
+            if (addingItem == null && CheckIfAdding())
             {
+                Debug.Log(!CheckIfEquiped(contactedObject));
+                if (!CheckIfEquiped(contactedObject))
+                {
+                    AttachObject(quickAccessHandController.CurrentCustomID, "adding");
+                } else
+                {
+                    AttachObject(quickAccessHandController.CurrentCustomID, "swapping");
+                }
                 
-                AttachObject(quickAccessHandController.CurrentCustomID);
             }
 
         } else
@@ -129,8 +144,6 @@ public class MaterialEquipShower : MonoBehaviour
         Transform itemTransform = currentSkeletonItem.transform;
         Material currentMaterial = itemTransform.GetComponent<MeshRenderer>().material;
         Material newMaterial = transparentMaterial;
-        //Material newMaterial = new Material(Shader.Find("Shader Graphs/Materialize_shadergraph"));
-        //Material newMaterial = new Material(Shader.Find("Shader Graphs/Materialize_transparent_shadergraph"));
         newMaterial.color = Color.red;
         itemTransform.GetComponent<MeshRenderer>().material = newMaterial;
     }
@@ -185,82 +198,68 @@ public class MaterialEquipShower : MonoBehaviour
         return false;
     }
     
-    public void AttachObject(int id)
+    public void AttachObject(int id, string typeOfAction)
     {
-        //SkeletonAttachedObjects skeletonAttachedObjects = skeleton.transform.GetComponent<SkeletonAttachedObjects>();
         Transform item = null;
         switch (id)
         {
             case 11:
-                //stoneHandsCounter.AddResource(-1);
-                //skeleton.IsConnectedHands = true;
                 item = Instantiate(objectManager.TakeObject(id).transform);
                 item.parent = stoneHandsPosition;
                 item.localPosition = new Vector3(0, 0, 0);
                 item.localRotation = Quaternion.Euler(stoneHandsRotation);
-                //skeletonAttachedObjects.ConnectedHands = item;
                 break;
             case 16:
-                //glovesCounter.AddResource(-1);
-                //skeleton.IsConnectedHands = true;
                 item = Instantiate(objectManager.TakeObject(id).transform);
                 item.parent = glovesPosition;
                 item.localPosition = new Vector3(0, 0, 0);
                 item.localRotation = Quaternion.Euler(glovesRotation);
-                //skeletonAttachedObjects.ConnectedGloves = item;
                 break;
             case 12:
-                //leggingsCounter.AddResource(-1);
-                //skeleton.IsConnectedLeggings = true;
                 item = Instantiate(objectManager.TakeObject(id).transform);
                 item.parent = leggingsPosition;
                 item.localPosition = new Vector3(0, 0, 0);
                 item.localRotation = Quaternion.Euler(leggingsRotation);
-                //skeletonAttachedObjects.ConnectedLeggings = item;
                 break;
             case 13:
-                //plateArmorCounter.AddResource(-1);
-                //skeleton.IsConnectedArmor = true;
                 item = Instantiate(objectManager.TakeObject(id).transform);
                 item.parent = plateArmorPosition;
                 item.localPosition = new Vector3(0, -5.5f, -2.2f);
                 item.localRotation = Quaternion.Euler(plateArmorRotation);
-                //skeletonAttachedObjects.ConnectedArmor = item;
                 break;
             case 14:
-                //shoesCounter.AddResource(-1);
-                //skeleton.IsConnectedShoes = true;
                 item = Instantiate(objectManager.TakeObject(id).transform);
                 item.parent = shoesPosition;
                 item.localPosition = new Vector3(-6.1f, 4.9f, -5.9f);
                 item.localRotation = Quaternion.Euler(shoesRotation);
-                //skeletonAttachedObjects.ConnectedShoes = item;
                 break;
             case 15:
-                //helmCounter.AddResource(-1);
-                //skeleton.IsConnectedHelm = true;
                 item = Instantiate(objectManager.TakeObject(id).transform);
                 item.parent = helmPosition;
                 item.localPosition = new Vector3(0, 0, 0);
                 item.localRotation = Quaternion.Euler(helmRotation);
-                //skeletonAttachedObjects.ConnectedHelm = item;
                 break;
             case 17:
-                //bracersCounter.AddResource(-1);
-                //skeleton.IsConnectedBracers = true;
                 item = Instantiate(objectManager.TakeObject(id).transform);
                 item.parent = bracersPosition;
                 item.localPosition = new Vector3(0, 7.6f, 0);
                 item.localRotation = Quaternion.Euler(bracersRotation);
-                //skeletonAttachedObjects.ConnectedBracers = item;
                 break;
         }
-        //item.GetChild(0).gameObject.AddComponent<SkeletonItem>();
-        //item.GetChild(0).gameObject.AddComponent<MeshCollider>();
-        item.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = addingMaterial;
+        Debug.Log(typeOfAction);
+        
+        
+        if (typeOfAction == "adding")
+        {
+            Debug.Log("Hello there 1");
+            item.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = addingMaterial;
+        } else if (typeOfAction == "swapping")
+        {
+            Debug.Log("Hello there 2");
+            item.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = swappingMaterial;
+        }
+        
         addingItem = item;
-        //item.GetChild(0).GetComponent<SkeletonItem>().ItemID = id;
-        //item.GetChild(0).GetComponent<SkeletonItem>().SkeletonScript = skeleton;
     }
     
 }

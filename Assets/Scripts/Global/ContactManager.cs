@@ -25,6 +25,7 @@ public class ContactManager : MonoBehaviour
     public event Action PotentialPositionerDeactivated = delegate { };
     public event Action CityRegenerationEntered = delegate { };
     public event Action<Transform> MinesDoorDetected = delegate { };
+    public event Action ObjectOverloaded = delegate { };
     private void Start()
     {
         ClickManager.LMBClicked += ContactObject;
@@ -35,10 +36,10 @@ public class ContactManager : MonoBehaviour
         if (!cursorManager.SomethingOpened)
         {
             Transform contactedObject = CameraController.ObservedObject.transform;
-            Debug.Log(contactedObject);
+            //Debug.Log(contactedObject);
             if (contactedObject != null)
             {
-                Debug.Log(contactedObject);
+                //Debug.Log(contactedObject);
                 if (contactedObject.GetComponent<Portal2>() != null)
                 {
                     if (TeleporterDetected != null)
@@ -48,19 +49,39 @@ public class ContactManager : MonoBehaviour
                 }
                 if (contactedObject.GetComponent<IOre>() != null && quickAccessHandController.CurrentCustomID == 10)
                 {
-                    if (OreDetected != null)
+                    if (contactedObject.GetComponent<OreMiningManager>().ConnectedSkeleton == null)
                     {
-                        if (potentialPositioner.IsActive) { PotentialPositionerDeactivated(); }
-                        OreDetected(contactedObject);
+                        if (OreDetected != null)
+                        {
+                            if (potentialPositioner.IsActive) { PotentialPositionerDeactivated(); }
+                            OreDetected(contactedObject);
+                        }
+                    } else
+                    {
+                        if (ObjectOverloaded != null)
+                        {
+                            ObjectOverloaded();
+                        }
                     }
+                    
                 }
                 if (contactedObject.parent.GetComponent<IOre>() != null && quickAccessHandController.CurrentCustomID == 10)
                 {
-                    if (OreDetected != null)
+                    if (contactedObject.GetComponent<OreMiningManager>().ConnectedSkeleton == null)
                     {
-                        if (potentialPositioner.IsActive) { PotentialPositionerDeactivated(); }
-                        OreDetected(contactedObject.parent);
+                        if (OreDetected != null)
+                        {
+                            if (potentialPositioner.IsActive) { PotentialPositionerDeactivated(); }
+                            OreDetected(contactedObject.parent);
+                        }
+                    } else
+                    {
+                        if (ObjectOverloaded != null)
+                        {
+                            ObjectOverloaded();
+                        }
                     }
+                    
                 }
                 else if (contactedObject.GetComponent<Skeleton>() != null && quickAccessHandController.CurrentCustomID == 10)
                 {
@@ -76,8 +97,12 @@ public class ContactManager : MonoBehaviour
                 {
                     //Debug.Log("Found Skeleton");
                     SkeletonBehavior skeletonScript = contactedObject.transform.parent.GetComponent<SkeletonBehavior>();
-                    if (skeletonScript.NavigationTarget != mainCharacter) { skeletonScript.NavigationTarget = mainCharacter; contactedSkeleton = contactedObject.parent; Debug.Log("told skeleton to follow mage"); }
-                    else if (skeletonScript.NavigationTarget == mainCharacter) { skeletonScript.NavigationTarget = null; contactedSkeleton = null; Debug.Log("told skeleton to stop following mage"); }
+                    if (skeletonScript.NavigationTarget != mainCharacter) { skeletonScript.NavigationTarget = mainCharacter; contactedSkeleton = contactedObject.parent; 
+                        //Debug.Log("told skeleton to follow mage");
+                    }
+                    else if (skeletonScript.NavigationTarget == mainCharacter) { skeletonScript.NavigationTarget = null; contactedSkeleton = null; 
+                        //Debug.Log("told skeleton to stop following mage");
+                    }
                     if (SkeletonDetected != null)
                     {
 
@@ -151,11 +176,21 @@ public class ContactManager : MonoBehaviour
                 }
                 else if (contactedObject.name == "MinesDoor")
                 {
-                    Debug.Log("found mines foor");
-                    if (MinesDoorDetected != null)
+                    //Debug.Log("found mines foor");
+                    if (DoorConnectionManager.GetPosition() != null) {
+                        if (MinesDoorDetected != null)
+                        {
+                            MinesDoorDetected(contactedObject);
+                        }
+                    } else
                     {
-                        MinesDoorDetected(contactedObject);
+                        if (ObjectOverloaded != null)
+                        {
+                            ObjectOverloaded();
+                        }
+                        Debug.Log("is full");
                     }
+                    
                 }
             }
         }

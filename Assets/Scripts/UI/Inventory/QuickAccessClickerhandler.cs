@@ -9,6 +9,7 @@ public class QuickAccessClickerhandler : MonoBehaviour, IPointerClickHandler, IP
     [SerializeField] Transform deleteButton;
     [SerializeField] AnimationCurve animationCurve;
     [SerializeField] Transform element;
+    [SerializeField] Transform quickaccessElementsHolder;
     List<RaycastResult> hitObjects = new List<RaycastResult>();
     Coroutine changeVisibilityCoroutine;
     Coroutine changeSizeCoroutine;
@@ -23,9 +24,11 @@ public class QuickAccessClickerhandler : MonoBehaviour, IPointerClickHandler, IP
         if (ObjectUnderMouse(0) != null && Input.GetKey(KeyCode.LeftControl))
         {
             DeleteCustomID(eventData);
+            DeleteMainQuickaccess();
         } else if (ObjectUnderMouse(0) != null && ObjectUnderMouse(2) == deleteButton.gameObject)
         {
             DeleteCustomID(eventData);
+            DeleteMainQuickaccess();
         }
     }
 
@@ -52,6 +55,12 @@ public class QuickAccessClickerhandler : MonoBehaviour, IPointerClickHandler, IP
     {
         element.GetComponent<Element>().CustomID = 0;
         MinimizeDeleteButton();
+    }
+
+    void DeleteMainQuickaccess()
+    {
+        int slotNumber = element.transform.parent.parent.GetSiblingIndex();
+        quickaccessElementsHolder.GetChild(slotNumber).Find("Borders").Find("Element").GetComponent<QuickAccessElement>().CustomID = 0;
     }
 
     public void DeleteElementButton()
