@@ -26,6 +26,9 @@ public class ContactManager : MonoBehaviour
     public event Action CityRegenerationEntered = delegate { };
     public event Action<Transform> MinesDoorDetected = delegate { };
     public event Action ObjectOverloaded = delegate { };
+
+    float count;
+    public Transform ContactedSkeleton { get { return contactedSkeleton; } }
     private void Start()
     {
         ClickManager.LMBClicked += ContactObject;
@@ -39,7 +42,6 @@ public class ContactManager : MonoBehaviour
             //Debug.Log(contactedObject);
             if (contactedObject != null)
             {
-                //Debug.Log(contactedObject);
                 if (contactedObject.GetComponent<Portal2>() != null)
                 {
                     if (TeleporterDetected != null)

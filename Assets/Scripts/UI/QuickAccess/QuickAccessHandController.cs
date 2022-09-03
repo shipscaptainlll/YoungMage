@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,6 +35,11 @@ public class QuickAccessHandController : MonoBehaviour
         {
             return currentCustomID;
         }
+        set 
+        {
+            currentCustomID = value;
+            if(ObjectHandsChanged != null) { ObjectHandsChanged(); } 
+        }
     }
 
     public int? CurrentSlot
@@ -45,6 +51,8 @@ public class QuickAccessHandController : MonoBehaviour
     }
 
     public Transform CurrentCounter { get { return currentCounter; } }
+
+    public event Action ObjectHandsChanged = delegate { };
     // Start is called before the first frame update
     void Start()
     {
@@ -127,7 +135,7 @@ public class QuickAccessHandController : MonoBehaviour
 
     void SetCurrentCustomID(int slotNumber)
     {
-        currentCustomID = quickAccessPanel.GetChild(slotNumber - 1).Find("Borders").Find("Element").GetComponent<QuickAccessElement>().CustomID;
+        CurrentCustomID = quickAccessPanel.GetChild(slotNumber - 1).Find("Borders").Find("Element").GetComponent<QuickAccessElement>().CustomID;
     }
 
     void RefreshCurrentSlot()

@@ -15,6 +15,8 @@ public class PersonMovement : MonoBehaviour
     [SerializeField] float jumpHeight;
     [SerializeField] LayerMask checkLayer;
     [SerializeField] LayerMask checkLayer2;
+    [SerializeField] LayerMask checkLayer3;
+    [SerializeField] LayerMask checkLayer4;
     [SerializeField] CharacterOccupation _characterOccupation;
     [SerializeField] float gravity;
     bool isAutoRunning;
@@ -31,8 +33,11 @@ public class PersonMovement : MonoBehaviour
     [SerializeField] SoundManager soundManager;
     AudioSource walkingSound;
     AudioSource runningSound;
+    AudioSource walkingStairsSound;
+    AudioSource runningStairsSound;
 
     float checkRadius;
+    float stairsCheckRadius;
     bool occupied;
     VisualEffect movementVFX;
     VisualEffect jumpVFX;
@@ -59,6 +64,7 @@ public class PersonMovement : MonoBehaviour
 
     bool doubleJumped;
     bool isGrounded;
+    bool onStairs;
 
     float timeShiftPressed;
 
@@ -82,6 +88,7 @@ public class PersonMovement : MonoBehaviour
         speed = basicSpeed;
         occupied = false;
         checkRadius = 0.5f;
+        stairsCheckRadius = 1.5f;
         movementVFX = transform.Find("VFX").Find("vfxgraph_StylizedSmoke").GetComponent<VisualEffect>();
         jumpVFX = transform.Find("VFX").Find("vfxgraph_StylizedSmokeJump").GetComponent<VisualEffect>();
         landVFX = transform.Find("VFX").Find("vfxgraph_StylizedSmokeLand").GetComponent<VisualEffect>();
@@ -94,14 +101,18 @@ public class PersonMovement : MonoBehaviour
 
         walkingSound = soundManager.FindSound("Walk");
         runningSound = soundManager.FindSound("Run");
+        walkingStairsSound = soundManager.FindSound("StairsWalk");
+        runningStairsSound = soundManager.FindSound("StairsRun");
     }
 
     void LateUpdate()
     {
         if (!occupied)
             MoveCharacter();
-        if (isWalking) { if (!walkingSound.isPlaying) { Debug.Log("started playing walk"); walkingSound.Play(); } } else { if (walkingSound.isPlaying) { Debug.Log("stoped playing walk"); walkingSound.Stop(); } }
-        if (isRunning) { if (!runningSound.isPlaying) { Debug.Log("started playing running"); runningSound.Play(); } } else { if (runningSound.isPlaying) { Debug.Log("stoped playing runnnig"); runningSound.Stop(); } }
+        if (isWalking && !onStairs && isGrounded) { if (!walkingSound.isPlaying) { walkingSound.Play(); } } else { if (walkingSound.isPlaying) { walkingSound.Stop(); } }
+        if (isWalking && onStairs) { if (!walkingStairsSound.isPlaying) { walkingStairsSound.Play(); } } else { if (walkingStairsSound.isPlaying) { walkingStairsSound.Stop(); } }
+        if (isRunning && !onStairs && isGrounded) { if (!runningSound.isPlaying) { runningSound.Play(); } } else { if (runningSound.isPlaying) { runningSound.Stop(); } }
+        if (isRunning && onStairs) { if (!runningStairsSound.isPlaying) { runningStairsSound.Play(); } } else { if (runningStairsSound.isPlaying) { runningStairsSound.Stop(); } }
     }
 
     IEnumerator DoubleShiftTimer()
@@ -204,7 +215,8 @@ public class PersonMovement : MonoBehaviour
 
 
 
-        isGrounded = (Physics.CheckSphere(checkGround.position, checkRadius, checkLayer) || Physics.CheckSphere(checkGround.position, checkRadius, checkLayer2));
+        isGrounded = (Physics.CheckSphere(checkGround.position, checkRadius, checkLayer) || Physics.CheckSphere(checkGround.position, checkRadius, checkLayer2) || Physics.CheckSphere(checkGround.position, checkRadius, checkLayer3));
+        onStairs = (Physics.CheckSphere(checkGround.position, stairsCheckRadius, checkLayer3));
         if (isGrounded && !isGroundedOld) {
             landVFX.SendEvent("CharacterLanded");
             landVFX.SetVector3("SphereCenterPosition", landVFX.transform.position);
