@@ -35,6 +35,14 @@ public class PersonMovement : MonoBehaviour
     AudioSource runningSound;
     AudioSource walkingStairsSound;
     AudioSource runningStairsSound;
+    AudioSource walkingStoneSound;
+    AudioSource runningStoneSound;
+    AudioSource woodLandNormalSound;
+    AudioSource woodLandLoudSound;
+    AudioSource stoneLandNormalSound;
+    AudioSource stoneLandLoudSound;
+    AudioSource startJumpSound;
+    AudioSource startDoubleJumpSound;
 
     float checkRadius;
     float stairsCheckRadius;
@@ -62,9 +70,11 @@ public class PersonMovement : MonoBehaviour
     float xInput;
     float zInput;
 
+    bool jumped;
     bool doubleJumped;
     bool isGrounded;
     bool onStairs;
+    bool onStone;
 
     float timeShiftPressed;
 
@@ -88,7 +98,7 @@ public class PersonMovement : MonoBehaviour
         speed = basicSpeed;
         occupied = false;
         checkRadius = 0.5f;
-        stairsCheckRadius = 1.5f;
+        stairsCheckRadius = 1.3f;
         movementVFX = transform.Find("VFX").Find("vfxgraph_StylizedSmoke").GetComponent<VisualEffect>();
         jumpVFX = transform.Find("VFX").Find("vfxgraph_StylizedSmokeJump").GetComponent<VisualEffect>();
         landVFX = transform.Find("VFX").Find("vfxgraph_StylizedSmokeLand").GetComponent<VisualEffect>();
@@ -103,16 +113,30 @@ public class PersonMovement : MonoBehaviour
         runningSound = soundManager.FindSound("Run");
         walkingStairsSound = soundManager.FindSound("StairsWalk");
         runningStairsSound = soundManager.FindSound("StairsRun");
+        walkingStoneSound = soundManager.FindSound("StoneWalk");
+        runningStoneSound = soundManager.FindSound("StoneRun");
+        woodLandNormalSound = soundManager.FindSound("WoodLandNormal");
+        woodLandLoudSound = soundManager.FindSound("WoodLandLoud");
+        stoneLandNormalSound = soundManager.FindSound("StoneLandNormal");
+        stoneLandLoudSound = soundManager.FindSound("StoneLandLoud");
+        startJumpSound = soundManager.FindSound("Jump");
+        startDoubleJumpSound = soundManager.FindSound("DoubleJump");
     }
 
     void LateUpdate()
     {
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            
+        }
         if (!occupied)
             MoveCharacter();
-        if (isWalking && !onStairs && isGrounded) { if (!walkingSound.isPlaying) { walkingSound.Play(); } } else { if (walkingSound.isPlaying) { walkingSound.Stop(); } }
+        if (isWalking && !onStone && !onStairs && isGrounded) { if (!walkingSound.isPlaying) { walkingSound.Play(); } } else { if (walkingSound.isPlaying) { walkingSound.Stop(); } }
         if (isWalking && onStairs) { if (!walkingStairsSound.isPlaying) { walkingStairsSound.Play(); } } else { if (walkingStairsSound.isPlaying) { walkingStairsSound.Stop(); } }
-        if (isRunning && !onStairs && isGrounded) { if (!runningSound.isPlaying) { runningSound.Play(); } } else { if (runningSound.isPlaying) { runningSound.Stop(); } }
+        if (isRunning && !onStone && !onStairs && isGrounded) { if (!runningSound.isPlaying) { runningSound.Play(); } } else { if (runningSound.isPlaying) { runningSound.Stop(); } }
         if (isRunning && onStairs) { if (!runningStairsSound.isPlaying) { runningStairsSound.Play(); } } else { if (runningStairsSound.isPlaying) { runningStairsSound.Stop(); } }
+        if (isWalking && onStone) { if (!walkingStoneSound.isPlaying) { walkingStoneSound.Play(); } } else { if (walkingStoneSound.isPlaying) { walkingStoneSound.Stop(); } }
+        if (isRunning && onStone) { if (!runningStoneSound.isPlaying) { runningStoneSound.Play(); } } else { if (runningStoneSound.isPlaying) { runningStoneSound.Stop(); } }
     }
 
     IEnumerator DoubleShiftTimer()
@@ -215,8 +239,10 @@ public class PersonMovement : MonoBehaviour
 
 
 
-        isGrounded = (Physics.CheckSphere(checkGround.position, checkRadius, checkLayer) || Physics.CheckSphere(checkGround.position, checkRadius, checkLayer2) || Physics.CheckSphere(checkGround.position, checkRadius, checkLayer3));
+        isGrounded = (Physics.CheckSphere(checkGround.position, checkRadius, checkLayer) || Physics.CheckSphere(checkGround.position, checkRadius, checkLayer2) 
+            || Physics.CheckSphere(checkGround.position, stairsCheckRadius, checkLayer3) || Physics.CheckSphere(checkGround.position, checkRadius, checkLayer4));
         onStairs = (Physics.CheckSphere(checkGround.position, stairsCheckRadius, checkLayer3));
+        onStone = (Physics.CheckSphere(checkGround.position, checkRadius, checkLayer4));
         if (isGrounded && !isGroundedOld) {
             landVFX.SendEvent("CharacterLanded");
             landVFX.SetVector3("SphereCenterPosition", landVFX.transform.position);
@@ -224,7 +250,15 @@ public class PersonMovement : MonoBehaviour
 
         if (isGrounded && velocity.y < 0)
         {
-            velocity.y = -2f;
+            velocity.y = -60f;
+            if (onStone)
+            {
+                if (!doubleJumped && jumped) { stoneLandNormalSound.Play(); } else if (doubleJumped) { stoneLandLoudSound.Play(); }
+            } else if (!onStone)
+            {
+                if (!doubleJumped && jumped) { woodLandNormalSound.Play(); } else if (doubleJumped) { woodLandLoudSound.Play(); }
+            }
+            
             doubleJumped = false;
         }
 
@@ -234,15 +268,29 @@ public class PersonMovement : MonoBehaviour
             if (CharacterJumped != null) { CharacterJumped(jumps); }
             jumpVFX.SetVector3("SphereCenterPosition", jumpVFX.transform.position); 
             jumpVFX.SendEvent("CharacterJumped");
+            jumped = true;
+            Debug.Log(jumped);
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            
             if (!isGrounded) { 
                 doubleJumped = true;
                 doubleJumps++;
+                startDoubleJumpSound.Play();
                 if (CharacterDoubleJumped != null) { CharacterDoubleJumped(doubleJumps); }
+            } else
+            {
+                startJumpSound.Play();
             }
         }
 
-        
+        if (isGrounded && velocity.y < 0 && jumped)
+        {
+            jumped = false;
+            Debug.Log(jumped);
+            
+        }
+
+
         velocity.y += gravity * Time.deltaTime;
 
         characterController.Move(velocity * Time.deltaTime);

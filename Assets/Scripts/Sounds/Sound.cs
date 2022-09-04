@@ -16,6 +16,19 @@ public class Sound
     [Range(0.1f, 3f)]
     public float pitch;
 
+    [Range(0f, 1f)]
+    public float spatialBlend;
+
+    public AudioRolloffMode audioRolloffMode;
+
+    public AudioSourceCurveType audioSourceCurveType;
+
+    public AnimationCurve audioSourceAnimationCurve;
+
+    public float minDistance;
+
+    public float maxDistance;
+
     public bool loop;
 
     [HideInInspector]

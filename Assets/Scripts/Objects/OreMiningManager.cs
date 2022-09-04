@@ -10,11 +10,18 @@ public class OreMiningManager : MonoBehaviour
     [SerializeField] OreHealthDecreaser oreHealthDecreaser;
     SkeletonBehavior connectedSkeleton;
 
+    [Header("Audio Connection")]
+    [SerializeField] SoundManager soundManager;
+    AudioSource stoneoreMiningSound;
+    AudioSource metaloreMiningClosingSound;
+
     float firstProductChances;
     float secondProductChances;
 
     static int firstProductCount = 0;
     static int secondProductCount = 0;
+
+    int secondProductID;
 
     System.Random random;
     public Transform FirstProductInstance { get { return firstProductInstance; } }
@@ -40,6 +47,10 @@ public class OreMiningManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+        stoneoreMiningSound = soundManager.LocateAudioSource("StoneOreMining", transform);
+        metaloreMiningClosingSound = soundManager.LocateAudioSource("MetalOreMining", transform);
+        
         //oreHealthDecreaser = transform.Find("OreHealth").GetComponent<OreHealthDecreaser>();
         productPopuper = transform.Find("OrePopup").GetComponent<MiningProductPopuper>();
         oreHealthDecreaser.HealthReachedZero += PopUpOre;
@@ -48,6 +59,9 @@ public class OreMiningManager : MonoBehaviour
         secondProductChances = transform.GetComponent<IOre>().SecondProductChances;
         firstProductInstance = transform.GetComponent<IOre>().FirstProductInstance;
         secondProductInstance = transform.GetComponent<IOre>().SecondProductInstance;
+        if (secondProductInstance != null && secondProductInstance.GetComponent<GlobalResource>() != null) { secondProductID = secondProductInstance.GetComponent<GlobalResource>().ID; } else { secondProductID = 2; }
+        
+        Debug.Log(secondProductID);
         random = new System.Random();
         StartCoroutine(CountChances());
     }
@@ -55,6 +69,20 @@ public class OreMiningManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            
+            if (secondProductID == 2)
+            {
+                stoneoreMiningSound.Play();
+                Debug.Log("started playing sounds for stone");
+            }
+            else if (secondProductID == 3)
+            {
+                metaloreMiningClosingSound.Play();
+                Debug.Log("started playing sounds for metal");
+            }
+        }
         
     }
 
@@ -74,7 +102,19 @@ public class OreMiningManager : MonoBehaviour
     void DecreaseOreHealth()
     {
         //Debug.Log("Hitted");
+        PlayMiningSound();
         oreHealthDecreaser.DealDamage(100);
+    }
+
+    void PlayMiningSound()
+    {
+        if (secondProductID == 2)
+        {
+            stoneoreMiningSound.Play();
+        } else if (secondProductID == 3)
+        {
+            metaloreMiningClosingSound.Play();
+        }
     }
 
     void VisualiseOreHealthbar()

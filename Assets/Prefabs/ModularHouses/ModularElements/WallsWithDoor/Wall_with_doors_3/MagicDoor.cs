@@ -6,6 +6,12 @@ public class MagicDoor : MonoBehaviour
 {
     [SerializeField] AnimationCurve openingAnimationCurve;
     [SerializeField] AnimationCurve closingAnimationCurve;
+
+    [Header("Audio Connection")]
+    [SerializeField] SoundManager soundManager;
+    AudioSource doorOpeningSound;
+    AudioSource doorClosingSound;
+
     Coroutine openingCoroutine;
     Coroutine closingCoroutine;
     Vector3 startRotation;
@@ -17,8 +23,19 @@ public class MagicDoor : MonoBehaviour
 
     void Start()
     {
+        
+        doorOpeningSound = soundManager.LocateAudioSource("DoorOpening", transform);
+        doorClosingSound = soundManager.LocateAudioSource("DoorClosing", transform);
         startRotation = transform.rotation.eulerAngles;
         StartCoroutine(RandomlyOpenDoor());
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            doorOpeningSound.Play();
+        }
     }
 
     IEnumerator RandomlyOpenDoor()
@@ -39,6 +56,7 @@ public class MagicDoor : MonoBehaviour
             {
                 StopCoroutine(openingCoroutine);
             }
+            doorOpeningSound.Play();
             openingCoroutine = StartCoroutine(OpeningCoroutine(5));
         }
     }
@@ -55,6 +73,7 @@ public class MagicDoor : MonoBehaviour
             {
                 StopCoroutine(openingCoroutine);
             }
+            doorClosingSound.Play();
             closingCoroutine = StartCoroutine(ClosingCoroutine());
         }
     }
