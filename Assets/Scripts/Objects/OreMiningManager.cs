@@ -14,6 +14,8 @@ public class OreMiningManager : MonoBehaviour
     [SerializeField] SoundManager soundManager;
     AudioSource stoneoreMiningSound;
     AudioSource metaloreMiningClosingSound;
+    AudioSource windstoneoreMiningSound;
+    AudioSource lavastoneoreMiningSound;
 
     float firstProductChances;
     float secondProductChances;
@@ -50,7 +52,9 @@ public class OreMiningManager : MonoBehaviour
         
         stoneoreMiningSound = soundManager.LocateAudioSource("StoneOreMining", transform);
         metaloreMiningClosingSound = soundManager.LocateAudioSource("MetalOreMining", transform);
-        
+        windstoneoreMiningSound = soundManager.LocateAudioSource("WindstoneOreMining", transform);
+        lavastoneoreMiningSound = soundManager.LocateAudioSource("LavastoneOreMining", transform);
+
         //oreHealthDecreaser = transform.Find("OreHealth").GetComponent<OreHealthDecreaser>();
         productPopuper = transform.Find("OrePopup").GetComponent<MiningProductPopuper>();
         oreHealthDecreaser.HealthReachedZero += PopUpOre;
@@ -82,6 +86,16 @@ public class OreMiningManager : MonoBehaviour
                 metaloreMiningClosingSound.Play();
                 Debug.Log("started playing sounds for metal");
             }
+            else if (secondProductID == 9)
+            {
+                windstoneoreMiningSound.Play();
+                Debug.Log("started playing sounds for wind");
+            }
+            else if (secondProductID == 6)
+            {
+                lavastoneoreMiningSound.Play();
+                Debug.Log("started playing sounds for lava");
+            }
         }
         
     }
@@ -111,9 +125,18 @@ public class OreMiningManager : MonoBehaviour
         if (secondProductID == 2)
         {
             stoneoreMiningSound.Play();
-        } else if (secondProductID == 3)
+        } 
+        else if (secondProductID == 3)
         {
             metaloreMiningClosingSound.Play();
+        }
+        else if (secondProductID == 9)
+        {
+            windstoneoreMiningSound.Play();
+        }
+        else if (secondProductID == 6)
+        {
+            lavastoneoreMiningSound.Play();
         }
     }
 
