@@ -7,6 +7,7 @@ public class MagibookMainmenu : MonoBehaviour
 {
     [SerializeField] ParticleSystem bookOpeningPS;
     [SerializeField] ParticleSystem OpeningPSSecond;
+    [SerializeField] ParticleSystem floatingParticles;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,5 +26,7 @@ public class MagibookMainmenu : MonoBehaviour
         bookOpeningPS.Play();
         OpeningPSSecond.gameObject.SetActive(true);
         OpeningPSSecond.Play();
+        floatingParticles.gameObject.SetActive(true);
+        floatingParticles.Play();
     }
 }

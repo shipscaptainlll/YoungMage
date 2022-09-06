@@ -34,6 +34,8 @@ public class SkeletonBehavior : MonoBehaviour
     [SerializeField] DestroyedSkeletonsCounter destroyedSkeletonsCounter;
     [SerializeField] Transform playerTransform;
     [SerializeField] CameraShake cameraShake;
+    [SerializeField] Transform necklessParticleSystem;
+    [SerializeField] Transform letersParticleSystem;
     VisualEffect movementVFX;
     bool isSmallSkeleton;
     bool isBigSkeleton;
@@ -99,6 +101,7 @@ public class SkeletonBehavior : MonoBehaviour
     bool reachedPosition;
     Coroutine changeColorCounter;
     Coroutine changeScaleCounter;
+    Coroutine showLettersCoroutine;
 
     int connectedObjects;
     bool isConnectedHands;
@@ -252,6 +255,7 @@ public class SkeletonBehavior : MonoBehaviour
             if (!wasOnceConjured) {
                 //Debug.Log("hello there");
                 wasOnceConjured = true;
+                ActivateConjurationNeckless();
                 countConjuredSkeletons++;
                 
                 if (isSmallSkeleton)
@@ -357,6 +361,38 @@ public class SkeletonBehavior : MonoBehaviour
     void CountConnectedObjects()
     {
         connectedObjects++;
+    }
+
+    void ActivateConjurationNeckless()
+    {
+        
+        necklessParticleSystem.gameObject.SetActive(true);
+        necklessParticleSystem.GetComponent<ParticleSystem>().Play();
+        letersParticleSystem.gameObject.SetActive(true);
+        letersParticleSystem.GetComponent<ParticleSystem>().Play();
+        showLettersCoroutine = StartCoroutine(ShowingLetters(1));
+    }
+
+    IEnumerator ShowingLetters(float duration)
+    {
+        Debug.Log("Showing letters");
+        float elapsed = 0;
+        float currentClip;
+        ParticleSystemRenderer necklessMeshRenderer = necklessParticleSystem.GetComponent<ParticleSystemRenderer>();
+        Material necklessMaterial = necklessMeshRenderer.material;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            currentClip = Mathf.Lerp(2f, 0f, elapsed / duration);
+            necklessMaterial.SetFloat("_Clip", currentClip);
+            necklessMeshRenderer.material = necklessMaterial;
+            yield return null;
+        }
+        necklessMaterial.SetFloat("_Clip", 0);
+        necklessMeshRenderer.material = necklessMaterial;
+        showLettersCoroutine = null;
+        yield return null;
     }
 
     void GotoCastle()
