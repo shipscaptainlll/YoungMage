@@ -13,6 +13,7 @@ public class ContactManager : MonoBehaviour
     [SerializeField] PotentialPositioner potentialPositioner;
     [SerializeField] AttachObjectSkeleton attachObjectSkeleton;
     [SerializeField] DeattachObjectSkeleton deattachObjectSkeleton;
+    [SerializeField] BookSpellsActivator bookSpellsActivator;
 
     Transform contactedSkeleton;
     public event Action<Transform> TeleporterDetected = delegate { };
@@ -91,26 +92,31 @@ public class ContactManager : MonoBehaviour
                     if (SkeletonDetected != null)
                     {
 
-                        TriggerPotentialPositioner(contactedObject);
+                        //TriggerPotentialPositioner(contactedObject);
                         SkeletonDetected(contactedObject, mainCharacter);
                     }
+                    Debug.Log("ready");
+                    
                 }
                 else if (contactedObject.parent.GetComponent<Skeleton>() != null && quickAccessHandController.CurrentCustomID == 10)
                 {
                     //Debug.Log("Found Skeleton");
                     SkeletonBehavior skeletonScript = contactedObject.transform.parent.GetComponent<SkeletonBehavior>();
-                    if (skeletonScript.NavigationTarget != mainCharacter) { skeletonScript.NavigationTarget = mainCharacter; contactedSkeleton = contactedObject.parent; 
+                    if (skeletonScript.NavigationTarget != mainCharacter) { skeletonScript.NavigationTarget = mainCharacter; contactedSkeleton = contactedObject.parent;
+                        bookSpellsActivator.CastContactSkeleton();
                         //Debug.Log("told skeleton to follow mage");
                     }
-                    else if (skeletonScript.NavigationTarget == mainCharacter) { skeletonScript.NavigationTarget = null; contactedSkeleton = null; 
+                    else if (skeletonScript.NavigationTarget == mainCharacter) { skeletonScript.NavigationTarget = null; contactedSkeleton = null;
+                        bookSpellsActivator.CastContactSkeleton();
                         //Debug.Log("told skeleton to stop following mage");
                     }
                     if (SkeletonDetected != null)
                     {
 
-                        TriggerPotentialPositioner(contactedObject.parent);
+                        //TriggerPotentialPositioner(contactedObject.parent);
                         SkeletonDetected(contactedObject.parent, mainCharacter);
                     }
+                    Debug.Log("ready1");
                 }
                 else if (contactedObject.parent.GetComponent<Skeleton>() != null
                     && (quickAccessHandController.CurrentCustomID == 11
@@ -123,6 +129,7 @@ public class ContactManager : MonoBehaviour
                 {
                     Debug.Log("Hello");
                     attachObjectSkeleton.AttachObject(contactedObject.parent.GetComponent<SkeletonBehavior>(), quickAccessHandController.CurrentCustomID);
+                    bookSpellsActivator.CastApplyObject();
                 }
                 else if (contactedObject.GetComponent<SkeletonItem>() != null)
                 {
@@ -134,6 +141,7 @@ public class ContactManager : MonoBehaviour
                     {
                         DefractorDetected();
                     }
+                    bookSpellsActivator.CastContactMachinery();
                 }
                 else if (contactedObject.parent.GetComponent<MidasCauldron>() != null)
                 {
@@ -141,6 +149,7 @@ public class ContactManager : MonoBehaviour
                     {
                         MidasCauldronDetected();
                     }
+                    bookSpellsActivator.CastContactMachinery();
                 }
                 else if (contactedObject.GetComponent<TransmutationResourceChoose>() != null)
                 {
@@ -148,6 +157,7 @@ public class ContactManager : MonoBehaviour
                     {
                         AlchemistTableDetected(contactedObject);
                     }
+                    bookSpellsActivator.CastContactMachinery();
                 }
                 else if (contactedObject.GetComponent<AlchemistPotentialProduct>() != null)
                 {
@@ -159,6 +169,7 @@ public class ContactManager : MonoBehaviour
                     {
                         AlchemistTableDetected(contactedObject.parent.Find("ChooseResource"));
                     }
+                    bookSpellsActivator.CastContactMachinery();
                 }
                 else if (contactedObject.GetComponent<Portal2>() != null)
                 {
@@ -172,9 +183,9 @@ public class ContactManager : MonoBehaviour
                             if (CityRegenerationEntered != null) { CityRegenerationEntered(); }
                         }
                     }
-                    
-                    
-                    
+
+                    bookSpellsActivator.CastContactMachinery();
+
                 }
                 else if (contactedObject.name == "MinesDoor")
                 {

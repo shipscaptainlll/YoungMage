@@ -20,15 +20,20 @@ public class SacketClickController : MonoBehaviour
     [SerializeField] ParticleSystem destroyParticles;
     [SerializeField] Transform midasLayerHolder;
     [SerializeField] Transform countUIAddon;
+    [SerializeField] BookSpellsActivator bookSpellsActivator;
+    [SerializeField] SoundManager soundManager;
     SameMagnetismProduct sameMagnetismProduct;
     List<Transform> KickedOutItems = new List<Transform>();
     Coroutine delayCoroutine = null;
     bool delayActive;
     System.Random random;
 
+    AudioSource popUpSound;
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("Hello there");
+        popUpSound = soundManager.LocateAudioSource("PopUp", transform);
         clickManager.TabClicked += KickOutItem;
         //clickManager.TabClicked += KickOutItem;
         random = new System.Random();
@@ -45,6 +50,8 @@ public class SacketClickController : MonoBehaviour
     {
         if (!delayActive)
         {
+            popUpSound.Play();
+            bookSpellsActivator.CastThrowObject();
             Debug.Log(transform);
             float xTorque = (float)random.Next(-2, 2);
             float yTorque = (float)random.Next(-2, 2);
@@ -61,6 +68,9 @@ public class SacketClickController : MonoBehaviour
             newObject.gameObject.AddComponent<SphereCollider>();
             newObject.gameObject.GetComponent<SphereCollider>().isTrigger = true;
             newObject.gameObject.GetComponent<SphereCollider>().radius = 0.16f;
+            newObject.GetChild(0).gameObject.AddComponent<SphereCollider>();
+            newObject.GetChild(0).gameObject.GetComponent<SphereCollider>().isTrigger = true;
+            newObject.GetChild(0).gameObject.GetComponent<SphereCollider>().radius = 0.005f;
             newObject.gameObject.AddComponent<DefractorResource>();
             newObject.gameObject.GetComponent<DefractorResource>().ID = quickAccessHandController.CurrentCustomID;
             newObject.gameObject.GetComponent<DefractorResource>().DestroyableObjects = destroyableObjects;

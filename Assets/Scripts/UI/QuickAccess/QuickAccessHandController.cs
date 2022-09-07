@@ -209,7 +209,7 @@ public class QuickAccessHandController : MonoBehaviour
             secondProductMaterial.SetFloat("_Clip", currentMaterialization);
             productMeshrenderer.material = productMaterial;
             secondProductMeshrenderer.material = secondProductMaterial;
-            Debug.Log(materializedTransform.GetChild(0).GetComponent<MeshRenderer>().material.GetFloat("_Clip"));
+            //Debug.Log(materializedTransform.GetChild(0).GetComponent<MeshRenderer>().material.GetFloat("_Clip"));
             yield return null;
         }
         productMaterial.SetFloat("_Clip", 0f);

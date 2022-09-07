@@ -94,9 +94,9 @@ public class SUISkeleton : MonoBehaviour
         {
             itemsString += "\nbracers";
         }
-        Debug.Log(appliedObjects.text);
+        //Debug.Log(appliedObjects.text);
         appliedObjects.text = itemsString;
-        Debug.Log(appliedObjects.text);
+        //Debug.Log(appliedObjects.text);
     }
 
     void UpdateElementSize(float currentDistance)

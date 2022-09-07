@@ -26,8 +26,9 @@ public class DefractorResource : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<RotatingCones>())
+        if (other.GetComponent<RotatingCones>() != null)
         {
+            Debug.Log("triggered");
             InstantiateDestroyableVersion();
             if (objectContactedDefractor != null) { objectContactedDefractor(transform); }
             

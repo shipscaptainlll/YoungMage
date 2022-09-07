@@ -8,14 +8,22 @@ public class BookSpellsCaster : MonoBehaviour
     [SerializeField] Transform magicbookPaper;
     [SerializeField] AnimationCurve appearAnimationCurve;
     [SerializeField] AnimationCurve intensityAnimationCurve;
+    [SerializeField] AnimationCurve enhanceAnimationCurve;
     [SerializeField] Animator bookAnimator;
+    [SerializeField] Transform activatedSpellInstance;
+    [SerializeField] Transform magicLettersParticles;
+
+    [Header("ObjectPool")]
+    [SerializeField] Transform objectPool;
     MeshRenderer paperMeshRenderer;
     public Spell[] spells;
     Spell castedSpell;
     int count;
     string currentSpell;
 
+    public string CurrentSpell { get { return currentSpell; } }
     Coroutine showLettersCoroutine;
+    Coroutine enhanceLettersCoroutine;
 
     void Start()
     {
@@ -30,7 +38,7 @@ public class BookSpellsCaster : MonoBehaviour
 
     public void CastSpell(string spellNameSearched)
     {
-        if (!AlreadyCasted(spellNameSearched) && !isCasting()) {
+        if (!AlreadyCasted(spellNameSearched)) {
             currentSpell = spellNameSearched;
             count++;
             if (showLettersCoroutine != null) { StopCoroutine(showLettersCoroutine); }
@@ -38,20 +46,40 @@ public class BookSpellsCaster : MonoBehaviour
             paperMeshRenderer.materials[1].SetFloat("_Clip", 2f);
             castedSpell = null;
             castedSpell = FindSpell(spellNameSearched);
+            //Debug.Log(castedSpell);
             if (castedSpell != null)
             {
-                Debug.Log("Casting Spell");
+                //Debug.Log("Casting Spell");
                 MagicbookAttachSprite(castedSpell.spellTexture);
                 ActivateAnimation();
                 //StartShowingLetters();
-                Debug.Log("Spell casted");
+                //Debug.Log("Spell casted");
             }
         }
     }
 
+    public void ActivateSpell()
+    {
+        Debug.Log("here");
+        //magicLettersParticles.gameObject.SetActive(true);
+        //magicLettersParticles.GetComponent<ParticleSystem>().Play();
+        Transform newSpell = Instantiate(activatedSpellInstance, magicbookPaper.position, magicbookPaper.rotation);
+        newSpell.gameObject.SetActive(true);
+        newSpell.parent = objectPool.transform;
+        newSpell.position = magicbookPaper.position;
+        newSpell.rotation = magicbookPaper.rotation;
+        ActivatedSpell newSpellScript = newSpell.GetComponent<ActivatedSpell>();
+        newSpellScript.UpdateSprite(FindSpell(currentSpell).spellTexture);
+        newSpellScript.MoveSpell();
+        if (enhanceLettersCoroutine != null) { StopCoroutine(enhanceLettersCoroutine); }
+        enhanceLettersCoroutine = StartCoroutine(EnhanceLetters(0.5f));
+        //magicLettersParticles.gameObject.SetActive(false);
+        Debug.Log("there");
+    }
+
     Spell FindSpell(string spellNameSearched)
     {
-        Debug.Log("Searching Spell");
+        //Debug.Log("Searching Spell");
         if (Array.Find(spells, spell => spell.spellName == spellNameSearched) != null) {
             return Array.Find(spells, spell => spell.spellName == spellNameSearched);
         }
@@ -66,7 +94,7 @@ public class BookSpellsCaster : MonoBehaviour
 
     void ActivateAnimation()
     {
-        Debug.Log("Animation activated");
+        //Debug.Log("Animation activated");
         if (count % 2 == 0)
         {
             bookAnimator.Play("BookPrecasting");
@@ -91,9 +119,29 @@ public class BookSpellsCaster : MonoBehaviour
         showLettersCoroutine = StartCoroutine(ShowingLetters(castedSpell.spellDuration));
     }
 
+    IEnumerator EnhanceLetters(float duration)
+    {
+        float elapsed = 0;
+        float currentEmission;
+
+        Material paperMaterial = paperMeshRenderer.materials[1];
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            currentEmission = Mathf.Lerp(1.5f, 90f, enhanceAnimationCurve.Evaluate(elapsed / duration));
+            paperMaterial.SetFloat("_ColorMultiplier", currentEmission);
+            paperMeshRenderer.materials[1] = paperMaterial;
+            yield return null;
+        }
+        paperMaterial.SetFloat("_ColorMultiplier", 1.5f);
+        paperMeshRenderer.materials[1] = paperMaterial;
+        enhanceLettersCoroutine = null;
+        yield return null;
+    }
+
     IEnumerator ShowingLetters(float duration)
     {
-        Debug.Log("Showing letters");
+        //Debug.Log("Showing letters");
         float elapsed = 0;
         float currentFill;
         float currentEmission;

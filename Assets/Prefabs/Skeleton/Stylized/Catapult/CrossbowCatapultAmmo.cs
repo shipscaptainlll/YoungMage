@@ -29,7 +29,7 @@ public class CrossbowCatapultAmmo : MonoBehaviour, ICatapultAmmo
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.transform.name);
+        //Debug.Log(other.transform.name);
         if (other.transform.GetComponent<CastleCatapultTarget>() != null)
         {
             castleHealthDecreaser.DealDamage(damage);

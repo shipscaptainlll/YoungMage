@@ -36,6 +36,7 @@ public class SkeletonBehavior : MonoBehaviour
     [SerializeField] CameraShake cameraShake;
     [SerializeField] Transform necklessParticleSystem;
     [SerializeField] Transform letersParticleSystem;
+    [SerializeField] SkeletonNecklessBehavior skeletonNecklessBehavior;
     VisualEffect movementVFX;
     bool isSmallSkeleton;
     bool isBigSkeleton;
@@ -101,7 +102,6 @@ public class SkeletonBehavior : MonoBehaviour
     bool reachedPosition;
     Coroutine changeColorCounter;
     Coroutine changeScaleCounter;
-    Coroutine showLettersCoroutine;
 
     int connectedObjects;
     bool isConnectedHands;
@@ -255,7 +255,7 @@ public class SkeletonBehavior : MonoBehaviour
             if (!wasOnceConjured) {
                 //Debug.Log("hello there");
                 wasOnceConjured = true;
-                ActivateConjurationNeckless();
+                skeletonNecklessBehavior.ActivateConjurationNeckless();
                 countConjuredSkeletons++;
                 
                 if (isSmallSkeleton)
@@ -318,7 +318,7 @@ public class SkeletonBehavior : MonoBehaviour
         {
             if (navMeshAgent.velocity.magnitude < 0.15f)
             {
-                Debug.Log("Reached Position");
+                //Debug.Log("Reached Position");
                 reachedPosition = true;
                 PotentialpositionsNavroutActive = false;
             }
@@ -363,37 +363,7 @@ public class SkeletonBehavior : MonoBehaviour
         connectedObjects++;
     }
 
-    void ActivateConjurationNeckless()
-    {
-        
-        necklessParticleSystem.gameObject.SetActive(true);
-        necklessParticleSystem.GetComponent<ParticleSystem>().Play();
-        letersParticleSystem.gameObject.SetActive(true);
-        letersParticleSystem.GetComponent<ParticleSystem>().Play();
-        showLettersCoroutine = StartCoroutine(ShowingLetters(1));
-    }
-
-    IEnumerator ShowingLetters(float duration)
-    {
-        Debug.Log("Showing letters");
-        float elapsed = 0;
-        float currentClip;
-        ParticleSystemRenderer necklessMeshRenderer = necklessParticleSystem.GetComponent<ParticleSystemRenderer>();
-        Material necklessMaterial = necklessMeshRenderer.material;
-
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            currentClip = Mathf.Lerp(2f, 0f, elapsed / duration);
-            necklessMaterial.SetFloat("_Clip", currentClip);
-            necklessMeshRenderer.material = necklessMaterial;
-            yield return null;
-        }
-        necklessMaterial.SetFloat("_Clip", 0);
-        necklessMeshRenderer.material = necklessMaterial;
-        showLettersCoroutine = null;
-        yield return null;
-    }
+    
 
     void GotoCastle()
     {
@@ -411,8 +381,8 @@ public class SkeletonBehavior : MonoBehaviour
         
         if (navMeshAgent.velocity.magnitude < 0.15f && isMoving)
         {
-            Debug.Log(navigationTarget.name);
-            Debug.Log(navigationTarget.parent.name == "SkeletonPositions");
+            //Debug.Log(navigationTarget.name);
+            //Debug.Log(navigationTarget.parent.name == "SkeletonPositions");
             if (navigationTarget != null && navigationTarget.GetComponent<IOre>() == null && navigationTarget.parent.name != "SkeletonPositions")
             {
                 isMoving = false;
@@ -455,6 +425,7 @@ public class SkeletonBehavior : MonoBehaviour
         {
             unconjuration = StartCoroutine(Unconjure());
             electricityOverload = StartCoroutine(OverloadBeforeDestruction());
+            skeletonNecklessBehavior.ActivateDestructionMode();
             beingUnconjured = true;
         }
         if (navigationTarget != null && beingUnconjured)
@@ -464,6 +435,7 @@ public class SkeletonBehavior : MonoBehaviour
             StopCoroutine(unconjuration);
             StopCoroutine(electricityOverload);
             StabilizeElectricity();
+            skeletonNecklessBehavior.ActivateNormalMode();
             overloadingElectricity.gameObject.SetActive(false);
             beingUnconjured = false;
             unusedCounter.gameObject.GetComponent<CanvasGroup>().alpha = 0;
@@ -536,26 +508,50 @@ public class SkeletonBehavior : MonoBehaviour
 
     IEnumerator OverloadBeforeDestruction()
     {
+        yield return new WaitForSeconds(1.5f);
         overloadingElectricity.gameObject.SetActive(true);
         
         overloadingVFXElectricity.Play();
 
+
         float expired = 0;
-        float processTime = 5f;
+        float processTime = 3.5f;
         float currentElectricitySpeed = 0.1f;
         float currentElectricityThickness = 0.51f;
         float currentElectricityVFXSpeed = 1f;
         float targetElectricitySpeed = 15f;
         float targetElectricityThickness = 1f;
         float targetElectricityVFXSpeed = 20f;
+        float currentElectricityHSV;
+        float currentFirstMeshHSV;
+        float currentSecondMeshHSV;
+        Color overloadingElectricityColor = overloadingVFXElectricity.GetVector4("Color");
+        Color overloadingMeshFirstColor = lowerPartMaterial.GetColor("Color_");
+        Color overloadingMeshSecondColor = upperPartMaterial.GetColor("Color_");
+        float hElectricity, sElectricity, vElectricity;
+        float hMeshFirst, sMeshFirst, vMeshFirst;
+        float hMeshSecond, sMeshSecond, vMeshSecond;
+        Color.RGBToHSV(overloadingElectricityColor, out hElectricity, out sElectricity, out vElectricity);
+        Color.RGBToHSV(overloadingMeshFirstColor, out hMeshFirst, out sMeshFirst, out vMeshFirst);
+        Color.RGBToHSV(overloadingMeshSecondColor, out hMeshSecond, out sMeshSecond, out vMeshSecond);
+
         while (expired < processTime)
         {
             expired += Time.deltaTime;
             currentElectricitySpeed = Mathf.Lerp(0.1f, targetElectricitySpeed, expired / processTime);
             currentElectricityThickness = Mathf.Lerp(0.51f, targetElectricityThickness, expired / processTime);
             currentElectricityVFXSpeed = Mathf.Lerp(1f, targetElectricityVFXSpeed, expired / processTime);
+            currentElectricityHSV = Mathf.Lerp(hElectricity, 1f, expired / processTime);
+            currentFirstMeshHSV = Mathf.Lerp(hMeshFirst, 1f, expired / processTime);
+            currentSecondMeshHSV = Mathf.Lerp(hMeshSecond, 1f, expired / processTime);
+            overloadingElectricityColor = Color.HSVToRGB(currentElectricityHSV, sElectricity, vElectricity);
+            overloadingMeshFirstColor = Color.HSVToRGB(currentFirstMeshHSV, sMeshFirst, vMeshFirst);
+            overloadingMeshSecondColor = Color.HSVToRGB(currentSecondMeshHSV, sMeshSecond, vMeshSecond);
             lowerPartMaterial.SetVector("ElecricityWidth_", new Vector2(currentElectricitySpeed, -0.05f));
             upperPartMaterial.SetVector("ElecricityWidth_", new Vector2(currentElectricitySpeed, -0.05f));
+            overloadingVFXElectricity.SetVector4("Color", overloadingElectricityColor);
+            lowerPartMaterial.SetColor("Color_", overloadingMeshFirstColor);
+            upperPartMaterial.SetColor("Color_", overloadingMeshSecondColor);
             lowerPartMaterial.SetFloat("Thickness_", currentElectricityThickness);
             upperPartMaterial.SetFloat("Thickness_", currentElectricityThickness);
             overloadingVFXElectricity.SetFloat("Speed", currentElectricityVFXSpeed);
@@ -567,6 +563,8 @@ public class SkeletonBehavior : MonoBehaviour
         upperPartMaterial.SetFloat("Thickness_", targetElectricityThickness);
         overloadingVFXElectricity.SetFloat("Speed", targetElectricityVFXSpeed);
         overloadingElectricity.gameObject.SetActive(false);
+        skeletonNecklessBehavior.NecklessParticleSystem.gameObject.SetActive(false);
+        skeletonNecklessBehavior.LettersParticleSystem.gameObject.SetActive(false);
         yield return null;
     }
 
@@ -579,6 +577,21 @@ public class SkeletonBehavior : MonoBehaviour
         upperPartMaterial.SetVector("ElecricityWidth_", new Vector2(normalElectricitySpeed, -0.05f));
         lowerPartMaterial.SetFloat("Thickness_", normalElectricityThickness);
         upperPartMaterial.SetFloat("Thickness_", normalElectricityThickness);
+        Color overloadingElectricityColor = overloadingVFXElectricity.GetVector4("Color");
+        Color overloadingMeshFirstColor = lowerPartMaterial.GetColor("Color_");
+        Color overloadingMeshSecondColor = upperPartMaterial.GetColor("Color_");
+        float hElectricity, sElectricity, vElectricity;
+        float hMeshFirst, sMeshFirst, vMeshFirst;
+        float hMeshSecond, sMeshSecond, vMeshSecond;
+        Color.RGBToHSV(overloadingElectricityColor, out hElectricity, out sElectricity, out vElectricity);
+        Color.RGBToHSV(overloadingMeshFirstColor, out hMeshFirst, out sMeshFirst, out vMeshFirst);
+        Color.RGBToHSV(overloadingMeshSecondColor, out hMeshSecond, out sMeshSecond, out vMeshSecond);
+        overloadingElectricityColor = Color.HSVToRGB(0.69f, sElectricity, vElectricity);
+        overloadingMeshFirstColor = Color.HSVToRGB(0.69f, sMeshFirst, vMeshFirst);
+        overloadingMeshSecondColor = Color.HSVToRGB(0.69f, sMeshSecond, vMeshSecond);
+        overloadingVFXElectricity.SetVector4("Color", overloadingElectricityColor);
+        lowerPartMaterial.SetColor("Color_", overloadingMeshFirstColor);
+        upperPartMaterial.SetColor("Color_", overloadingMeshSecondColor);
         overloadingElectricity.GetComponent<VisualEffect>().SetFloat("Speed", normalElectricityVFXSpeed);
     }
 

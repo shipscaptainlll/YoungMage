@@ -28,6 +28,7 @@ public class BookSpellsNotifier : MonoBehaviour
 
     void EvaluateObject()
     {
+        //Debug.Log(currentObject);
         if (currentObject == null)
         {
             if (ObjectInHands() || ItemInHands()) { CastThrowObject(); } else { CastIdle(); }
@@ -36,7 +37,7 @@ public class BookSpellsNotifier : MonoBehaviour
             if (SkeletonConnected() && BookInHands()) { CastMiningSpell(); }
             else if (ObjectInHands() || ItemInHands()) { CastThrowObject(); } else { CastIdle(); }
         }
-        else if (currentObject.parent != null || currentObject.parent.GetComponent<IOre>() != null)
+        else if (currentObject.parent != null && currentObject.parent.GetComponent<IOre>() != null)
         {
             if (SkeletonConnected() && BookInHands()) { CastMiningSpell(); }
             else if (ObjectInHands() || ItemInHands()) { CastThrowObject(); } else { CastIdle(); }
@@ -48,12 +49,14 @@ public class BookSpellsNotifier : MonoBehaviour
         }
         else if (currentObject.GetComponent<Skeleton>() != null)
         {
+            Debug.Log(currentObject + "skeleton1");
             if (BookInHands()) { CastContactSkeleton(); }
             else if (ItemInHands()) { CastApplyObject(); }
             else if (ObjectInHands()) { CastThrowObject(); } else { CastIdle(); }
         }
-        else if (currentObject.parent.GetComponent<Skeleton>() != null)
+        else if (currentObject.parent != null && currentObject.parent.GetComponent<Skeleton>() != null)
         {
+            Debug.Log(currentObject + "skeleton");
             if (BookInHands()) { CastContactSkeleton(); }
             else if (ItemInHands()) { CastApplyObject(); }
             else if (ObjectInHands()) { CastThrowObject(); } else { CastIdle(); }
@@ -63,18 +66,19 @@ public class BookSpellsNotifier : MonoBehaviour
             if (BookInHands() || ItemInHands()) { CastApplyObject(); }
             else if (ObjectInHands()) { CastThrowObject(); } else { CastIdle(); }
         }
-        else if (currentObject.parent.GetComponent<Defractor>() != null)
+        else if (currentObject.parent != null && currentObject.parent.GetComponent<Defractor>() != null)
         {
             if (BookInHands()) { CastContactMachinery(); }
             else if (ObjectInHands() || ItemInHands()) { CastThrowObject(); } else { CastIdle(); }
         }
-        else if (currentObject.parent.GetComponent<MidasCauldron>() != null)
+        else if (currentObject.parent != null && currentObject.parent.GetComponent<MidasCauldron>() != null)
         {
             if (BookInHands()) { CastContactMachinery(); }
             else if (ObjectInHands() || ItemInHands()) { CastThrowObject(); } else { CastIdle(); }
         }
-        else if (currentObject.GetComponent<TransmutationResourceChoose>() != null)
+        else if (currentObject.GetComponent<TransmutationResourceChoose>() != null || currentObject.GetComponent<AlchemistPotentialProduct>() != null || currentObject.GetComponent<TransmutationResourcePack>() != null)
         {
+            Debug.Log("hello there seeing transmutation");
             if (BookInHands()) { CastContactMachinery(); }
             else if (ObjectInHands() || ItemInHands()) { CastThrowObject(); } else { CastIdle(); }
         }
@@ -85,6 +89,8 @@ public class BookSpellsNotifier : MonoBehaviour
         }
         else if (currentObject.GetComponent<GlobalResource>() != null)
         {
+            Debug.Log("found resource");
+            Debug.Log(BookInHands());
             if (BookInHands()) { CastTornadoSpell(); }
             else if (ObjectInHands() || ItemInHands()) { CastThrowObject(); } else { CastIdle(); }
         } else

@@ -16,6 +16,8 @@ public class OreMiningManager : MonoBehaviour
     AudioSource metaloreMiningClosingSound;
     AudioSource windstoneoreMiningSound;
     AudioSource lavastoneoreMiningSound;
+    AudioSource popUpSound;
+    [SerializeField] BookSpellsActivator bookSpellsActivator;
 
     float firstProductChances;
     float secondProductChances;
@@ -44,6 +46,7 @@ public class OreMiningManager : MonoBehaviour
                 ConnectSkeleton(value);
             }
             connectedSkeleton = value;
+            bookSpellsActivator.CastMiningSpell();
         }
     }
     // Start is called before the first frame update
@@ -54,6 +57,7 @@ public class OreMiningManager : MonoBehaviour
         metaloreMiningClosingSound = soundManager.LocateAudioSource("MetalOreMining", transform);
         windstoneoreMiningSound = soundManager.LocateAudioSource("WindstoneOreMining", transform);
         lavastoneoreMiningSound = soundManager.LocateAudioSource("LavastoneOreMining", transform);
+        popUpSound = soundManager.LocateAudioSource("PopUp", transform);
 
         //oreHealthDecreaser = transform.Find("OreHealth").GetComponent<OreHealthDecreaser>();
         productPopuper = transform.Find("OrePopup").GetComponent<MiningProductPopuper>();
@@ -65,7 +69,7 @@ public class OreMiningManager : MonoBehaviour
         secondProductInstance = transform.GetComponent<IOre>().SecondProductInstance;
         if (secondProductInstance != null && secondProductInstance.GetComponent<GlobalResource>() != null) { secondProductID = secondProductInstance.GetComponent<GlobalResource>().ID; } else { secondProductID = 2; }
         
-        Debug.Log(secondProductID);
+        //Debug.Log(secondProductID);
         random = new System.Random();
         StartCoroutine(CountChances());
     }
@@ -79,22 +83,22 @@ public class OreMiningManager : MonoBehaviour
             if (secondProductID == 2)
             {
                 stoneoreMiningSound.Play();
-                Debug.Log("started playing sounds for stone");
+                //Debug.Log("started playing sounds for stone");
             }
             else if (secondProductID == 3)
             {
                 metaloreMiningClosingSound.Play();
-                Debug.Log("started playing sounds for metal");
+                //Debug.Log("started playing sounds for metal");
             }
             else if (secondProductID == 9)
             {
                 windstoneoreMiningSound.Play();
-                Debug.Log("started playing sounds for wind");
+                //Debug.Log("started playing sounds for wind");
             }
             else if (secondProductID == 6)
             {
                 lavastoneoreMiningSound.Play();
-                Debug.Log("started playing sounds for lava");
+                //Debug.Log("started playing sounds for lava");
             }
         }
         
@@ -169,6 +173,7 @@ public class OreMiningManager : MonoBehaviour
 
     void PopUpOre()
     {
+        popUpSound.Play();
         Transform oreToInstantiate = ChooseProduct();
         productPopuper.PopupProduct(oreToInstantiate);
     }

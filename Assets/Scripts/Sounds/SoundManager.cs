@@ -51,6 +51,7 @@ public class SoundManager : MonoBehaviour
 
     public AudioSource LocateAudioSource(string name, Transform newParent)
     {
+        Debug.Log(Array.Find(sounds, sound => sound.name == name).name);
         if (Array.Find(sounds, sound => sound.name == name) != null)
         {
             Sound sound = Array.Find(sounds, sound => sound.name == name);

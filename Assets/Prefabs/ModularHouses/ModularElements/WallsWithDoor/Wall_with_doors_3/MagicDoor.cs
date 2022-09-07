@@ -11,6 +11,7 @@ public class MagicDoor : MonoBehaviour
     [SerializeField] SoundManager soundManager;
     AudioSource doorOpeningSound;
     AudioSource doorClosingSound;
+    AudioSource doorBumpingSound;
 
     Coroutine openingCoroutine;
     Coroutine closingCoroutine;
@@ -18,7 +19,7 @@ public class MagicDoor : MonoBehaviour
 
     bool playerInInitiator;
     bool doorOpened;
-
+    bool bumpSoundPlayed;
     public bool PlayerInInitiator { get { return playerInInitiator; } set { playerInInitiator = value; } }
 
     void Start()
@@ -26,6 +27,7 @@ public class MagicDoor : MonoBehaviour
         
         doorOpeningSound = soundManager.LocateAudioSource("DoorOpening", transform);
         doorClosingSound = soundManager.LocateAudioSource("DoorClosing", transform);
+        doorBumpingSound = soundManager.LocateAudioSource("DoorBump", transform);
         startRotation = transform.rotation.eulerAngles;
         StartCoroutine(RandomlyOpenDoor());
     }
@@ -108,10 +110,18 @@ public class MagicDoor : MonoBehaviour
         {
             elapsed += Time.deltaTime;
             currentRotation = Mathf.Lerp(zStartRotation, startRotation.z, closingAnimationCurve.Evaluate(elapsed / delay));
+            if (!bumpSoundPlayed && elapsed > 0.4f)
+            {
+                doorBumpingSound.Play();
+                bumpSoundPlayed = true;
+            }
+            
             transform.rotation = Quaternion.Euler(new Vector3(startRotation.x, startRotation.y, currentRotation));
             yield return null;
         }
         transform.rotation = Quaternion.Euler(new Vector3(startRotation.x, startRotation.y, startRotation.z));
+
+        bumpSoundPlayed = false;
         closingCoroutine = null;
         doorOpened = false;
         yield return null;

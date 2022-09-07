@@ -27,7 +27,7 @@ public class GameTimeManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.K))
         {
-            Debug.Log("hours: " + hoursInGame + " minutes: " + restMinutes + " seconds: " + restSeconds);
+            //Debug.Log("hours: " + hoursInGame + " minutes: " + restMinutes + " seconds: " + restSeconds);
         }
     }
 

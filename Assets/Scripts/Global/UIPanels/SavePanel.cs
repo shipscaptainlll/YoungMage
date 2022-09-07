@@ -96,13 +96,13 @@ public class SavePanel : MonoBehaviour
     public void AutoSave()
     {
         
-        Debug.Log("Game was autosaved");
+        //Debug.Log("Game was autosaved");
     }
 
     public void SetAutosaveRate(float newAutosaveRate)
     {
         StopCoroutine(autosaveCoroutine);
         autosaveCoroutine = StartCoroutine(AutosaveCounter(newAutosaveRate));
-        Debug.Log("New autosave rate was setted");
+        //Debug.Log("New autosave rate was setted");
     }
 }

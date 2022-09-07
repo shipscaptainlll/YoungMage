@@ -32,6 +32,7 @@ public class CameraSUIInformer : MonoBehaviour
             //Debug.Log(mainCameraController.ObservedObject.transform);
             if (observedType == null)
             {
+                //Debug.Log(mainCameraController.ObservedObject.transform);
                 if (mainCameraController.ObservedObject.transform.parent != null
                     && mainCameraController.ObservedObject.transform.parent.GetComponent<Skeleton>() != null) {
                     observedType = "Skeleton";
@@ -49,7 +50,7 @@ public class CameraSUIInformer : MonoBehaviour
                     observedType = "Machinery";
                     lastObservedObject = mainCameraController.ObservedObject.transform.gameObject;
                 }
-                else if (mainCameraController.ObservedObject.transform.parent.GetComponent<IMachinery>() != null)
+                else if (mainCameraController.ObservedObject.transform.parent != null && mainCameraController.ObservedObject.transform.parent.GetComponent<IMachinery>() != null)
                 {
                     observedType = "Machinery";
                     lastObservedObject = mainCameraController.ObservedObject.transform.parent.gameObject;

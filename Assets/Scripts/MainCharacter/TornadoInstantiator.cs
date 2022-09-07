@@ -12,6 +12,7 @@ public class TornadoInstantiator : MonoBehaviour
     [SerializeField] Transform body;
     [SerializeField] Vector3 offsetRotation;
     [SerializeField] CameraShake cameraShake;
+    [SerializeField] BookSpellsActivator bookSpellsActivator;
     ParticleSystem windParticles;
     ParticleSystem dustParticles;
     ParticleSystem.MainModule windParticlesMainmodule;
@@ -26,10 +27,12 @@ public class TornadoInstantiator : MonoBehaviour
 // Start is called before the first frame update
 void Start()
     {
+        tornadoVFX.transform.gameObject.SetActive(true);
         windParticles = tornadoVFX.transform.Find("WindParticles").GetComponent<ParticleSystem>();
         dustParticles = tornadoVFX.transform.Find("DustParticles").GetComponent<ParticleSystem>();
         windParticlesMainmodule = tornadoVFX.transform.Find("WindParticles").GetComponent<ParticleSystem>().main;
         dustParticlesMainmodule = tornadoVFX.transform.Find("DustParticles").GetComponent<ParticleSystem>().main;
+        tornadoVFX.transform.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -40,6 +43,7 @@ void Start()
             cameraShake.Activated = true;
             windParticles.Play();
             dustParticles.Play();
+            //bookSpellsActivator.CastTornadoSpell();
 
             Debug.Log("hello there");
             tornadoCountQuests++;
@@ -52,6 +56,7 @@ void Start()
             {
                 if (result.transform.gameObject.layer == 6 && result.transform.name != "Terrain")
                 {
+                    Debug.Log("hello there");
                     if (turnOffCoroutine != null) { StopCoroutine(turnOffCoroutine); }
                     tornadoVFX.SetFloat("TornadoLayer1Dissolve1", 0.84f);
                     tornadoVFX.SetFloat("TornadoLayer1Dissolve2", 0.935f);

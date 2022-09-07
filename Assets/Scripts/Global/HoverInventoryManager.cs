@@ -97,7 +97,7 @@ public class HoverInventoryManager : MonoBehaviour
 
     IEnumerator CountOnImage()
     {
-        Debug.Log("Started process1");
+        //Debug.Log("Started process1");
         float elapsed = 0;
         float target = 0.3f;
         waitedEnough = false;

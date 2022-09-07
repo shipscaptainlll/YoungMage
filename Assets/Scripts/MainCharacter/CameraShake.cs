@@ -33,7 +33,7 @@ public class CameraShake : MonoBehaviour
 
     IEnumerator Shake (float magnitude)
     {
-        Debug.Log(transform.localPosition);
+        //Debug.Log(transform.localPosition);
         while (true)
         {
             
@@ -41,14 +41,14 @@ public class CameraShake : MonoBehaviour
             float y = Random.Range(-1, 1) * magnitude;
 
             transform.localPosition = new Vector3(x, originalPos.y + y, originalPos.z);
-            Debug.Log(transform.localPosition);
+            //Debug.Log(transform.localPosition);
             yield return null;
         }
     }
 
     IEnumerator Shake(float duration, float magnitude)
     {
-        Debug.Log("started");
+        //Debug.Log("started");
         float elapsed = 0;
         float currentMagnitude;
         while (elapsed < duration)

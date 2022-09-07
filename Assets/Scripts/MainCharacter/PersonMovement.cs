@@ -43,6 +43,7 @@ public class PersonMovement : MonoBehaviour
     AudioSource stoneLandLoudSound;
     AudioSource startJumpSound;
     AudioSource startDoubleJumpSound;
+    AudioSource landedChairSound;
 
     float checkRadius;
     float stairsCheckRadius;
@@ -121,6 +122,7 @@ public class PersonMovement : MonoBehaviour
         stoneLandLoudSound = soundManager.FindSound("StoneLandLoud");
         startJumpSound = soundManager.FindSound("Jump");
         startDoubleJumpSound = soundManager.FindSound("DoubleJump");
+        landedChairSound = soundManager.FindSound("Chair");
     }
 
     void LateUpdate()
@@ -243,9 +245,18 @@ public class PersonMovement : MonoBehaviour
             || Physics.CheckSphere(checkGround.position, stairsCheckRadius, checkLayer3) || Physics.CheckSphere(checkGround.position, checkRadius, checkLayer4));
         onStairs = (Physics.CheckSphere(checkGround.position, stairsCheckRadius, checkLayer3));
         onStone = (Physics.CheckSphere(checkGround.position, checkRadius, checkLayer4));
-        if (isGrounded && !isGroundedOld) {
+        if (isGrounded && !isGroundedOld) 
+        {
             landVFX.SendEvent("CharacterLanded");
             landVFX.SetVector3("SphereCenterPosition", landVFX.transform.position);
+            Collider[] hitColliders = Physics.OverlapSphere(checkGround.position, checkRadius);
+                foreach (Collider hitCollider in hitColliders)
+                {
+                    if (hitCollider.transform.name == "chair")
+                    {
+                        landedChairSound.Play();
+                    }
+                }
         }
 
         if (isGrounded && velocity.y < 0)
