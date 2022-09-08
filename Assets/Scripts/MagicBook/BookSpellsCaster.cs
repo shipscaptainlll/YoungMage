@@ -15,6 +15,10 @@ public class BookSpellsCaster : MonoBehaviour
 
     [Header("ObjectPool")]
     [SerializeField] Transform objectPool;
+
+    [Header("Sounds Manager")]
+    [SerializeField] SoundManager soundManager;
+    AudioSource bookOpeningSound;
     MeshRenderer paperMeshRenderer;
     public Spell[] spells;
     Spell castedSpell;
@@ -29,6 +33,7 @@ public class BookSpellsCaster : MonoBehaviour
     {
         
         paperMeshRenderer = magicbookPaper.GetComponent<MeshRenderer>();
+        bookOpeningSound = soundManager.LocateAudioSource("BookOpening", magicbookPaper.parent);
     }
 
     void Update()
@@ -52,6 +57,7 @@ public class BookSpellsCaster : MonoBehaviour
                 //Debug.Log("Casting Spell");
                 MagicbookAttachSprite(castedSpell.spellTexture);
                 ActivateAnimation();
+                bookOpeningSound.Play();
                 //StartShowingLetters();
                 //Debug.Log("Spell casted");
             }

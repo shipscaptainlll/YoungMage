@@ -44,6 +44,7 @@ public class PersonMovement : MonoBehaviour
     AudioSource startJumpSound;
     AudioSource startDoubleJumpSound;
     AudioSource landedChairSound;
+    AudioSource landedTableSound;
 
     float checkRadius;
     float stairsCheckRadius;
@@ -123,6 +124,7 @@ public class PersonMovement : MonoBehaviour
         startJumpSound = soundManager.FindSound("Jump");
         startDoubleJumpSound = soundManager.FindSound("DoubleJump");
         landedChairSound = soundManager.FindSound("Chair");
+        landedTableSound = soundManager.FindSound("TableSlap");
     }
 
     void LateUpdate()
@@ -256,6 +258,10 @@ public class PersonMovement : MonoBehaviour
                     {
                         landedChairSound.Play();
                     }
+                    else if (hitCollider.transform.name == "Table")
+                {
+                    landedTableSound.Play();
+                }
                 }
         }
 

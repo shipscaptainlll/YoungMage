@@ -26,6 +26,11 @@ public class PanelsManager : MonoBehaviour
     [SerializeField] Transform defaultPosition;
     [SerializeField] Transform quickaccessinvisiblePosition;
     [SerializeField] Transform quickaccessdefaultPosition;
+
+    [Header("Sound Manager")]
+    [SerializeField] SoundManager soundManager;
+
+    AudioSource whooshFirstSound;
     Transform currentlyOpened;
     Transform currentSettingsSubpanel;
     Transform nextToOpen;
@@ -60,6 +65,7 @@ public class PanelsManager : MonoBehaviour
         clickManager.EscClicked += ChooseEscapeActions;
         contactManager.MidasCauldronDetected += openMidasCauldronTable;
         contactManager.DefractorDetected += openDefractorTable;
+        whooshFirstSound = soundManager.FindSound("WhooshFirst");
     }
 
     void decideNextState()
@@ -79,6 +85,7 @@ public class PanelsManager : MonoBehaviour
             currentlyOpened = nextToOpen;
         }
         considerQuickAccessPanel();
+        whooshFirstSound.Play();
     }
 
     bool checkIfAlreadyOpened()
