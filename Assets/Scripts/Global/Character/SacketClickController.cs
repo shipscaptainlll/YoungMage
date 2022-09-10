@@ -21,7 +21,11 @@ public class SacketClickController : MonoBehaviour
     [SerializeField] Transform midasLayerHolder;
     [SerializeField] Transform countUIAddon;
     [SerializeField] BookSpellsActivator bookSpellsActivator;
+
+    [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
+
+    
     SameMagnetismProduct sameMagnetismProduct;
     List<Transform> KickedOutItems = new List<Transform>();
     Coroutine delayCoroutine = null;
@@ -79,6 +83,7 @@ public class SacketClickController : MonoBehaviour
             newObject.gameObject.GetComponent<GlobalResource>().WasCollected = true;
             newObject.gameObject.GetComponent<GlobalResource>().TargetLayerMask = midasLayerHolder.GetComponent<LayerMaskSettings>().TargetLayer;
             newObject.gameObject.GetComponent<GlobalResource>().ID = quickAccessHandController.CurrentCustomID;
+            newObject.gameObject.GetComponent<GlobalResource>().GlobalSoundManager = soundManager;
             //missed somewhereTransform magneticAdd = Instantiate(magnetismAddOn, newObject.position, newObject.rotation);
             Transform countUIAdd = Instantiate(countUIAddon, newObject.position + new Vector3(0, 0.5f, 0), newObject.rotation); 
             countUIAdd.gameObject.SetActive(true);

@@ -11,10 +11,15 @@ public class TornadoObjectsCatcher : MonoBehaviour
     [SerializeField] Transform catchParticles;
     [SerializeField] ItemsCounterQuests itemsCounterQuests;
 
+    [Header("Sounds Manager")]
+    [SerializeField] SoundManager soundManager;
+    AudioSource acquiringObject;
+
     BoxCollider transformBoxcollider;
     // Start is called before the first frame update
     void Start()
     {
+        acquiringObject = soundManager.FindSound("ObjectAcquiringFirst");
         transformBoxcollider = transform.GetComponent<BoxCollider>();
     }
 
@@ -96,6 +101,7 @@ public class TornadoObjectsCatcher : MonoBehaviour
         AddToCounter(resource.GetComponent<GlobalResource>().ID);
         HoldResource(resource);
         StartCoroutine(DestroyObject(resource));
+        acquiringObject.Play();
         //InstantiateCatchParticles(resource);
     }
 

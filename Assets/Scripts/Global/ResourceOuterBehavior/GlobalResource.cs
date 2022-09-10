@@ -7,6 +7,9 @@ public class GlobalResource : MonoBehaviour
 {
     [SerializeField] LayerMask layerMask;
     [SerializeField] int id;
+    SoundManager globalSoundManager;
+    AudioSource fallingSound;
+
     int count = 1;
     bool collidingSameResource;
 
@@ -20,6 +23,8 @@ public class GlobalResource : MonoBehaviour
     public LayerMask TargetLayerMask { set { layerMask = value; } }
     public bool CollidingSameResource { get { return collidingSameResource; } set { collidingSameResource = value; } }
     public int ID { get { return id; } set { id = value; } }
+
+    public SoundManager GlobalSoundManager { set { globalSoundManager = value; InitializeSounds(); } }
 
     public event Action CountChanged = delegate { };
     // Start is called before the first frame update
@@ -43,6 +48,7 @@ public class GlobalResource : MonoBehaviour
             //|| other.gameObject.layer == 0 && id != 1 && other.gameObject.GetComponent<GlobalResource>() == null
             //Debug.Log(other.gameObject.layer + " " + other.transform);
             GetComponent<SphereCollider>().isTrigger = false;
+            fallingSound.Play();
             //transform.Find("SameResourceMagnetism(Clone)")?.gameObject.SetActive(true);
             //if (Vector3.Distance(transform.position, other.transform.position) > 2f)
             //{
@@ -104,4 +110,16 @@ public class GlobalResource : MonoBehaviour
         GetComponent<Rigidbody>().useGravity = true;
     }
     */
+
+    void InitializeSounds()
+    {
+        if (id == 2)
+        {
+            fallingSound = globalSoundManager.LocateAudioSource("StoneOreLanding", transform);
+        } else if (id == 3)
+        {
+            fallingSound = globalSoundManager.LocateAudioSource("MetalOreLanding", transform);
+        }
+        
+    }
 }
