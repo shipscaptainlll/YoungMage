@@ -10,10 +10,15 @@ public class DropHandler : MonoBehaviour, IDropHandler
     List<RaycastResult> hitObjects = new List<RaycastResult>();
     public event Action QuitAccessChanged = delegate { };
     [SerializeField] Transform quickAccessPanel;
+
+    [Header("Sounds Manager")]
+    [SerializeField] SoundManager soundManager;
+    AudioSource changeElementSound;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        changeElementSound = soundManager.FindSound("NewObjectAppearingUI");
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -57,6 +62,8 @@ public class DropHandler : MonoBehaviour, IDropHandler
         int cacheCustomId = targetObject.GetComponent<Element>().CustomID;
         targetObject.GetComponent<Element>().CustomID = eventData.pointerDrag.transform.GetComponent<Element>().CustomID;
         eventData.pointerDrag.transform.GetComponent<Element>().CustomID = cacheCustomId;
+
+        changeElementSound.Play();
     }
 
     void CopyCustomID(PointerEventData eventData)
@@ -66,6 +73,8 @@ public class DropHandler : MonoBehaviour, IDropHandler
         int slotNumber = targetObject.transform.parent.parent.GetSiblingIndex();
 
         CopyIDToQuickAccess(eventData, slotNumber);
+
+        changeElementSound.Play();
     }
 
     void CopyIDToQuickAccess(PointerEventData eventData, int slotNumber)

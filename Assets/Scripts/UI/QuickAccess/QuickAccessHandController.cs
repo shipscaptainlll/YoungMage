@@ -15,6 +15,10 @@ public class QuickAccessHandController : MonoBehaviour
     [SerializeField] Transform hand;
     [SerializeField] ObjectManager objectManager;
     [SerializeField] Transform countersHolder;
+
+    [Header("Sounds  Manager")]
+    [SerializeField] SoundManager soundManager;
+    AudioSource changingElementSound;
     Transform currentCounter;
     GameObject objectInHand;
     int currentCustomID;
@@ -56,6 +60,7 @@ public class QuickAccessHandController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        changingElementSound = soundManager.FindSound("ChanginHandElement");
         subscribeOnSlots();
         currentSlot = 1;
         objectInHand = null;
@@ -69,6 +74,7 @@ public class QuickAccessHandController : MonoBehaviour
         clickManager.EightClicked += pickUpFromInventory;
         clickManager.NineClicked += pickUpFromInventory;
         RefreshCurrentSlot();
+        
     }
 
     void pickUpFromInventory(int slotNumber)
@@ -83,6 +89,7 @@ public class QuickAccessHandController : MonoBehaviour
             
         }
         int targetCustomID = quickAccessPanel.GetChild(slotNumber - 1).Find("Borders").Find("Element").GetComponent<QuickAccessElement>().CustomID;
+        if (targetCustomID != currentCustomID || targetCustomID == 0) { changingElementSound.Play(); }
         if (targetCustomID != 0 && targetCustomID != 10)
         {
             magicwandModel.gameObject.SetActive(false);
@@ -112,6 +119,7 @@ public class QuickAccessHandController : MonoBehaviour
             objectInHand = null;
         }
         FindCurrentCounter();
+        
     }
 
     void MarkUsedSlot(int slotNumber)

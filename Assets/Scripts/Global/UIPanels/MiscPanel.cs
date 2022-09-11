@@ -6,6 +6,12 @@ using UnityEngine.UI;
 
 public class MiscPanel : MonoBehaviour
 {
+    [Header("Sounds Manager")]
+    [SerializeField] SoundManager soundManager;
+
+    AudioSource chooseSound;
+
+
     public event Action TutorialResetRequested = delegate { };
     public event Action WarpBaseRequested = delegate { };
     public event Action<float> AutosaveTimeChangeRequested = delegate { };
@@ -13,7 +19,7 @@ public class MiscPanel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        chooseSound = soundManager.FindSound("SettingElement");
     }
 
     // Update is called once per frame
@@ -26,6 +32,7 @@ public class MiscPanel : MonoBehaviour
     {
         if (TutorialResetRequested != null) { TutorialResetRequested(); }
         if (SettingChanged != null) { SettingChanged(1); }
+        chooseSound.Play();
         Debug.Log("Tutorial has been reseted");
     }
 
@@ -33,6 +40,7 @@ public class MiscPanel : MonoBehaviour
     {
         if (WarpBaseRequested != null) { WarpBaseRequested(); }
         if (SettingChanged != null) { SettingChanged(1); }
+        chooseSound.Play();
         Debug.Log("Warped to the base");
     }
 
@@ -43,6 +51,7 @@ public class MiscPanel : MonoBehaviour
         sliderValueRepresentation.text = newAutosaveDelay + " min";
         if (AutosaveTimeChangeRequested != null) { AutosaveTimeChangeRequested(newAutosaveDelay); }
         if (SettingChanged != null) { SettingChanged(1); }
+        chooseSound.Play();
         Debug.Log("AutosaveTimeSet on " + newAutosaveDelay + " mins");
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class BookSpellsCaster : MonoBehaviour
 {
+    [SerializeField] Transform magicBook;
     [SerializeField] Transform magicbookPaper;
     [SerializeField] AnimationCurve appearAnimationCurve;
     [SerializeField] AnimationCurve intensityAnimationCurve;
@@ -117,6 +118,16 @@ public class BookSpellsCaster : MonoBehaviour
     public void ActivateParticleSystem()
     {
 
+    }
+
+    public void ShowSpellsBook()
+    {
+        magicBook.gameObject.SetActive(true);
+    }
+
+    public void HideSpellsBook()
+    {
+        magicBook.gameObject.SetActive(false);
     }
 
     public void StartShowingLetters()

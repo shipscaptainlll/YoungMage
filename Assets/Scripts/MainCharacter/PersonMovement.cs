@@ -33,6 +33,7 @@ public class PersonMovement : MonoBehaviour
     [SerializeField] SoundManager soundManager;
     AudioSource walkingSound;
     AudioSource runningSound;
+    AudioSource shiftingSound;
     AudioSource walkingStairsSound;
     AudioSource runningStairsSound;
     AudioSource walkingStoneSound;
@@ -125,6 +126,7 @@ public class PersonMovement : MonoBehaviour
         startDoubleJumpSound = soundManager.FindSound("DoubleJump");
         landedChairSound = soundManager.FindSound("Chair");
         landedTableSound = soundManager.FindSound("TableSlap");
+        shiftingSound = soundManager.FindSound("Shift");
     }
 
     void LateUpdate()
@@ -210,6 +212,7 @@ public class PersonMovement : MonoBehaviour
                 if (CharacterShifted != null) { CharacterShifted(shifts); }
                 StartCoroutine(DoubleShiftTimer());
                 StartCoroutine(CooldownDoubleshift());
+                shiftingSound.Play();
             }
             timeShiftPressed = Time.time;
         }

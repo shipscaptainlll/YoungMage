@@ -11,12 +11,17 @@ public class GraphicsPanel : MonoBehaviour
     [SerializeField] string graphicsQuality;
     [SerializeField] bool activePointLightShadows;
 
+    [Header("Sounds Manager")]
+    [SerializeField] SoundManager soundManager;
+
+    AudioSource chooseSound;
+
 
     public event Action<int> SettingChanged = delegate { };
     // Start is called before the first frame update
     void Start()
     {
-        
+        chooseSound = soundManager.FindSound("SettingElement");
     }
 
     // Update is called once per frame
@@ -29,6 +34,7 @@ public class GraphicsPanel : MonoBehaviour
     {
         pointLightShadows = slider.value;
         if (SettingChanged != null) { SettingChanged(1); }
+        chooseSound.Play();
         Debug.Log("Point light shadows changed: " + pointLightShadows);
     }
 
@@ -36,6 +42,7 @@ public class GraphicsPanel : MonoBehaviour
     {
         graphicsQuality = dropdown.value.ToString();
         if (SettingChanged != null) { SettingChanged(1); }
+        chooseSound.Play();
         Debug.Log("Graphics quality is: " + graphicsQuality);
     }
 
@@ -43,6 +50,7 @@ public class GraphicsPanel : MonoBehaviour
     {
         activePointLightShadows = toggle.isOn;
         if (SettingChanged != null) { SettingChanged(1); }
+        chooseSound.Play();
         Debug.Log("Point light shadows are active " + activePointLightShadows);
     }
 }

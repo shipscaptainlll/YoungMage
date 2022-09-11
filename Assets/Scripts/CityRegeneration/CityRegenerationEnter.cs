@@ -21,6 +21,7 @@ public class CityRegenerationEnter : MonoBehaviour
     [SerializeField] PersonMovement personMovement;
     [SerializeField] PanelsManager panelsManager;
     [SerializeField] Transform quickAccessPanel;
+    [SerializeField] BookSpellsCaster bookSpellsCaster;
 
     [SerializeField] ParticleSystem enterPartycleSystem;
 
@@ -59,6 +60,7 @@ public class CityRegenerationEnter : MonoBehaviour
     {
         if (!isActive)
         {
+            HideSpellsBook();
             cityWallUpgrade.GetComponent<CanvasGroup>().alpha = 1;
             cityCastleUpgrade.GetComponent<CanvasGroup>().alpha = 1;
             cityBlacksmithUpgrade.GetComponent<CanvasGroup>().alpha = 1;
@@ -77,6 +79,16 @@ public class CityRegenerationEnter : MonoBehaviour
             }
             cameraRepositioningCoroutine = StartCoroutine(CameraToDestination(cameraTransform, cameraDestination, 1.2f));
         }
+    }
+
+    public void ShowSpellsBook()
+    {
+        bookSpellsCaster.ShowSpellsBook();
+    }
+
+    public void HideSpellsBook()
+    {
+        bookSpellsCaster.HideSpellsBook();
     }
 
     IEnumerator CameraToDestination(Transform startPoint, Transform endPoint, float delay)
@@ -126,6 +138,7 @@ public class CityRegenerationEnter : MonoBehaviour
     {
         if (isActive && !isEntering)
         {
+            ShowSpellsBook();
             cityWallUpgrade.GetComponent<CanvasGroup>().alpha = 0;
             cityCastleUpgrade.GetComponent<CanvasGroup>().alpha = 0;
             cityBlacksmithUpgrade.GetComponent<CanvasGroup>().alpha = 0;

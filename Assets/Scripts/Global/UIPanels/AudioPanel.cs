@@ -12,10 +12,16 @@ public class AudioPanel : MonoBehaviour
     float musicVolume;
     bool soundsTurnedOff;
 
+    [Header("Sounds Manager")]
+    [SerializeField] SoundManager soundManager;
+
+    AudioSource chooseSound;
+
     public event Action<int> SettingChanged = delegate { };
     // Start is called before the first frame update
     void Start()
     {
+        chooseSound = soundManager.FindSound("SettingElement");
         ApplyDefaultSettings();
     }
 
@@ -23,6 +29,7 @@ public class AudioPanel : MonoBehaviour
     {
         overallVolume = slider.value;
         if (SettingChanged != null) { SettingChanged(1); }
+        chooseSound.Play();
         //Debug.Log("Overall volume now is " + overallVolume);
     }
 
@@ -30,6 +37,7 @@ public class AudioPanel : MonoBehaviour
     {
         effectsVolume = slider.value;
         if (SettingChanged != null) { SettingChanged(1); }
+        chooseSound.Play();
         //Debug.Log("Effects volume now is " + effectsVolume);
     }
 
@@ -37,6 +45,7 @@ public class AudioPanel : MonoBehaviour
     {
         charactersSpeechVolume = slider.value;
         if (SettingChanged != null) { SettingChanged(1); }
+        chooseSound.Play();
         //Debug.Log("Characters speech now is " + charactersSpeechVolume);
     }
 
@@ -44,6 +53,7 @@ public class AudioPanel : MonoBehaviour
     {
         musicVolume = slider.value;
         if (SettingChanged != null) { SettingChanged(1); }
+        chooseSound.Play();
         //Debug.Log("Music volume now is " + musicVolume);
     }
 
@@ -51,6 +61,7 @@ public class AudioPanel : MonoBehaviour
     {
         soundsTurnedOff = toggle.isOn;
         if (SettingChanged != null) { SettingChanged(1); }
+        chooseSound.Play();
         //Debug.Log("Sounds turned off: " + soundsTurnedOff);
     }
 
@@ -66,5 +77,6 @@ public class AudioPanel : MonoBehaviour
         //Debug.Log("Music volume now is " + musicVolume);
         soundsTurnedOff = false;
         //Debug.Log("Sounds are now " + soundsTurnedOff);
+        chooseSound.Play();
     }
 }

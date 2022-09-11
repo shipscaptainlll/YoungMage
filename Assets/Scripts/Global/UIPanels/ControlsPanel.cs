@@ -17,13 +17,18 @@ public class ControlsPanel : MonoBehaviour
     bool shiftPressed;
     bool changingSettings;
 
+    [Header("Sounds Manager")]
+    [SerializeField] SoundManager soundManager;
+
+    AudioSource chooseSound;
+
     public bool AutorunToggled { get { return autorunToggled; } }
     public event Action<bool> autorunWasToggled = delegate { };
     public event Action<int> SettingChanged = delegate { };
     // Start is called before the first frame update
     void Start()
     {
-        
+        chooseSound = soundManager.FindSound("SettingElement");
     }
 
     private void OnGUI()
@@ -72,6 +77,7 @@ public class ControlsPanel : MonoBehaviour
                 {
                     activeButton.transform.Find("Text").GetComponent<Text>().text = "LeftShift + LeftShift";
                     if (SettingChanged != null) { SettingChanged(1); }
+                    chooseSound.Play();
                 }
                 
                 shiftPressed = false;
@@ -100,12 +106,14 @@ public class ControlsPanel : MonoBehaviour
         {
             activeButton.transform.Find("Text").GetComponent<Text>().text = settedButtons;
             if (SettingChanged != null) { SettingChanged(1); }
+            chooseSound.Play();
         }
 
         if (!shiftPressed)
         {
             activeButton = null;
             EventSystem.current.SetSelectedGameObject(null);
+            chooseSound.Play();
         }
     }
 
@@ -113,6 +121,7 @@ public class ControlsPanel : MonoBehaviour
     {
         mouseInverted = invertMouseToggle.isOn;
         if (SettingChanged != null) { SettingChanged(1); }
+        chooseSound.Play();
         Debug.Log("Mouse is inverted " + mouseInverted);
     }
 
@@ -120,11 +129,13 @@ public class ControlsPanel : MonoBehaviour
     {
         mouseSensitivity = mouseSensitivitySlider.value;
         if (SettingChanged != null) { SettingChanged(1); }
+        chooseSound.Play();
         Debug.Log("Mouse sensitivity is setted: " + mouseSensitivity);
     }
 
     public void ResetControls()
     {
+        chooseSound.Play();
         Debug.Log("Controls are reseted");
     }
 
@@ -133,6 +144,7 @@ public class ControlsPanel : MonoBehaviour
         autorunToggled = autorunToggle.isOn;
         if (SettingChanged != null) { SettingChanged(1); }
         if (autorunWasToggled != null) { autorunWasToggled(autorunToggled); }
+        chooseSound.Play();
         Debug.Log("Autorun is toggle " + mouseInverted);
     }
 }
