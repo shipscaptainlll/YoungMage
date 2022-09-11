@@ -96,6 +96,7 @@ public class QuickAccessHandController : MonoBehaviour
             sacketModel.gameObject.SetActive(true);
             GameObject objectToTake = objectManager.TakeObject(targetCustomID);
             objectInHand = Instantiate(objectToTake, hand.position, hand.rotation);
+            SetLayerRecursively(objectInHand.transform, 11);
             objectInHand.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             MaterializeEffect(objectInHand.transform, 0.65f);
             SetObjectMovement(objectInHand);
@@ -226,5 +227,15 @@ public class QuickAccessHandController : MonoBehaviour
         secondProductMeshrenderer.material = secondProductMaterial;
         //Destroy(productTransform.gameObject);
         yield return null;
+    }
+
+    void SetLayerRecursively(Transform objectTransform, int layerNumber)
+    {
+        objectTransform.gameObject.layer = layerNumber;
+
+        foreach (Transform child in objectTransform)
+        {
+            SetLayerRecursively(child, layerNumber);
+        }
     }
 }

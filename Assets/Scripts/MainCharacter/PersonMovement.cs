@@ -32,6 +32,7 @@ public class PersonMovement : MonoBehaviour
     [Header("Audio Connection")]
     [SerializeField] SoundManager soundManager;
     AudioSource walkingSound;
+    AudioSource woodCreakSound;
     AudioSource runningSound;
     AudioSource shiftingSound;
     AudioSource walkingStairsSound;
@@ -46,6 +47,11 @@ public class PersonMovement : MonoBehaviour
     AudioSource startDoubleJumpSound;
     AudioSource landedChairSound;
     AudioSource landedTableSound;
+    AudioSource exclaimingSound;
+
+    Coroutine delayCreakCoroutine;
+    bool creakDelayElapsed;
+    System.Random rand;
 
     float checkRadius;
     float stairsCheckRadius;
@@ -98,6 +104,8 @@ public class PersonMovement : MonoBehaviour
     public event Action<int> CharacterDoubleJumped = delegate { };
     void Start()
     {
+        creakDelayElapsed = true;
+        rand = new System.Random();
         speed = basicSpeed;
         occupied = false;
         checkRadius = 0.5f;
@@ -113,6 +121,7 @@ public class PersonMovement : MonoBehaviour
         StartCoroutine(MovingDustSpawner());
 
         walkingSound = soundManager.FindSound("Walk");
+        woodCreakSound = soundManager.FindSound("WoodSkreak");
         runningSound = soundManager.FindSound("Run");
         walkingStairsSound = soundManager.FindSound("StairsWalk");
         runningStairsSound = soundManager.FindSound("StairsRun");
@@ -127,6 +136,8 @@ public class PersonMovement : MonoBehaviour
         landedChairSound = soundManager.FindSound("Chair");
         landedTableSound = soundManager.FindSound("TableSlap");
         shiftingSound = soundManager.FindSound("Shift");
+        exclaimingSound = soundManager.FindSound("YoungMageExclaiming");
+        
     }
 
     void LateUpdate()
@@ -137,12 +148,33 @@ public class PersonMovement : MonoBehaviour
         }
         if (!occupied)
             MoveCharacter();
-        if (isWalking && !onStone && !onStairs && isGrounded) { if (!walkingSound.isPlaying) { walkingSound.Play(); } } else { if (walkingSound.isPlaying) { walkingSound.Stop(); } }
+        if (isWalking && !onStone && !onStairs && isGrounded) { RandomWoodcreakInitiator(); if (!walkingSound.isPlaying) { walkingSound.Play(); } } else { if (walkingSound.isPlaying) { walkingSound.Stop(); } }
         if (isWalking && onStairs) { if (!walkingStairsSound.isPlaying) { walkingStairsSound.Play(); } } else { if (walkingStairsSound.isPlaying) { walkingStairsSound.Stop(); } }
         if (isRunning && !onStone && !onStairs && isGrounded) { if (!runningSound.isPlaying) { runningSound.Play(); } } else { if (runningSound.isPlaying) { runningSound.Stop(); } }
         if (isRunning && onStairs) { if (!runningStairsSound.isPlaying) { runningStairsSound.Play(); } } else { if (runningStairsSound.isPlaying) { runningStairsSound.Stop(); } }
         if (isWalking && onStone) { if (!walkingStoneSound.isPlaying) { walkingStoneSound.Play(); } } else { if (walkingStoneSound.isPlaying) { walkingStoneSound.Stop(); } }
         if (isRunning && onStone) { if (!runningStoneSound.isPlaying) { runningStoneSound.Play(); } } else { if (runningStoneSound.isPlaying) { runningStoneSound.Stop(); } }
+    }
+
+    void RandomWoodcreakInitiator()
+    {
+        if (creakDelayElapsed)
+        {
+            int randomNumber = rand.Next(1, 10);
+            //Debug.Log("Creak random number: " + randomNumber);
+            if (randomNumber > 8)
+            {
+                woodCreakSound.Play();
+            }
+            creakDelayElapsed = false;
+            delayCreakCoroutine = StartCoroutine(DelayCreak());
+        }
+    }
+
+    IEnumerator DelayCreak()
+    {
+        yield return new WaitForSeconds(10);
+        creakDelayElapsed = true;
     }
 
     IEnumerator DoubleShiftTimer()
@@ -289,13 +321,14 @@ public class PersonMovement : MonoBehaviour
             jumpVFX.SetVector3("SphereCenterPosition", jumpVFX.transform.position); 
             jumpVFX.SendEvent("CharacterJumped");
             jumped = true;
-            Debug.Log(jumped);
+            //Debug.Log(jumped);
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             
             if (!isGrounded) { 
                 doubleJumped = true;
                 doubleJumps++;
                 startDoubleJumpSound.Play();
+                exclaimingSound.Play();
                 if (CharacterDoubleJumped != null) { CharacterDoubleJumped(doubleJumps); }
             } else
             {
@@ -306,7 +339,7 @@ public class PersonMovement : MonoBehaviour
         if (isGrounded && velocity.y < 0 && jumped)
         {
             jumped = false;
-            Debug.Log(jumped);
+            //Debug.Log(jumped);
             
         }
 

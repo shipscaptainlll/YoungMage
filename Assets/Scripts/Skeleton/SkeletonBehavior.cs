@@ -37,6 +37,14 @@ public class SkeletonBehavior : MonoBehaviour
     [SerializeField] Transform necklessParticleSystem;
     [SerializeField] Transform letersParticleSystem;
     [SerializeField] SkeletonNecklessBehavior skeletonNecklessBehavior;
+    [SerializeField] LayerMask checkLayer1;
+    [SerializeField] LayerMask checkLayer2;
+    [SerializeField] LayerMask checkLayer3;
+    [SerializeField] float checkGroundRadius;
+    [SerializeField] float stairsCheckRadius;
+    bool onGround;
+    bool onStairs;
+    bool onStone;
     VisualEffect movementVFX;
     bool isSmallSkeleton;
     bool isBigSkeleton;
@@ -73,7 +81,15 @@ public class SkeletonBehavior : MonoBehaviour
 
     [Header("Castle Nav")]
     List <Transform> CastleNavrout = new List<Transform>();
-    
+
+    [Header("Sounds Manager")]
+    [SerializeField] SoundManager soundManager;
+    AudioSource walkingGroundSound;
+    AudioSource walkingStairsSound;
+    AudioSource walkingStoneSound;
+    AudioSource destroySkeletonSound;
+
+
 
     bool CastleNavroutActive;
     bool PotentialpositionsNavroutActive;
@@ -148,6 +164,10 @@ public class SkeletonBehavior : MonoBehaviour
     System.Random rand;
     void Start()
     {
+        walkingGroundSound = soundManager.LocateAudioSource("SkeletonWalkGround", transform);
+        walkingStairsSound = soundManager.LocateAudioSource("SkeletonWalkStairs", transform);
+        walkingStoneSound = soundManager.LocateAudioSource("SkeletonWalkStone", transform);
+        
         rand = new System.Random();
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.avoidancePriority = rand.Next(1, 10);
@@ -276,7 +296,7 @@ public class SkeletonBehavior : MonoBehaviour
                 }
             }
             navigationTarget = value;
-            //Debug.Log("updated skeleton target");
+            Debug.Log(navigationTarget + " " + transform);
             UpdateAnimation();
 
         }
@@ -321,10 +341,33 @@ public class SkeletonBehavior : MonoBehaviour
                 //Debug.Log("Reached Position");
                 reachedPosition = true;
                 PotentialpositionsNavroutActive = false;
-            }
+            } 
         }
+
         CheckIfStopped();
         if (isConjured) { CheckIfUnused(); }
+
+    }
+
+    void ManageSounds()
+    {
+        if (onGround) { if (!walkingGroundSound.isPlaying) { walkingGroundSound.Play(); } } else { if (walkingGroundSound.isPlaying) { walkingGroundSound.Stop(); } }
+        if (onStairs) { if (!walkingStairsSound.isPlaying) { walkingStairsSound.Play(); } } else { if (walkingStairsSound.isPlaying) { walkingStairsSound.Stop(); } }
+        if (onStone) { if (!walkingStoneSound.isPlaying) { walkingStoneSound.Play(); } } else { if (walkingStoneSound.isPlaying) { walkingStoneSound.Stop(); } }
+    }
+
+    void TurnOffSounds()
+    {
+        walkingGroundSound.Stop();
+        walkingStairsSound.Stop();
+        walkingStoneSound.Stop();
+    }
+
+    void CheckGroundType()
+    {
+        onGround = (Physics.CheckSphere(checkGround.position, checkGroundRadius, checkLayer1));
+        onStairs = (Physics.CheckSphere(checkGround.position, stairsCheckRadius, checkLayer2));
+        onStone = (Physics.CheckSphere(checkGround.position, checkGroundRadius, checkLayer3));
     }
 
     void NotifyObjectConnected()
@@ -393,11 +436,18 @@ public class SkeletonBehavior : MonoBehaviour
                 isMoving = false;
                 localAnimator.Play("SkelMine");
             }
-            
+            TurnOffSounds();
+
+
         } else if (navMeshAgent.velocity.magnitude > 0.15f && !isMoving)
         {
             isMoving = true;
             localAnimator.Play("SkelMove");
+        }
+        else if (navMeshAgent.velocity.magnitude > 0.15f && isMoving)
+        {
+            CheckGroundType();
+            ManageSounds();
         }
     }
 
@@ -597,8 +647,8 @@ public class SkeletonBehavior : MonoBehaviour
 
     IEnumerator DestroySkeleton()
     {
-        
 
+        
         destructionParticleSystem.SetActive(true);
         destructionParticleSystem.GetComponent<ParticleSystem>().Play();
         Debug.Log("DestroyedSkeleton");
@@ -606,6 +656,8 @@ public class SkeletonBehavior : MonoBehaviour
         lowerPartSkinnedrenderer.gameObject.SetActive(false);
         upperPartSkinnedrenderer.gameObject.SetActive(false);
         GameObject instantiatedDestroyedSkeleton = Instantiate(destroyedSkeleton, transform.position, transform.rotation);
+        destroySkeletonSound = soundManager.LocateAudioSource("SkeletonBlast", instantiatedDestroyedSkeleton.transform);
+        destroySkeletonSound.Play();
         unusedCounter.gameObject.GetComponent<CanvasGroup>().alpha = 0;
         yield return new WaitForSeconds(1.5f);
         foreach (Transform bone in instantiatedDestroyedSkeleton.transform)
@@ -752,16 +804,15 @@ public class SkeletonBehavior : MonoBehaviour
 
     public void AddTarget(Transform targetOre)
     {
-        Debug.Log("new target added " + targetOre);
-        Debug.Log("new target added " + targetOre.parent.name);
-        if (navigationTarget.GetComponent<PersonMovement>() != null)
+
+        if (navigationTarget != null && navigationTarget.GetComponent<PersonMovement>() != null)
         {
             if (targetOre.GetComponent<NavMeshObstacle>() != null)
             {
                 targetOre.GetComponent<NavMeshObstacle>().enabled = false;
             }
             
-            if (targetOre.name == "MinesDoor")
+            if (targetOre.name == "DoorCaveBump")
             {
                 NavigationTarget = DoorConnectionManager.GetPosition();
             } else
@@ -770,7 +821,7 @@ public class SkeletonBehavior : MonoBehaviour
             }
             //Debug.Log(navigationTarget);
             
-        }
+        } else { Debug.Log("Skeleton is not connected to anything " + transform); }
     }
 
     public void ShowEmotion()
@@ -1031,4 +1082,22 @@ public class SkeletonBehavior : MonoBehaviour
         }
     }
     */
+
+    public void SubscribeAfterInstantiation()
+    {
+        contactManager.GetComponent<ContactManager>().OreDetected += AddTarget;
+        contactManager.GetComponent<ContactManager>().MinesDoorDetected += AddTarget;
+        contactManager.GetComponent<ContactManager>().ObjectOverloaded += ShowEmotion;
+        connectedTeleport.GetComponent<Teleporter>().TeleportFound += StopGravity;
+        transform.GetComponent<CopycatCreator>().OriginTeleported += StopActivities;
+    }
+
+    public void UnsubscribeBeforeDestruction()
+    {
+        contactManager.GetComponent<ContactManager>().OreDetected -= AddTarget;
+        contactManager.GetComponent<ContactManager>().MinesDoorDetected -= AddTarget;
+        contactManager.GetComponent<ContactManager>().ObjectOverloaded -= ShowEmotion;
+        connectedTeleport.GetComponent<Teleporter>().TeleportFound -= StopGravity;
+        transform.GetComponent<CopycatCreator>().OriginTeleported -= StopActivities;
+    }
 }

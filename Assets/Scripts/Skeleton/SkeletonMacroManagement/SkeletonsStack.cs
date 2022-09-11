@@ -34,6 +34,7 @@ public class SkeletonsStack : MonoBehaviour
     void DeleteSkeleton(Transform deletedSkeleton)
     {
         skeletonsStack.Remove(deletedSkeleton);
+        deletedSkeleton.GetComponent<SkeletonBehavior>().UnsubscribeBeforeDestruction();
         Debug.Log("Count in lists: " + skeletonsStack.Count);
         Destroy(deletedSkeleton.gameObject);
     }

@@ -20,12 +20,12 @@ public class DoorClosingInitiator : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-        Debug.Log(collider.transform);
+        //Debug.Log(collider.transform);
         if (collider.transform.GetComponent<PersonMovement>() != null)
         {
             magicDoor.CloseTheDoor();
             magicDoor.PlayerInInitiator = true;
-            Debug.Log("player entered initiator");
+            //Debug.Log("player entered initiator");
         }
     }
 

@@ -20,7 +20,7 @@ public class EClickPosition : MonoBehaviour
     {
         if (other.gameObject.layer == 11)
         {
-            //Debug.Log("something entered");
+            Debug.Log("something entered");
             SomethingEntered(tag);
         }
     }

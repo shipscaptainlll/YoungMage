@@ -24,10 +24,16 @@ public class SavePanel : MonoBehaviour
     [SerializeField] float autosaveRate;
     Coroutine autosaveCoroutine;
 
+    [Header("Saves Manager")]
+    [SerializeField] SoundManager soundManager;
+    AudioSource thinkingSound;
+    
+
 
     // Start is called before the first frame update
     void Start()
     {
+        thinkingSound = soundManager.FindSound("YoungMageThinking");
         clickManager.FFiveClicked += AutoSave;
         miscPanel.AutosaveTimeChangeRequested += SetAutosaveRate;
 
@@ -39,7 +45,8 @@ public class SavePanel : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.B))
         {
-            saveSystemSerialization.SaveProgress();
+            //saveSystemSerialization.SaveProgress();
+            AutoSave();
         }
 
         
@@ -95,8 +102,8 @@ public class SavePanel : MonoBehaviour
 
     public void AutoSave()
     {
-        
-        //Debug.Log("Game was autosaved");
+        thinkingSound.Play();
+        Debug.Log("Game was autosaved");
     }
 
     public void SetAutosaveRate(float newAutosaveRate)

@@ -7,6 +7,10 @@ public class DoorTacklingManager : MonoBehaviour
     [SerializeField] DoorHealthDecreaser doorHealthDecreaser;
     [SerializeField] DoorOpen leftDoorOpener;
     [SerializeField] DoorOpen rightDoorOpener;
+
+    [Header("Audio Connection")]
+    [SerializeField] SoundManager soundManager;
+    AudioSource doorTacklingSound;
     SkeletonBehavior connectedSkeleton;
 
     public SkeletonBehavior ConnectedSkeleton
@@ -30,7 +34,7 @@ public class DoorTacklingManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        doorTacklingSound = soundManager.LocateAudioSource("DoorCaveBump", transform);
     }
 
     // Update is called once per frame
@@ -55,7 +59,13 @@ public class DoorTacklingManager : MonoBehaviour
     void DecreaseOreHealth()
     {
         //Debug.Log("Hitted");
+        PlayMiningSound();
         doorHealthDecreaser.DealDamage(100);
+    }
+
+    void PlayMiningSound()
+    {
+        doorTacklingSound.Play();
     }
 
     void VisualiseOreHealthbar()

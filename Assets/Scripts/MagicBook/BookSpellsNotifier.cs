@@ -49,14 +49,14 @@ public class BookSpellsNotifier : MonoBehaviour
         }
         else if (currentObject.GetComponent<Skeleton>() != null)
         {
-            Debug.Log(currentObject + "skeleton1");
+            //Debug.Log(currentObject + "skeleton1");
             if (BookInHands()) { CastContactSkeleton(); }
             else if (ItemInHands()) { CastApplyObject(); }
             else if (ObjectInHands()) { CastThrowObject(); } else { CastIdle(); }
         }
         else if (currentObject.parent != null && currentObject.parent.GetComponent<Skeleton>() != null)
         {
-            Debug.Log(currentObject + "skeleton");
+            //Debug.Log(currentObject + "skeleton");
             if (BookInHands()) { CastContactSkeleton(); }
             else if (ItemInHands()) { CastApplyObject(); }
             else if (ObjectInHands()) { CastThrowObject(); } else { CastIdle(); }

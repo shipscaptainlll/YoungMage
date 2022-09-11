@@ -145,8 +145,11 @@ public class PanelsManager : MonoBehaviour
 
     void openInventory()
     {
-        nextToOpen = inventoryPanel;
-        decideNextState();
+        if (currentlyOpened != escapeMenuPanel)
+        {
+            nextToOpen = inventoryPanel;
+            decideNextState();
+        }
     }
 
     void openUpgradeTable()
@@ -229,8 +232,11 @@ public class PanelsManager : MonoBehaviour
 
     public void OpenQuestPanel()
     {
-        nextToOpen = questPanel;
-        decideNextState();
+        if (currentlyOpened != escapeMenuPanel)
+        {
+            nextToOpen = questPanel;
+            decideNextState();
+        }
     }
 
     public void OpenMainmenuPanel()
