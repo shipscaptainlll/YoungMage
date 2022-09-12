@@ -19,6 +19,7 @@ public class PersonMovement : MonoBehaviour
     [SerializeField] LayerMask checkLayer4;
     [SerializeField] CharacterOccupation _characterOccupation;
     [SerializeField] float gravity;
+    [SerializeField] Transform caveBulpsHolder;
     bool isAutoRunning;
 
     [Header("Warp Base Settings")]
@@ -33,6 +34,7 @@ public class PersonMovement : MonoBehaviour
     [SerializeField] SoundManager soundManager;
     AudioSource walkingSound;
     AudioSource woodCreakSound;
+    
     AudioSource runningSound;
     AudioSource shiftingSound;
     AudioSource walkingStairsSound;
@@ -50,7 +52,9 @@ public class PersonMovement : MonoBehaviour
     AudioSource exclaimingSound;
 
     Coroutine delayCreakCoroutine;
+    Coroutine delayCaveBulpCoroutine;
     bool creakDelayElapsed;
+    bool caveDelayElapsed;
     System.Random rand;
 
     float checkRadius;
@@ -105,6 +109,7 @@ public class PersonMovement : MonoBehaviour
     void Start()
     {
         creakDelayElapsed = true;
+        caveDelayElapsed = true;
         rand = new System.Random();
         speed = basicSpeed;
         occupied = false;
@@ -154,6 +159,8 @@ public class PersonMovement : MonoBehaviour
         if (isRunning && onStairs) { if (!runningStairsSound.isPlaying) { runningStairsSound.Play(); } } else { if (runningStairsSound.isPlaying) { runningStairsSound.Stop(); } }
         if (isWalking && onStone) { if (!walkingStoneSound.isPlaying) { walkingStoneSound.Play(); } } else { if (walkingStoneSound.isPlaying) { walkingStoneSound.Stop(); } }
         if (isRunning && onStone) { if (!runningStoneSound.isPlaying) { runningStoneSound.Play(); } } else { if (runningStoneSound.isPlaying) { runningStoneSound.Stop(); } }
+
+        if ((isWalking && onStone) || (isRunning && onStone)) { RandomCavebulpInitiator(); }
     }
 
     void RandomWoodcreakInitiator()
@@ -164,6 +171,7 @@ public class PersonMovement : MonoBehaviour
             //Debug.Log("Creak random number: " + randomNumber);
             if (randomNumber > 8)
             {
+                
                 woodCreakSound.Play();
             }
             creakDelayElapsed = false;
@@ -171,10 +179,33 @@ public class PersonMovement : MonoBehaviour
         }
     }
 
+    void RandomCavebulpInitiator()
+    {
+        if (caveDelayElapsed)
+        {
+            int randomNumber = rand.Next(1, 10);
+            Debug.Log("Creak random number: " + randomNumber);
+            if (randomNumber > 7)
+            {
+                Debug.Log("there: " + randomNumber);
+                int randNumberBulps = rand.Next(0, caveBulpsHolder.childCount);
+                caveBulpsHolder.GetChild(randNumberBulps).GetComponent<CaveSoundHolder>().PlaySound();
+            }
+            caveDelayElapsed = false;
+            delayCaveBulpCoroutine = StartCoroutine(DelayBulp());
+        }
+    }
+
     IEnumerator DelayCreak()
     {
         yield return new WaitForSeconds(10);
         creakDelayElapsed = true;
+    }
+
+    IEnumerator DelayBulp()
+    {
+        yield return new WaitForSeconds(10);
+        caveDelayElapsed = true;
     }
 
     IEnumerator DoubleShiftTimer()

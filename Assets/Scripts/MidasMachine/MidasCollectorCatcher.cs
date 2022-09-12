@@ -7,6 +7,8 @@ using UnityEngine.VFX;
 public class MidasCollectorCatcher : MonoBehaviour
 {
     [SerializeField] Material dematerializeMaterial;
+    [SerializeField] SoundManager soundManager;
+    AudioSource dissolvingSound;
 
     public event Action<int> ResourceEnteredCollector = delegate { };
     // Start is called before the first frame update
@@ -25,9 +27,11 @@ public class MidasCollectorCatcher : MonoBehaviour
     {
         if (other.GetComponent<MidasResource>() != null)
         {
+            dissolvingSound = soundManager.LocateAudioSource("DissolvingObject", other.transform);
+            dissolvingSound.Play();
             int resourceID = other.GetComponent<GlobalResource>().ID;
             if (ResourceEnteredCollector != null) { ResourceEnteredCollector(resourceID); }
-            StartCoroutine(DematerializeProduct(other.transform, 2));
+            StartCoroutine(DematerializeProduct(other.transform, 4));
         }
     }
 

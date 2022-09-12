@@ -132,7 +132,7 @@ public class BookSpellsNotifier : MonoBehaviour
 
     void CastIdle()
     {
-        bookSpellsCaster.CastSpell("Idle");
+        bookSpellsCaster.CastSpell("NullSpell");
     }
 
     bool BookInHands()

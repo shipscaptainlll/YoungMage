@@ -12,6 +12,12 @@ public class PortalOpener : MonoBehaviour
     [SerializeField] CopycatCreator teleportationManager;
     [SerializeField] EClickVariations eClickVariations;
     [SerializeField] CopycatCatcher copycatCatcher;
+
+    [Header("Sounds Manager")]
+    [SerializeField] SoundManager soundManager;
+    AudioSource openPortalSound;
+    AudioSource workPortalSound;
+    AudioSource closePortalSound;
     bool portalOpened;
     Transform housePortal;
     Transform fieldPortal;
@@ -28,6 +34,9 @@ public class PortalOpener : MonoBehaviour
         housePortal.localScale = new Vector3(0.1f, 0.1f, housePortal.localScale.z);
         //teleportationManager.SkeletonFinallyTeleported += InitiatePortalClosing;
         copycatCatcher.CopycatCached += InitiatePortalClosing;
+        openPortalSound = soundManager.LocateAudioSource("PortalOpening", housePortalContainer);
+        workPortalSound = soundManager.LocateAudioSource("PortalWorking", housePortalContainer);
+        closePortalSound = soundManager.LocateAudioSource("PortalClosing", housePortalContainer);
     }
 
     // Update is called once per frame
@@ -40,6 +49,7 @@ public class PortalOpener : MonoBehaviour
     {
         if (!portalOpened)
         {
+            
             portalOpened = true;
             //Debug.Log("OpeningPortal");
             if (!cycleRunning && eClickVariations.IsOpeningPortal)
@@ -80,6 +90,7 @@ public class PortalOpener : MonoBehaviour
     {
         if (cycleRunning)
         {
+            
             cycleRunning = false;
             StartCoroutine(ClosePortal());
             StartCoroutine(CloseVFX());
@@ -99,6 +110,9 @@ public class PortalOpener : MonoBehaviour
         float startYScale = housePortal.localScale.y;
         float currentYScale;
         float targetYScale = 0.865296f;
+
+        if (!openPortalSound.isPlaying) { openPortalSound.Play(); } 
+        workPortalSound.Play();
         while (elapsed < updateSpeed)
         {
             elapsed += Time.deltaTime;
@@ -120,6 +134,8 @@ public class PortalOpener : MonoBehaviour
         float startYScale = housePortal.localScale.y;
         float currentYScale;
         float targetYScale = 0.01f;
+        closePortalSound.Play();
+        workPortalSound.Stop();
         while (elapsed < updateSpeed)
         {
             elapsed += Time.deltaTime;

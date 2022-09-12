@@ -11,6 +11,12 @@ public class DoorHealthDecreaser : MonoBehaviour
     [SerializeField] GameObject motherGameObject;
     [SerializeField] Transform instantiationPoint;
     [SerializeField] Transform PSInstantiationPoint;
+
+    [Header("Audio Connection")]
+    [SerializeField] SoundManager soundManager;
+    AudioSource doorBlastSound;
+    
+
     float minimalWidth = 0;
     float maximumWidth = 1000;
     float maximumHealth = 1000;
@@ -26,6 +32,7 @@ public class DoorHealthDecreaser : MonoBehaviour
     {
         currentDamage = 50;
         healthTransform = transform.Find("Borders").Find("Foreground").GetComponent<RectTransform>();
+        
     }
 
 
@@ -79,10 +86,11 @@ public class DoorHealthDecreaser : MonoBehaviour
         doorTacklingManager.ConnectedSkeleton.NavigationTarget = null;
         Transform destroyableDoorNew = Instantiate(destroyableDoor, instantiationPoint.position, transform.rotation);
         ParticleSystem destroyPSNew = Instantiate(destroyParticleSystem, PSInstantiationPoint.position, transform.rotation);
-
+        doorBlastSound = soundManager.LocateAudioSource("DoorCaveBlast", destroyPSNew.transform);
+        doorBlastSound.Play();
         destroyPSNew.gameObject.SetActive(true);
         destroyPSNew.gameObject.AddComponent<DestroyableParticleSystem>();
-        destroyPSNew.gameObject.GetComponent<DestroyableParticleSystem>().TimeDestruction = 3;
+        destroyPSNew.gameObject.GetComponent<DestroyableParticleSystem>().TimeDestruction = 7;
         destroyableDoorNew.Rotate(0, 90, 0);
         Destroy(motherGameObject);
     }

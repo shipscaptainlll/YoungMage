@@ -31,6 +31,7 @@ public class PanelsManager : MonoBehaviour
     [SerializeField] SoundManager soundManager;
 
     AudioSource whooshFirstSound;
+    AudioSource inventoryOpenSound;
     Transform currentlyOpened;
     Transform currentSettingsSubpanel;
     Transform nextToOpen;
@@ -66,10 +67,15 @@ public class PanelsManager : MonoBehaviour
         contactManager.MidasCauldronDetected += openMidasCauldronTable;
         contactManager.DefractorDetected += openDefractorTable;
         whooshFirstSound = soundManager.FindSound("WhooshFirst");
+        inventoryOpenSound = soundManager.FindSound("InventoryOpening");
     }
 
     void decideNextState()
     {
+        if (nextToOpen != inventoryPanel)
+        {
+            whooshFirstSound.Play();
+        }
         if (checkIfAlreadyOpened())
         {
             closeCurrentPanel();
@@ -85,7 +91,7 @@ public class PanelsManager : MonoBehaviour
             currentlyOpened = nextToOpen;
         }
         considerQuickAccessPanel();
-        whooshFirstSound.Play();
+        
     }
 
     bool checkIfAlreadyOpened()
@@ -148,6 +154,7 @@ public class PanelsManager : MonoBehaviour
         if (currentlyOpened != escapeMenuPanel)
         {
             nextToOpen = inventoryPanel;
+            inventoryOpenSound.Play();
             decideNextState();
         }
     }

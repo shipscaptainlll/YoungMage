@@ -13,6 +13,7 @@ public class BookSpellsCaster : MonoBehaviour
     [SerializeField] Animator bookAnimator;
     [SerializeField] Transform activatedSpellInstance;
     [SerializeField] Transform magicLettersParticles;
+    [SerializeField] Texture2D distortionTexture;
 
     [Header("ObjectPool")]
     [SerializeField] Transform objectPool;
@@ -20,6 +21,11 @@ public class BookSpellsCaster : MonoBehaviour
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
     AudioSource bookOpeningSound;
+    AudioSource nullSpellCasting;
+    AudioSource popUpSound;
+    AudioSource spellCasting;
+
+
     MeshRenderer paperMeshRenderer;
     public Spell[] spells;
     Spell castedSpell;
@@ -35,6 +41,11 @@ public class BookSpellsCaster : MonoBehaviour
         
         paperMeshRenderer = magicbookPaper.GetComponent<MeshRenderer>();
         bookOpeningSound = soundManager.LocateAudioSource("BookOpening", magicbookPaper.parent);
+        nullSpellCasting = soundManager.FindSound("NullSpell");
+        popUpSound = soundManager.FindSound("PopUp");
+        spellCasting = soundManager.LocateAudioSource("CastingSpell", magicbookPaper);
+
+
     }
 
     void Update()
@@ -56,9 +67,11 @@ public class BookSpellsCaster : MonoBehaviour
             if (castedSpell != null)
             {
                 //Debug.Log("Casting Spell");
+                
                 MagicbookAttachSprite(castedSpell.spellTexture);
                 ActivateAnimation();
                 bookOpeningSound.Play();
+                
                 //StartShowingLetters();
                 //Debug.Log("Spell casted");
             }
@@ -78,10 +91,41 @@ public class BookSpellsCaster : MonoBehaviour
         ActivatedSpell newSpellScript = newSpell.GetComponent<ActivatedSpell>();
         newSpellScript.UpdateSprite(FindSpell(currentSpell).spellTexture);
         newSpellScript.MoveSpell();
+        ManageSounds();
+
+        if (castedSpell.spellName == "NullSpell")
+        {
+            
+            Material paperMaterial = newSpell.GetComponent<MeshRenderer>().material;    
+            float currentSecondMeshHSV;
+            Color overloadingMeshSecondColor = paperMaterial.GetColor("_EmissionColor");
+            float hMeshSecond, sMeshSecond, vMeshSecond;
+            Color.RGBToHSV(overloadingMeshSecondColor, out hMeshSecond, out sMeshSecond, out vMeshSecond);
+            currentSecondMeshHSV = 1;
+            overloadingMeshSecondColor = Color.HSVToRGB(currentSecondMeshHSV, sMeshSecond, vMeshSecond);
+            paperMaterial.SetColor("_EmissionColor", overloadingMeshSecondColor);
+            newSpell.GetComponent<MeshRenderer>().material = paperMaterial;
+        }
+        
+
         if (enhanceLettersCoroutine != null) { StopCoroutine(enhanceLettersCoroutine); }
         enhanceLettersCoroutine = StartCoroutine(EnhanceLetters(0.5f));
         //magicLettersParticles.gameObject.SetActive(false);
         Debug.Log("there");
+    }
+
+    void ManageSounds()
+    {
+        if (castedSpell.spellName == "NullSpell")
+        {
+            nullSpellCasting.Play();
+        }
+        else { spellCasting.Play(); }
+        if (castedSpell.spellName == "ThrowObject")
+        {
+            popUpSound.Play();
+        }
+        
     }
 
     Spell FindSpell(string spellNameSearched)
@@ -132,16 +176,40 @@ public class BookSpellsCaster : MonoBehaviour
 
     public void StartShowingLetters()
     {
-        if (showLettersCoroutine != null) { StopCoroutine(showLettersCoroutine); }
-        showLettersCoroutine = StartCoroutine(ShowingLetters(castedSpell.spellDuration));
+        if (castedSpell.spellName != "NullSpell")
+        {
+            if (showLettersCoroutine != null) { StopCoroutine(showLettersCoroutine); }
+            showLettersCoroutine = StartCoroutine(ShowingLetters(castedSpell.spellDuration));
+        }
+        
     }
 
     IEnumerator EnhanceLetters(float duration)
     {
+        
+        
         float elapsed = 0;
         float currentEmission;
 
         Material paperMaterial = paperMeshRenderer.materials[1];
+
+
+        if (castedSpell.spellName == "NullSpell")
+        {
+            MagicbookAttachSprite(distortionTexture);
+            paperMaterial.SetFloat("_Clip", 0.8f);
+            
+            float currentSecondMeshHSV;
+            Color overloadingMeshSecondColor = paperMaterial.GetColor("_EmissionColor");
+            float hMeshSecond, sMeshSecond, vMeshSecond;
+            Color.RGBToHSV(overloadingMeshSecondColor, out hMeshSecond, out sMeshSecond, out vMeshSecond);
+            currentSecondMeshHSV = 1;
+            overloadingMeshSecondColor = Color.HSVToRGB(currentSecondMeshHSV, sMeshSecond, vMeshSecond);
+            paperMaterial.SetColor("_EmissionColor", overloadingMeshSecondColor);
+            paperMeshRenderer.materials[1] = paperMaterial;
+        }
+        
+
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
@@ -153,6 +221,20 @@ public class BookSpellsCaster : MonoBehaviour
         paperMaterial.SetFloat("_ColorMultiplier", 1.5f);
         paperMeshRenderer.materials[1] = paperMaterial;
         enhanceLettersCoroutine = null;
+
+        if (castedSpell.spellName == "NullSpell")
+        {
+            paperMaterial.SetFloat("_Clip", 2f);
+            float currentSecondMeshHSV;
+            Color overloadingMeshSecondColor = paperMaterial.GetColor("_EmissionColor");
+            float hMeshSecond, sMeshSecond, vMeshSecond;
+            Color.RGBToHSV(overloadingMeshSecondColor, out hMeshSecond, out sMeshSecond, out vMeshSecond);
+            currentSecondMeshHSV = 0.69f;
+            overloadingMeshSecondColor = Color.HSVToRGB(currentSecondMeshHSV, sMeshSecond, vMeshSecond);
+            paperMaterial.SetColor("_EmissionColor", overloadingMeshSecondColor);
+            paperMeshRenderer.materials[1] = paperMaterial;
+            paperMeshRenderer.materials[1] = paperMaterial;
+        }
         yield return null;
     }
 

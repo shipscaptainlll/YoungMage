@@ -25,6 +25,11 @@ public class CityRegenerationEnter : MonoBehaviour
 
     [SerializeField] ParticleSystem enterPartycleSystem;
 
+    [Header("Sounds Manager")]
+    [SerializeField] SoundManager soundManager;
+    [SerializeField] Transform floatingSoundHolder;
+    AudioSource floatingSound;
+
     [Header("Cache - delete safely")]
     [SerializeField] Transform cityWallUpgrade;
     [SerializeField] Transform cityCastleUpgrade;
@@ -44,6 +49,8 @@ public class CityRegenerationEnter : MonoBehaviour
         camera = cameraTransform.GetComponent<CameraController>();
         contactManager.CityRegenerationEntered += EnterCityRegeneration;
         clickManager.EscClicked += ExitCityRegeneration;
+        floatingSound = soundManager.LocateAudioSource("FloatingCastle", floatingSoundHolder);
+        floatingSound.Play();
     }
 
     // Update is called once per frame

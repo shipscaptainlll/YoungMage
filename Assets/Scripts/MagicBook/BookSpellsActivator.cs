@@ -42,4 +42,9 @@ public class BookSpellsActivator : MonoBehaviour
         if (bookSpellsCaster.CurrentSpell == "Tornado") { bookSpellsCaster.ActivateSpell(); }
     }
 
+    public void CastNullSpell()
+    {
+        if (bookSpellsCaster.CurrentSpell == "NullSpell") { bookSpellsCaster.ActivateSpell(); }
+    }
+
 }

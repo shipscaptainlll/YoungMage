@@ -35,6 +35,7 @@ public class DoorTacklingManager : MonoBehaviour
     void Start()
     {
         doorTacklingSound = soundManager.LocateAudioSource("DoorCaveBump", transform);
+        
     }
 
     // Update is called once per frame

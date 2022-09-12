@@ -119,6 +119,24 @@ public class GlobalResource : MonoBehaviour
         } else if (id == 3)
         {
             fallingSound = globalSoundManager.LocateAudioSource("MetalOreLanding", transform);
+        } else if (id == 4)
+        {
+            //fallingSound = globalSoundManager.LocateAudioSource("MetalOreLanding", transform);
+        } else if (id == 5)
+        {
+            fallingSound = globalSoundManager.LocateAudioSource("EarthstoneLanding", transform);
+        } else if (id == 6)
+        {
+            fallingSound = globalSoundManager.LocateAudioSource("LavastoneoreLanding", transform);
+        } else if (id == 7)
+        {
+            fallingSound = globalSoundManager.LocateAudioSource("MagicstoneoreLanding", transform);
+        } else if (id == 8)
+        {
+            fallingSound = globalSoundManager.LocateAudioSource("WaterstoneOreLanding", transform);
+        } else if (id == 9)
+        {
+            //fallingSound = globalSoundManager.LocateAudioSource("MetalOreLanding", transform);
         }
         
     }
