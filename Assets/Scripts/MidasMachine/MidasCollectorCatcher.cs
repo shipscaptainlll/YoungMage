@@ -9,12 +9,14 @@ public class MidasCollectorCatcher : MonoBehaviour
     [SerializeField] Material dematerializeMaterial;
     [SerializeField] SoundManager soundManager;
     AudioSource dissolvingSound;
+    AudioSource waterFallinSound;
 
+    System.Random rand;
     public event Action<int> ResourceEnteredCollector = delegate { };
     // Start is called before the first frame update
     void Start()
     {
-        
+        rand = new System.Random();
     }
 
     // Update is called once per frame
@@ -27,12 +29,23 @@ public class MidasCollectorCatcher : MonoBehaviour
     {
         if (other.GetComponent<MidasResource>() != null)
         {
-            dissolvingSound = soundManager.LocateAudioSource("DissolvingObject", other.transform);
-            dissolvingSound.Play();
+
+            ApplySounds(other.transform);
             int resourceID = other.GetComponent<GlobalResource>().ID;
             if (ResourceEnteredCollector != null) { ResourceEnteredCollector(resourceID); }
             StartCoroutine(DematerializeProduct(other.transform, 4));
         }
+    }
+
+    void ApplySounds(Transform appliedToObject)
+    {
+        int random = rand.Next(1, 4);
+        if (random == 1) { waterFallinSound = soundManager.LocateAudioSource("WaterFallinSoundFirst", appliedToObject); }
+        else if (random == 2) { waterFallinSound = soundManager.LocateAudioSource("WaterFallinSoundSecond", appliedToObject); }
+        else if (random > 2) { waterFallinSound = soundManager.LocateAudioSource("WaterFallinSoundThird", appliedToObject); }
+        dissolvingSound = soundManager.LocateAudioSource("DissolvingObject", appliedToObject);
+        dissolvingSound.Play();
+        waterFallinSound.Play();
     }
 
     IEnumerator DematerializeProduct(Transform productTransform, float duration)

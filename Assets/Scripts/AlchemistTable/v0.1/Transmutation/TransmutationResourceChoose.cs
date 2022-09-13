@@ -12,6 +12,11 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
     [SerializeField] float _updateSpeed;
     [SerializeField] ResourceBottleStorage _resourceBottleStorage;
     [SerializeField] Transform _resourcesPositionsHolder;
+
+    [Header("Sounds Manager")]
+    [SerializeField] SoundManager soundManager;
+    AudioSource openingSound;
+
     List<GameObject> _accessibleResources = new List<GameObject>();
     Transform _chosenResource;
     float _currentAngle = 0f;
@@ -43,6 +48,7 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
     {
         potentialProductAppearance.AmuletRequestedReset += ResetResourceChoosing;
         SubscribeOnEvents();
+        openingSound = soundManager.LocateAudioSource("OnElementAlchtab", transform);
     }
 
 
@@ -81,11 +87,13 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
         VisualizeAccessibleResources();
         ResourcesPositionRecalculate();
         RotationSpeedRecalculate();
+
         if (!_transmutationEnabled) { HideResourcePack(); }
     }
 
     void VisualizeAccessibleResources()
     {
+        
         foreach (Transform position in _resourcesPositionsHolder)
         {
             position.gameObject.GetComponent<MeshRenderer>().enabled = false;
@@ -321,7 +329,7 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
 
     public void Show()
     {
-        //Debug.Log("Hello there");
+        openingSound.Play();
         if (!_transmutationEnabled && !_characterOccupation.IsOccupied)
         {
             foreach (GameObject resource in _accessibleResources)

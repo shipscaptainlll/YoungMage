@@ -109,12 +109,12 @@ public class OreMiningManager : MonoBehaviour
         if (secondProductID == 2)
         {
             oreMiningSound = soundManager.LocateAudioSource("StoneOreMining", transform);
-            Debug.Log("started playing sounds for stone");
+            //Debug.Log("started playing sounds for stone");
         }
         else if (secondProductID == 3)
         {
             oreMiningSound = soundManager.LocateAudioSource("MetalOreMining", transform);
-            Debug.Log("started playing sounds for metal");
+            //Debug.Log("started playing sounds for metal");
         }
         else if (secondProductID == 4)
         {
@@ -124,27 +124,27 @@ public class OreMiningManager : MonoBehaviour
         else if (secondProductID == 5)
         {
             oreMiningSound = soundManager.LocateAudioSource("EarthstoneMining", transform);
-            Debug.Log("started playing sounds for earth");
+            //Debug.Log("started playing sounds for earth");
         }
         else if (secondProductID == 6)
         {
             oreMiningSound = soundManager.LocateAudioSource("LavastoneOreMining", transform);
-            Debug.Log("started playing sounds for lava");
+            //Debug.Log("started playing sounds for lava");
         }
         else if (secondProductID == 7)
         {
             oreMiningSound = soundManager.LocateAudioSource("MagicstoneoreMining", transform);
-            Debug.Log("started playing sounds for magic");
+            //Debug.Log("started playing sounds for magic");
         }
         else if (secondProductID == 8)
         {
             oreMiningSound = soundManager.LocateAudioSource("WaterstoneOreMining", transform);
-            Debug.Log("started playing sounds for water");
+            //Debug.Log("started playing sounds for water");
         }
         else if (secondProductID == 9)
         {
             oreMiningSound = soundManager.LocateAudioSource("WindstoneOreMining", transform);
-            Debug.Log("started playing sounds for wind");
+            //Debug.Log("started playing sounds for wind");
         }
     }
 

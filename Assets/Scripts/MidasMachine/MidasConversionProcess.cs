@@ -9,12 +9,19 @@ public class MidasConversionProcess : MonoBehaviour
     [SerializeField] MidasCollectorCatcher outCollectorCatcher;
     [SerializeField] MidasResourcesCosts midasResourcesCosts;
 
+    [Header("Sounds Manager")]
+    [SerializeField] SoundManager soundManager;
+    [SerializeField] Transform waterfallTransform;
+    AudioSource waterFallSound;
+
     public event Action CoinTransportationAccepted = delegate { };
     // Start is called before the first frame update
     void Start()
     {
         inCollectorCatcher.ResourceEnteredCollector += StartConversion;
         outCollectorCatcher.ResourceEnteredCollector += StartConversion;
+        waterFallSound = soundManager.LocateAudioSource("WaterfallOnMetal", waterfallTransform);
+        waterFallSound.Play();
     }
 
     // Update is called once per frame

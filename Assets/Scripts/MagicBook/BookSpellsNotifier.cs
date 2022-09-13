@@ -78,7 +78,7 @@ public class BookSpellsNotifier : MonoBehaviour
         }
         else if (currentObject.GetComponent<TransmutationResourceChoose>() != null || currentObject.GetComponent<AlchemistPotentialProduct>() != null || currentObject.GetComponent<TransmutationResourcePack>() != null)
         {
-            Debug.Log("hello there seeing transmutation");
+            
             if (BookInHands()) { CastContactMachinery(); }
             else if (ObjectInHands() || ItemInHands()) { CastThrowObject(); } else { CastIdle(); }
         }

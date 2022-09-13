@@ -9,6 +9,12 @@ public class QuestNotificatorElement : MonoBehaviour
     [SerializeField] QuestsDatabase questsDatabase;
     [SerializeField] NewQuestsNotificator newQuestsNotificator;
     [SerializeField] Text questDescriptionHolder;
+
+    [Header("Sounds Manager")]
+    [SerializeField] SoundManager soundManager;
+    AudioSource questAppearanceSound;
+    AudioSource questDisappearanceSound;
+
     Coroutine hidingElemets = null;
     Coroutine calibratingElement = null;
     bool coroutineIsRunning = false;
@@ -26,6 +32,7 @@ public class QuestNotificatorElement : MonoBehaviour
     {
         newQuestsNotificator.startedHidingElement += StartRelocations;
         StartCoroutine(StartTimer(transform));
+        
     }
 
     // Update is called once per frame
@@ -52,6 +59,9 @@ public class QuestNotificatorElement : MonoBehaviour
 
     IEnumerator ShowQuestElement()
     {
+        questAppearanceSound = soundManager.LocateAudioSource("QuestUIAppear", transform);
+        
+        questAppearanceSound.Play();
         float elapsed = 0;
         float maxTime = 0.22f;
 
@@ -102,6 +112,8 @@ public class QuestNotificatorElement : MonoBehaviour
 
     IEnumerator HideQuestElement()
     {
+        questDisappearanceSound = soundManager.LocateAudioSource("QuestUIDisappear", transform);
+        questDisappearanceSound.Play();
         float elapsed = 0;
         float maxTime = 0.24f;
         while (elapsed < maxTime)
@@ -117,6 +129,7 @@ public class QuestNotificatorElement : MonoBehaviour
         newQuestsNotificator.QuestElements.Remove(transform);
         newQuestsNotificator.StartHidingElement();
         questsDatabase.ShowResiduaryQuests();
+        yield return new WaitForSeconds(0.3f);
         Destroy(transform.gameObject);
         yield return null;
     }

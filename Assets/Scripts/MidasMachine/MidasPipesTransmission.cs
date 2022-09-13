@@ -9,12 +9,16 @@ public class MidasPipesTransmission : MonoBehaviour
     [SerializeField] ObjectManager objectManager;
     [SerializeField] Transform finalOutlet;
 
+    [Header("Sounds Manager")]
+    [SerializeField] SoundManager soundManager;
+    AudioSource coinInstantiationSound;
     System.Random random;
     // Start is called before the first frame update
     void Start()
     {
         midasConversionProcess.CoinTransportationAccepted += StartMateialTransportation;
         random = new System.Random();
+        coinInstantiationSound = soundManager.LocateAudioSource("CoinAppear", finalOutlet);
     }
 
     // Update is called once per frame
@@ -49,6 +53,7 @@ public class MidasPipesTransmission : MonoBehaviour
 
     public void LetCoinOut()
     {
+        coinInstantiationSound.Play();
         float xTorque = (float)random.Next(-2, 2);
         float yTorque = (float)random.Next(-2, 2);
         float zTorque = (float)random.Next(-2, 2);

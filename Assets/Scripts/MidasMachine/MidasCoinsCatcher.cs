@@ -10,11 +10,24 @@ public class MidasCoinsCatcher : MonoBehaviour
     GameObject currentAccumulationForm = null;
     int coinsCount = 0;
 
+    [Header("Sounds Manager")]
+    [SerializeField] SoundManager soundManager;
+    AudioSource singleCoinSound;
+    AudioSource pileCoinsSoundFirst;
+    AudioSource pileCoinsSoundSecond;
+    AudioSource pileCoinsSoundThird;
+
+    System.Random rand;
     public event Action<Transform> CollectionUpdated = delegate { };
     // Start is called before the first frame update
     void Start()
     {
-        
+        singleCoinSound = soundManager.LocateAudioSource("CoinFallingMetal", transform);
+        pileCoinsSoundFirst = soundManager.LocateAudioSource("CoinFallPilecoinsFirst", transform);
+        pileCoinsSoundSecond = soundManager.LocateAudioSource("CoinFallPilecoinsSecond", transform);
+        pileCoinsSoundThird = soundManager.LocateAudioSource("CoinFallPilecoinsThird", transform);
+
+        rand = new System.Random();
     }
 
     // Update is called once per frame
@@ -35,11 +48,19 @@ public class MidasCoinsCatcher : MonoBehaviour
 
     public void AddToCount()
     {
-        coinsCount += 10;
+        coinsCount += 1;
     }
 
     public void CountCoins()
     {
+        if (coinsCount == 1) { singleCoinSound.Play(); }
+        else if (coinsCount > 1)
+        {
+            int randomInt = rand.Next(1, 4);
+            if (randomInt == 1) { pileCoinsSoundFirst.Play(); }
+            else if (randomInt == 2) { pileCoinsSoundSecond.Play(); }
+            else if (randomInt > 2) { pileCoinsSoundThird.Play(); }
+        }
         GameObject potentialAccumulationForm = coinsAccumulationModels.TakeModel(coinsCount);
         if (currentAccumulationForm != potentialAccumulationForm && potentialAccumulationForm != null)
         {

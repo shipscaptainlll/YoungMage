@@ -8,6 +8,8 @@ public class AlchemistPotentialProduct : MonoBehaviour, IResource, IShowClickabl
     [SerializeField] PotentialProductAppearance potentialProductAppearance;
     [SerializeField] int _id;
 
+
+
     public int ID { get { return _id; } }
 
     public event Action<string> ObjectFound = delegate { };

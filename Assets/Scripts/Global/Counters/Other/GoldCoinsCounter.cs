@@ -11,6 +11,10 @@ public class GoldCoinsCounter : MonoBehaviour, ICounter
     int count;
     bool itemOpened;
 
+    [Header("Sounds Manager")]
+    [SerializeField] SoundManager soundManager;
+    AudioSource coinsPaySound;
+
     public int ID { get { return id; } }
     public int Count
     {
@@ -36,10 +40,12 @@ public class GoldCoinsCounter : MonoBehaviour, ICounter
     void Start()
     {
         count = 0;
+        coinsPaySound = soundManager.FindSound("CoinPay");
     }
 
     public void AddResource(int ammount)
     {
+        if (ammount < 0) { coinsPaySound.Play(); }
         count += ammount;
         if (AddedAmmount != null) { AddedAmmount(id, ammount); }
         NotifyAmountChanged(count);

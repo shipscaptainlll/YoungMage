@@ -24,6 +24,7 @@ public class BookSpellsCaster : MonoBehaviour
     AudioSource nullSpellCasting;
     AudioSource popUpSound;
     AudioSource spellCasting;
+    AudioSource magicLettersAppear;
 
 
     MeshRenderer paperMeshRenderer;
@@ -44,7 +45,7 @@ public class BookSpellsCaster : MonoBehaviour
         nullSpellCasting = soundManager.FindSound("NullSpell");
         popUpSound = soundManager.FindSound("PopUp");
         spellCasting = soundManager.LocateAudioSource("CastingSpell", magicbookPaper);
-
+        magicLettersAppear = soundManager.LocateAudioSource("MagicLettersAppear", magicbookPaper);
 
     }
 
@@ -249,7 +250,7 @@ public class BookSpellsCaster : MonoBehaviour
         
         Material paperMaterial = paperMeshRenderer.materials[1];
         Color lettersColor = paperMaterial.GetColor("_EmissionColor");
-
+        magicLettersAppear.Play();
 
         while (elapsed < duration)
         {

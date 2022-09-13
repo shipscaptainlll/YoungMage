@@ -36,7 +36,7 @@ public class SacketClickController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Hello there");
+        //Debug.Log("Hello there");
         
         clickManager.TabClicked += KickOutItem;
         //clickManager.TabClicked += KickOutItem;
