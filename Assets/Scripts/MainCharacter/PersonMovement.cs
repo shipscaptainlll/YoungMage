@@ -17,6 +17,7 @@ public class PersonMovement : MonoBehaviour
     [SerializeField] LayerMask checkLayer2;
     [SerializeField] LayerMask checkLayer3;
     [SerializeField] LayerMask checkLayer4;
+    [SerializeField] LayerMask checkLayer5;
     [SerializeField] CharacterOccupation _characterOccupation;
     [SerializeField] float gravity;
     [SerializeField] Transform caveBulpsHolder;
@@ -39,6 +40,9 @@ public class PersonMovement : MonoBehaviour
     AudioSource shiftingSound;
     AudioSource walkingStairsSound;
     AudioSource runningStairsSound;
+    AudioSource walkingBedSound;
+    AudioSource jumpingBedSound;
+    AudioSource doubleJumpingBedSound;
     AudioSource walkingStoneSound;
     AudioSource runningStoneSound;
     AudioSource woodLandNormalSound;
@@ -88,6 +92,8 @@ public class PersonMovement : MonoBehaviour
     bool isGrounded;
     bool onStairs;
     bool onStone;
+    bool onOtherGround;
+    string currentObjectGround;
 
     float timeShiftPressed;
 
@@ -130,6 +136,9 @@ public class PersonMovement : MonoBehaviour
         runningSound = soundManager.FindSound("Run");
         walkingStairsSound = soundManager.FindSound("StairsWalk");
         runningStairsSound = soundManager.FindSound("StairsRun");
+        walkingBedSound = soundManager.FindSound("BedWalk");
+        jumpingBedSound = soundManager.FindSound("BedJump");
+        doubleJumpingBedSound = soundManager.FindSound("BedDoubleJump");
         walkingStoneSound = soundManager.FindSound("StoneWalk");
         runningStoneSound = soundManager.FindSound("StoneRun");
         woodLandNormalSound = soundManager.FindSound("WoodLandNormal");
@@ -153,14 +162,17 @@ public class PersonMovement : MonoBehaviour
         }
         if (!occupied)
             MoveCharacter();
-        if (isWalking && !onStone && !onStairs && isGrounded) { RandomWoodcreakInitiator(); if (!walkingSound.isPlaying) { walkingSound.Play(); } } else { if (walkingSound.isPlaying) { walkingSound.Stop(); } }
+        if (isWalking && !onStone && !onStairs && !onOtherGround && isGrounded) { RandomWoodcreakInitiator(); if (!walkingSound.isPlaying) { walkingSound.Play(); } } else { if (walkingSound.isPlaying) { walkingSound.Stop(); } }
         if (isWalking && onStairs) { if (!walkingStairsSound.isPlaying) { walkingStairsSound.Play(); } } else { if (walkingStairsSound.isPlaying) { walkingStairsSound.Stop(); } }
-        if (isRunning && !onStone && !onStairs && isGrounded) { if (!runningSound.isPlaying) { runningSound.Play(); } } else { if (runningSound.isPlaying) { runningSound.Stop(); } }
+        if (isRunning && !onStone && !onStairs && !onOtherGround && isGrounded) { if (!runningSound.isPlaying) { runningSound.Play(); } } else { if (runningSound.isPlaying) { runningSound.Stop(); } }
         if (isRunning && onStairs) { if (!runningStairsSound.isPlaying) { runningStairsSound.Play(); } } else { if (runningStairsSound.isPlaying) { runningStairsSound.Stop(); } }
         if (isWalking && onStone) { if (!walkingStoneSound.isPlaying) { walkingStoneSound.Play(); } } else { if (walkingStoneSound.isPlaying) { walkingStoneSound.Stop(); } }
         if (isRunning && onStone) { if (!runningStoneSound.isPlaying) { runningStoneSound.Play(); } } else { if (runningStoneSound.isPlaying) { runningStoneSound.Stop(); } }
 
         if ((isWalking && onStone) || (isRunning && onStone)) { RandomCavebulpInitiator(); }
+
+        if (isWalking && onOtherGround && currentObjectGround == "Bed") { if (!walkingBedSound.isPlaying) { walkingBedSound.Play(); } } else { if (walkingBedSound.isPlaying) { walkingBedSound.Stop(); } }
+
     }
 
     void RandomWoodcreakInitiator()
@@ -310,36 +322,64 @@ public class PersonMovement : MonoBehaviour
 
 
         isGrounded = (Physics.CheckSphere(checkGround.position, checkRadius, checkLayer) || Physics.CheckSphere(checkGround.position, checkRadius, checkLayer2) 
-            || Physics.CheckSphere(checkGround.position, stairsCheckRadius, checkLayer3) || Physics.CheckSphere(checkGround.position, checkRadius, checkLayer4));
+            || Physics.CheckSphere(checkGround.position, stairsCheckRadius, checkLayer3) || Physics.CheckSphere(checkGround.position, checkRadius, checkLayer4)
+            || Physics.CheckSphere(checkGround.position, checkRadius, checkLayer5));
         onStairs = (Physics.CheckSphere(checkGround.position, stairsCheckRadius, checkLayer3));
         onStone = (Physics.CheckSphere(checkGround.position, checkRadius, checkLayer4));
+        onOtherGround = (Physics.CheckSphere(checkGround.position, checkRadius, checkLayer5));
+        if (onOtherGround && currentObjectGround == null)
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(checkGround.position, checkRadius);
+            foreach (Collider hitCollider in hitColliders)
+            {
+                if (hitCollider.transform.name == "Bed")
+                {
+                    currentObjectGround = "Bed";
+                    return;
+                }
+                else
+                {
+                    currentObjectGround = null;
+                }
+            }
+        }
+        if (!onOtherGround && currentObjectGround != null) { currentObjectGround = null; }
         if (isGrounded && !isGroundedOld) 
         {
             landVFX.SendEvent("CharacterLanded");
             landVFX.SetVector3("SphereCenterPosition", landVFX.transform.position);
             Collider[] hitColliders = Physics.OverlapSphere(checkGround.position, checkRadius);
-                foreach (Collider hitCollider in hitColliders)
+            foreach (Collider hitCollider in hitColliders)
+            {
+                if (hitCollider.transform.name == "chair")
                 {
-                    if (hitCollider.transform.name == "chair")
-                    {
-                        landedChairSound.Play();
-                    }
-                    else if (hitCollider.transform.name == "Table")
+                    landedChairSound.Play();
+                }
+                else if (hitCollider.transform.name == "Table")
                 {
                     landedTableSound.Play();
                 }
+                else if (hitCollider.transform.name == "Table")
+                {
+                    jumpingBedSound.Play();
                 }
+            }
         }
 
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -60f;
+            
             if (onStone)
             {
                 if (!doubleJumped && jumped) { stoneLandNormalSound.Play(); } else if (doubleJumped) { stoneLandLoudSound.Play(); }
-            } else if (!onStone)
+            } else if (!onStone && currentObjectGround == null)
             {
                 if (!doubleJumped && jumped) { woodLandNormalSound.Play(); } else if (doubleJumped) { woodLandLoudSound.Play(); }
+            } else if (currentObjectGround == "Bed")
+            {
+                Debug.Log(currentObjectGround);
+                if (!doubleJumped && jumped) { jumpingBedSound.Play(); } else if (doubleJumped) { doubleJumpingBedSound.Play(); }
             }
             
             doubleJumped = false;

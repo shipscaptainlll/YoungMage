@@ -37,6 +37,7 @@ public class SkeletonHouseInstantiator : MonoBehaviour
         Transform newSkeleton = Instantiate(skeletonModel, teleportedSkeleton.position, teleportedSkeleton.rotation);
         newSkeleton.gameObject.SetActive(true);
         newSkeleton.GetComponent<SkeletonBehavior>().SubscribeAfterInstantiation();
+        newSkeleton.GetComponent<SkeletonBehavior>().InstantiateSounds();
         newSkeleton.GetComponent<SkeletonBehavior>().Activity = "Idle";
         newSkeleton.parent = homeSkeletonsHolder;
         if (HouseSkeletonCreated != null) { HouseSkeletonCreated(newSkeleton); }

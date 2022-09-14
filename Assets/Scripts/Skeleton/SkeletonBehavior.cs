@@ -84,10 +84,13 @@ public class SkeletonBehavior : MonoBehaviour
 
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
+    [SerializeField] Transform portalTransform;
     AudioSource walkingGroundSound;
     AudioSource walkingStairsSound;
     AudioSource walkingStoneSound;
     AudioSource destroySkeletonSound;
+    AudioSource goingThroughPortal;
+    bool goingPortalPlayed;
 
 
 
@@ -164,10 +167,8 @@ public class SkeletonBehavior : MonoBehaviour
     System.Random rand;
     void Start()
     {
-        walkingGroundSound = soundManager.LocateAudioSource("SkeletonWalkGround", transform);
-        walkingStairsSound = soundManager.LocateAudioSource("SkeletonWalkStairs", transform);
-        walkingStoneSound = soundManager.LocateAudioSource("SkeletonWalkStone", transform);
-        
+        InstantiateSounds();
+
         rand = new System.Random();
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.avoidancePriority = rand.Next(1, 10);
@@ -249,6 +250,10 @@ public class SkeletonBehavior : MonoBehaviour
         set
         {
             isConjured = true;
+            if (navigationTarget.GetComponent<PortalCamera>() != null)
+            {
+                StartCoroutine(CountDistancePortal());
+            }
             if (navigationTarget != null && navigationTarget.GetComponent<IOre>() != null)
             {
                 navigationTarget.GetComponent<NavMeshObstacle>().enabled = true;
@@ -707,7 +712,7 @@ public class SkeletonBehavior : MonoBehaviour
     public void StartChazingPortal(Transform foundPortal)
     {
         StartCoroutine(BecomeCojured(foundPortal));
-        
+        StartCoroutine(CountDistancePortal());
     }
 
     IEnumerator BecomeCojured(Transform foundPortal)
@@ -1099,5 +1104,34 @@ public class SkeletonBehavior : MonoBehaviour
         contactManager.GetComponent<ContactManager>().ObjectOverloaded -= ShowEmotion;
         connectedTeleport.GetComponent<Teleporter>().TeleportFound -= StopGravity;
         transform.GetComponent<CopycatCreator>().OriginTeleported -= StopActivities;
+    }
+
+    public void InstantiateSounds()
+    {
+        walkingGroundSound = soundManager.LocateAudioSource("SkeletonWalkGround", transform);
+        walkingStairsSound = soundManager.LocateAudioSource("SkeletonWalkStairs", transform);
+        walkingStoneSound = soundManager.LocateAudioSource("SkeletonWalkStone", transform);
+        
+    }
+
+    public void ThroughPortalSound()
+    {
+        goingPortalPlayed = true;
+        goingThroughPortal = soundManager.LocateAudioSource("GoingThroughPortal", portalTransform);
+        goingThroughPortal.Play();
+    }
+
+    IEnumerator CountDistancePortal()
+    {
+        bool portalActivated = false;
+        while (true)
+        {
+            var currentDistance = Vector3.Distance(transform.position, navigationTarget.position);
+            if (currentDistance < 5) { portalActivated = true; }
+            if (currentDistance < 4.5f && portalActivated && !goingPortalPlayed) { ThroughPortalSound(); }
+            Debug.Log(currentDistance);
+            yield return null;
+        }
+        
     }
 }
