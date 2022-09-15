@@ -95,11 +95,11 @@ public class CameraController : MonoBehaviour
         {
             yRotation += xRot * 0.25f;
             xRotation -= yRot * 0.25f;
-            Debug.Log(startRotation);
+            //Debug.Log(startRotation);
             yRotation = Mathf.Clamp(yRotation, startRotation.y - 6.5f, startRotation.y + 6.5f);
             xRotation = Mathf.Clamp(xRotation, startRotation.x - 6.5f, startRotation.x + 6.5f);
             transform.localRotation = Quaternion.Euler(xRotation, yRotation, startRotation.z);
-            Debug.Log(transform.localRotation.eulerAngles);
+            //Debug.Log(transform.localRotation.eulerAngles);
         }
 
 

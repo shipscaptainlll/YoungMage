@@ -163,7 +163,7 @@ public class ContactManager : MonoBehaviour
                 {
                     //Debug.Log("Potential product is visible");
                 }
-                else if (contactedObject.parent.Find("ChooseResource") != null && contactedObject.parent.Find("ChooseResource").GetComponent<TransmutationResourceChoose>() != null)
+                else if (contactedObject.parent != null && contactedObject.parent.Find("ChooseResource") != null && contactedObject.parent.Find("ChooseResource").GetComponent<TransmutationResourceChoose>() != null)
                 {
                     if (AlchemistTableDetected != null)
                     {

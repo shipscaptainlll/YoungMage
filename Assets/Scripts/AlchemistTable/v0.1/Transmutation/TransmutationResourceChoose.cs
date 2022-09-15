@@ -16,6 +16,8 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
     AudioSource openingSound;
+    AudioSource rotatingSound;
+    AudioSource applyElementSound;
 
     List<GameObject> _accessibleResources = new List<GameObject>();
     Transform _chosenResource;
@@ -49,6 +51,8 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
         potentialProductAppearance.AmuletRequestedReset += ResetResourceChoosing;
         SubscribeOnEvents();
         openingSound = soundManager.LocateAudioSource("OnElementAlchtab", transform);
+        rotatingSound = soundManager.LocateAudioSource("RotateElementAlchtab", transform);
+        applyElementSound = soundManager.LocateAudioSource("ApplyElementAlchtab", transform);
     }
 
 
@@ -93,7 +97,7 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
 
     void VisualizeAccessibleResources()
     {
-        
+        Debug.Log("Closed");
         foreach (Transform position in _resourcesPositionsHolder)
         {
             position.gameObject.GetComponent<MeshRenderer>().enabled = false;
@@ -157,6 +161,7 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
     {
         if (engagedResourcePack.parent.Find("ChooseResource") == transform)
         {
+            Debug.Log("Hello there");
             ShowResourcePack();
             ClearChosenVisualisation();
             if (ResourceUnchosen != null)
@@ -191,6 +196,7 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
     {
         if (_transmutationEnabled && !_isRotating)
         {
+            rotatingSound.Play();
             _isRotating = true;
             ChangeCurrentAngle(-_deltaAngle);
             StartCoroutine(Rotate(-_rotationAngle, _updateSpeed));
@@ -201,6 +207,7 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
     {
         if (_transmutationEnabled && !_isRotating)
         {
+            rotatingSound.Play();
             _isRotating = true;
             ChangeCurrentAngle(_deltaAngle);
             StartCoroutine(Rotate(_rotationAngle, _updateSpeed));
@@ -313,6 +320,7 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
         //Debug.Log(engagedResourcePack + " engaged resource pack");
         if (engagedResourcePack.parent.Find("ChooseResource") == transform)
         {
+            applyElementSound.Play();
             //Debug.Log("found");
             StopResourceChoosing(engagedResourcePack);
         }
@@ -322,6 +330,7 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
     {
         foreach (GameObject resource in _accessibleResources)
         {
+            Debug.Log("Shown");
             resource.GetComponent<MeshRenderer>().enabled = true;
             resource.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
         }

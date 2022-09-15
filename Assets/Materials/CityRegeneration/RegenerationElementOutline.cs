@@ -20,6 +20,11 @@ public class RegenerationElementOutline : MonoBehaviour
     Coroutine housesCoroutine;
     Coroutine wallsCoroutine;
     Coroutine castleCoroutine;
+
+    [Header("Sounds Manager")]
+    [SerializeField] SoundManager soundManager;
+    AudioSource onElementSound;
+
     public enum RegenerationElementType
     {
         nothing,
@@ -32,6 +37,7 @@ public class RegenerationElementOutline : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        onElementSound = soundManager.LocateAudioSource("OnElementRegtab", transform);
         if (elementType == RegenerationElementType.house)
         {
             firstHousesMaterial = gameObject.GetComponent<MeshRenderer>().sharedMaterial;
@@ -57,10 +63,12 @@ public class RegenerationElementOutline : MonoBehaviour
         wallMaterial.SetFloat("_Multiplier", 0);
         firstCastleMaterial.SetFloat("_Multiplier", 0);
         secondCastleMaterial.SetFloat("_Multiplier", 0);
+        
     }
 
     public void StartShowingOutline()
     {
+        Debug.Log("played");
         if (elementType == RegenerationElementType.house)
         {
             Transform housesHolder = gameObject.transform.parent;
@@ -69,15 +77,19 @@ public class RegenerationElementOutline : MonoBehaviour
                 if (housesCoroutine != null) { StopCoroutine(housesCoroutine); }
                 housesCoroutine = StartCoroutine(ChangeOutlineIntensity(firstHousesMaterial.GetFloat("_Multiplier"), 0.58f, 0.6f));
             }
+            onElementSound.Play();
         } else if (elementType == RegenerationElementType.wall)
         {
             if (wallsCoroutine != null) { StopCoroutine(wallsCoroutine); }
             wallsCoroutine = StartCoroutine(ChangeOutlineIntensity(wallMaterial.GetFloat("_Multiplier"), 0.58f, 0.3f));
+            onElementSound.Play();
         } else if (elementType == RegenerationElementType.castle)
         {
             if (castleCoroutine != null) { StopCoroutine(castleCoroutine); }
             castleCoroutine = StartCoroutine(ChangeOutlineIntensity(firstCastleMaterial.GetFloat("_Multiplier"), 0.58f, 0.3f));
+            onElementSound.Play();
         }
+        
     }
 
     public void StopShowingOutline()

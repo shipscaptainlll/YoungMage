@@ -86,6 +86,7 @@ public class CharacterOccupation : MonoBehaviour
             
             case "alchemist table":
                 if (CharacterEngagedTransmutation != null) CharacterEngagedTransmutation(_engagedObject);
+                Debug.Log("engaged");
                 break;
         }
     }

@@ -54,6 +54,7 @@ public class SoundManager : MonoBehaviour
         //Debug.Log(Array.Find(sounds, sound => sound.name == name).name);
         if (Array.Find(sounds, sound => sound.name == name) != null)
         {
+            string oldName = newParent.gameObject.name;
             Sound sound = Array.Find(sounds, sound => sound.name == name);
 
             AudioSource newAudioSource = newParent.gameObject.AddComponent<AudioSource>();
@@ -69,6 +70,7 @@ public class SoundManager : MonoBehaviour
             newAudioSource.minDistance = sound.minDistance;
             newAudioSource.maxDistance = sound.maxDistance;
 
+            newParent.gameObject.name = oldName;
             return newAudioSource;
         }
         return null;

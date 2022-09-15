@@ -20,6 +20,15 @@ public class AttachObjectSkeleton : MonoBehaviour
     [SerializeField] float materializationDuration;
     [SerializeField] MaterialEquipShower materialEquipShower;
 
+    [Header("Sounds Manager")]
+    [SerializeField] SoundManager soundManager;
+    AudioSource applyObjectSound;
+
+    void Start()
+    {
+        applyObjectSound = soundManager.FindSound("ApplyElementSkeleton");
+    }
+
     public void AttachObject(SkeletonBehavior skeleton, int id)
     {
         SkeletonAttachedObjects skeletonAttachedObjects = skeleton.transform.GetComponent<SkeletonAttachedObjects>();
@@ -193,6 +202,7 @@ public class AttachObjectSkeleton : MonoBehaviour
         item.GetChild(0).GetComponent<SkeletonItem>().SkeletonScript = skeleton;
         
         StartCoroutine(MaterializeItem(item, materializationDuration));
+        applyObjectSound.Play();
     }
 
     IEnumerator MaterializeItem(Transform productTransform, float duration)
