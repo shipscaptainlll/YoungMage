@@ -12,6 +12,7 @@ public class PortalOpener : MonoBehaviour
     [SerializeField] CopycatCreator teleportationManager;
     [SerializeField] EClickVariations eClickVariations;
     [SerializeField] CopycatCatcher copycatCatcher;
+    [SerializeField] ParticleSystem portalPS;
 
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
@@ -49,7 +50,7 @@ public class PortalOpener : MonoBehaviour
     {
         if (!portalOpened)
         {
-            
+            ActivateParticleSystem();
             portalOpened = true;
             //Debug.Log("OpeningPortal");
             if (!cycleRunning && eClickVariations.IsOpeningPortal)
@@ -144,6 +145,7 @@ public class PortalOpener : MonoBehaviour
             housePortal.localScale = new Vector3(currentXScale, currentYScale, housePortal.localScale.z);
             yield return null;
         }
+        DeactivateParticleSystem();
         housePortal.gameObject.SetActive(false);
     }
 
@@ -239,4 +241,16 @@ public class PortalOpener : MonoBehaviour
         choosenSkeleton.Find("MiddlePart.002").GetComponent<ObjectSlicer>().enabled = true;
         choosenSkeleton.GetComponent<CopycatCreator>().enabled = true;
     }
+
+    void ActivateParticleSystem()
+    {
+        portalPS.gameObject.SetActive(true);
+        portalPS.Play();
+    }
+    void DeactivateParticleSystem()
+    {
+        portalPS.Play();
+        portalPS.gameObject.SetActive(false);
+    }
+
 }

@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class DefractorProduct : MonoBehaviour
 {
+    
     Transform countersHolder;
     int id;
 
     public int ID { get { return id; } set { id = value; } }
     public Transform CountersHolder { set { countersHolder = value; } }
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -25,11 +27,13 @@ public class DefractorProduct : MonoBehaviour
     {
         if (other.GetComponent<ICatcher>() != null && other.GetComponent<ICatcher>().CatcherTag == "DefractoringLine")
         {
+            
             Destroy(gameObject);
         }
         if (other.GetComponent<ICatcher>() != null && other.GetComponent<ICatcher>().CatcherTag == "OutletLine")
         {
             //Debug.Log(countersHolder);
+            other.GetComponent<BasicCatcher>().CatchSound();
             foreach (Transform element in countersHolder)
             {
                 if (element.GetComponent<ICounter>().ID == id)
@@ -41,4 +45,6 @@ public class DefractorProduct : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    
 }

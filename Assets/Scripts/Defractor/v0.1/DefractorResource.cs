@@ -6,6 +6,10 @@ using UnityEngine;
 public class DefractorResource : MonoBehaviour
 {
     [SerializeField] DestroyableObjects destroyableObjects;
+    SoundManager soundManager;
+    AudioSource destructionSound;
+    public SoundManager SoundManagerScript { set { soundManager = value; } }
+    
     int id;
     GameObject destroyableVersion;
 
@@ -13,7 +17,7 @@ public class DefractorResource : MonoBehaviour
     public int ID { get { return id; } set { id = value; } }
     // Start is called before the first frame update
     void Start()
-    {
+    { 
         
     }
 
@@ -38,9 +42,9 @@ public class DefractorResource : MonoBehaviour
     void InstantiateDestroyableVersion()
     {
         destroyableVersion = Instantiate(destroyableObjects.TakeObject(id), transform.position, transform.rotation);
+        destructionSound = soundManager.LocateAudioSource("RockoreDestruction", destroyableVersion.transform);
+        destructionSound.Play();
         destroyableVersion.transform.position = transform.position;
         destroyableVersion.AddComponent<DestroyableObject>();
     }
-
-    
 }

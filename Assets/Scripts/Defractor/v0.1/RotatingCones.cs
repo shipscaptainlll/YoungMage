@@ -9,6 +9,7 @@ public class RotatingCones : MonoBehaviour
     [SerializeField] int direction;
     [SerializeField] float requiredSpeed;
     [SerializeField] float updateSpeed;
+    [SerializeField] ParticleSystem rotationParticleSystem;
     float currentSpeed = 0;
     bool rotating = false;
     bool slowingDown = false;
@@ -17,7 +18,7 @@ public class RotatingCones : MonoBehaviour
     void Start()
     {
         cuttingProcess.RotationStarted += StartRotation;
-        
+        DeactivateRotationPS();
     }
 
     // Update is called once per frame
@@ -28,6 +29,7 @@ public class RotatingCones : MonoBehaviour
 
     void StartRotation()
     {
+        ActivateRotationPS();
         Debug.Log("started cones rotation2");
         rotating = true;
         slowingDown = false;
@@ -38,7 +40,7 @@ public class RotatingCones : MonoBehaviour
 
     void StopRotation()
     {
-        
+        DeactivateRotationPS();
         if (!slowingDown)
         {
             slowingDown = true;
@@ -69,7 +71,7 @@ public class RotatingCones : MonoBehaviour
                 elapsed += Time.deltaTime;
                 currentSpeed += Time.deltaTime * 100;
             } else if (!done && currentSpeed >= requiredSpeed) { done = true; currentSpeed = requiredSpeed; }
-            Debug.Log("started cones rotation4");
+            //Debug.Log("started cones rotation4");
             transform.Rotate(0, 0, currentSpeed * direction * Time.deltaTime);
         }
     }
@@ -91,6 +93,24 @@ public class RotatingCones : MonoBehaviour
             }
             else if (!done && currentSpeed <= requiredSpeed) { done = true; currentSpeed = 0; slowingDown = false; StopAllCoroutines(); }
             transform.Rotate(0, 0, currentSpeed * direction * Time.deltaTime);
+        }
+    }
+
+    void ActivateRotationPS()
+    {
+        if (!rotationParticleSystem.isPlaying)
+        {
+            rotationParticleSystem.gameObject.SetActive(true);
+            rotationParticleSystem.Play();
+        }
+    }
+
+    void DeactivateRotationPS()
+    {
+        if (rotationParticleSystem.isPlaying)
+        {
+            rotationParticleSystem.Stop();
+            rotationParticleSystem.gameObject.SetActive(false);
         }
     }
 }

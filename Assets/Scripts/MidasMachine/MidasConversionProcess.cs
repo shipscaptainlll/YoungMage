@@ -8,6 +8,8 @@ public class MidasConversionProcess : MonoBehaviour
     [SerializeField] MidasCollectorCatcher inCollectorCatcher;
     [SerializeField] MidasCollectorCatcher outCollectorCatcher;
     [SerializeField] MidasResourcesCosts midasResourcesCosts;
+    [SerializeField] ParticleSystem transformationPS;
+    Coroutine delayPSCoroutine;
 
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
@@ -32,6 +34,8 @@ public class MidasConversionProcess : MonoBehaviour
 
     void StartConversion(int resourceID)
     {
+        ManageTransformationPS();
+        
         Debug.Log("Resource entered collector " + resourceID);
         int countOfCoins = midasResourcesCosts.GetCost(resourceID);
         StartCoroutine(PushIntoProcess(countOfCoins));
@@ -48,5 +52,24 @@ public class MidasConversionProcess : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
         
+    }
+
+    void ManageTransformationPS()
+    {
+        if (delayPSCoroutine != null) { StopCoroutine(delayPSCoroutine); delayPSCoroutine = StartCoroutine(delayPS()); }
+        else
+        {
+            delayPSCoroutine = StartCoroutine(delayPS());
+            transformationPS.gameObject.SetActive(true);
+            transformationPS.Play();
+        }
+    }
+
+    IEnumerator delayPS()
+    {
+        yield return new WaitForSeconds(17f);
+        transformationPS.Stop();
+        transformationPS.gameObject.SetActive(false);
+        delayPSCoroutine = null;
     }
 }

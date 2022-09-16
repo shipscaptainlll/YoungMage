@@ -12,6 +12,7 @@ public class WallRegenerationButton : MonoBehaviour, IPointerDownHandler, IPoint
     public float ButtonDownTime { get { return buttonDownTime; } }
 
     public event Action ButtonDown = delegate { };
+    public event Action ButtonUp = delegate { };
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +39,7 @@ public class WallRegenerationButton : MonoBehaviour, IPointerDownHandler, IPoint
     {
         isHolded = false;
         buttonDownTime = 10;
+        if (ButtonUp != null) { ButtonUp(); }
     }
 
 }

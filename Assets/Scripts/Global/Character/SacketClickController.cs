@@ -83,6 +83,7 @@ public class SacketClickController : MonoBehaviour
                 newObject.gameObject.GetComponent<DefractorResource>().ID = quickAccessHandController.CurrentCustomID;
                 newObject.gameObject.GetComponent<DefractorResource>().DestroyableObjects = destroyableObjects;
                 newObject.gameObject.GetComponent<DefractorResource>().objectContactedDefractor += DestroyObject;
+                newObject.gameObject.GetComponent<DefractorResource>().SoundManagerScript = soundManager;
                 newObject.gameObject.AddComponent<GlobalResource>();
                 newObject.gameObject.GetComponent<GlobalResource>().WasCollected = true;
                 newObject.gameObject.GetComponent<GlobalResource>().TargetLayerMask = midasLayerHolder.GetComponent<LayerMaskSettings>().TargetLayer;

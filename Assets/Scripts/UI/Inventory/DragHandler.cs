@@ -11,6 +11,9 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     int rowSiblingIndex;
     int slotSiblingIndex;
 
+    Coroutine clickDelayCoroutine;
+    bool doubleClicked;
+
     List<RaycastResult> hitObjects = new List<RaycastResult>();
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -41,7 +44,8 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public void OnPointerDown(PointerEventData eventData)
     {
         //Debug.Log(" is free");
-        if (Input.GetKey(KeyCode.LeftControl))
+        ManageDoubleClicks();
+        if (Input.GetKey(KeyCode.LeftControl) || doubleClicked)
         {
             if (GetObjectUnderMouse().GetComponent<Element>().ElementType == Element.ElementTypeEnum.inventorySlot.ToString() && GetObjectUnderMouse().GetComponent<Element>().CustomID != 0)
             {
@@ -91,5 +95,19 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         if (hitObjects.Count <= 0) return null;
 
         return hitObjects[0].gameObject;
+    }
+
+    void ManageDoubleClicks()
+    {
+        if (clickDelayCoroutine == null) { clickDelayCoroutine = StartCoroutine(delayLeftClick()); }
+        else { doubleClicked = true; Debug.Log("double clicked"); }
+    }
+
+    IEnumerator delayLeftClick()
+    {
+        yield return new WaitForSeconds(0.25f);
+        doubleClicked = false;
+        clickDelayCoroutine = null;
+        
     }
 }

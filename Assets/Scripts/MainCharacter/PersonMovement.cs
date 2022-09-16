@@ -54,6 +54,7 @@ public class PersonMovement : MonoBehaviour
     AudioSource landedChairSound;
     AudioSource landedTableSound;
     AudioSource exclaimingSound;
+    AudioSource hardBreathingSound;
 
     Coroutine delayCreakCoroutine;
     Coroutine delayCaveBulpCoroutine;
@@ -151,7 +152,7 @@ public class PersonMovement : MonoBehaviour
         landedTableSound = soundManager.FindSound("TableSlap");
         shiftingSound = soundManager.FindSound("Shift");
         exclaimingSound = soundManager.FindSound("YoungMageExclaiming");
-        
+        hardBreathingSound = soundManager.FindSound("MageHardBreathing");
     }
 
     void LateUpdate()
@@ -247,10 +248,12 @@ public class PersonMovement : MonoBehaviour
 
         if (Mathf.Abs(xInput) > 0.2f || Mathf.Abs(zInput) > 0.2f)
         {
+            
             isWalking = true;
-        }
+        } 
         else
         {
+            
             isWalking = false;
         }
 
@@ -262,6 +265,7 @@ public class PersonMovement : MonoBehaviour
                 {
                     //Debug.Log("pressed shift");
                     speed = basicSpeed * 1.45f;
+                    if (hardBreathingSound.isPlaying) { hardBreathingSound.Stop(); }
                     isWalking = false; isRunning = true;
                 }
             }
@@ -269,6 +273,7 @@ public class PersonMovement : MonoBehaviour
         if (!isShifting && Input.GetKeyUp(KeyCode.LeftShift) && !isAutoRunning)
         {
             speed = basicSpeed * 1;
+            if (!hardBreathingSound.isPlaying) { hardBreathingSound.Play(); }
             isWalking = true; isRunning = false;
             keyPushedLength = 0;
         }
@@ -394,7 +399,7 @@ public class PersonMovement : MonoBehaviour
             jumped = true;
             //Debug.Log(jumped);
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-            
+            if (hardBreathingSound.isPlaying) { hardBreathingSound.Stop(); }
             if (!isGrounded) { 
                 doubleJumped = true;
                 doubleJumps++;

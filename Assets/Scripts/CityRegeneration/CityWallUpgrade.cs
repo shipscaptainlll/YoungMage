@@ -10,6 +10,7 @@ public class CityWallUpgrade : MonoBehaviour
     [SerializeField] CastleHealthDecreaser castleHealthDecreaser;
     [SerializeField] GoldCoinsCounter goldCoinsCounter;
     [SerializeField] SUINotificator suiNotificator;
+    [SerializeField] ParticleSystem upgradeParticleSystem;
 
     [Header("Roates to inner elements")]
     [SerializeField] Text healthText;
@@ -31,6 +32,7 @@ public class CityWallUpgrade : MonoBehaviour
         castleHealthDecreaser.CastleHealthChanged += AnalyzeCurrentHealth;
         //goldCoinsCounter.AmmountEnded += AnalyzeGold;
         wallRegenerationButton.ButtonDown += TransformMoneyHealth;
+        wallRegenerationButton.ButtonUp += HideUpgradePS;
     }
 
     // Update is called once per frame
@@ -41,6 +43,7 @@ public class CityWallUpgrade : MonoBehaviour
 
     public void TransformMoneyHealth()
     {
+        ShowUpgradePS();
         float healthRegenerate = wallRegenerationButton.ButtonDownTime;
         int goldNeeded = Mathf.RoundToInt(wallRegenerationButton.ButtonDownTime * healthCost);
         if (goldCoinsCounter.Count <= goldNeeded)
@@ -76,4 +79,18 @@ public class CityWallUpgrade : MonoBehaviour
         return Mathf.RoundToInt((wallMaximumHealth - currentHealth) * healthCost);
     }
 
+    void ShowUpgradePS()
+    {
+        if (!upgradeParticleSystem.isPlaying)
+        {
+            upgradeParticleSystem.gameObject.SetActive(true);
+            upgradeParticleSystem.Play();
+        }
+    }
+
+    void HideUpgradePS()
+    {
+        upgradeParticleSystem.Stop();
+        upgradeParticleSystem.gameObject.SetActive(false);
+    }
 }

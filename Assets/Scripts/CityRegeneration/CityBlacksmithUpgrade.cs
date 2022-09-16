@@ -9,6 +9,8 @@ public class CityBlacksmithUpgrade : MonoBehaviour
     [Header("Attached main scripts")]
     [SerializeField] GoldCoinsCounter goldCoinsCounter;
     [SerializeField] SUINotificator suiNotificator;
+    [SerializeField] ParticleSystem upgradePS;
+    Coroutine upgradPSCoroutine;
 
     [Header("Roates to inner elements")]
     [SerializeField] Scrollbar upgradesBar;
@@ -52,6 +54,7 @@ public class CityBlacksmithUpgrade : MonoBehaviour
         {
             if (TakeUpgradeMoney())
             {
+                ShowUpgradePS();
                 suiNotificator.Notify("-" + upgradeCost);
                 upgradeCurrentCount++;
                 InitiateScrolling();
@@ -112,5 +115,32 @@ public class CityBlacksmithUpgrade : MonoBehaviour
         upgradesBar.value = endScroll;
         coroutineIsRunning = false;
         yield return null;
+    }
+
+    void ShowUpgradePS()
+    {
+        if (upgradPSCoroutine != null)
+        {
+            StopCoroutine(upgradPSCoroutine);
+        }
+        upgradPSCoroutine = StartCoroutine(DelayUpgradePS());
+        if (!upgradePS.isPlaying)
+        {
+            upgradePS.gameObject.SetActive(true);
+            upgradePS.Play();
+        }
+    }
+
+    IEnumerator DelayUpgradePS()
+    {
+        yield return new WaitForSeconds(0.75f);
+        HideUpgradePS();
+        upgradPSCoroutine = null;
+    }
+
+    void HideUpgradePS()
+    {
+        upgradePS.Stop();
+        upgradePS.gameObject.SetActive(false);
     }
 }

@@ -85,9 +85,10 @@ public class DropHandler : MonoBehaviour, IDropHandler
     Transform CheckForRepeating(PointerEventData eventData)
     {
         Transform quickAccessPanel = transform.Find("QuickAccess");
+        Transform targetObject = GetObjectUnderMouse().transform.parent.parent;
         foreach (Transform slot in quickAccessPanel.GetChild(0))
         {
-            if (slot.GetChild(0).Find("Element").GetComponent<Element>().CustomID == eventData.pointerDrag.transform.GetComponent<Element>().CustomID)
+            if (slot.GetChild(0).Find("Element").GetComponent<Element>().CustomID == eventData.pointerDrag.transform.GetComponent<Element>().CustomID && targetObject.GetSiblingIndex() != slot.GetSiblingIndex())
             {
                 return slot;
             } 

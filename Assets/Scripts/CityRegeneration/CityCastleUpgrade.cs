@@ -9,6 +9,8 @@ public class CityCastleUpgrade : MonoBehaviour
     [Header("Attached main scripts")]
     [SerializeField] GoldCoinsCounter goldCoinsCounter;
     [SerializeField] SUINotificator suiNotificator;
+    [SerializeField] ParticleSystem upgradePS;
+    Coroutine upgradPSCoroutine;
 
     [Header("Roates to inner elements")]
     [SerializeField] Scrollbar upgradesBar;
@@ -89,6 +91,7 @@ public class CityCastleUpgrade : MonoBehaviour
             //Debug.Log("there hello if");
             if (TakeUpgradeMoney(sphereUpgradeCost))
             {
+                ShowUpgradePS();
                 suiNotificator.Notify("-" + sphereUpgradeCost);
                 Debug.Log("there hello if1");
                 sphereUpgradeCurrentCount++;
@@ -113,6 +116,7 @@ public class CityCastleUpgrade : MonoBehaviour
             Debug.Log("there hello if22");
             if (TakeUpgradeMoney(countUpgradeCost))
             {
+                ShowUpgradePS();
                 suiNotificator.Notify("-" + countUpgradeCost);
                 countUpgradeCurrentCount++;
                 //availableShards[countUpgradeCurrentCount - 1].GetComponent<CanvasGroup>().alpha = 1;
@@ -199,5 +203,32 @@ public class CityCastleUpgrade : MonoBehaviour
     void ShowNextShard()
     {
         availableShards[countUpgradeCurrentCount - 1].GetComponent<CanvasGroup>().alpha = 1;
+    }
+
+    void ShowUpgradePS()
+    {
+        if (upgradPSCoroutine != null)
+        {
+            StopCoroutine(upgradPSCoroutine);
+        }
+        upgradPSCoroutine = StartCoroutine(DelayUpgradePS());
+        if (!upgradePS.isPlaying)
+        {
+            upgradePS.gameObject.SetActive(true);
+            upgradePS.Play();
+        }
+    }
+
+    IEnumerator DelayUpgradePS()
+    {
+        yield return new WaitForSeconds(0.75f);
+        HideUpgradePS();
+        upgradPSCoroutine = null;
+    }
+
+    void HideUpgradePS()
+    {
+        upgradePS.Stop();
+        upgradePS.gameObject.SetActive(false);
     }
 }

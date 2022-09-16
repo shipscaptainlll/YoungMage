@@ -32,7 +32,7 @@ public class DefractorPortalOpener : MonoBehaviour
         {
             cycleRunning = true;
             EnablePortals();
-            StartVFX();
+            StartPS();
             //StartCoroutine(OpenPortal());
         }
     }
@@ -140,9 +140,10 @@ public class DefractorPortalOpener : MonoBehaviour
         }
     }
 
-    void StartVFX()
+    void StartPS()
     {
         VFXContainer.gameObject.SetActive(true);
+        VFXContainer.GetComponent<ParticleSystem>().Play();
     }
 
     void EnablePortals()

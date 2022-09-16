@@ -17,6 +17,8 @@ public class PotentialProductAppearance : MonoBehaviour
     [SerializeField] Transform resourcePacksHolder;
     [SerializeField] ItemsCounterQuests itemsCounterQuests;
 
+    [SerializeField] ParticleSystem productParticleSystem;
+
     [SerializeField] EClickVariations eClickVariations;
     Transform createdObject;
     bool isCreated = false;
@@ -46,6 +48,7 @@ public class PotentialProductAppearance : MonoBehaviour
     public event Action ObjectTeleported = delegate { };
     void InstantiateProduct()
     {
+        ActivateProductPS();
         if (eClickVariations.IsTransmutating && !isCreated && potentialProductVisualisation.CurrentProductID != 0)
         {
             foreach (Transform element in productsHolder)
@@ -69,7 +72,7 @@ public class PotentialProductAppearance : MonoBehaviour
 
     void InstantiateProduct(Transform amulet)
     {
-        
+        ActivateProductPS();
         if (amulet != null)
         {
             if (amulet.GetComponent<TransmutationAmulet>().ID != 0 && !isCreated)
@@ -171,6 +174,7 @@ public class PotentialProductAppearance : MonoBehaviour
 
     void DestroyObject()
     {
+        DeactivateProductPS();
         if (ObjectProduced != null) { ObjectProduced(createdObject.GetComponent<TransmutationProduct>().ID); }
         Destroy(createdObject.gameObject);
         ObjectTeleported();
@@ -181,5 +185,17 @@ public class PotentialProductAppearance : MonoBehaviour
     {
         yield return new WaitForSeconds(0.3f);
         isCreated = false;
+    }
+
+    void ActivateProductPS()
+    {
+        productParticleSystem.gameObject.SetActive(true);
+        productParticleSystem.Play();
+    }
+
+    void DeactivateProductPS()
+    {
+        productParticleSystem.Stop();
+        productParticleSystem.gameObject.SetActive(false);
     }
 }

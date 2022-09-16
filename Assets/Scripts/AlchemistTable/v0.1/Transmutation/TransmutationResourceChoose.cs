@@ -97,7 +97,7 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
 
     void VisualizeAccessibleResources()
     {
-        Debug.Log("Closed");
+        //Debug.Log("Closed");
         foreach (Transform position in _resourcesPositionsHolder)
         {
             position.gameObject.GetComponent<MeshRenderer>().enabled = false;
