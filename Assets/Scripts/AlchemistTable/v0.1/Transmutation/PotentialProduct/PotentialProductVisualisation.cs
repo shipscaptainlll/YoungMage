@@ -7,6 +7,7 @@ using System;
 
 public class PotentialProductVisualisation : MonoBehaviour
 {
+    [Header("Main Part")]
     [SerializeField] Transform potentialResourcesHolder;
     [SerializeField] Transform potentialProductsHolder;
     [SerializeField] PotentialProductLibrary potentialProductLibrary;
@@ -15,7 +16,13 @@ public class PotentialProductVisualisation : MonoBehaviour
     List<int> resourcesIDs = new List<int>();
     Dictionary<int, List<int>> potentialProducts = new Dictionary<int, List<int>>();
     List<int> productCombination = new List<int> { 20, 20};
+    List<int> foundObjects = new List<int>();
     int currentProductID;
+
+    [Header("Sounds Manager")]
+    [SerializeField] SoundManager soundManager;
+    AudioSource visualisationSound;
+    AudioSource mageThinking;
 
     public List<int> ResourcesIDs { get { return resourcesIDs; } }
     public int CurrentProductID
@@ -31,8 +38,9 @@ public class PotentialProductVisualisation : MonoBehaviour
         potentialProducts.Add(1, new List<int> { 1, 2, 3 });
         potentialProductAppearance.ObjectCreated += TemporarilyHide;
         potentialProductAppearance.ObjectTeleported += TemporarilyShow;
+        visualisationSound = soundManager.LocateAudioSource("TransmutationPotentialProduct", transform);
+        mageThinking = soundManager.LocateAudioSource("YoungMageThinking", transform);
 
-        
     }
 
     // Update is called once per frame
@@ -119,6 +127,8 @@ public class PotentialProductVisualisation : MonoBehaviour
             {
                 if (element.GetComponent<AlchemistPotentialProduct>().ID == currentProductID)
                 {
+                    visualisationSound.Play();
+                    mageThinking.Play();
                     element.GetComponent<MeshRenderer>().enabled = true;
                     element.GetComponent<CapsuleCollider>().enabled = true;
                     potentialProductVisualised();

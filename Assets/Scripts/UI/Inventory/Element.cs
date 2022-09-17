@@ -12,6 +12,7 @@ public class Element : MonoBehaviour
     [SerializeField] AnimationCurve animationCurve;
     Transform attachedCounter;
     Text textBox;
+    Vector2 elementSize;
 
     Coroutine showElementCoroutine;
     Coroutine resizeCoroutine;
@@ -27,6 +28,7 @@ public class Element : MonoBehaviour
         set
         {
             customID = value;
+            StopAllCoroutines();
             UpdateAttachedCounter();
             UpdateElement();
             if (!coroutineActive)
@@ -82,6 +84,8 @@ public class Element : MonoBehaviour
         UpdateImage();
     }
 
+    
+
     void UpdateElement()
     {
         UpdateImage();
@@ -98,7 +102,7 @@ public class Element : MonoBehaviour
     {
         float elapsed = 0;
         RectTransform elementRect = transform.GetComponent<RectTransform>();
-        float finalSize = transform.GetComponent<RectTransform>().sizeDelta.x;
+        float finalSize = elementSize.x;
         transform.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 0);
         Vector2 startElementSize = transform.GetComponent<RectTransform>().sizeDelta;
         float currentSize = 0;
@@ -109,6 +113,7 @@ public class Element : MonoBehaviour
             elementRect.sizeDelta = new Vector2(currentSize, currentSize);
             yield return null;
         }
+        Debug.Log(finalSize);
         elementRect.sizeDelta = new Vector2(finalSize, finalSize);
 
         showElementCoroutine = null;
@@ -120,7 +125,7 @@ public class Element : MonoBehaviour
         coroutineActive = true;
         float elapsed = 0;
         RectTransform elementRect = transform.GetComponent<RectTransform>();
-        Vector2 elementSize = transform.GetComponent<RectTransform>().sizeDelta;
+        //Vector2 elementSize = elementSize;
         float currentSize = 0;
         while (elapsed < duration)
         {
@@ -149,6 +154,9 @@ public class Element : MonoBehaviour
     void UpdateImage()
     {
         transform.GetComponent<Image>().sprite = spriteManager.TakeSprite(customID);
+        RectTransform elementRect = transform.GetComponent<RectTransform>();
+        //Debug.Log("true1");
+        elementSize = new Vector2(38, 38);
     }
 
     void UpdateCounter(int count)

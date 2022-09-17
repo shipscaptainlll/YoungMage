@@ -10,6 +10,7 @@ public class CityCastleUpgrade : MonoBehaviour
     [SerializeField] GoldCoinsCounter goldCoinsCounter;
     [SerializeField] SUINotificator suiNotificator;
     [SerializeField] ParticleSystem upgradePS;
+    [SerializeField] Transform circleSoundSource;
     Coroutine upgradPSCoroutine;
 
     [Header("Roates to inner elements")]
@@ -23,6 +24,9 @@ public class CityCastleUpgrade : MonoBehaviour
     [SerializeField] Text fillText;
     [SerializeField] Transform SUINotificator;
 
+    [Header("Sounds Manager")]
+    [SerializeField] SoundManager soundManager;
+    AudioSource conjurationAppearSound;
 
     int sphereUpgradesMaxCount;
     int sphereUpgradeCurrentCount;
@@ -71,6 +75,7 @@ public class CityCastleUpgrade : MonoBehaviour
             availableButtons.Add(button);
         }
         upgradesBar.value = ((float)(sphereUpgradeCurrentCount) / (float)(sphereUpgradesMaxCount + 2.5f)) + offsetUpgrade;
+        conjurationAppearSound = soundManager.LocateAudioSource("ConjurationCircleAppear", circleSoundSource);
         //Debug.Log(sphereUpgradeCurrentCount);
         //Debug.Log(sphereUpgradesMaxCount);
     }
@@ -216,6 +221,7 @@ public class CityCastleUpgrade : MonoBehaviour
         {
             upgradePS.gameObject.SetActive(true);
             upgradePS.Play();
+            conjurationAppearSound.Play();
         }
     }
 

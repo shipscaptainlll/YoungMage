@@ -118,7 +118,7 @@ public class OreMiningManager : MonoBehaviour
         }
         else if (secondProductID == 4)
         {
-            //metaloreMiningClosingSound.Play();
+            oreMiningSound = soundManager.LocateAudioSource("CursedoreMining", transform);
             //Debug.Log("started playing sounds for metal");
         }
         else if (secondProductID == 5)

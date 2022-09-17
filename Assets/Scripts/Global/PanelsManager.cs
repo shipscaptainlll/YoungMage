@@ -29,6 +29,7 @@ public class PanelsManager : MonoBehaviour
 
     [Header("Sound Manager")]
     [SerializeField] SoundManager soundManager;
+    AudioSource settingsSubpanelSound;
 
     AudioSource whooshFirstSound;
     AudioSource inventoryOpenSound;
@@ -68,6 +69,7 @@ public class PanelsManager : MonoBehaviour
         contactManager.DefractorDetected += openDefractorTable;
         whooshFirstSound = soundManager.FindSound("WhooshFirst");
         inventoryOpenSound = soundManager.FindSound("InventoryOpening");
+        settingsSubpanelSound = soundManager.FindSound("SettingMainChange");
     }
 
     void decideNextState()
@@ -199,30 +201,35 @@ public class PanelsManager : MonoBehaviour
         switch (subpanelName)
         {
             case "graphicsPanel":
-                if (currentSettingsSubpanel != graphicsSettingPanel && currentSettingsSubpanel != null) { StartCoroutine(CacheClosePanel(currentSettingsSubpanel, true)); }
+                if (currentSettingsSubpanel != graphicsSettingPanel && currentSettingsSubpanel != null) { StartCoroutine(CacheClosePanel(currentSettingsSubpanel, true)); settingsSubpanelSound.Play(); }
                 StartCoroutine(CacheOpenPanel(graphicsSettingPanel));
                 showOnForeground(graphicsSettingPanel);
                 currentSettingsSubpanel = graphicsSettingPanel;
+                
                 break;
             case "audioPanel":
-                if (currentSettingsSubpanel != audioSettingsPanel && currentSettingsSubpanel != null) { StartCoroutine(CacheClosePanel(currentSettingsSubpanel, true)); }
+                if (currentSettingsSubpanel != audioSettingsPanel && currentSettingsSubpanel != null) { StartCoroutine(CacheClosePanel(currentSettingsSubpanel, true)); settingsSubpanelSound.Play(); }
                 StartCoroutine(CacheOpenPanel(audioSettingsPanel));
                 showOnForeground(audioSettingsPanel);
                 currentSettingsSubpanel = audioSettingsPanel;
+                
                 break;
             case "controlsPanel":
-                if (currentSettingsSubpanel != controlsSettingsPanel && currentSettingsSubpanel != null) { StartCoroutine(CacheClosePanel(currentSettingsSubpanel, true)); }
+                if (currentSettingsSubpanel != controlsSettingsPanel && currentSettingsSubpanel != null) { StartCoroutine(CacheClosePanel(currentSettingsSubpanel, true)); settingsSubpanelSound.Play(); }
                 StartCoroutine(CacheOpenPanel(controlsSettingsPanel));
                 showOnForeground(controlsSettingsPanel);
                 currentSettingsSubpanel = controlsSettingsPanel;
+                
                 break;
             case "miscellaneousPanel":
-                if (currentSettingsSubpanel != miscellaneousSettingsPanel && currentSettingsSubpanel != null) { StartCoroutine(CacheClosePanel(currentSettingsSubpanel, true)); }
+                if (currentSettingsSubpanel != miscellaneousSettingsPanel && currentSettingsSubpanel != null) { StartCoroutine(CacheClosePanel(currentSettingsSubpanel, true)); settingsSubpanelSound.Play(); }
                 StartCoroutine(CacheOpenPanel(miscellaneousSettingsPanel));
                 showOnForeground(miscellaneousSettingsPanel);
                 currentSettingsSubpanel = miscellaneousSettingsPanel;
+                
                 break;
         }
+        
     }
 
     public void OpenSavePanel()

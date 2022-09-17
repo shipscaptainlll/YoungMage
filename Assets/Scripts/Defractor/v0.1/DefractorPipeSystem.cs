@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class DefractorPipeSystem : MonoBehaviour
 {
+    [Header("Main Part")]
     [SerializeField] DefractoringProcess defractoringProcess;
     [SerializeField] ItemsCounterQuests itemsCounterQuests;
     [SerializeField] ObjectManager objectManager;
@@ -13,6 +14,10 @@ public class DefractorPipeSystem : MonoBehaviour
     [SerializeField] Transform pipeOutlet;
     [SerializeField] Transform productsCountersHolder;
     System.Random random;
+
+    [Header("Sounds Manager")]
+    [SerializeField] SoundManager soundManager;
+    AudioSource transportationSound;
 
     public event Action ProductLeftPipes = delegate { };
     // Start is called before the first frame update
@@ -46,6 +51,8 @@ public class DefractorPipeSystem : MonoBehaviour
     void LetFromDefractor(GameObject productObject)
     {
         GameObject productInstance = Instantiate(productObject, defractorStartLine.position, Quaternion.Euler(new Vector3(0, 0, 90)));
+        transportationSound = soundManager.LocateAudioSource("DefractorFlyingObject", productInstance.transform);
+        transportationSound.Play();
         SetDefractoringLine(productInstance);
     }
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class GraphicsPanel : MonoBehaviour
@@ -23,6 +24,7 @@ public class GraphicsPanel : MonoBehaviour
     {
         chooseSound = soundManager.FindSound("SettingElement");
     }
+
 
     // Update is called once per frame
     void Update()

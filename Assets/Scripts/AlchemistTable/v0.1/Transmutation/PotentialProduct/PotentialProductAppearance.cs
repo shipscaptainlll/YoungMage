@@ -7,6 +7,7 @@ using System;
 
 public class PotentialProductAppearance : MonoBehaviour
 {
+    [Header("Main Part")]
     [SerializeField] ClickManager clickManager;
     [SerializeField] AmuletsTransmutation amuletsTransmutation;
     [SerializeField] TransmutationCostTaker transmutationCostTaker;
@@ -23,6 +24,11 @@ public class PotentialProductAppearance : MonoBehaviour
     Transform createdObject;
     bool isCreated = false;
 
+    [Header("Sounds Manager")]
+    [SerializeField] SoundManager soundManager;
+    AudioSource conjurationAppearSound;
+    AudioSource throughPortalSound;
+
     public event Action<int> ObjectProduced = delegate { };
     public bool IsCreated
     {
@@ -36,6 +42,7 @@ public class PotentialProductAppearance : MonoBehaviour
     {
         clickManager.EClicked += InstantiateProduct;
         amuletsTransmutation.AutomaticTransmutationContinue += InstantiateProduct;
+        conjurationAppearSound = soundManager.LocateAudioSource("ConjurationCircleAppear", productParticleSystem.transform);
 
         foreach (Transform amulet in amuletsHolder)
         {
@@ -60,6 +67,8 @@ public class PotentialProductAppearance : MonoBehaviour
                     Debug.Log("Creating object with id3 :" + element.GetComponent<TransmutationProduct>().ID);
                     itemsCounterQuests.countCreatedQuest(element.GetComponent<TransmutationProduct>().ID);
                     createdObject = Instantiate(element, element.position, element.rotation);
+                    throughPortalSound = soundManager.LocateAudioSource("GoingThroughPortal", createdObject);
+                    StartCoroutine(PortalSoundDelay());
                     createdObject.GetComponent<TransmutationProduct>().EnteredPortal += DestroyObject;
                     createdObject.GetComponent<MeshRenderer>().enabled = true;
                     //createdObject.GetComponent<Rigidbody>().useGravity = true;
@@ -89,6 +98,8 @@ public class PotentialProductAppearance : MonoBehaviour
                             ObjectCreated();
                             Debug.Log("Creating object with id1 :" + element.GetComponent<TransmutationProduct>().ID);
                             createdObject = Instantiate(element, element.position, element.rotation);
+                            throughPortalSound = soundManager.LocateAudioSource("GoingThroughPortal", createdObject);
+                            StartCoroutine(PortalSoundDelay());
                             itemsCounterQuests.countCreatedQuest(element.GetComponent<TransmutationProduct>().ID);
                             createdObject.GetComponent<TransmutationProduct>().EnteredPortal += DestroyObject;
                             createdObject.GetComponent<MeshRenderer>().enabled = true;
@@ -127,7 +138,8 @@ public class PotentialProductAppearance : MonoBehaviour
                             ObjectCreated();
                             Debug.Log("Creating object with id2 " + element.GetComponent<TransmutationProduct>().ID);
                             createdObject = Instantiate(element, element.position, element.rotation);
-                            
+                            throughPortalSound = soundManager.LocateAudioSource("GoingThroughPortal", createdObject);
+                            StartCoroutine(PortalSoundDelay());
                             itemsCounterQuests.countCreatedQuest(element.GetComponent<TransmutationProduct>().ID);
                             createdObject.GetComponent<TransmutationProduct>().EnteredPortal += DestroyObject;
                             createdObject.GetComponent<MeshRenderer>().enabled = true;
@@ -146,6 +158,12 @@ public class PotentialProductAppearance : MonoBehaviour
             StartedAutomaticTransmutation(null);
         }
         
+    }
+
+    IEnumerator PortalSoundDelay()
+    {
+        yield return new WaitForSeconds(1);
+        throughPortalSound.Play();
     }
 
     IEnumerator MaterializeProduct(Transform productTransform, float duration)
@@ -191,6 +209,7 @@ public class PotentialProductAppearance : MonoBehaviour
     {
         productParticleSystem.gameObject.SetActive(true);
         productParticleSystem.Play();
+        conjurationAppearSound.Play();
     }
 
     void DeactivateProductPS()

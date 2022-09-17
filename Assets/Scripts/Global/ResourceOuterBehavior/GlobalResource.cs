@@ -121,7 +121,7 @@ public class GlobalResource : MonoBehaviour
             fallingSound = globalSoundManager.LocateAudioSource("MetalOreLanding", transform);
         } else if (id == 4)
         {
-            //fallingSound = globalSoundManager.LocateAudioSource("MetalOreLanding", transform);
+            fallingSound = globalSoundManager.LocateAudioSource("CursedoreLanding", transform);
         } else if (id == 5)
         {
             fallingSound = globalSoundManager.LocateAudioSource("EarthstoneLanding", transform);

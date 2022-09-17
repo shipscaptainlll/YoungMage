@@ -6,9 +6,15 @@ using UnityEngine;
 public class DefractorPortalOpener : MonoBehaviour
 {
     //[SerializeField] Transform portalContainer;
+    [Header("Main Part")]
     [SerializeField] Transform VFXContainer;
     Transform housePortal;
     bool cycleRunning = false;
+
+    [Header("Sounds Manager")]
+    [SerializeField] SoundManager soundManager;
+    AudioSource conjurationAppearSound;
+    
 
     public event Action PortalClosed = delegate { };
     // Start is called before the first frame update
@@ -16,6 +22,7 @@ public class DefractorPortalOpener : MonoBehaviour
     {
         
         housePortal = transform.Find("Simple Portal").Find("Visualisation");
+        conjurationAppearSound = soundManager.LocateAudioSource("ConjurationCircleAppear", VFXContainer);
         //housePortal.localScale = new Vector3(0.1f, 0.1f, housePortal.localScale.z);
     }
 
@@ -144,6 +151,7 @@ public class DefractorPortalOpener : MonoBehaviour
     {
         VFXContainer.gameObject.SetActive(true);
         VFXContainer.GetComponent<ParticleSystem>().Play();
+        conjurationAppearSound.Play();
     }
 
     void EnablePortals()

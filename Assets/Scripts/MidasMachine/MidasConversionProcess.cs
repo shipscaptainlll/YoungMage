@@ -9,12 +9,14 @@ public class MidasConversionProcess : MonoBehaviour
     [SerializeField] MidasCollectorCatcher outCollectorCatcher;
     [SerializeField] MidasResourcesCosts midasResourcesCosts;
     [SerializeField] ParticleSystem transformationPS;
+    
     Coroutine delayPSCoroutine;
 
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
     [SerializeField] Transform waterfallTransform;
     AudioSource waterFallSound;
+    AudioSource conjurationStartSound;
 
     public event Action CoinTransportationAccepted = delegate { };
     // Start is called before the first frame update
@@ -23,6 +25,7 @@ public class MidasConversionProcess : MonoBehaviour
         inCollectorCatcher.ResourceEnteredCollector += StartConversion;
         outCollectorCatcher.ResourceEnteredCollector += StartConversion;
         waterFallSound = soundManager.LocateAudioSource("WaterfallOnMetal", waterfallTransform);
+        conjurationStartSound = soundManager.LocateAudioSource("ConjurationCircleAppear", transformationPS.transform);
         waterFallSound.Play();
     }
 
@@ -59,9 +62,11 @@ public class MidasConversionProcess : MonoBehaviour
         if (delayPSCoroutine != null) { StopCoroutine(delayPSCoroutine); delayPSCoroutine = StartCoroutine(delayPS()); }
         else
         {
+            conjurationStartSound.Play();
             delayPSCoroutine = StartCoroutine(delayPS());
             transformationPS.gameObject.SetActive(true);
             transformationPS.Play();
+            
         }
     }
 

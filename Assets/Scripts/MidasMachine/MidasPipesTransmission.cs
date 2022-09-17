@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class MidasPipesTransmission : MonoBehaviour
 {
@@ -8,10 +9,14 @@ public class MidasPipesTransmission : MonoBehaviour
     [SerializeField] PipeElementInstantiator pipeElementInstantiator;
     [SerializeField] ObjectManager objectManager;
     [SerializeField] Transform finalOutlet;
+    [SerializeField] Transform transformationVFX;
+    Coroutine transformationVFXCoroutine;
 
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
     AudioSource coinInstantiationSound;
+    AudioSource handElectricitySound;
+
     System.Random random;
     // Start is called before the first frame update
     void Start()
@@ -19,6 +24,7 @@ public class MidasPipesTransmission : MonoBehaviour
         midasConversionProcess.CoinTransportationAccepted += StartMateialTransportation;
         random = new System.Random();
         coinInstantiationSound = soundManager.LocateAudioSource("CoinAppear", finalOutlet);
+        handElectricitySound = soundManager.LocateAudioSource("ElectricitySound", transformationVFX);
     }
 
     // Update is called once per frame
@@ -29,6 +35,7 @@ public class MidasPipesTransmission : MonoBehaviour
 
     void StartMateialTransportation()
     {
+        
         StartCoroutine(MaterialTransportation());
     }
 
@@ -41,7 +48,28 @@ public class MidasPipesTransmission : MonoBehaviour
 
     public void StartCoinTransportation()
     {
+        ManageHandVFX();
         StartCoroutine(CoinTransportation());
+    }
+
+    void ManageHandVFX()
+    {
+        if (transformationVFXCoroutine != null)
+        {
+            StopCoroutine(transformationVFXCoroutine);
+        }
+        transformationVFXCoroutine = StartCoroutine(DelayVFXOff());
+    }
+
+    IEnumerator DelayVFXOff()
+    {
+        transformationVFX.gameObject.SetActive(true);
+        transformationVFX.GetComponent<VisualEffect>().Play();
+        if (!handElectricitySound.isPlaying) { handElectricitySound.Play(); }
+        yield return new WaitForSeconds(5f);
+        transformationVFX.GetComponent<VisualEffect>().Stop();
+        handElectricitySound.Stop();
+        transformationVFX.gameObject.SetActive(false);
     }
 
     IEnumerator CoinTransportation()

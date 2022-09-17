@@ -250,7 +250,7 @@ public class SkeletonBehavior : MonoBehaviour
         set
         {
             isConjured = true;
-            if (navigationTarget.GetComponent<PortalCamera>() != null)
+            if (navigationTarget != null && navigationTarget.GetComponent<PortalCamera>() != null)
             {
                 StartCoroutine(CountDistancePortal());
             }

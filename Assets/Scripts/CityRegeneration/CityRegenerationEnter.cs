@@ -29,6 +29,8 @@ public class CityRegenerationEnter : MonoBehaviour
     [SerializeField] SoundManager soundManager;
     [SerializeField] Transform floatingSoundHolder;
     AudioSource floatingSound;
+    AudioSource zoomInSound;
+    AudioSource zoomOutSound;
 
     [Header("Cache - delete safely")]
     [SerializeField] Transform cityWallUpgrade;
@@ -50,6 +52,8 @@ public class CityRegenerationEnter : MonoBehaviour
         contactManager.CityRegenerationEntered += EnterCityRegeneration;
         clickManager.EscClicked += ExitCityRegeneration;
         floatingSound = soundManager.LocateAudioSource("FloatingCastle", floatingSoundHolder);
+        zoomInSound = soundManager.FindSound("CameraZoomIn");
+        zoomOutSound = soundManager.FindSound("CameraZoomOut");
         floatingSound.Play();
     }
 
@@ -67,6 +71,7 @@ public class CityRegenerationEnter : MonoBehaviour
     {
         if (!isActive)
         {
+            zoomInSound.Play();
             HideSpellsBook();
             cityWallUpgrade.GetComponent<CanvasGroup>().alpha = 1;
             cityCastleUpgrade.GetComponent<CanvasGroup>().alpha = 1;
@@ -145,6 +150,7 @@ public class CityRegenerationEnter : MonoBehaviour
     {
         if (isActive && !isEntering)
         {
+            zoomOutSound.Play();
             ShowSpellsBook();
             cityWallUpgrade.GetComponent<CanvasGroup>().alpha = 0;
             cityCastleUpgrade.GetComponent<CanvasGroup>().alpha = 0;

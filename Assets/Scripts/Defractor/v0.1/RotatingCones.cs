@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RotatingCones : MonoBehaviour
 {
+    [Header("Main Part")]
     [SerializeField] ClickManager clickManager;
     [SerializeField] CuttingProcess cuttingProcess;
     [SerializeField] int direction;
@@ -14,13 +15,24 @@ public class RotatingCones : MonoBehaviour
     bool rotating = false;
     bool slowingDown = false;
 
+    [Header("Sounds Manager")]
+    [SerializeField] SoundManager soundManager;
+    AudioSource conjurationAppearSound;
+    AudioSource knivesRotationSounds;
+    AudioSource knivesStopSounds;
+
     // Start is called before the first frame update
     void Start()
     {
         cuttingProcess.RotationStarted += StartRotation;
+        
+        if (soundManager != null) { conjurationAppearSound = soundManager.LocateAudioSource("ConjurationCircleAppear", rotationParticleSystem.transform); }
+        if (soundManager != null) { knivesRotationSounds = soundManager.LocateAudioSource("DefractorRotation", transform);
+            knivesStopSounds = soundManager.LocateAudioSource("DefractorRotationStop", transform); }
+        
         DeactivateRotationPS();
     }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -29,6 +41,7 @@ public class RotatingCones : MonoBehaviour
 
     void StartRotation()
     {
+        if ( soundManager != null && !knivesRotationSounds.isPlaying) { knivesRotationSounds.Play(); }
         ActivateRotationPS();
         Debug.Log("started cones rotation2");
         rotating = true;
@@ -40,6 +53,7 @@ public class RotatingCones : MonoBehaviour
 
     void StopRotation()
     {
+        if (soundManager != null && knivesRotationSounds.isPlaying) { knivesRotationSounds.Stop(); knivesStopSounds.Play(); }
         DeactivateRotationPS();
         if (!slowingDown)
         {
@@ -98,16 +112,17 @@ public class RotatingCones : MonoBehaviour
 
     void ActivateRotationPS()
     {
-        if (!rotationParticleSystem.isPlaying)
+        if (soundManager != null && !rotationParticleSystem.isPlaying)
         {
             rotationParticleSystem.gameObject.SetActive(true);
             rotationParticleSystem.Play();
+            conjurationAppearSound.Play();
         }
     }
 
     void DeactivateRotationPS()
     {
-        if (rotationParticleSystem.isPlaying)
+        if (soundManager != null && rotationParticleSystem.isPlaying)
         {
             rotationParticleSystem.Stop();
             rotationParticleSystem.gameObject.SetActive(false);

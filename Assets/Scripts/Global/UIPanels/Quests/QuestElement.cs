@@ -21,6 +21,10 @@ public class QuestElement : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     [Header("Cancel quest")]
     [SerializeField] Transform cancelQuestButton;
 
+    [Header("Sounds Manager")]
+    [SerializeField] SoundManager soundManager;
+    AudioSource finishQuestSound;
+
     Coroutine waitTransformVisible;
     Coroutine smoothIncreasement;
     float iteratedPercent;
@@ -76,6 +80,7 @@ public class QuestElement : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     void Start()
     {
         //isHoldingQuest = false;
+        finishQuestSound = soundManager.FindSound("QuestFinished");
     }
 
 
@@ -111,6 +116,7 @@ public class QuestElement : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         if (isCompleted)
         {
+            finishQuestSound.Play();
             //Debug.Log(1);
             isHoldingQuest = false;
             isCompleted = false;

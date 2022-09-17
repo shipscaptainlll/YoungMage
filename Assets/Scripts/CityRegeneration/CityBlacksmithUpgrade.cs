@@ -10,13 +10,18 @@ public class CityBlacksmithUpgrade : MonoBehaviour
     [SerializeField] GoldCoinsCounter goldCoinsCounter;
     [SerializeField] SUINotificator suiNotificator;
     [SerializeField] ParticleSystem upgradePS;
+    [SerializeField] Transform circleSoundSource;
     Coroutine upgradPSCoroutine;
 
     [Header("Roates to inner elements")]
     [SerializeField] Scrollbar upgradesBar;
     [SerializeField] Transform contentHolder;
     [SerializeField] Text goldText;
-    
+
+    [Header("Sounds Manager")]
+    [SerializeField] SoundManager soundManager;
+    AudioSource conjurationAppearSound;
+
     int upgradesMaxCount;
     int upgradeCurrentCount;
     float offsetUpgrade;
@@ -39,6 +44,7 @@ public class CityBlacksmithUpgrade : MonoBehaviour
         costModifier = 2.5f;
         upgradesMaxCount = contentHolder.childCount - 4;
         upgradesBar.value = ((float)(upgradeCurrentCount) / (float)(upgradesMaxCount+2.5f)) + offsetUpgrade;
+        conjurationAppearSound = soundManager.LocateAudioSource("ConjurationCircleAppear", circleSoundSource);
         //Debug.Log(upgradesBar.value);
     }
 
@@ -128,6 +134,7 @@ public class CityBlacksmithUpgrade : MonoBehaviour
         {
             upgradePS.gameObject.SetActive(true);
             upgradePS.Play();
+            conjurationAppearSound.Play();
         }
     }
 

@@ -11,11 +11,16 @@ public class CityWallUpgrade : MonoBehaviour
     [SerializeField] GoldCoinsCounter goldCoinsCounter;
     [SerializeField] SUINotificator suiNotificator;
     [SerializeField] ParticleSystem upgradeParticleSystem;
+    [SerializeField] Transform circleSoundSource;
 
     [Header("Roates to inner elements")]
     [SerializeField] Text healthText;
     [SerializeField] Text goldText;
     [SerializeField] WallRegenerationButton wallRegenerationButton;
+
+    [Header("Sounds Manager")]
+    [SerializeField] SoundManager soundManager;
+    AudioSource conjurationAppearSound;
 
     int wallMaximumHealth;
     float healthCost;
@@ -33,6 +38,7 @@ public class CityWallUpgrade : MonoBehaviour
         //goldCoinsCounter.AmmountEnded += AnalyzeGold;
         wallRegenerationButton.ButtonDown += TransformMoneyHealth;
         wallRegenerationButton.ButtonUp += HideUpgradePS;
+        conjurationAppearSound = soundManager.LocateAudioSource("ConjurationCircleAppear", circleSoundSource);
     }
 
     // Update is called once per frame
@@ -85,6 +91,7 @@ public class CityWallUpgrade : MonoBehaviour
         {
             upgradeParticleSystem.gameObject.SetActive(true);
             upgradeParticleSystem.Play();
+            conjurationAppearSound.Play();
         }
     }
 
