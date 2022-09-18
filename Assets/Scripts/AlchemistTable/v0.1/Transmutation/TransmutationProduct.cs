@@ -12,6 +12,7 @@ public class TransmutationProduct : MonoBehaviour, IResource
     bool isTeleported = false;
     private void OnTriggerEnter(Collider other)
     {
+        
         if (!isTeleported && other.gameObject.layer == 6)
         {
             isTeleported = true;

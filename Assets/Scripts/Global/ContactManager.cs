@@ -40,7 +40,8 @@ public class ContactManager : MonoBehaviour
         if (!cursorManager.SomethingOpened)
         {
             Transform contactedObject = CameraController.ObservedObject.transform;
-            //Debug.Log(contactedObject);
+            Debug.Log(contactedObject);
+            Debug.Log(contactedObject.parent);
             if (contactedObject != null)
             {
                 if (contactedObject.GetComponent<Portal2>() != null)
@@ -116,7 +117,7 @@ public class ContactManager : MonoBehaviour
                         //TriggerPotentialPositioner(contactedObject.parent);
                         SkeletonDetected(contactedObject.parent, mainCharacter);
                     }
-                    Debug.Log("ready1");
+                    //Debug.Log("ready1");
                 }
                 else if (contactedObject.parent.GetComponent<Skeleton>() != null
                     && (quickAccessHandController.CurrentCustomID == 11

@@ -64,7 +64,7 @@ public class PotentialProductAppearance : MonoBehaviour
                 {
                     isCreated = true;
                     ObjectCreated();
-                    Debug.Log("Creating object with id3 :" + element.GetComponent<TransmutationProduct>().ID);
+                    //Debug.Log("Creating object with id3 :" + element.GetComponent<TransmutationProduct>().ID);
                     itemsCounterQuests.countCreatedQuest(element.GetComponent<TransmutationProduct>().ID);
                     createdObject = Instantiate(element, element.position, element.rotation);
                     throughPortalSound = soundManager.LocateAudioSource("GoingThroughPortal", createdObject);
@@ -169,11 +169,11 @@ public class PotentialProductAppearance : MonoBehaviour
     IEnumerator MaterializeProduct(Transform productTransform, float duration)
     {
         float elapsed = 0;
-        Debug.Log("hello");
+        //Debug.Log("hello");
         MeshRenderer productMeshrenderer = productTransform.GetComponent<MeshRenderer>();
-        Debug.Log("hello");
+        //Debug.Log("hello");
         Material productMaterial = productMeshrenderer.material;
-        Debug.Log("hello");
+        //Debug.Log("hello");
         float currentMaterialization;
         while (elapsed < duration)
         {
@@ -181,7 +181,7 @@ public class PotentialProductAppearance : MonoBehaviour
             currentMaterialization = Mathf.Lerp(1, 0, elapsed / duration);
             productMaterial.SetFloat("_Clip", currentMaterialization);
             productMeshrenderer.material = productMaterial;
-            Debug.Log(currentMaterialization);
+            //Debug.Log(currentMaterialization);
             yield return null;
         }
         productMaterial.SetFloat("_Clip", 0);
@@ -192,9 +192,15 @@ public class PotentialProductAppearance : MonoBehaviour
 
     void DestroyObject()
     {
+        Debug.Log(1);
         DeactivateProductPS();
-        if (ObjectProduced != null) { ObjectProduced(createdObject.GetComponent<TransmutationProduct>().ID); }
+        if (ObjectProduced != null && createdObject.GetComponent<TransmutationProduct>().ID != 26) { 
+            Debug.Log(1); 
+            ObjectProduced(createdObject.GetComponent<TransmutationProduct>().ID); 
+            Debug.Log(1); }
+        Debug.Log(1);
         Destroy(createdObject.gameObject);
+        Debug.Log(1);
         ObjectTeleported();
         StartCoroutine(WaitDelay());
     }
@@ -214,7 +220,10 @@ public class PotentialProductAppearance : MonoBehaviour
 
     void DeactivateProductPS()
     {
+        Debug.Log(1);
         productParticleSystem.Stop();
+        Debug.Log(1);
         productParticleSystem.gameObject.SetActive(false);
+        Debug.Log(1);
     }
 }

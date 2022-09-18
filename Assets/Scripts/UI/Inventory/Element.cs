@@ -113,7 +113,7 @@ public class Element : MonoBehaviour
             elementRect.sizeDelta = new Vector2(currentSize, currentSize);
             yield return null;
         }
-        Debug.Log(finalSize);
+        //Debug.Log(finalSize);
         elementRect.sizeDelta = new Vector2(finalSize, finalSize);
 
         showElementCoroutine = null;

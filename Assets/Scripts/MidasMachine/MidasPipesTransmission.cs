@@ -14,8 +14,12 @@ public class MidasPipesTransmission : MonoBehaviour
 
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
+    [SerializeField] Transform crystalsSoundSource;
     AudioSource coinInstantiationSound;
     AudioSource handElectricitySound;
+    AudioSource crystalsTurnOn;
+    AudioSource crystalsWorking;
+    AudioSource crystalsTurnOff;
 
     System.Random random;
     // Start is called before the first frame update
@@ -25,6 +29,10 @@ public class MidasPipesTransmission : MonoBehaviour
         random = new System.Random();
         coinInstantiationSound = soundManager.LocateAudioSource("CoinAppear", finalOutlet);
         handElectricitySound = soundManager.LocateAudioSource("ElectricitySound", transformationVFX);
+
+        crystalsTurnOn = soundManager.LocateAudioSource("CrystalActivation", crystalsSoundSource);
+        crystalsWorking = soundManager.LocateAudioSource("CrystalWorkingUnderwater", crystalsSoundSource);
+        crystalsTurnOff = soundManager.LocateAudioSource("CrystalsDeactivating", crystalsSoundSource);
     }
 
     // Update is called once per frame
@@ -65,10 +73,12 @@ public class MidasPipesTransmission : MonoBehaviour
     {
         transformationVFX.gameObject.SetActive(true);
         transformationVFX.GetComponent<VisualEffect>().Play();
-        if (!handElectricitySound.isPlaying) { handElectricitySound.Play(); }
+        if (!handElectricitySound.isPlaying) { handElectricitySound.Play(); crystalsTurnOn.Play(); crystalsWorking.Play(); }
         yield return new WaitForSeconds(5f);
         transformationVFX.GetComponent<VisualEffect>().Stop();
         handElectricitySound.Stop();
+        crystalsWorking.Stop();
+        crystalsTurnOff.Play();
         transformationVFX.gameObject.SetActive(false);
     }
 

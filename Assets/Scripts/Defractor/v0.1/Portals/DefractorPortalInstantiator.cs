@@ -24,6 +24,7 @@ public class DefractorPortalInstantiator : MonoBehaviour
             
             portalIsActive = true;
             portalInstance = Instantiate(portalToInstantiate, portalToInstantiate.position, portalToInstantiate.rotation);
+            portalInstance.GetComponent<DefractorPortalOpener>().InstantiateSouds();
             portalInstance.GetComponent<DefractorPortalOpener>().InitiatePortalOpening();
             portalInstance.GetComponent<DefractorPortalOpener>().PortalClosed += DestroyInstance;
 

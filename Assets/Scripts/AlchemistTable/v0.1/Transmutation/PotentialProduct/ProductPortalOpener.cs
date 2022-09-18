@@ -40,10 +40,13 @@ public class ProductPortalOpener : MonoBehaviour
 
     public void InitiatePortalClosing()
     {
+        Debug.Log("Here");
         if (cycleRunning)
         {
             cycleRunning = false;
+            Debug.Log("here 2");
             StartCoroutine(ClosePortal());
+            Debug.Log("here 3");
             StartCoroutine(CloseVFX());
         }
     }

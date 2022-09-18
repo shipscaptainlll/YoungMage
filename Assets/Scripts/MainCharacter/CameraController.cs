@@ -20,6 +20,7 @@ public class CameraController : MonoBehaviour
     float yRotation;
     float xRotation;
     RaycastHit hit = new RaycastHit();
+    RaycastHit hitThird = new RaycastHit();
     bool isOnStairs;
     bool upperStairs;
 
@@ -133,9 +134,10 @@ public class CameraController : MonoBehaviour
         while (true)
         {
 
-            if (Physics.SphereCast(transform.position, 0.1f, transform.TransformDirection(Vector3.forward * contactingRayDistance), out hit, contactingRayDistance, clickableLayerMask))
+            if (Physics.SphereCast(transform.position, 0.1f, transform.TransformDirection(Vector3.forward * contactingRayDistance), out hitThird, contactingRayDistance, clickableLayerMask))
             {
-                objectOutliner.StoreVewedObject(hit.transform); 
+                
+                objectOutliner.StoreVewedObject(hitThird.transform); 
             } else { objectOutliner.StoreVewedObject(null);  }
             yield return new WaitForSeconds(0.033f);
         }        

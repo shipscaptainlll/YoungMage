@@ -13,8 +13,14 @@ public class DefractorPortalOpener : MonoBehaviour
 
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
+    [SerializeField] Transform crystalsSoundSource;
+    [SerializeField] float crystalsDistance;
     AudioSource conjurationAppearSound;
-    
+    AudioSource crystalsTurnOn;
+    AudioSource crystalsWorking;
+    AudioSource crystalsTurnOff;
+    AudioSource openPortalSound;
+    AudioSource closePortalSound;
 
     public event Action PortalClosed = delegate { };
     // Start is called before the first frame update
@@ -22,7 +28,7 @@ public class DefractorPortalOpener : MonoBehaviour
     {
         
         housePortal = transform.Find("Simple Portal").Find("Visualisation");
-        conjurationAppearSound = soundManager.LocateAudioSource("ConjurationCircleAppear", VFXContainer);
+        
         //housePortal.localScale = new Vector3(0.1f, 0.1f, housePortal.localScale.z);
     }
 
@@ -32,15 +38,31 @@ public class DefractorPortalOpener : MonoBehaviour
         
     }
 
+    public void InstantiateSouds()
+    {
+        conjurationAppearSound = soundManager.LocateAudioSource("ConjurationCircleAppear", VFXContainer);
+
+        crystalsTurnOn = soundManager.LocateAudioSource("CrystalActivation", crystalsSoundSource);
+        crystalsWorking = soundManager.LocateAudioSource("CrystalWorking", crystalsSoundSource);
+        crystalsWorking.maxDistance = crystalsDistance;
+        crystalsTurnOff = soundManager.LocateAudioSource("CrystalsDeactivating", crystalsSoundSource);
+        openPortalSound = soundManager.LocateAudioSource("PortalOpeningDefractor", crystalsSoundSource);
+        closePortalSound = soundManager.LocateAudioSource("PortalClosingDefractor", crystalsSoundSource);
+    }
+
     public void InitiatePortalOpening()
     {
         housePortal = transform.Find("Simple Portal").Find("Visualisation");
         if (!cycleRunning)
         {
+            
+            
+            
             cycleRunning = true;
             EnablePortals();
+            StartCrystalsSound();
             StartPS();
-            //StartCoroutine(OpenPortal());
+            StartCoroutine(OpenPortal());
         }
     }
 
@@ -48,16 +70,18 @@ public class DefractorPortalOpener : MonoBehaviour
     {
         if (cycleRunning)
         {
+            EndCrystalsSound();
             cycleRunning = false;
-            //StartCoroutine(ClosePortal());
+            StartCoroutine(ClosePortal());
             //StartCoroutine(CloseVFX());
             PortalClosed();
-            housePortal.gameObject.SetActive(false);
+            //housePortal.gameObject.SetActive(false);
             VFXContainer.gameObject.SetActive(false);
         }
     }
     IEnumerator OpenPortal()
     {
+        openPortalSound.Play();
         housePortal = transform.Find("Simple Portal").Find("Visualisation");
         housePortal.GetComponent<MeshRenderer>().enabled = true;
         housePortal.localScale = new Vector3(0.001f, 0.001f, housePortal.localScale.z);
@@ -84,8 +108,9 @@ public class DefractorPortalOpener : MonoBehaviour
 
     IEnumerator ClosePortal()
     {
+        closePortalSound.Play();
         float elapsed = 0;
-        float updateSpeed = 0.15f;
+        float updateSpeed = 1.15f;
         float startXScale = housePortal.localScale.x;
         float currentXScale;
         float targetXScale = 0.01f;
@@ -152,6 +177,19 @@ public class DefractorPortalOpener : MonoBehaviour
         VFXContainer.gameObject.SetActive(true);
         VFXContainer.GetComponent<ParticleSystem>().Play();
         conjurationAppearSound.Play();
+    }
+
+    void EndCrystalsSound()
+    {
+        crystalsWorking.Stop();
+        crystalsTurnOff.Play();
+    }
+
+    void StartCrystalsSound()
+    {
+        crystalsTurnOn.Play();
+        crystalsWorking.Play();
+
     }
 
     void EnablePortals()

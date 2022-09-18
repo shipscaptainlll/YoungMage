@@ -14,6 +14,8 @@ public class BookSpellsCaster : MonoBehaviour
     [SerializeField] Transform activatedSpellInstance;
     [SerializeField] Transform magicLettersParticles;
     [SerializeField] Texture2D distortionTexture;
+    [SerializeField] Transform bookTransform;
+    [SerializeField] Transform instantiatedObjectsHolder;
 
     [Header("ObjectPool")]
     [SerializeField] Transform objectPool;
@@ -32,6 +34,7 @@ public class BookSpellsCaster : MonoBehaviour
     Spell castedSpell;
     int count;
     string currentSpell;
+    bool bookIsHidden;
 
     public string CurrentSpell { get { return currentSpell; } }
     Coroutine showLettersCoroutine;
@@ -56,7 +59,7 @@ public class BookSpellsCaster : MonoBehaviour
 
     public void CastSpell(string spellNameSearched)
     {
-        if (!AlreadyCasted(spellNameSearched)) {
+        if (!AlreadyCasted(spellNameSearched) && !bookIsHidden) {
             currentSpell = spellNameSearched;
             count++;
             if (showLettersCoroutine != null) { StopCoroutine(showLettersCoroutine); }
@@ -81,38 +84,41 @@ public class BookSpellsCaster : MonoBehaviour
 
     public void ActivateSpell()
     {
-        Debug.Log("here");
-        //magicLettersParticles.gameObject.SetActive(true);
-        //magicLettersParticles.GetComponent<ParticleSystem>().Play();
-        Transform newSpell = Instantiate(activatedSpellInstance, magicbookPaper.position, magicbookPaper.rotation);
-        newSpell.gameObject.SetActive(true);
-        newSpell.parent = objectPool.transform;
-        newSpell.position = magicbookPaper.position;
-        newSpell.rotation = magicbookPaper.rotation;
-        ActivatedSpell newSpellScript = newSpell.GetComponent<ActivatedSpell>();
-        newSpellScript.UpdateSprite(FindSpell(currentSpell).spellTexture);
-        newSpellScript.MoveSpell();
-        ManageSounds();
-
-        if (castedSpell.spellName == "NullSpell")
+        if (!bookIsHidden)
         {
-            
-            Material paperMaterial = newSpell.GetComponent<MeshRenderer>().material;    
-            float currentSecondMeshHSV;
-            Color overloadingMeshSecondColor = paperMaterial.GetColor("_EmissionColor");
-            float hMeshSecond, sMeshSecond, vMeshSecond;
-            Color.RGBToHSV(overloadingMeshSecondColor, out hMeshSecond, out sMeshSecond, out vMeshSecond);
-            currentSecondMeshHSV = 1;
-            overloadingMeshSecondColor = Color.HSVToRGB(currentSecondMeshHSV, sMeshSecond, vMeshSecond);
-            paperMaterial.SetColor("_EmissionColor", overloadingMeshSecondColor);
-            newSpell.GetComponent<MeshRenderer>().material = paperMaterial;
-        }
-        
+            //Debug.Log("here");
+            //magicLettersParticles.gameObject.SetActive(true);
+            //magicLettersParticles.GetComponent<ParticleSystem>().Play();
+            Transform newSpell = Instantiate(activatedSpellInstance, magicbookPaper.position, magicbookPaper.rotation);
+            newSpell.gameObject.SetActive(true);
+            newSpell.parent = objectPool.transform;
+            newSpell.position = magicbookPaper.position;
+            newSpell.rotation = magicbookPaper.rotation;
+            ActivatedSpell newSpellScript = newSpell.GetComponent<ActivatedSpell>();
+            newSpellScript.UpdateSprite(FindSpell(currentSpell).spellTexture);
+            newSpellScript.MoveSpell();
+            ManageSounds();
 
-        if (enhanceLettersCoroutine != null) { StopCoroutine(enhanceLettersCoroutine); }
-        enhanceLettersCoroutine = StartCoroutine(EnhanceLetters(0.5f));
-        //magicLettersParticles.gameObject.SetActive(false);
-        Debug.Log("there");
+            if (castedSpell.spellName == "NullSpell")
+            {
+
+                Material paperMaterial = newSpell.GetComponent<MeshRenderer>().material;
+                float currentSecondMeshHSV;
+                Color overloadingMeshSecondColor = paperMaterial.GetColor("_EmissionColor");
+                float hMeshSecond, sMeshSecond, vMeshSecond;
+                Color.RGBToHSV(overloadingMeshSecondColor, out hMeshSecond, out sMeshSecond, out vMeshSecond);
+                currentSecondMeshHSV = 1;
+                overloadingMeshSecondColor = Color.HSVToRGB(currentSecondMeshHSV, sMeshSecond, vMeshSecond);
+                paperMaterial.SetColor("_EmissionColor", overloadingMeshSecondColor);
+                newSpell.GetComponent<MeshRenderer>().material = paperMaterial;
+            }
+
+
+            if (enhanceLettersCoroutine != null) { StopCoroutine(enhanceLettersCoroutine); }
+            enhanceLettersCoroutine = StartCoroutine(EnhanceLetters(0.5f));
+            //magicLettersParticles.gameObject.SetActive(false);
+            //Debug.Log("there");
+        }
     }
 
     void ManageSounds()
@@ -126,6 +132,16 @@ public class BookSpellsCaster : MonoBehaviour
         {
             popUpSound.Play();
         }
+        
+    }
+
+    public void HideBook()
+    {
+        
+    }
+
+    public void ShowBook()
+    {
         
     }
 
@@ -167,12 +183,20 @@ public class BookSpellsCaster : MonoBehaviour
 
     public void ShowSpellsBook()
     {
-        magicBook.gameObject.SetActive(true);
+        bookIsHidden = false;
+        bookTransform.gameObject.SetActive(true);
+        if (instantiatedObjectsHolder.GetChild(0) != null && instantiatedObjectsHolder.GetChild(0).GetComponent<MeshRenderer>() != null) { instantiatedObjectsHolder.GetChild(0).GetComponent<MeshRenderer>().enabled = true; }
+        if (instantiatedObjectsHolder.GetChild(0).GetChild(0) != null && instantiatedObjectsHolder.GetChild(0).GetChild(0).GetComponent<MeshRenderer>() != null) { instantiatedObjectsHolder.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().enabled = true; }
+        if (instantiatedObjectsHolder.GetChild(0).GetChild(0).GetChild(0) != null && instantiatedObjectsHolder.GetChild(0).GetChild(0).GetChild(0).GetComponent<MeshRenderer>() != null) { instantiatedObjectsHolder.GetChild(0).GetChild(0).GetChild(0).GetComponent<MeshRenderer>().enabled = true; }
     }
 
     public void HideSpellsBook()
     {
-        magicBook.gameObject.SetActive(false);
+        bookIsHidden = true;
+        bookTransform.gameObject.SetActive(false);
+        if (instantiatedObjectsHolder.GetChild(0) != null && instantiatedObjectsHolder.GetChild(0).GetComponent<MeshRenderer>() != null) { instantiatedObjectsHolder.GetChild(0).GetComponent<MeshRenderer>().enabled = false; }
+        if (instantiatedObjectsHolder.GetChild(0).GetChild(0) != null && instantiatedObjectsHolder.GetChild(0).GetChild(0).GetComponent<MeshRenderer>() != null) { instantiatedObjectsHolder.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().enabled = false; }
+        if (instantiatedObjectsHolder.GetChild(0).GetChild(0).GetChild(0) != null && instantiatedObjectsHolder.GetChild(0).GetChild(0).GetChild(0).GetComponent<MeshRenderer>() != null) { instantiatedObjectsHolder.GetChild(0).GetChild(0).GetChild(0).GetComponent<MeshRenderer>().enabled = false; }
     }
 
     public void StartShowingLetters()

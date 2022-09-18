@@ -90,6 +90,7 @@ public class SkeletonBehavior : MonoBehaviour
     AudioSource walkingStoneSound;
     AudioSource destroySkeletonSound;
     AudioSource goingThroughPortal;
+    
     bool goingPortalPlayed;
 
 
@@ -485,6 +486,7 @@ public class SkeletonBehavior : MonoBehaviour
         }
         if (navigationTarget != null && beingUnconjured)
         {
+            
             StopCoroutine(changeColorCounter);
             StopCoroutine(changeScaleCounter);
             StopCoroutine(unconjuration);
@@ -719,8 +721,8 @@ public class SkeletonBehavior : MonoBehaviour
     {
         conjurationVFX.gameObject.SetActive(true);
         conjurationVFX.Play();
-        
-        
+
+
         float expired = 0;
         float processTime = 0.15f;
         float currentElectricityValue = 0;
@@ -1111,7 +1113,6 @@ public class SkeletonBehavior : MonoBehaviour
         walkingGroundSound = soundManager.LocateAudioSource("SkeletonWalkGround", transform);
         walkingStairsSound = soundManager.LocateAudioSource("SkeletonWalkStairs", transform);
         walkingStoneSound = soundManager.LocateAudioSource("SkeletonWalkStone", transform);
-        
     }
 
     public void ThroughPortalSound()

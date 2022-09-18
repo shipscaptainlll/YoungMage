@@ -330,7 +330,7 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
     {
         foreach (GameObject resource in _accessibleResources)
         {
-            Debug.Log("Shown");
+            //Debug.Log("Shown");
             resource.GetComponent<MeshRenderer>().enabled = true;
             resource.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
         }

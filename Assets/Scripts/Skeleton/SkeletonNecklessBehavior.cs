@@ -4,16 +4,24 @@ using UnityEngine;
 
 public class SkeletonNecklessBehavior : MonoBehaviour
 {
+    [Header("Main Part")]
     [SerializeField] Transform necklessParticleSystem;
     [SerializeField] Transform letersParticleSystem;
     Coroutine showLettersCoroutine;
     Coroutine enteringDestructionCoroutine;
 
+    [Header("Sounds Manager")]
+    [SerializeField] SoundManager soundManager;
+    AudioSource conjurationSound;
+    AudioSource deconjurationSound;
+    AudioSource skeletonWaves;
+
     public Transform NecklessParticleSystem { get { return necklessParticleSystem; } }
     public Transform LettersParticleSystem { get { return letersParticleSystem; } }
     public void ActivateConjurationNeckless()
     {
-
+        conjurationSound.Play();
+        skeletonWaves.Play();
         necklessParticleSystem.gameObject.SetActive(true);
         necklessParticleSystem.GetComponent<ParticleSystem>().Play();
         letersParticleSystem.gameObject.SetActive(true);
@@ -23,14 +31,23 @@ public class SkeletonNecklessBehavior : MonoBehaviour
 
     public void ActivateDestructionMode()
     {
+        deconjurationSound.Play();
         if (enteringDestructionCoroutine == null) { enteringDestructionCoroutine = StartCoroutine(EnteringDestructionMode(1, 0.999f)); } 
         else { StopCoroutine(enteringDestructionCoroutine); enteringDestructionCoroutine = StartCoroutine(EnteringDestructionMode(1, 0.999f)); }
     }
 
     public void ActivateNormalMode()
     {
+        conjurationSound.Play();
         if (enteringDestructionCoroutine == null) { enteringDestructionCoroutine = StartCoroutine(EnteringDestructionMode(0.1f, 0.69f)); }
         else { StopCoroutine(enteringDestructionCoroutine); enteringDestructionCoroutine = StartCoroutine(EnteringDestructionMode(0.1f, 0.69f)); }
+    }
+
+    void Start()
+    {
+        conjurationSound = soundManager.LocateAudioSource("SkeletonConjuration", transform);
+        deconjurationSound = soundManager.LocateAudioSource("SkeletonDeconjuration", transform);
+        skeletonWaves = soundManager.LocateAudioSource("SkeletonWaves", transform);
     }
 
     void Update()

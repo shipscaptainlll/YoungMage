@@ -351,7 +351,7 @@ public class ItemsCounterQuests : MonoBehaviour
 
     public void countCreatedQuest(int id)
     {
-        Debug.Log(id);
+        //Debug.Log(id);
         switch (id)
         {
             case 11:

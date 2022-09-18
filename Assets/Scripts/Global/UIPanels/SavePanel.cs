@@ -26,14 +26,14 @@ public class SavePanel : MonoBehaviour
 
     [Header("Saves Manager")]
     [SerializeField] SoundManager soundManager;
-    AudioSource thinkingSound;
+    AudioSource saveSound;
     
 
 
     // Start is called before the first frame update
     void Start()
     {
-        thinkingSound = soundManager.FindSound("YoungMageThinking");
+        saveSound = soundManager.FindSound("Save");
         clickManager.FFiveClicked += AutoSave;
         miscPanel.AutosaveTimeChangeRequested += SetAutosaveRate;
 
@@ -102,7 +102,7 @@ public class SavePanel : MonoBehaviour
 
     public void AutoSave()
     {
-        thinkingSound.Play();
+        saveSound.Play();
         Debug.Log("Game was autosaved");
     }
 
