@@ -23,7 +23,10 @@ public class SkeletonHouseInstantiator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            InstantiateNewInhouse();
+        }
     }
 
     void CountTeleportedSkeleton(Transform teleportedSkeleton)
@@ -37,7 +40,18 @@ public class SkeletonHouseInstantiator : MonoBehaviour
         Transform newSkeleton = Instantiate(skeletonModel, teleportedSkeleton.position, teleportedSkeleton.rotation);
         newSkeleton.gameObject.SetActive(true);
         newSkeleton.GetComponent<SkeletonBehavior>().SubscribeAfterInstantiation();
-        newSkeleton.GetComponent<SkeletonBehavior>().InstantiateSounds();
+        //newSkeleton.GetComponent<SkeletonBehavior>().InstantiateSounds();
+        newSkeleton.GetComponent<SkeletonBehavior>().Activity = "Idle";
+        newSkeleton.parent = homeSkeletonsHolder;
+        if (HouseSkeletonCreated != null) { HouseSkeletonCreated(newSkeleton); }
+    }
+
+    void InstantiateNewInhouse()
+    {
+        Transform newSkeleton = Instantiate(skeletonModel, transform.position, transform.rotation);
+        newSkeleton.gameObject.SetActive(true);
+        newSkeleton.GetComponent<SkeletonBehavior>().SubscribeAfterInstantiation();
+        //newSkeleton.GetComponent<SkeletonBehavior>().InstantiateSounds();
         newSkeleton.GetComponent<SkeletonBehavior>().Activity = "Idle";
         newSkeleton.parent = homeSkeletonsHolder;
         if (HouseSkeletonCreated != null) { HouseSkeletonCreated(newSkeleton); }

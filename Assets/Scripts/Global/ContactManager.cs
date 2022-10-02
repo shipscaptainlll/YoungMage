@@ -87,6 +87,7 @@ public class ContactManager : MonoBehaviour
                     }
                     
                 }
+                /*
                 else if (contactedObject.GetComponent<Skeleton>() != null && quickAccessHandController.CurrentCustomID == 10)
                 {
 
@@ -99,11 +100,12 @@ public class ContactManager : MonoBehaviour
                     Debug.Log("ready");
                     
                 }
-                else if (contactedObject.parent.GetComponent<Skeleton>() != null && quickAccessHandController.CurrentCustomID == 10)
+                */
+                else if (contactedObject.GetComponent<Skeleton>() != null && quickAccessHandController.CurrentCustomID == 10)
                 {
                     //Debug.Log("Found Skeleton");
-                    SkeletonBehavior skeletonScript = contactedObject.transform.parent.GetComponent<SkeletonBehavior>();
-                    if (skeletonScript.NavigationTarget != mainCharacter) { skeletonScript.NavigationTarget = mainCharacter; contactedSkeleton = contactedObject.parent;
+                    SkeletonBehavior skeletonScript = contactedObject.transform.GetComponent<SkeletonBehavior>();
+                    if (skeletonScript.NavigationTarget != mainCharacter) { skeletonScript.NavigationTarget = mainCharacter; contactedSkeleton = contactedObject;
                         bookSpellsActivator.CastContactSkeleton();
                         //Debug.Log("told skeleton to follow mage");
                     }
@@ -115,7 +117,7 @@ public class ContactManager : MonoBehaviour
                     {
 
                         //TriggerPotentialPositioner(contactedObject.parent);
-                        SkeletonDetected(contactedObject.parent, mainCharacter);
+                        SkeletonDetected(contactedObject, mainCharacter);
                     }
                     //Debug.Log("ready1");
                 }

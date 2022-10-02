@@ -33,16 +33,17 @@ public class CopycatCreator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("terhe");
         distanceOriginPortal();
         copycat = Instantiate(copycatInstance, copycatPortal.transform.position + spawnOffset, transform.rotation);
         copycat.GetComponent<CopycatManager>().Origin = transform;
         copycat.AddComponent<Copycat>().ConnectedInstance = transform;
-        copycat.transform.Find("MiddlePart.002").GetComponent<ObjectSlicer>().ObjectToTileAround = copycatPortal.transform;
-        copycat.transform.Find("MiddlePart.002").GetComponent<ObjectSlicer>().Offset = new Vector3(1,0,0);
-        copycat.transform.Find("MiddlePart.002").GetComponent<ObjectSlicer>().InvertBool = 1;
-        copycat.transform.Find("OuterPart.002").GetComponent<ObjectSlicer>().ObjectToTileAround = copycatPortal.transform;
-        copycat.transform.Find("OuterPart.002").GetComponent<ObjectSlicer>().Offset = new Vector3(1, 0, 0);
-        copycat.transform.Find("OuterPart.002").GetComponent<ObjectSlicer>().InvertBool = 1;
+        copycat.transform.Find("GameObject").Find("Icosphere.014").GetComponent<ObjectSlicer>().ObjectToTileAround = copycatPortal.transform;
+        copycat.transform.Find("GameObject").Find("Icosphere.014").GetComponent<ObjectSlicer>().Offset = new Vector3(1,0,0);
+        copycat.transform.Find("GameObject").Find("Icosphere.014").GetComponent<ObjectSlicer>().InvertBool = 1;
+        //copycat.transform.Find("OuterPart.002").GetComponent<ObjectSlicer>().ObjectToTileAround = copycatPortal.transform;
+        //copycat.transform.Find("OuterPart.002").GetComponent<ObjectSlicer>().Offset = new Vector3(1, 0, 0);
+        //copycat.transform.Find("OuterPart.002").GetComponent<ObjectSlicer>().InvertBool = 1;
         if (copycatPortal.transform.parent.parent.Find("CopycatCatcher") != null)
         {
             copycatPortal.transform.parent.parent.Find("CopycatCatcher").GetComponent<CopycatCatcher>().CopycatCached += destroyCopycat;

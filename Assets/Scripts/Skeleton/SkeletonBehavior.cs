@@ -78,6 +78,7 @@ public class SkeletonBehavior : MonoBehaviour
     [SerializeField] GameObject destroyedSkeleton;
     SkinnedMeshRenderer upperPartSkinnedrenderer;
     SkinnedMeshRenderer lowerPartSkinnedrenderer;
+    SkinnedMeshRenderer bodySkinnedrenderer;
 
     [Header("Castle Nav")]
     List <Transform> CastleNavrout = new List<Transform>();
@@ -92,7 +93,6 @@ public class SkeletonBehavior : MonoBehaviour
     AudioSource goingThroughPortal;
     
     bool goingPortalPlayed;
-
 
 
     bool CastleNavroutActive;
@@ -184,6 +184,7 @@ public class SkeletonBehavior : MonoBehaviour
         lowerPartMaterial = transform.Find("OuterPart.002").GetComponent<SkinnedMeshRenderer>().material;
         upperPartSkinnedrenderer = transform.Find("MiddlePart.002").GetComponent<SkinnedMeshRenderer>();
         lowerPartSkinnedrenderer = transform.Find("OuterPart.002").GetComponent<SkinnedMeshRenderer>();
+        bodySkinnedrenderer = transform.Find("Icosphere.014").GetComponent<SkinnedMeshRenderer>();
         overloadingVFXElectricity = overloadingElectricity.GetComponent<VisualEffect>();
 
         gravity = -9.81f;
@@ -357,6 +358,7 @@ public class SkeletonBehavior : MonoBehaviour
 
     void ManageSounds()
     {
+        
         if (onGround) { if (!walkingGroundSound.isPlaying) { walkingGroundSound.Play(); } } else { if (walkingGroundSound.isPlaying) { walkingGroundSound.Stop(); } }
         if (onStairs) { if (!walkingStairsSound.isPlaying) { walkingStairsSound.Play(); } } else { if (walkingStairsSound.isPlaying) { walkingStairsSound.Stop(); } }
         if (onStone) { if (!walkingStoneSound.isPlaying) { walkingStoneSound.Play(); } } else { if (walkingStoneSound.isPlaying) { walkingStoneSound.Stop(); } }
@@ -416,13 +418,16 @@ public class SkeletonBehavior : MonoBehaviour
 
     void GotoCastle()
     {
-        foreach(Transform point in CastleNavroutHolder)
+        if (CastleNavroutHolder != null)
         {
-            CastleNavrout.Add(point);
+            foreach (Transform point in CastleNavroutHolder)
+            {
+                CastleNavrout.Add(point);
+            }
+            CastleNavroutActive = true;
+            navigationTarget = CastleNavrout[0];
+            castleNavpointNumber = 0;
         }
-        CastleNavroutActive = true;
-        navigationTarget = CastleNavrout[0];
-        castleNavpointNumber = 0;
     }
 
     void CheckIfStopped()
@@ -660,12 +665,16 @@ public class SkeletonBehavior : MonoBehaviour
         destructionParticleSystem.GetComponent<ParticleSystem>().Play();
         Debug.Log("DestroyedSkeleton");
         ShakePlayerCamera();
-        lowerPartSkinnedrenderer.gameObject.SetActive(false);
-        upperPartSkinnedrenderer.gameObject.SetActive(false);
+        //lowerPartSkinnedrenderer.gameObject.SetActive(false);
+        //upperPartSkinnedrenderer.gameObject.SetActive(false);
+        bodySkinnedrenderer.gameObject.SetActive(false);
         GameObject instantiatedDestroyedSkeleton = Instantiate(destroyedSkeleton, transform.position, transform.rotation);
         destroySkeletonSound = soundManager.LocateAudioSource("SkeletonBlast", instantiatedDestroyedSkeleton.transform);
         destroySkeletonSound.Play();
         unusedCounter.gameObject.GetComponent<CanvasGroup>().alpha = 0;
+        Destroy(walkingGroundSound);
+        Destroy(walkingStoneSound);
+        Destroy(walkingStairsSound);
         yield return new WaitForSeconds(1.5f);
         foreach (Transform bone in instantiatedDestroyedSkeleton.transform)
         {
@@ -1120,6 +1129,7 @@ public class SkeletonBehavior : MonoBehaviour
         goingPortalPlayed = true;
         goingThroughPortal = soundManager.LocateAudioSource("GoingThroughPortal", portalTransform);
         goingThroughPortal.Play();
+        TurnOffSounds();
     }
 
     IEnumerator CountDistancePortal()
@@ -1130,7 +1140,7 @@ public class SkeletonBehavior : MonoBehaviour
             var currentDistance = Vector3.Distance(transform.position, navigationTarget.position);
             if (currentDistance < 5) { portalActivated = true; }
             if (currentDistance < 4.5f && portalActivated && !goingPortalPlayed) { ThroughPortalSound(); }
-            Debug.Log(currentDistance);
+            //Debug.Log(currentDistance);
             yield return null;
         }
         
