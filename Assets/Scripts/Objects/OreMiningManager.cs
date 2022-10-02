@@ -8,6 +8,7 @@ public class OreMiningManager : MonoBehaviour
     Transform secondProductInstance;
     MiningProductPopuper productPopuper;
     [SerializeField] OreHealthDecreaser oreHealthDecreaser;
+    [SerializeField] ParticleSystem particlesPS;
     SkeletonBehavior connectedSkeleton;
 
     [Header("Audio Connection")]
@@ -95,6 +96,7 @@ public class OreMiningManager : MonoBehaviour
     void DecreaseOreHealth()
     {
         //Debug.Log("Hitted");
+        particlesPS.Play();
         PlayMiningSound();
         oreHealthDecreaser.DealDamage(100);
     }
