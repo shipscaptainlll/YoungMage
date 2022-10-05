@@ -55,6 +55,7 @@ public class CityRegenerationEnter : MonoBehaviour
         zoomInSound = soundManager.FindSound("CameraZoomIn");
         zoomOutSound = soundManager.FindSound("CameraZoomOut");
         floatingSound.Play();
+        Debug.Log("ready");
     }
 
     // Update is called once per frame
@@ -69,8 +70,10 @@ public class CityRegenerationEnter : MonoBehaviour
 
     void EnterCityRegeneration()
     {
+        Debug.Log("Here2");
         if (!isActive)
         {
+            Debug.Log("Here1");
             zoomInSound.Play();
             HideSpellsBook();
             cityWallUpgrade.GetComponent<CanvasGroup>().alpha = 1;

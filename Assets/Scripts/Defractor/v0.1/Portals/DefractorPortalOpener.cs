@@ -7,6 +7,7 @@ public class DefractorPortalOpener : MonoBehaviour
 {
     //[SerializeField] Transform portalContainer;
     [Header("Main Part")]
+    [SerializeField] AppearanceTransmutationCircle appearanceTransmutationCircle;
     [SerializeField] Transform VFXContainer;
     Transform housePortal;
     bool cycleRunning = false;
@@ -76,7 +77,8 @@ public class DefractorPortalOpener : MonoBehaviour
             //StartCoroutine(CloseVFX());
             PortalClosed();
             //housePortal.gameObject.SetActive(false);
-            VFXContainer.gameObject.SetActive(false);
+            appearanceTransmutationCircle.CircleDisappearance();
+            //VFXContainer.gameObject.SetActive(false);
         }
     }
     IEnumerator OpenPortal()
@@ -174,8 +176,9 @@ public class DefractorPortalOpener : MonoBehaviour
 
     void StartPS()
     {
-        VFXContainer.gameObject.SetActive(true);
-        VFXContainer.GetComponent<ParticleSystem>().Play();
+        appearanceTransmutationCircle.CircleAppearance();
+        //VFXContainer.gameObject.SetActive(true);
+        //VFXContainer.GetComponent<ParticleSystem>().Play();
         conjurationAppearSound.Play();
     }
 

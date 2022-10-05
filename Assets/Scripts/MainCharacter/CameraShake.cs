@@ -37,8 +37,8 @@ public class CameraShake : MonoBehaviour
         while (true)
         {
             
-            float x = Random.Range(-1, 1) * magnitude;
-            float y = Random.Range(-1, 1) * magnitude;
+            float x = Random.Range(-1, 1) * magnitude / 100;
+            float y = Random.Range(-1, 1) * magnitude / 100;
 
             transform.localPosition = new Vector3(x, originalPos.y + y, originalPos.z);
             //Debug.Log(transform.localPosition);
@@ -55,8 +55,8 @@ public class CameraShake : MonoBehaviour
         {
             elapsed += Time.deltaTime;
             currentMagnitude = Mathf.Lerp(magnitude, 0, elapsed / duration);
-            float x = Random.Range(-1, 1) * currentMagnitude;
-            float y = Random.Range(-1, 1) * currentMagnitude;
+            float x = Random.Range(-1, 1) * currentMagnitude / 100;
+            float y = Random.Range(-1, 1) * currentMagnitude / 100;
             transform.localPosition = new Vector3(x, originalPos.y + y, originalPos.z);
             yield return null;
         }

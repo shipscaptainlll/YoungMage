@@ -10,6 +10,7 @@ public class CityCastleUpgrade : MonoBehaviour
     [SerializeField] GoldCoinsCounter goldCoinsCounter;
     [SerializeField] SUINotificator suiNotificator;
     [SerializeField] ParticleSystem upgradePS;
+    [SerializeField] AppearanceTransmutationCircle appearanceTransmutationCircle;
     [SerializeField] Transform circleSoundSource;
     Coroutine upgradPSCoroutine;
 
@@ -219,8 +220,9 @@ public class CityCastleUpgrade : MonoBehaviour
         upgradPSCoroutine = StartCoroutine(DelayUpgradePS());
         if (!upgradePS.isPlaying)
         {
-            upgradePS.gameObject.SetActive(true);
-            upgradePS.Play();
+            appearanceTransmutationCircle.CircleAppearance();
+            //upgradePS.gameObject.SetActive(true);
+            //upgradePS.Play();
             conjurationAppearSound.Play();
         }
     }
@@ -234,7 +236,8 @@ public class CityCastleUpgrade : MonoBehaviour
 
     void HideUpgradePS()
     {
-        upgradePS.Stop();
-        upgradePS.gameObject.SetActive(false);
+        appearanceTransmutationCircle.CircleDisappearance();
+        //upgradePS.Stop();
+        //upgradePS.gameObject.SetActive(false);
     }
 }

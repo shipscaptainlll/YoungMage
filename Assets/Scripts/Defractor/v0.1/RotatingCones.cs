@@ -11,6 +11,7 @@ public class RotatingCones : MonoBehaviour
     [SerializeField] float requiredSpeed;
     [SerializeField] float updateSpeed;
     [SerializeField] ParticleSystem rotationParticleSystem;
+    [SerializeField] AppearanceTransmutationCircle appearanceTransmutationCircle;
     float currentSpeed = 0;
     bool rotating = false;
     bool slowingDown = false;
@@ -114,8 +115,7 @@ public class RotatingCones : MonoBehaviour
     {
         if (soundManager != null && !rotationParticleSystem.isPlaying)
         {
-            rotationParticleSystem.gameObject.SetActive(true);
-            rotationParticleSystem.Play();
+            appearanceTransmutationCircle.CircleAppearance();
             conjurationAppearSound.Play();
         }
     }
@@ -124,8 +124,7 @@ public class RotatingCones : MonoBehaviour
     {
         if (soundManager != null && rotationParticleSystem.isPlaying)
         {
-            rotationParticleSystem.Stop();
-            rotationParticleSystem.gameObject.SetActive(false);
+            appearanceTransmutationCircle.CircleDisappearance();
         }
     }
 }

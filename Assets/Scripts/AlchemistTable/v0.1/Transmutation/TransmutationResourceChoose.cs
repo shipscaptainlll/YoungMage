@@ -13,11 +13,14 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
     [SerializeField] ResourceBottleStorage _resourceBottleStorage;
     [SerializeField] Transform _resourcesPositionsHolder;
 
-    [Header("Sounds Manager")]
+    [Header("Sounds Manager Settings")]
     [SerializeField] SoundManager soundManager;
     AudioSource openingSound;
     AudioSource rotatingSound;
     AudioSource applyElementSound;
+
+    [Header("Alchemist Circles Rotation Settings")]
+    [SerializeField] TransmutationCircleRotation transmutationCircleRotation;
 
     List<GameObject> _accessibleResources = new List<GameObject>();
     Transform _chosenResource;
@@ -97,7 +100,6 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
 
     void VisualizeAccessibleResources()
     {
-        //Debug.Log("Closed");
         foreach (Transform position in _resourcesPositionsHolder)
         {
             position.gameObject.GetComponent<MeshRenderer>().enabled = false;
@@ -161,7 +163,8 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
     {
         if (engagedResourcePack.parent.Find("ChooseResource") == transform)
         {
-            Debug.Log("Hello there");
+            transmutationCircleRotation.CircleChooseRotation();
+            //Debug.Log("Hello there123");
             ShowResourcePack();
             ClearChosenVisualisation();
             if (ResourceUnchosen != null)
@@ -176,8 +179,9 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
     {
         if (engagedResourcePack.parent.Find("ChooseResource") == transform)
         {
-            VisualizeChosenResource();
             HideResourcePack();
+            VisualizeChosenResource();
+            
             _transmutationEnabled = false;
         }
     }
@@ -252,6 +256,8 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
     {
         ClearChosenVisualisation();
         GameObject targetObject = GetChoosenResource();
+        transmutationCircleRotation.CircleChoosenRotation();
+        //Debug.Log("Hello there12");
         foreach (Transform panel in _choosenResourcesHolder.transform)
         {
             if (panel.GetComponent<AlchemistTableResource>().ID == targetObject.transform.GetComponent<AlchemistTableResource>().ID)
@@ -309,10 +315,13 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
 
     void HideResourcePack()
     {
-        foreach(GameObject resource in _accessibleResources)
+        
+        
+        foreach (GameObject resource in _accessibleResources)
         {
             resource.GetComponent<MeshRenderer>().enabled = false;
         }
+        
     }
 
     void ChooseResource(Transform engagedResourcePack)
@@ -328,6 +337,7 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
 
     void ShowResourcePack()
     {
+        
         foreach (GameObject resource in _accessibleResources)
         {
             //Debug.Log("Shown");
@@ -339,6 +349,8 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
     public void Show()
     {
         openingSound.Play();
+        transmutationCircleRotation.CircleLookRotation();
+        //Debug.Log("Hello there1");
         if (!_transmutationEnabled && !_characterOccupation.IsOccupied)
         {
             foreach (GameObject resource in _accessibleResources)
@@ -361,6 +373,8 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
 
     public void Hide()
     {
+        Debug.Log("Hello there");
+        transmutationCircleRotation.CircleDefaultRotation();
         if (!_transmutationEnabled)
         {
             foreach (GameObject resource in _accessibleResources)

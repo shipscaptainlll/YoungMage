@@ -185,18 +185,18 @@ public class BookSpellsCaster : MonoBehaviour
     {
         bookIsHidden = false;
         bookTransform.gameObject.SetActive(true);
-        if (instantiatedObjectsHolder.GetChild(0) != null && instantiatedObjectsHolder.GetChild(0).GetComponent<MeshRenderer>() != null) { instantiatedObjectsHolder.GetChild(0).GetComponent<MeshRenderer>().enabled = true; }
-        if (instantiatedObjectsHolder.GetChild(0).GetChild(0) != null && instantiatedObjectsHolder.GetChild(0).GetChild(0).GetComponent<MeshRenderer>() != null) { instantiatedObjectsHolder.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().enabled = true; }
-        if (instantiatedObjectsHolder.GetChild(0).GetChild(0).GetChild(0) != null && instantiatedObjectsHolder.GetChild(0).GetChild(0).GetChild(0).GetComponent<MeshRenderer>() != null) { instantiatedObjectsHolder.GetChild(0).GetChild(0).GetChild(0).GetComponent<MeshRenderer>().enabled = true; }
+        if (instantiatedObjectsHolder.childCount > 0 && instantiatedObjectsHolder.GetChild(0) != null && instantiatedObjectsHolder.GetChild(0).GetComponent<MeshRenderer>() != null) { instantiatedObjectsHolder.GetChild(0).GetComponent<MeshRenderer>().enabled = true; }
+        if (instantiatedObjectsHolder.childCount > 0 && instantiatedObjectsHolder.GetChild(0).GetChild(0) != null && instantiatedObjectsHolder.GetChild(0).GetChild(0).GetComponent<MeshRenderer>() != null) { instantiatedObjectsHolder.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().enabled = true; }
+        if (instantiatedObjectsHolder.childCount > 0 && instantiatedObjectsHolder.GetChild(0).GetChild(0).GetChild(0) != null && instantiatedObjectsHolder.GetChild(0).GetChild(0).GetChild(0).GetComponent<MeshRenderer>() != null) { instantiatedObjectsHolder.GetChild(0).GetChild(0).GetChild(0).GetComponent<MeshRenderer>().enabled = true; }
     }
 
     public void HideSpellsBook()
     {
         bookIsHidden = true;
         bookTransform.gameObject.SetActive(false);
-        if (instantiatedObjectsHolder.GetChild(0) != null && instantiatedObjectsHolder.GetChild(0).GetComponent<MeshRenderer>() != null) { instantiatedObjectsHolder.GetChild(0).GetComponent<MeshRenderer>().enabled = false; }
-        if (instantiatedObjectsHolder.GetChild(0).GetChild(0) != null && instantiatedObjectsHolder.GetChild(0).GetChild(0).GetComponent<MeshRenderer>() != null) { instantiatedObjectsHolder.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().enabled = false; }
-        if (instantiatedObjectsHolder.GetChild(0).GetChild(0).GetChild(0) != null && instantiatedObjectsHolder.GetChild(0).GetChild(0).GetChild(0).GetComponent<MeshRenderer>() != null) { instantiatedObjectsHolder.GetChild(0).GetChild(0).GetChild(0).GetComponent<MeshRenderer>().enabled = false; }
+        if (instantiatedObjectsHolder.childCount > 0 && instantiatedObjectsHolder.GetChild(0) != null && instantiatedObjectsHolder.GetChild(0).GetComponent<MeshRenderer>() != null) { instantiatedObjectsHolder.GetChild(0).GetComponent<MeshRenderer>().enabled = false; }
+        if (instantiatedObjectsHolder.childCount > 0 && instantiatedObjectsHolder.GetChild(0).GetChild(0) != null && instantiatedObjectsHolder.GetChild(0).GetChild(0).GetComponent<MeshRenderer>() != null) { instantiatedObjectsHolder.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().enabled = false; }
+        if (instantiatedObjectsHolder.childCount > 0 && instantiatedObjectsHolder.GetChild(0).GetChild(0).GetChild(0) != null && instantiatedObjectsHolder.GetChild(0).GetChild(0).GetChild(0).GetComponent<MeshRenderer>() != null) { instantiatedObjectsHolder.GetChild(0).GetChild(0).GetChild(0).GetComponent<MeshRenderer>().enabled = false; }
     }
 
     public void StartShowingLetters()

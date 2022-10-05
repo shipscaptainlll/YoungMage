@@ -11,6 +11,7 @@ public class CityWallUpgrade : MonoBehaviour
     [SerializeField] GoldCoinsCounter goldCoinsCounter;
     [SerializeField] SUINotificator suiNotificator;
     [SerializeField] ParticleSystem upgradeParticleSystem;
+    [SerializeField] AppearanceTransmutationCircle appearanceTransmutationCircle;
     [SerializeField] Transform circleSoundSource;
     [SerializeField] Transform regenerationSoundSource;
 
@@ -92,8 +93,9 @@ public class CityWallUpgrade : MonoBehaviour
     {
         if (!upgradeParticleSystem.isPlaying)
         {
-            upgradeParticleSystem.gameObject.SetActive(true);
-            upgradeParticleSystem.Play();
+            appearanceTransmutationCircle.CircleAppearance();
+            //upgradeParticleSystem.gameObject.SetActive(true);
+            //upgradeParticleSystem.Play();
             conjurationAppearSound.Play();
             regenerationSound.Play();
         }
@@ -101,8 +103,9 @@ public class CityWallUpgrade : MonoBehaviour
 
     void HideUpgradePS()
     {
-        upgradeParticleSystem.Stop();
+        appearanceTransmutationCircle.CircleDisappearance();
+        //upgradeParticleSystem.Stop();
         regenerationSound.Stop();
-        upgradeParticleSystem.gameObject.SetActive(false);
+        //upgradeParticleSystem.gameObject.SetActive(false);
     }
 }

@@ -15,6 +15,7 @@ public class ContactManager : MonoBehaviour
     [SerializeField] DeattachObjectSkeleton deattachObjectSkeleton;
     [SerializeField] BookSpellsActivator bookSpellsActivator;
 
+    PersonMovement characterScript;
     Transform contactedSkeleton;
     public event Action<Transform> TeleporterDetected = delegate { };
     public event Action<Transform> OreDetected = delegate { };
@@ -33,6 +34,7 @@ public class ContactManager : MonoBehaviour
     private void Start()
     {
         ClickManager.LMBClicked += ContactObject;
+        characterScript = mainCharacter.GetComponent<PersonMovement>();
     }
 
     void ContactObject()
@@ -101,7 +103,7 @@ public class ContactManager : MonoBehaviour
                     
                 }
                 */
-                else if (contactedObject.GetComponent<Skeleton>() != null && quickAccessHandController.CurrentCustomID == 10)
+                else if (contactedObject.GetComponent<Skeleton>() != null && !characterScript.IsCrouching && quickAccessHandController.CurrentCustomID == 10)
                 {
                     //Debug.Log("Found Skeleton");
                     SkeletonBehavior skeletonScript = contactedObject.transform.GetComponent<SkeletonBehavior>();

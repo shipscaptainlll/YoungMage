@@ -95,6 +95,8 @@ public class PersonMovement : MonoBehaviour
     bool onStone;
     bool onOtherGround;
     string currentObjectGround;
+    bool skeletonAttached;
+    bool isCrouching;
 
     float timeShiftPressed;
 
@@ -105,8 +107,11 @@ public class PersonMovement : MonoBehaviour
     public int ProgressParameterThird { get { return shifts; } }
     public int ProgressParameterFourth { get { return jumps; } }
     public int ProgressParameterFifth { get { return doubleJumps; } }
-
     
+    public bool SkeletonAttached { get { return skeletonAttached; } set { skeletonAttached = value; } }
+    public bool IsCrouching { get { return isCrouching; } set { isCrouching = value; StopRunning(); } }
+
+    public float BasicSpeed { get { return basicSpeed; } set { basicSpeed = value; } }
     
     public event Action<int> CharacterStepMade = delegate { };
     public event Action<int> CharacterRunnedStep = delegate { };
@@ -257,7 +262,7 @@ public class PersonMovement : MonoBehaviour
             isWalking = false;
         }
 
-        if ((!isShifting && Input.GetKey(KeyCode.LeftShift)) || isAutoRunning && !isShifting)
+        if ((!isShifting && !isCrouching && Input.GetKey(KeyCode.LeftShift)) || isAutoRunning && !isShifting)
         {
             keyPushedLength += Time.deltaTime;
             {
@@ -270,16 +275,13 @@ public class PersonMovement : MonoBehaviour
                 }
             }
         }
-        if (!isShifting && Input.GetKeyUp(KeyCode.LeftShift) && !isAutoRunning)
+        if (!isShifting && !isCrouching && Input.GetKeyUp(KeyCode.LeftShift) && !isAutoRunning)
         {
-            speed = basicSpeed * 1;
-            if (!hardBreathingSound.isPlaying) { hardBreathingSound.Play(); }
-            isWalking = true; isRunning = false;
-            keyPushedLength = 0;
+            StopRunning();
         }
         bool isGroundedOld = isGrounded;
         
-        if (!doubleshiftCooldowned && Input.GetKeyDown(KeyCode.LeftShift))
+        if (!doubleshiftCooldowned && !isCrouching && Input.GetKeyDown(KeyCode.LeftShift))
         {
             var timeCurrentPressed = Time.time;
             if (timeCurrentPressed - timeShiftPressed < 0.30f)
@@ -390,7 +392,7 @@ public class PersonMovement : MonoBehaviour
             doubleJumped = false;
         }
 
-        if (isGrounded && Input.GetButtonDown("Jump") || (!doubleJumped && !isGrounded && Input.GetButtonDown("Jump")))
+        if (isGrounded && !isCrouching && Input.GetButtonDown("Jump") || (!doubleJumped && !isGrounded && !isCrouching && Input.GetButtonDown("Jump")))
         {
             jumps++;
             if (CharacterJumped != null) { CharacterJumped(jumps); }
@@ -456,5 +458,13 @@ public class PersonMovement : MonoBehaviour
         transform.rotation = basePosition.rotation;
         characterController.enabled = true;
         Debug.Log("Warped back to base");
+    }
+
+    void StopRunning()
+    {
+        speed = basicSpeed * 1;
+        if (isRunning && !hardBreathingSound.isPlaying) { hardBreathingSound.Play(); }
+        isWalking = true; isRunning = false;
+        keyPushedLength = 0;
     }
 }

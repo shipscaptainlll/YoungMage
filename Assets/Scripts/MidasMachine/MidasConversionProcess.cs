@@ -9,6 +9,7 @@ public class MidasConversionProcess : MonoBehaviour
     [SerializeField] MidasCollectorCatcher outCollectorCatcher;
     [SerializeField] MidasResourcesCosts midasResourcesCosts;
     [SerializeField] ParticleSystem transformationPS;
+    [SerializeField] AppearanceTransmutationCircle appearanceTransmutationCircle;
     
     Coroutine delayPSCoroutine;
 
@@ -64,8 +65,9 @@ public class MidasConversionProcess : MonoBehaviour
         {
             conjurationStartSound.Play();
             delayPSCoroutine = StartCoroutine(delayPS());
-            transformationPS.gameObject.SetActive(true);
-            transformationPS.Play();
+            appearanceTransmutationCircle.CircleAppearance();
+            //transformationPS.gameObject.SetActive(true);
+            //transformationPS.Play();
             
         }
     }
@@ -73,8 +75,9 @@ public class MidasConversionProcess : MonoBehaviour
     IEnumerator delayPS()
     {
         yield return new WaitForSeconds(17f);
-        transformationPS.Stop();
-        transformationPS.gameObject.SetActive(false);
+        appearanceTransmutationCircle.CircleDisappearance();
+        //transformationPS.Stop();
+        //transformationPS.gameObject.SetActive(false);
         delayPSCoroutine = null;
     }
 }

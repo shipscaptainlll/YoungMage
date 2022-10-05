@@ -19,6 +19,7 @@ public class PotentialProductAppearance : MonoBehaviour
     [SerializeField] ItemsCounterQuests itemsCounterQuests;
 
     [SerializeField] ParticleSystem productParticleSystem;
+    [SerializeField] AppearanceTransmutationCircle appearanceTransmutationCircle;
 
     [SerializeField] EClickVariations eClickVariations;
     Transform createdObject;
@@ -213,17 +214,19 @@ public class PotentialProductAppearance : MonoBehaviour
 
     void ActivateProductPS()
     {
-        productParticleSystem.gameObject.SetActive(true);
-        productParticleSystem.Play();
+        appearanceTransmutationCircle.CircleAppearance();
+        //productParticleSystem.gameObject.SetActive(true);
+        //productParticleSystem.Play();
         conjurationAppearSound.Play();
     }
 
     void DeactivateProductPS()
     {
-        Debug.Log(1);
-        productParticleSystem.Stop();
-        Debug.Log(1);
-        productParticleSystem.gameObject.SetActive(false);
-        Debug.Log(1);
+        appearanceTransmutationCircle.CircleDisappearance();
+        //Debug.Log(1);
+        //productParticleSystem.Stop();
+        //Debug.Log(1);
+        //productParticleSystem.gameObject.SetActive(false);
+        //Debug.Log(1);
     }
 }

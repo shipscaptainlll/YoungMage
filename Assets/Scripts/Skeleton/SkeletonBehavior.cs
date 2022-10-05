@@ -42,6 +42,7 @@ public class SkeletonBehavior : MonoBehaviour
     [SerializeField] LayerMask checkLayer3;
     [SerializeField] float checkGroundRadius;
     [SerializeField] float stairsCheckRadius;
+    [SerializeField] float speed;
     bool onGround;
     bool onStairs;
     bool onStone;
@@ -49,6 +50,11 @@ public class SkeletonBehavior : MonoBehaviour
     bool isSmallSkeleton;
     bool isBigSkeleton;
     bool isLizardSkeleton;
+    bool isCrouching;
+
+    public float Speed { get { return speed; } set { speed = value; navMeshAgent.speed = speed; } }
+    public bool IsCrouching { get { return isCrouching; } set { isCrouching = value; } }
+
 
     [Header("VFX conjuration")]
     [SerializeField] ParticleSystem conjurationVFX;
@@ -118,7 +124,7 @@ public class SkeletonBehavior : MonoBehaviour
     bool rotatedEnough = false;
     string activity;
     bool cache = false;
-    float speed = 9f;
+    
     bool reachedPosition;
     Coroutine changeColorCounter;
     Coroutine changeScaleCounter;
@@ -157,6 +163,7 @@ public class SkeletonBehavior : MonoBehaviour
     public int DestroyedBigSkeletons { get { return destroyedBigSkeletons; } }
     public int DestroyedLizardSkeletons { get { return destroyedLizardSkeletons; } }
     public bool ReachedPosition { get { return reachedPosition; } }
+    public AudioSource WalkingGroundSound { get { return walkingGroundSound; } }
     //cache
     [SerializeField] Transform targetMage1;
     public Transform CastlePosition { set { castlePosition = value; } }
@@ -278,7 +285,19 @@ public class SkeletonBehavior : MonoBehaviour
                 //Debug.Log("Disconnected from the ore");
                 DoorConnectionManager.ReturnPosition(navigationTarget);
                 navigationTarget.parent.parent.GetComponent<DoorTacklingManager>().ConnectedSkeleton = null;
+            } 
+            
+            if (navigationTarget == null && value.GetComponent<PersonMovement>() != null)
+            {
+                value.GetComponent<PersonMovement>().SkeletonAttached = true;
+                Debug.Log("Hello thereee1");
+            } else if (navigationTarget != null && navigationTarget.GetComponent<PersonMovement>() != null && value == null)
+            {
+                navigationTarget.GetComponent<PersonMovement>().SkeletonAttached = false;
+                Debug.Log("Hello thereee2");
             }
+            
+            
             if (!wasOnceConjured) {
                 //Debug.Log("hello there");
                 wasOnceConjured = true;
@@ -453,7 +472,9 @@ public class SkeletonBehavior : MonoBehaviour
         } else if (navMeshAgent.velocity.magnitude > 0.15f && !isMoving)
         {
             isMoving = true;
-            localAnimator.Play("SkelMove");
+            if (isCrouching) { localAnimator.Play("CrouchSmallSkeleton"); }
+            else { localAnimator.Play("SkelMove"); }
+            
         }
         else if (navMeshAgent.velocity.magnitude > 0.15f && isMoving)
         {
@@ -823,6 +844,8 @@ public class SkeletonBehavior : MonoBehaviour
 
         if (navigationTarget != null && navigationTarget.GetComponent<PersonMovement>() != null)
         {
+            navigationTarget.GetComponent<PersonMovement>().SkeletonAttached = false;
+
             if (targetOre.GetComponent<NavMeshObstacle>() != null)
             {
                 targetOre.GetComponent<NavMeshObstacle>().enabled = false;
@@ -836,7 +859,7 @@ public class SkeletonBehavior : MonoBehaviour
                 NavigationTarget = targetOre;
             }
             //Debug.Log(navigationTarget);
-            
+
         } else { Debug.Log("Skeleton is not connected to anything " + transform); }
     }
 

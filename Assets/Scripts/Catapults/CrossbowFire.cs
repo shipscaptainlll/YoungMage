@@ -62,7 +62,7 @@ public class CrossbowFire : MonoBehaviour
         float xVelocity = Mathf.Sqrt(gravity * Distance * Distance / (2f * (height - Distance * tangAngle)));
         float yVelocity = tangAngle * xVelocity;
         calculatedVelocities = new Vector2(xVelocity, yVelocity);
-        Debug.Log(calculatedVelocities);
+        //Debug.Log(calculatedVelocities);
         return calculatedVelocities;
     }
 
