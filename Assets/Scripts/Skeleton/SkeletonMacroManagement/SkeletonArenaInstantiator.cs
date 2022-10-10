@@ -46,6 +46,11 @@ public class SkeletonArenaInstantiator : MonoBehaviour
         if (skeletonsCount < skeletonsMaxCount)
         {
             skeletonsCount++;
+            Debug.Log("instantiated new one4");
+            Debug.Log("skeletons count" + skeletonsCount);
+            Debug.Log("skeletons max count" + skeletonsMaxCount);
+            Debug.Log(skeletonsCount < skeletonsMaxCount);
+            
             float xPositionOffset = (float)random.Next(-10, 10);
             float zPositionOffset = (float)random.Next(-10, 10);
             Transform newSkeleton = Instantiate(skeletonModel, instantiationPoint.position + new Vector3(xPositionOffset, 0, zPositionOffset), skeletonModel.rotation);

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class CastlePositionsManager : MonoBehaviour
 {
-    List<Transform> castlePotentialPositions = new List<Transform>();
+    public List<Transform> castlePotentialPositions = new List<Transform>();
+    public List<Transform> castleOccupiedPositions = new List<Transform>();
 
     public List<Transform> CastlePotentialPositions
     {
@@ -26,8 +27,16 @@ public class CastlePositionsManager : MonoBehaviour
     {
         Transform returnedPosition = castlePotentialPositions[0];
         
+        castleOccupiedPositions.Add(returnedPosition);
         castlePotentialPositions.Remove(returnedPosition);
+        Debug.Log(castlePotentialPositions.Count);
         return returnedPosition;
 
+    }
+
+    public void RegeneratePositions(Transform returnedPosition)
+    {
+        returnedPosition.gameObject.SetActive(true);
+        castlePotentialPositions.Add(returnedPosition);
     }
 }

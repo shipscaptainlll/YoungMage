@@ -41,8 +41,8 @@ public class OreMiningHighlighing : MonoBehaviour
         {
             elapsed += Time.deltaTime;
             currentEmission = Mathf.Lerp(startEmission, highlightingIntensification, animationCurve.Evaluate(elapsed / highlightingDuration));
-            Debug.Log(currentEmission);
-            Debug.Log(startMaterial.GetColor("_EmissionColor"));
+            //Debug.Log(currentEmission);
+            //Debug.Log(startMaterial.GetColor("_EmissionColor"));
             startMaterial.SetColor("_EmissionColor", startColor * currentEmission);
             
             yield return null;

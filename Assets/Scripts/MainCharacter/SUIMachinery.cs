@@ -61,8 +61,11 @@ public class SUIMachinery : MonoBehaviour
 
     void UpdateElementPosition()
     {
-        Vector3 objectPosition = Camera.main.WorldToScreenPoint(objectReference.transform.position);
-        borderedCanvas.transform.position = objectPosition;
+        if (objectReference != null)
+        {
+            Vector3 objectPosition = Camera.main.WorldToScreenPoint(objectReference.transform.position);
+            borderedCanvas.transform.position = objectPosition;
+        }
     }
 
     void HideElement()

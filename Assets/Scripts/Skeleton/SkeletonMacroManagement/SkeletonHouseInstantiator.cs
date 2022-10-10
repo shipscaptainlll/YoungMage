@@ -6,6 +6,7 @@ using UnityEngine;
 public class SkeletonHouseInstantiator : MonoBehaviour
 {
     [SerializeField] SkeletonArenaInstantiator skeletonArenaInstantiator;
+    [SerializeField] CastlePositionsManager castlePositionsManager;
     [SerializeField] SkeletonsStack skeletonsStack;
     [SerializeField] Transform homeSkeletonsHolder;
     [SerializeField] CopycatCatcher copycatCatcher;
@@ -57,9 +58,23 @@ public class SkeletonHouseInstantiator : MonoBehaviour
         if (HouseSkeletonCreated != null) { HouseSkeletonCreated(newSkeleton); }
     }
 
-    void DestroySkeleton(Transform teleportedSkeleton)
+    public void DestroySkeleton(Transform teleportedSkeleton)
     {
-        if (SkeletonDestroyed != null) { SkeletonDestroyed(teleportedSkeleton.transform.GetComponent<Copycat>().ConnectedInstance); }
+        if (SkeletonDestroyed != null && teleportedSkeleton.transform.GetComponent<Copycat>() != null) { SkeletonDestroyed(teleportedSkeleton.transform.GetComponent<Copycat>().ConnectedInstance); }
+        //Debug.Log("1");
         skeletonArenaInstantiator.SkeletonsCount -= 1;
+        Debug.Log("2");
+        teleportedSkeleton.GetComponent<SkeletonHealthDecreaser>().UnscubscribeSkeletonSoldier();
+        //Debug.Log("3");
+        castlePositionsManager.RegeneratePositions(teleportedSkeleton.GetComponent<SkeletonBehavior>().OccupiedArenaPositions);
+        //Debug.Log("4");
+        foreach (Transform skeleton in skeletonsStack.SkeletonsArena)
+        {
+            if (skeleton == teleportedSkeleton) { 
+                skeletonsStack.SkeletonsArena.Remove(teleportedSkeleton);
+                //Debug.Log("5");
+                return; }
+        }
+        //Debug.Log("6");
     }
 }

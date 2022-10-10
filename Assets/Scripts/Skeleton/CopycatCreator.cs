@@ -78,7 +78,7 @@ public class CopycatCreator : MonoBehaviour
         {
             copycatPortal.transform.parent.parent.Find("CopycatCatcher").GetComponent<CopycatCatcher>().CopycatCached -= destroyCopycat;
             lastCopycatPosition = copycat.transform.position;
-            Debug.Log("Copycat destroyed");
+            //Debug.Log("Copycat destroyed");
             Destroy(copycat);
         }
         

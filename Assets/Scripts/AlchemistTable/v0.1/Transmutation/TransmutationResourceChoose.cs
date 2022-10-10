@@ -373,7 +373,7 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
 
     public void Hide()
     {
-        Debug.Log("Hello there");
+        //Debug.Log("Hello there");
         transmutationCircleRotation.CircleDefaultRotation();
         if (!_transmutationEnabled)
         {

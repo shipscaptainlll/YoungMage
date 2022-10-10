@@ -28,12 +28,15 @@ public class PortalOpener : MonoBehaviour
 
     Transform choosenSkeleton;
     System.Random random;
+
+    public Transform ChoosenSkeleton { get { return choosenSkeleton; } }
     // Start is called before the first frame update
     void Start()
     {
         random = new System.Random();
         clickManager.EClicked += InitiatePortalOpening;
         housePortal = housePortalContainer.Find("Simple Portal").Find("Visualisation");
+        fieldPortal = fieldPortalContainer.Find("Simple Portal").Find("Visualisation");
         housePortal.localScale = new Vector3(0.1f, 0.1f, housePortal.localScale.z);
         //teleportationManager.SkeletonFinallyTeleported += InitiatePortalClosing;
         copycatCatcher.CopycatCached += InitiatePortalClosing;
@@ -48,39 +51,51 @@ public class PortalOpener : MonoBehaviour
         
     }
 
-    void InitiatePortalOpening()
+    public void InitiatePortalOpening()
     {
         if (!portalOpened)
         {
             
             portalOpened = true;
-            //Debug.Log("OpeningPortal");
+            Debug.Log("OpeningPortal");
             if (!cycleRunning && eClickVariations.IsOpeningPortal)
             {
                 cycleRunning = true;
-                
+                Debug.Log("OpeningPortal1");
                 EnablePortals();
+                Debug.Log("OpeningPortal2");
                 ActivateParticleSystem();
+                Debug.Log("OpeningPortal3");
                 ChooseSkeletonInstance();
+                Debug.Log("OpeningPortal4");
                 ChangePortalPosition();
+                Debug.Log("OpeningPortal5");
                 ChangeSkeletonSlicer();
+                Debug.Log("OpeningPortal6");
                 StartVFX();
+                Debug.Log("OpeningPortal7");
                 StartCoroutine(OpenVFX());
+                Debug.Log("OpeningPortal8");
                 StartCoroutine(OpenPortal());
+                Debug.Log("OpeningPortal9");
             }
         } else { portalOpened = false;
-            //Debug.Log("ClosingPortal");
+            Debug.Log("ClosingPortal");
             if (cycleRunning)
             {
+                Debug.Log("ClosingPortal1");
                 cycleRunning = false;
+                Debug.Log("ClosingPortal2");
                 StartCoroutine(ClosePortal());
+                Debug.Log("ClosingPortal3");
                 StartCoroutine(CloseVFX());
+                Debug.Log("ClosingPortal4");
             }
         }
         
     }
 
-    void InitiatePortalClosing()
+    public void InitiatePortalClosing()
     {
         if (cycleRunning)
         {
@@ -150,6 +165,8 @@ public class PortalOpener : MonoBehaviour
         }
         DeactivateParticleSystem();
         housePortal.gameObject.SetActive(false);
+        fieldPortal.gameObject.SetActive(false);
+        //fieldPortalContainer.gameObject.SetActive(false);
     }
 
     IEnumerator CloseVFX()
@@ -202,6 +219,7 @@ public class PortalOpener : MonoBehaviour
 
     void EnablePortals()
     {
+        fieldPortal.gameObject.SetActive(true);
         housePortalContainer.gameObject.SetActive(true);
         fieldPortalContainer.gameObject.SetActive(true);
     }
@@ -219,7 +237,7 @@ public class PortalOpener : MonoBehaviour
 
             for (int j = 0; j < skeletons.Length; j++)
             {
-                if (skeletons[i].GetComponent<SkeletonBehavior>().ReachedPosition == true)
+                if (skeletons[i].transform != null && skeletons[i].GetComponent<SkeletonBehavior>().ReachedPosition == true)
                 {
                     
                     choosenSkeleton = skeletons[skeletonID];

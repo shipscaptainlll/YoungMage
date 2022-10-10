@@ -40,7 +40,7 @@ public class TransmutationCircleRotation : MonoBehaviour
 
     IEnumerator RotateCircleLook()
     {
-        Debug.Log("There1");
+        //Debug.Log("There1");
         var rotation = transmutationCirclePS.rotationOverLifetime;
         rotation.z = 18;
         yield return new WaitForSeconds(0.19f);
@@ -74,7 +74,7 @@ public class TransmutationCircleRotation : MonoBehaviour
 
     IEnumerator RotateCircleDefault()
     {
-        Debug.Log("There");
+        //Debug.Log("There");
         var rotation = transmutationCirclePS.rotationOverLifetime;
         rotation.z = 0.21f;
         yield return null;

@@ -43,6 +43,8 @@ public class SkeletonBehavior : MonoBehaviour
     [SerializeField] float checkGroundRadius;
     [SerializeField] float stairsCheckRadius;
     [SerializeField] float speed;
+    [SerializeField] SkeletonsStack skeletonsStack;
+    Transform occupiedArenaPosition;
     bool onGround;
     bool onStairs;
     bool onStone;
@@ -164,6 +166,8 @@ public class SkeletonBehavior : MonoBehaviour
     public int DestroyedLizardSkeletons { get { return destroyedLizardSkeletons; } }
     public bool ReachedPosition { get { return reachedPosition; } }
     public AudioSource WalkingGroundSound { get { return walkingGroundSound; } }
+
+    public Transform OccupiedArenaPositions { get { return occupiedArenaPosition; } }
     //cache
     [SerializeField] Transform targetMage1;
     public Transform CastlePosition { set { castlePosition = value; } }
@@ -354,6 +358,7 @@ public class SkeletonBehavior : MonoBehaviour
                 {
                     PotentialpositionsNavroutActive = true;
                     navigationTarget = castlePositionsManager.GetAvailablePosition();
+                    occupiedArenaPosition = navigationTarget;
                     CastleNavroutActive = false;
                 }
                 
@@ -365,6 +370,7 @@ public class SkeletonBehavior : MonoBehaviour
             if (navMeshAgent.velocity.magnitude < 0.15f)
             {
                 //Debug.Log("Reached Position");
+                skeletonsStack.SaveSkeletonArena(transform);
                 reachedPosition = true;
                 PotentialpositionsNavroutActive = false;
             } 
@@ -524,6 +530,11 @@ public class SkeletonBehavior : MonoBehaviour
             unusedCounter.gameObject.GetComponent<CanvasGroup>().alpha = 0;
             Debug.Log("Active again");
         }
+    }
+
+    public void DestroyManually()
+    {
+        StartCoroutine(DestroySkeleton());
     }
 
     IEnumerator Unconjure()
@@ -724,7 +735,7 @@ public class SkeletonBehavior : MonoBehaviour
 
     void ShakePlayerCamera()
     {
-        Debug.Log(Vector3.Distance(playerTransform.position, this.transform.position));
+        //Debug.Log(Vector3.Distance(playerTransform.position, this.transform.position));
         if (Vector3.Distance(playerTransform.position, this.transform.position) < 6
             && !cameraShake.Activated) {
             cameraShake.ShakeCamera(0.75f, 0.065f * (1/Vector3.Distance(playerTransform.position, this.transform.position)) * 18);
@@ -1133,6 +1144,11 @@ public class SkeletonBehavior : MonoBehaviour
 
     public void UnsubscribeBeforeDestruction()
     {
+        //Debug.Log("hello there11");
+        foreach(Transform skeleton in skeletonsStack.SkeletonsArena)
+        {
+            if (skeleton == transform) { Debug.Log("found"); skeletonsStack.SkeletonsArena.Remove(transform); return; }
+        }
         contactManager.GetComponent<ContactManager>().OreDetected -= AddTarget;
         contactManager.GetComponent<ContactManager>().MinesDoorDetected -= AddTarget;
         contactManager.GetComponent<ContactManager>().ObjectOverloaded -= ShowEmotion;

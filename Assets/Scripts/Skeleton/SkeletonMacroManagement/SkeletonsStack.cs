@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,9 +9,13 @@ public class SkeletonsStack : MonoBehaviour
     [SerializeField] SkeletonHouseInstantiator skeletonHouseInstantiator;
     List<Transform> skeletonsStack = new List<Transform>();//in field
     List<Transform> skeletonsHouseStack = new List<Transform>();
+    List<Transform> skeletonsArena = new List<Transform>();
 
 
     public List<Transform> SkeletonStack { get { return skeletonsStack; } }
+    public List<Transform> SkeletonsArena { get { return skeletonsArena; } }
+
+    public event Action SkeletonArenaAdded = delegate { };
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +27,10 @@ public class SkeletonsStack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            //Debug.Log(SkeletonsArena.Count);
+        }
     }
 
     void SaveSkeleton(Transform newSkeleton)
@@ -31,7 +39,13 @@ public class SkeletonsStack : MonoBehaviour
 
     }
 
-    void DeleteSkeleton(Transform deletedSkeleton)
+    public void SaveSkeletonArena(Transform newSkeleton)
+    {
+        skeletonsArena.Add(newSkeleton);
+        if (SkeletonArenaAdded != null) { SkeletonArenaAdded(); }
+    }
+
+    public void DeleteSkeleton(Transform deletedSkeleton)
     {
         skeletonsStack.Remove(deletedSkeleton);
         deletedSkeleton.GetComponent<SkeletonBehavior>().UnsubscribeBeforeDestruction();
