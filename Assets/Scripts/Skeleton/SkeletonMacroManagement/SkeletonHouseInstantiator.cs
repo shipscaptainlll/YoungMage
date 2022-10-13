@@ -60,13 +60,17 @@ public class SkeletonHouseInstantiator : MonoBehaviour
 
     public void DestroySkeleton(Transform teleportedSkeleton)
     {
+        skeletonArenaInstantiator.SkeletonsCount -= 1;
+        Debug.Log(teleportedSkeleton);
+        Debug.Log(teleportedSkeleton + " position " + teleportedSkeleton.GetComponent<Copycat>().ConnectedInstance.GetComponent<SkeletonBehavior>().OccupiedArenaPositions);
+        castlePositionsManager.RegeneratePositions(teleportedSkeleton.GetComponent<Copycat>().ConnectedInstance.GetComponent<SkeletonBehavior>().OccupiedArenaPositions);
         if (SkeletonDestroyed != null && teleportedSkeleton.transform.GetComponent<Copycat>() != null) { SkeletonDestroyed(teleportedSkeleton.transform.GetComponent<Copycat>().ConnectedInstance); }
         //Debug.Log("1");
-        skeletonArenaInstantiator.SkeletonsCount -= 1;
-        Debug.Log("2");
-        teleportedSkeleton.GetComponent<SkeletonHealthDecreaser>().UnscubscribeSkeletonSoldier();
+        
+        Debug.Log("here: " + castlePositionsManager.CastlePotentialPositions.Count);
+        teleportedSkeleton.GetComponent<Copycat>().ConnectedInstance.GetComponent<SkeletonHealthDecreaser>().UnscubscribeSkeletonSoldier();
         //Debug.Log("3");
-        castlePositionsManager.RegeneratePositions(teleportedSkeleton.GetComponent<SkeletonBehavior>().OccupiedArenaPositions);
+        
         //Debug.Log("4");
         foreach (Transform skeleton in skeletonsStack.SkeletonsArena)
         {
@@ -74,6 +78,24 @@ public class SkeletonHouseInstantiator : MonoBehaviour
                 skeletonsStack.SkeletonsArena.Remove(teleportedSkeleton);
                 //Debug.Log("5");
                 return; }
+        }
+        //Debug.Log("6");
+    }
+
+    public void DestroySkeleton(SkeletonBehavior teleportedSkeleton)
+    {
+        skeletonArenaInstantiator.SkeletonsCount -= 1;
+        castlePositionsManager.RegeneratePositions(teleportedSkeleton.OccupiedArenaPositions);
+
+        //Debug.Log("4");
+        foreach (Transform skeleton in skeletonsStack.SkeletonsArena)
+        {
+            if (skeleton == teleportedSkeleton.transform)
+            {
+                skeletonsStack.SkeletonsArena.Remove(teleportedSkeleton.transform);
+                //Debug.Log("5");
+                return;
+            }
         }
         //Debug.Log("6");
     }

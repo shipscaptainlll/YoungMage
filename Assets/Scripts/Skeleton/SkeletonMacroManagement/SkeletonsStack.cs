@@ -49,8 +49,11 @@ public class SkeletonsStack : MonoBehaviour
     {
         skeletonsStack.Remove(deletedSkeleton);
         deletedSkeleton.GetComponent<SkeletonBehavior>().UnsubscribeBeforeDestruction();
-        Debug.Log("Count in lists: " + skeletonsStack.Count);
-        Destroy(deletedSkeleton.gameObject);
+        //Debug.Log("Count in lists: " + skeletonsStack.Count);
+
+        if (deletedSkeleton.GetComponent<SkeletonBehavior>().FracturedSkeleton != null) { 
+            Destroy(deletedSkeleton.GetComponent<SkeletonBehavior>().FracturedSkeleton.gameObject); }
+        //Destroy(deletedSkeleton.gameObject);
     }
 
     void SaveHouseSkeleton(Transform newSkeleton)

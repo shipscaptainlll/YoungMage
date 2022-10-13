@@ -57,39 +57,39 @@ public class PortalOpener : MonoBehaviour
         {
             
             portalOpened = true;
-            Debug.Log("OpeningPortal");
+            //Debug.Log("OpeningPortal");
             if (!cycleRunning && eClickVariations.IsOpeningPortal)
             {
                 cycleRunning = true;
-                Debug.Log("OpeningPortal1");
+                //Debug.Log("OpeningPortal1");
                 EnablePortals();
-                Debug.Log("OpeningPortal2");
+                //Debug.Log("OpeningPortal2");
                 ActivateParticleSystem();
-                Debug.Log("OpeningPortal3");
+                //Debug.Log("OpeningPortal3");
                 ChooseSkeletonInstance();
-                Debug.Log("OpeningPortal4");
+                //Debug.Log("OpeningPortal4");
                 ChangePortalPosition();
-                Debug.Log("OpeningPortal5");
+                //Debug.Log("OpeningPortal5");
                 ChangeSkeletonSlicer();
-                Debug.Log("OpeningPortal6");
+                //Debug.Log("OpeningPortal6");
                 StartVFX();
-                Debug.Log("OpeningPortal7");
+                //Debug.Log("OpeningPortal7");
                 StartCoroutine(OpenVFX());
-                Debug.Log("OpeningPortal8");
+                //Debug.Log("OpeningPortal8");
                 StartCoroutine(OpenPortal());
-                Debug.Log("OpeningPortal9");
+                //Debug.Log("OpeningPortal9");
             }
         } else { portalOpened = false;
-            Debug.Log("ClosingPortal");
+            //Debug.Log("ClosingPortal");
             if (cycleRunning)
             {
-                Debug.Log("ClosingPortal1");
+                //Debug.Log("ClosingPortal1");
                 cycleRunning = false;
-                Debug.Log("ClosingPortal2");
+                //Debug.Log("ClosingPortal2");
                 StartCoroutine(ClosePortal());
-                Debug.Log("ClosingPortal3");
+                //Debug.Log("ClosingPortal3");
                 StartCoroutine(CloseVFX());
-                Debug.Log("ClosingPortal4");
+                //Debug.Log("ClosingPortal4");
             }
         }
         
@@ -226,14 +226,14 @@ public class PortalOpener : MonoBehaviour
 
     void ChooseSkeletonInstance()
     {
-        Debug.Log(skeletonsStack.SkeletonStack.Count);
+        //Debug.Log(skeletonsStack.SkeletonStack.Count);
         
         
         var skeletons = skeletonsStack.SkeletonStack.ToArray();
 
         for (int i = 0; i < skeletons.Length; i++)
         {
-            int skeletonID = random.Next(0, skeletonsStack.SkeletonStack.Count);
+            int skeletonID = random.Next(0, skeletonsStack.SkeletonsArena.Count);
 
             for (int j = 0; j < skeletons.Length; j++)
             {
@@ -248,19 +248,19 @@ public class PortalOpener : MonoBehaviour
 
 
 
-        Debug.Log(choosenSkeleton);
+        //Debug.Log(choosenSkeleton);
     }
 
     void ChangePortalPosition()
     {
-        fieldPortalContainer.position = choosenSkeleton.position + new Vector3(-4, 1.5f, 0);
+        fieldPortalContainer.position = choosenSkeleton.position + new Vector3(-4.5f, 3.0f, 0);
     }
 
     void ChangeSkeletonSlicer()
     {
         choosenSkeleton.Find("OuterPart.002").GetComponent<ObjectSlicer>().enabled = true;
         choosenSkeleton.Find("MiddlePart.002").GetComponent<ObjectSlicer>().enabled = true;
-        choosenSkeleton.GetComponent<CopycatCreator>().enabled = true;
+        //choosenSkeleton.GetComponent<CopycatCreator>().enabled = true;
     }
 
     void ActivateParticleSystem()

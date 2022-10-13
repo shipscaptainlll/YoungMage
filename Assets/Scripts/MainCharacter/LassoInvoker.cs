@@ -24,8 +24,8 @@ public class LassoInvoker : MonoBehaviour
         ContactManager = transform.parent.parent.parent.Find("Script").Find("ContactManager").GetComponent<ContactManager>();
         lassoRenderer = transform.parent.parent.Find("Line").GetComponent<LineRenderer>();
         localAnimator = transform.GetComponent<Animator>();
-        ContactManager.SkeletonDetected += ChangeTarget;
-        ContactManager.OreDetected += CalculateBehavior;
+        //ContactManager.SkeletonDetected += ChangeTarget;
+        //ContactManager.OreDetected += CalculateBehavior;
         state = "idle";
         isContactingSkeleton = false;
     }
@@ -33,6 +33,7 @@ public class LassoInvoker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         switch (state)
         {
             case "idle":
@@ -41,6 +42,7 @@ public class LassoInvoker : MonoBehaviour
                 InvokeLasso();
                 break;
         }
+        */
     }
 
     void CalculateBehavior()

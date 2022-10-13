@@ -33,9 +33,10 @@ public class CopycatCreator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("terhe");
+        //Debug.Log("terhe");
         distanceOriginPortal();
         copycat = Instantiate(copycatInstance, copycatPortal.transform.position + spawnOffset, transform.rotation);
+        transform.GetComponent<SkeletonBehavior>().AttachedCopycat = copycat.transform;
         copycat.GetComponent<CopycatManager>().Origin = transform;
         copycat.AddComponent<Copycat>().ConnectedInstance = transform;
         copycat.transform.Find("GameObject").Find("Icosphere.014").GetComponent<ObjectSlicer>().ObjectToTileAround = copycatPortal.transform;
@@ -68,14 +69,17 @@ public class CopycatCreator : MonoBehaviour
         //Debug.Log(transform.position.x + " " + originPortal.transform.position.x);
         //Debug.Log(distanceX);
         //Debug.Log(spawnOffset);
-        spawnOffset = new Vector3(distanceX, distanceY, distanceZ);
+        spawnOffset = new Vector3(distanceX, distanceY + 1, distanceZ);
     }
 
-    void destroyCopycat(Transform modelOrigin)
+    public void destroyCopycat(Transform modelOrigin)
     {
         Debug.Log(modelOrigin);
+        Debug.Log(transform);
+        Debug.Log(transform == modelOrigin);
         if (modelOrigin == transform)
         {
+            
             copycatPortal.transform.parent.parent.Find("CopycatCatcher").GetComponent<CopycatCatcher>().CopycatCached -= destroyCopycat;
             lastCopycatPosition = copycat.transform.position;
             //Debug.Log("Copycat destroyed");

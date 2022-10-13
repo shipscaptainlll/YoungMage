@@ -125,7 +125,7 @@ public class CameraController : MonoBehaviour
         // Draw a yellow sphere at the transform's position
         Gizmos.color = Color.yellow;
         Debug.DrawLine(transform.position, transform.position + transform.TransformDirection(Vector3.forward * contactingRayDistance));
-        Gizmos.DrawWireSphere(transform.position + transform.TransformDirection(Vector3.forward * contactingRayDistance), 0.1f);
+        //Gizmos.DrawWireSphere(transform.position + transform.TransformDirection(Vector3.forward * contactingRayDistance), 0.1f);
     }
 
     IEnumerator SeeObject()

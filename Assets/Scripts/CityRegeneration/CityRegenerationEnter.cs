@@ -55,7 +55,7 @@ public class CityRegenerationEnter : MonoBehaviour
         zoomInSound = soundManager.FindSound("CameraZoomIn");
         zoomOutSound = soundManager.FindSound("CameraZoomOut");
         floatingSound.Play();
-        Debug.Log("ready");
+        //Debug.Log("ready");
     }
 
     // Update is called once per frame

@@ -103,7 +103,7 @@ public class SavePanel : MonoBehaviour
     public void AutoSave()
     {
         saveSound.Play();
-        Debug.Log("Game was autosaved");
+        //Debug.Log("Game was autosaved");
     }
 
     public void SetAutosaveRate(float newAutosaveRate)

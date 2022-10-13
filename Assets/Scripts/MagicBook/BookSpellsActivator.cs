@@ -18,7 +18,7 @@ public class BookSpellsActivator : MonoBehaviour
 
     public void CastContactSkeleton()
     {
-        Debug.Log(bookSpellsCaster.CurrentSpell);
+        //Debug.Log(bookSpellsCaster.CurrentSpell);
         if (bookSpellsCaster.CurrentSpell == "ContactSkeleton") { bookSpellsCaster.ActivateSpell(); }
     }
 

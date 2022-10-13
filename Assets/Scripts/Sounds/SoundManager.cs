@@ -32,7 +32,7 @@ public class SoundManager : MonoBehaviour
             sound.source.loop = sound.loop;
             sound.source.spatialBlend = sound.spatialBlend;
             sound.source.rolloffMode = sound.audioRolloffMode;
-            sound.source.SetCustomCurve(sound.audioSourceCurveType, sound.audioSourceAnimationCurve);
+            if (sound.spatialBlend == 1) { sound.source.SetCustomCurve(sound.audioSourceCurveType, sound.audioSourceAnimationCurve); }
             sound.source.minDistance = sound.minDistance;
             sound.source.maxDistance = sound.maxDistance;
         }

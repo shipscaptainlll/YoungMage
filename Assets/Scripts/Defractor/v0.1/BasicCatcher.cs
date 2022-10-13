@@ -12,7 +12,7 @@ public class BasicCatcher : MonoBehaviour, ICatcher
     // Start is called before the first frame update
     void Start()
     {
-        teleportationSound = soundManager.LocateAudioSource("GoingThroughPortal", transform);
+        if (soundManager != null) { teleportationSound = soundManager.LocateAudioSource("GoingThroughPortal", transform); }
     }
 
     // Update is called once per frame

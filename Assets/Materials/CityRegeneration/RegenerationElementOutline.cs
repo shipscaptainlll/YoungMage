@@ -45,11 +45,14 @@ public class RegenerationElementOutline : MonoBehaviour
             
             firstHousesColor = new Color(0.3773585f, 0.22f, 0);
             secondHousesColor = new Color(0.3773585f, 0.22f, 0);
+            firstHousesMaterial.SetFloat("_Multiplier", 0);
+            secondHousesMaterial.SetFloat("_Multiplier", 0);
         }
         else if (elementType == RegenerationElementType.wall)
         {
             wallMaterial = gameObject.GetComponent<MeshRenderer>().sharedMaterial;
             wallColor = new Color(0.3773585f, 0.22f, 0);
+            wallMaterial.SetFloat("_Multiplier", 0);
         }
         else if (elementType == RegenerationElementType.castle)
         {
@@ -57,13 +60,9 @@ public class RegenerationElementOutline : MonoBehaviour
             secondCastleMaterial = gameObject.transform.GetChild(1).GetComponent<MeshRenderer>().sharedMaterial;
             firstCastleColor = new Color(0.3773585f, 0.22f, 0);
             secondCastleColor = new Color(0.3773585f, 0.22f, 0);
+            firstCastleMaterial.SetFloat("_Multiplier", 0);
+            secondCastleMaterial.SetFloat("_Multiplier", 0);
         }
-        firstHousesMaterial.SetFloat("_Multiplier", 0);
-        secondHousesMaterial.SetFloat("_Multiplier", 0);
-        wallMaterial.SetFloat("_Multiplier", 0);
-        firstCastleMaterial.SetFloat("_Multiplier", 0);
-        secondCastleMaterial.SetFloat("_Multiplier", 0);
-        
     }
 
     public void StartShowingOutline()

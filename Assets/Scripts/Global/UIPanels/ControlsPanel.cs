@@ -10,7 +10,7 @@ public class ControlsPanel : MonoBehaviour
 {
     public List<KeyCode> currentlyPressedKeys = new List<KeyCode>();
     float mouseSensitivity;
-    float timeShiftPressed = Time.time;
+    float timeShiftPressed;
     bool mouseInverted;
     bool autorunToggled;
     Button activeButton;
@@ -29,6 +29,7 @@ public class ControlsPanel : MonoBehaviour
     void Start()
     {
         chooseSound = soundManager.FindSound("SettingElement");
+        timeShiftPressed = Time.time;
     }
 
     private void OnGUI()

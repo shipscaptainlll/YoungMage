@@ -42,8 +42,13 @@ public class SkeletonHealthDecreaser : MonoBehaviour
 
     void DestroySkeleton()
     {
+        if (transform.GetComponent<SkeletonBehavior>().AttachedCopycat != null)
+        {
+            Debug.Log("wasnt null bo ");
+            transform.GetComponent<CopycatCreator>().destroyCopycat(transform);
+        }
         skeletonStack.DeleteSkeleton(transform);
-        skeletonHouseInstantiator.DestroySkeleton(transform);
+        skeletonHouseInstantiator.DestroySkeleton(transform.GetComponent<SkeletonBehavior>());
         if (portalOpener.ChoosenSkeleton == transform) { portalOpener.InitiatePortalOpening(); }
     }
 

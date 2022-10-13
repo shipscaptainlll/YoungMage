@@ -44,7 +44,10 @@ public class SkeletonBehavior : MonoBehaviour
     [SerializeField] float stairsCheckRadius;
     [SerializeField] float speed;
     [SerializeField] SkeletonsStack skeletonsStack;
+    [SerializeField] bool beingTested;
+    Transform attachedCopycat;
     Transform occupiedArenaPosition;
+    Transform fracturedSkeleton;
     bool onGround;
     bool onStairs;
     bool onStone;
@@ -54,9 +57,11 @@ public class SkeletonBehavior : MonoBehaviour
     bool isLizardSkeleton;
     bool isCrouching;
 
-    public float Speed { get { return speed; } set { speed = value; navMeshAgent.speed = speed; } }
+    public float Speed { get { return speed; } set { speed = value; 
+            navMeshAgent.speed = speed; } }
     public bool IsCrouching { get { return isCrouching; } set { isCrouching = value; } }
-
+    public Transform AttachedCopycat { get { return attachedCopycat; } set { attachedCopycat = value; } }
+    public Transform FracturedSkeleton { get { return fracturedSkeleton; } set { fracturedSkeleton = value; } }
 
     [Header("VFX conjuration")]
     [SerializeField] ParticleSystem conjurationVFX;
@@ -294,11 +299,11 @@ public class SkeletonBehavior : MonoBehaviour
             if (navigationTarget == null && value.GetComponent<PersonMovement>() != null)
             {
                 value.GetComponent<PersonMovement>().SkeletonAttached = true;
-                Debug.Log("Hello thereee1");
+                //Debug.Log("Hello thereee1");
             } else if (navigationTarget != null && navigationTarget.GetComponent<PersonMovement>() != null && value == null)
             {
                 navigationTarget.GetComponent<PersonMovement>().SkeletonAttached = false;
-                Debug.Log("Hello thereee2");
+                //Debug.Log("Hello thereee2");
             }
             
             
@@ -326,7 +331,7 @@ public class SkeletonBehavior : MonoBehaviour
                 }
             }
             navigationTarget = value;
-            Debug.Log(navigationTarget + " " + transform);
+            //Debug.Log(navigationTarget + " " + transform);
             UpdateAnimation();
 
         }
@@ -344,6 +349,9 @@ public class SkeletonBehavior : MonoBehaviour
         }
 
         if (navigationTarget != null) { navMeshAgent.destination = navigationTarget.position; }
+        if (beingTested) { 
+            //Debug.Log(navigationTarget);
+        }
         if (CastleNavroutActive)
         {
             
@@ -359,6 +367,7 @@ public class SkeletonBehavior : MonoBehaviour
                     PotentialpositionsNavroutActive = true;
                     navigationTarget = castlePositionsManager.GetAvailablePosition();
                     occupiedArenaPosition = navigationTarget;
+                    Debug.Log("got this position " + occupiedArenaPosition);
                     CastleNavroutActive = false;
                 }
                 
@@ -370,6 +379,7 @@ public class SkeletonBehavior : MonoBehaviour
             if (navMeshAgent.velocity.magnitude < 0.15f)
             {
                 //Debug.Log("Reached Position");
+                
                 skeletonsStack.SaveSkeletonArena(transform);
                 reachedPosition = true;
                 PotentialpositionsNavroutActive = false;
@@ -388,12 +398,12 @@ public class SkeletonBehavior : MonoBehaviour
         if (onStairs) { if (!walkingStairsSound.isPlaying) { walkingStairsSound.Play(); } } else { if (walkingStairsSound.isPlaying) { walkingStairsSound.Stop(); } }
         if (onStone) { if (!walkingStoneSound.isPlaying) { walkingStoneSound.Play(); } } else { if (walkingStoneSound.isPlaying) { walkingStoneSound.Stop(); } }
     }
-
+    
     void TurnOffSounds()
     {
-        walkingGroundSound.Stop();
-        walkingStairsSound.Stop();
-        walkingStoneSound.Stop();
+        if (walkingGroundSound != null) { walkingGroundSound.Stop(); }
+        if (walkingGroundSound != null) { walkingStairsSound.Stop(); }
+        if (walkingGroundSound != null) { walkingStoneSound.Stop(); }
     }
 
     void CheckGroundType()
@@ -539,7 +549,7 @@ public class SkeletonBehavior : MonoBehaviour
 
     IEnumerator Unconjure()
     {
-        Debug.Log("BeingDeconjured");
+        //Debug.Log("BeingDeconjured");
         unusedCounter.gameObject.GetComponent<CanvasGroup>().alpha = 1;
         int elapsed = 6;
         int lifetimeSkeleton = 1;
@@ -595,8 +605,8 @@ public class SkeletonBehavior : MonoBehaviour
         }
         currentColor = new Color(1, 0, 0);
         unusedCounterText.color = currentColor;
-        Debug.Log(currentColor);
-        Debug.Log(counterColor);
+        //Debug.Log(currentColor);
+        //Debug.Log(counterColor);
         yield return null;
     }
 
@@ -695,12 +705,13 @@ public class SkeletonBehavior : MonoBehaviour
         
         destructionParticleSystem.SetActive(true);
         destructionParticleSystem.GetComponent<ParticleSystem>().Play();
-        Debug.Log("DestroyedSkeleton");
+        //Debug.Log("DestroyedSkeleton");
         ShakePlayerCamera();
         //lowerPartSkinnedrenderer.gameObject.SetActive(false);
         //upperPartSkinnedrenderer.gameObject.SetActive(false);
         bodySkinnedrenderer.gameObject.SetActive(false);
         GameObject instantiatedDestroyedSkeleton = Instantiate(destroyedSkeleton, transform.position, transform.rotation);
+        fracturedSkeleton = instantiatedDestroyedSkeleton.transform;
         destroySkeletonSound = soundManager.LocateAudioSource("SkeletonBlast", instantiatedDestroyedSkeleton.transform);
         destroySkeletonSound.Play();
         unusedCounter.gameObject.GetComponent<CanvasGroup>().alpha = 0;
@@ -754,6 +765,7 @@ public class SkeletonBehavior : MonoBehaviour
 
     public void StartChazingPortal(Transform foundPortal)
     {
+        transform.GetComponent<CopycatCreator>().enabled = true;
         StartCoroutine(BecomeCojured(foundPortal));
         StartCoroutine(CountDistancePortal());
     }
@@ -852,7 +864,8 @@ public class SkeletonBehavior : MonoBehaviour
 
     public void AddTarget(Transform targetOre)
     {
-
+        Debug.Log(navigationTarget);
+        Debug.Log(navigationTarget.GetComponent<PersonMovement>() != null);
         if (navigationTarget != null && navigationTarget.GetComponent<PersonMovement>() != null)
         {
             navigationTarget.GetComponent<PersonMovement>().SkeletonAttached = false;

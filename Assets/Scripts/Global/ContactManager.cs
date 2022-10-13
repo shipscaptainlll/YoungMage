@@ -43,7 +43,7 @@ public class ContactManager : MonoBehaviour
         {
             Transform contactedObject = CameraController.ObservedObject.transform;
             Debug.Log(contactedObject);
-            Debug.Log(contactedObject.parent);
+            //Debug.Log(contactedObject.parent);
             if (contactedObject != null)
             {
                 if (contactedObject.GetComponent<Portal2>() != null)

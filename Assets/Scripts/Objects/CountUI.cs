@@ -21,8 +21,11 @@ public class CountUI : MonoBehaviour
         localOreMainscript = transform.parent.GetComponent<GlobalResource>();
         elementRecttransform = transform.Find("Text").GetComponent<RectTransform>();
         elementCanvasGroup = transform.GetComponent<CanvasGroup>();
-        localOreMainscript.CountChanged += UpdateText;
-        UpdateText();
+        if (localOreMainscript != null) { 
+            localOreMainscript.CountChanged += UpdateText; 
+            UpdateText(); 
+        }
+        
         //Debug.Log("Initialised");
     }
 

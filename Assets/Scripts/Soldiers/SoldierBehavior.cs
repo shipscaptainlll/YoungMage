@@ -73,7 +73,8 @@ public class SoldierBehavior : MonoBehaviour
 
     void StartEmotions()
     {
-        StopCoroutine(currentCoroutine);
+        if (currentCoroutine != null) { StopCoroutine(currentCoroutine); }
+        
         int randomNumber = rand.Next(0, 10);
         if (randomNumber < 2) { soldierAnimator.Play("SoldierShowingSmthg"); }
         else if (randomNumber > 1 && randomNumber < 5) { soldierAnimator.Play("Shouting"); }
@@ -86,7 +87,7 @@ public class SoldierBehavior : MonoBehaviour
 
     public void StopEmotions()
     {
-        Debug.Log("stopped emotions");
+        //Debug.Log("stopped emotions");
         soldierState = SoldierState.shooting;
         DecideNextMove();
     }

@@ -32,6 +32,8 @@ public class Portal2 : MonoBehaviour
         portalCam = GetComponentInChildren<Camera>();
         portalCam.enabled = false;
         trackedTravellers = new List<PortalTraveller>();
+
+        Debug.Log(transform);
         screenMeshFilter = screen.GetComponent<MeshFilter>();
         contactManager.TeleporterDetected += ActivateSearch;
     }

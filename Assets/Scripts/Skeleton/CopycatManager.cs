@@ -43,11 +43,15 @@ public class CopycatManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        spawnOffset = origin.GetComponent<CopycatCreator>().SpawnOffset;
-        transform.rotation = origin.rotation;
-        transform.position = copycatPortal.position + spawnOffset;
-        getOriginAnimation();
-        if (checkDifference()) { changeCurrentAnimation(); }
+        if (origin == null) { Destroy(gameObject); }
+        if (origin != null)
+        {
+            spawnOffset = origin.GetComponent<CopycatCreator>().SpawnOffset;
+            transform.rotation = origin.rotation;
+            transform.position = copycatPortal.position + spawnOffset;
+            getOriginAnimation();
+            if (checkDifference()) { changeCurrentAnimation(); }
+        }
     }
 
     void getOriginAnimation()
