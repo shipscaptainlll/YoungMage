@@ -65,10 +65,15 @@ public class CatapultHealthDecreaser : MonoBehaviour
         healthTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, updatedWidth);
         if (currentHealth <= 0)
         {
-            Transform parts = Instantiate(partsObject, transform.parent.parent.position, transform.parent.parent.rotation * Quaternion.Euler(new Vector3(0, 90, 0)));
-            parts.position = transform.parent.parent.position + new Vector3(0, 2f, 0);
-            Destroy(masterObject.gameObject);
+            DestroyCatapult();
         }
         yield return null;
+    }
+
+    public void DestroyCatapult()
+    {
+        Transform parts = Instantiate(partsObject, transform.parent.parent.position, transform.parent.parent.rotation * Quaternion.Euler(new Vector3(0, 90, 0)));
+        parts.position = transform.parent.parent.position + new Vector3(0, 2f, 0);
+        Destroy(masterObject.gameObject);
     }
 }

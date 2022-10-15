@@ -74,9 +74,9 @@ public class CopycatCreator : MonoBehaviour
 
     public void destroyCopycat(Transform modelOrigin)
     {
-        Debug.Log(modelOrigin);
-        Debug.Log(transform);
-        Debug.Log(transform == modelOrigin);
+        //Debug.Log(modelOrigin);
+        //Debug.Log(transform);
+        //Debug.Log(transform == modelOrigin);
         if (modelOrigin == transform)
         {
             

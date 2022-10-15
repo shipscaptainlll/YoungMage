@@ -22,6 +22,7 @@ public class CatapultMovement : MonoBehaviour
     NavMeshAgent navMeshAgent;
     Transform navigationTarget;
     Transform fireTarget;
+    Transform connectedSkeleton;
 
     System.Random rand;
     public Transform NavigationTarget
@@ -38,18 +39,35 @@ public class CatapultMovement : MonoBehaviour
 
     public bool ChangingTarget {  get { return changingTarget; } }
     public Transform FireTarget { get { return fireTarget; } }
+    public Transform ConnectedSkeleton { get { return connectedSkeleton; } set { connectedSkeleton = value; } }
     // Start is called before the first frame update
     void Start()
     {
-        rand = new System.Random();
+        
+        /*
+        
         //Debug.Log(potentialTargetsPositions);
         //Debug.Log(potentialTargetsPositions.childCount);
         int randomIndex = rand.Next(0, (potentialTargetsPositions.childCount - 1));
         //Debug.Log(randomIndex);
+        
+        GotoCastle();
+        */
+    }
+
+    public void InstantiationSetUp()
+    {
+        rand = new System.Random();
         navMeshEnabled = true;
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.avoidancePriority = rand.Next(30, 50);
-        GotoCastle();
+    }
+
+    public void SubscribeOnSkeleton(Transform skeleton)
+    {
+        ConnectedSkeleton = skeleton;
+        navigationTarget = skeleton;
+        skeleton.GetComponent<SkeletonBehavior>().ReachedCastle += PlaceOnCastle;
     }
 
     // Update is called once per frame
@@ -71,7 +89,7 @@ public class CatapultMovement : MonoBehaviour
                 else
                 {
                     PotentialpositionsNavroutActive = true;
-                    navigationTarget = castlePositionsManager.GetAvailablePosition();
+                    //navigationTarget = castlePositionsManager.GetAvailablePosition();
                     CastleNavroutActive = false;
                 }
 
@@ -92,6 +110,14 @@ public class CatapultMovement : MonoBehaviour
                 PotentialpositionsNavroutActive = false;
             }
         }
+    }
+
+    void PlaceOnCastle()
+    {
+        PotentialpositionsNavroutActive = true;
+        navigationTarget = connectedSkeleton.GetComponent<SkeletonBehavior>().OccupiedArenaPositions.GetChild(0);
+        CastleNavroutActive = false;
+        Debug.Log(navigationTarget);
     }
 
     public void ChooseNewTarget()

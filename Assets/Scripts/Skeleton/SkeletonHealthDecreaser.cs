@@ -37,6 +37,7 @@ public class SkeletonHealthDecreaser : MonoBehaviour
             UnscubscribeSkeletonSoldier();
             DestroySkeleton();
             skeletonBehavior.DestroyManually();
+            
         }
     }
 

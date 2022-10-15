@@ -26,7 +26,7 @@ public class CopycatCatcher : MonoBehaviour
             
             if (CopycatCached != null)
             {
-                Debug.Log("Catched");
+                Debug.Log("Catched " + transform);
                 CopycatCached(other.transform.GetComponent<Copycat>().ConnectedInstance);
                 SkeletonTeleported(other.transform);
             }

@@ -103,6 +103,7 @@ public class ShootingSoldier : MonoBehaviour
     {
         Transform newAmmo = Instantiate(arrowAmmo);
         newAmmo.gameObject.SetActive(true);
+        newAmmo.GetComponent<ArrowSoldier>().Target = nextTarget;
         newAmmo.GetChild(0).GetComponent<ParticleSystem>().Play();
         //Debug.Log(newAmmo);
         newAmmo.position = shootingStart.position;

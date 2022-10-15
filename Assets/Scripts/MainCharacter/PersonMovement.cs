@@ -21,6 +21,8 @@ public class PersonMovement : MonoBehaviour
     [SerializeField] CharacterOccupation _characterOccupation;
     [SerializeField] float gravity;
     [SerializeField] Transform caveBulpsHolder;
+    [SerializeField] Transform mainCamera;
+    CameraController cameraController;
     bool isAutoRunning;
 
     [Header("Warp Base Settings")]
@@ -112,6 +114,7 @@ public class PersonMovement : MonoBehaviour
     public bool IsCrouching { get { return isCrouching; } set { isCrouching = value; StopRunning(); } }
 
     public float BasicSpeed { get { return basicSpeed; } set { basicSpeed = value; } }
+    public Transform MainCamera { get { return mainCamera; } }
     
     public event Action<int> CharacterStepMade = delegate { };
     public event Action<int> CharacterRunnedStep = delegate { };
@@ -158,6 +161,7 @@ public class PersonMovement : MonoBehaviour
         shiftingSound = soundManager.FindSound("Shift");
         exclaimingSound = soundManager.FindSound("YoungMageExclaiming");
         hardBreathingSound = soundManager.FindSound("MageHardBreathing");
+        cameraController = mainCamera.GetComponent<CameraController>();
     }
 
     void LateUpdate()
@@ -196,6 +200,7 @@ public class PersonMovement : MonoBehaviour
             delayCreakCoroutine = StartCoroutine(DelayCreak());
         }
     }
+
 
     void RandomCavebulpInitiator()
     {

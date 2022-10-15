@@ -29,7 +29,7 @@ public class CastlePositionsManager : MonoBehaviour
         
         castleOccupiedPositions.Add(returnedPosition);
         castlePotentialPositions.Remove(returnedPosition);
-        Debug.Log(castlePotentialPositions.Count);
+        //Debug.Log(castlePotentialPositions.Count);
         return returnedPosition;
 
     }

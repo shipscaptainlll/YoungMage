@@ -22,15 +22,18 @@ public class StairsRotationPoint : MonoBehaviour
         //Debug.Log(other);
         if (other.GetComponent<PersonMovement>() != null)
         {
-            //Debug.Log("Character entered");
-            CameraController cameraController = other.transform.Find("Main Camera").GetComponent<CameraController>();
+            
+            CameraController cameraController = other.GetComponent<PersonMovement>().MainCamera.GetComponent<CameraController>();
+
             if (!cameraController.IsOnStairs)
             {
                 cameraController.IsOnStairs = true;
+                Debug.Log("Character entered");
                 if (EnterType == "Upper") { cameraController.UpperStairs = true; } else { cameraController.UpperStairs = false; }
             } else
             {
                 cameraController.IsOnStairs = false;
+                Debug.Log("Character left");
             }
             
         }

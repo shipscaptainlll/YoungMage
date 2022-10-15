@@ -6,18 +6,23 @@ using UnityEngine;
 public class CatapultArenaInstantiator : MonoBehaviour
 {
     [SerializeField] Transform catapultModel;
+    [SerializeField] Transform skeletonModel;
     [SerializeField] Transform instantiationPoint;
     [SerializeField] Transform castlePotentionalPositions;
     [SerializeField] Transform castlePosition;
+    [SerializeField] Transform skeletonsHolder;
     [SerializeField] Transform catapultsHolder;
     [SerializeField] CastleHealthDecreaser castleHealthDecreaser;
 
     int catapultsCount = 0;
+    int skeletonsCount = 0;
     [SerializeField] int catapultsMaxCount;
     [SerializeField] ClickManager clickManager;
     System.Random random;
 
     public int CatapultsCount { get { return catapultsCount; } set { catapultsCount = value; } }
+    public int SkeletonsCount { get { return skeletonsCount; } set { skeletonsCount = value; } }
+    public event Action<Transform> SkeletonInstantiated = delegate { };
     public event Action<Transform> CatapultInstantiated = delegate { };
     // Start is called before the first frame update
     void Start()
@@ -49,24 +54,31 @@ public class CatapultArenaInstantiator : MonoBehaviour
             catapultsCount++;
             float xPositionOffset = (float)random.Next(-10, 10);
             float zPositionOffset = (float)random.Next(-10, 10);
+
+            Transform newSkeleton = Instantiate(skeletonModel, instantiationPoint.position + new Vector3(xPositionOffset, 0, zPositionOffset), skeletonModel.rotation);
+            newSkeleton.gameObject.SetActive(true);
             Transform newCatapult = Instantiate(catapultModel, instantiationPoint.position + new Vector3(xPositionOffset, 0, zPositionOffset), catapultModel.rotation);
+            newSkeleton.GetComponent<SkeletonBehavior>().ConnectedCatapult = newCatapult;
+            newCatapult.GetComponent<CatapultMovement>().InstantiationSetUp();
+            newCatapult.GetComponent<CatapultMovement>().SubscribeOnSkeleton(newSkeleton);
             newCatapult.gameObject.SetActive(true);
-            newCatapult.GetChild(0).GetChild(0).GetComponent<CatapultFire>().CastleHealthDecreaser = castleHealthDecreaser;
+            newCatapult.GetChild(0).GetChild(1).GetComponent<CatapultFire>().CastleHealthDecreaser = castleHealthDecreaser;
             foreach (Transform position in castlePotentionalPositions)
             {
                 if (position.gameObject.activeSelf)
                 {
-
-                    //Debug.Log(newSkeleton.GetComponent<SkeletonBehavior>());
+                    newSkeleton.GetComponent<SkeletonBehavior>().ConnectToPosition(position);
+                    newSkeleton.parent = skeletonsHolder;
+                    newSkeleton.GetComponent<SkeletonBehavior>().CastlePosition = castlePosition;
+                    position.gameObject.SetActive(false);
+                    if (SkeletonInstantiated != null) { SkeletonInstantiated(newSkeleton); }
                     newCatapult.parent = catapultsHolder;
-                    //Debug.Log(newSkeleton.GetComponent<SkeletonBehavior>().Activity);
                     position.gameObject.SetActive(false);
                     if (CatapultInstantiated != null) { CatapultInstantiated(newCatapult); }
                     return;
                 }
 
             }
-            
         }
         
     }

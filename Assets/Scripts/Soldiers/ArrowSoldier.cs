@@ -5,7 +5,10 @@ using UnityEngine;
 public class ArrowSoldier : MonoBehaviour
 {
     [SerializeField] Transform cacheTarget;
+    Transform target;
     Coroutine destroyObject;
+
+    public Transform Target { get { return target; } set { target = value; } }
     // Start is called before the first frame update
     void Start()
     {
@@ -33,7 +36,9 @@ public class ArrowSoldier : MonoBehaviour
     IEnumerator DestroyObject()
     {
         yield return new WaitForSeconds(2);
-        //Debug.Log("Arrow missed");
+        if (target != null) { target.GetComponent<SkeletonHealthDecreaser>().DecreaseHealth(); 
+            //Debug.Log("Arrow missed " + target);
+        }
         Destroy(gameObject);
     }
 }

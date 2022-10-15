@@ -65,10 +65,15 @@ public class ObjectHealthDecreaser : MonoBehaviour
         healthTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, updatedWidth);
         if (currentHealth <= 0)
         {
-            Transform parts = Instantiate(partsObject, transform.parent.parent.position, transform.parent.parent.rotation);
-            parts.position = transform.parent.parent.position;
-            Destroy(masterObject.gameObject);
+            DestroyCatapult();
         }
         yield return null;
+    }
+
+    public void DestroyCatapult()
+    {
+        Transform parts = Instantiate(partsObject, transform.parent.parent.position, transform.parent.parent.rotation);
+        parts.position = transform.parent.parent.position;
+        Destroy(masterObject.gameObject);
     }
 }

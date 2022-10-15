@@ -6,6 +6,8 @@ using UnityEngine;
 public class SkeletonsStack : MonoBehaviour
 {
     [SerializeField] SkeletonArenaInstantiator skeletonArenaInstantiator;
+    [SerializeField] CrossbowCatapultArenaInstantiator crossbowCatapultArenaInstantiator;
+    [SerializeField] CatapultArenaInstantiator catapultArenaInstantiator;
     [SerializeField] SkeletonHouseInstantiator skeletonHouseInstantiator;
     List<Transform> skeletonsStack = new List<Transform>();//in field
     List<Transform> skeletonsHouseStack = new List<Transform>();
@@ -20,6 +22,8 @@ public class SkeletonsStack : MonoBehaviour
     void Start()
     {
         skeletonArenaInstantiator.SkeletonInstantiated += SaveSkeleton;
+        crossbowCatapultArenaInstantiator.SkeletonInstantiated += SaveSkeleton;
+        catapultArenaInstantiator.SkeletonInstantiated += SaveSkeleton;
         skeletonHouseInstantiator.HouseSkeletonCreated += SaveHouseSkeleton;
         skeletonHouseInstantiator.SkeletonDestroyed += DeleteSkeleton;
     }
@@ -53,7 +57,7 @@ public class SkeletonsStack : MonoBehaviour
 
         if (deletedSkeleton.GetComponent<SkeletonBehavior>().FracturedSkeleton != null) { 
             Destroy(deletedSkeleton.GetComponent<SkeletonBehavior>().FracturedSkeleton.gameObject); }
-        //Destroy(deletedSkeleton.gameObject);
+        Destroy(deletedSkeleton.gameObject);
     }
 
     void SaveHouseSkeleton(Transform newSkeleton)

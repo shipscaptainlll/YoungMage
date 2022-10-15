@@ -253,7 +253,7 @@ public class PortalOpener : MonoBehaviour
 
     void ChangePortalPosition()
     {
-        fieldPortalContainer.position = choosenSkeleton.position + new Vector3(-4.5f, 3.0f, 0);
+        fieldPortalContainer.position = choosenSkeleton.position + new Vector3(-4.5f, 1.5f, 0);
     }
 
     void ChangeSkeletonSlicer()

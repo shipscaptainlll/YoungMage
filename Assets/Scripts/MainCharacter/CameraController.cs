@@ -17,6 +17,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] float contactingRayDistance;
     [SerializeField] PersonMovement personMovement;
     [SerializeField] CameraShake cameraShake;
+    [SerializeField] Transform ladder;
     float yRotation;
     float xRotation;
     RaycastHit hit = new RaycastHit();
@@ -70,7 +71,19 @@ public class CameraController : MonoBehaviour
 
         if (isOnStairs)
         {
+            // Determine which direction to rotate towards
+            Vector3 targetDirection = (ladder.position - transform.position).normalized;
+
+            // The step size is equal to speed times frame time.
+            float singleStep = 1 * Time.deltaTime;
+
+            // Rotate the forward vector towards the target direction by one step
+            var newDirection = Quaternion.LookRotation(targetDirection);
+
             
+            xRot -= Input.GetAxis("Vertical") * 0.1f * personMovement.Speed;
+            transform.RotateAround(ladder.transform.position, Vector3.up, xRot * Time.deltaTime);
+            /*
             if (upperStairs)
             {
                 xRot += -0.01f * Input.GetAxis("Vertical") * Time.deltaTime * mouseSensitivity * personMovement.Speed;
@@ -78,8 +91,8 @@ public class CameraController : MonoBehaviour
             {
                 xRot += 0.01f * Input.GetAxis("Vertical") * Time.deltaTime * mouseSensitivity * personMovement.Speed;
             }
-            
-            
+            */
+
         }
        
         

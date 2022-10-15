@@ -45,6 +45,7 @@ public class SkeletonBehavior : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] SkeletonsStack skeletonsStack;
     [SerializeField] bool beingTested;
+    [SerializeField] bool homeVersion;
     Transform attachedCopycat;
     Transform occupiedArenaPosition;
     Transform fracturedSkeleton;
@@ -52,16 +53,19 @@ public class SkeletonBehavior : MonoBehaviour
     bool onStairs;
     bool onStone;
     VisualEffect movementVFX;
-    bool isSmallSkeleton;
-    bool isBigSkeleton;
-    bool isLizardSkeleton;
+    [SerializeField] bool isSmallSkeleton;
+    [SerializeField] bool isBigSkeleton;
+    [SerializeField] bool isLizardSkeleton;
     bool isCrouching;
 
     public float Speed { get { return speed; } set { speed = value; 
             navMeshAgent.speed = speed; } }
-    public bool IsCrouching { get { return isCrouching; } set { isCrouching = value; } }
+    public bool IsCrouching { get { return isCrouching; } set { isCrouching = value; isMoving = false; } }
     public Transform AttachedCopycat { get { return attachedCopycat; } set { attachedCopycat = value; } }
     public Transform FracturedSkeleton { get { return fracturedSkeleton; } set { fracturedSkeleton = value; } }
+    public bool IsSmallSkeleton { get { return isSmallSkeleton; } }
+    public bool IsBigSkeleton { get { return isBigSkeleton; } }
+    public bool IsLizardSkeleton { get { return isLizardSkeleton; } }
 
     [Header("VFX conjuration")]
     [SerializeField] ParticleSystem conjurationVFX;
@@ -131,6 +135,7 @@ public class SkeletonBehavior : MonoBehaviour
     bool rotatedEnough = false;
     string activity;
     bool cache = false;
+    Transform connectedCatapult;
     
     bool reachedPosition;
     Coroutine changeColorCounter;
@@ -152,6 +157,7 @@ public class SkeletonBehavior : MonoBehaviour
     bool fifthConnectedNotified;
     bool sixthConnectedNotified;
 
+    public Transform ConnectedCatapult { get { return connectedCatapult; } set { connectedCatapult = value; } }
     public int ConnectedObjects { get { return connectedObjects; } set { connectedObjects = value; } }
     public bool IsConnectedHands { get { return isConnectedHands; } set { isConnectedHands = value; NotifyObjectConnected(); } }
     public bool IsConnectedLeggings { get { return isConnectedLeggings; } set { isConnectedLeggings = value; NotifyObjectConnected(); } }
@@ -179,7 +185,7 @@ public class SkeletonBehavior : MonoBehaviour
     public event Action<Transform> OriginRotated = delegate { };
     public event Action OreHitted = delegate { };
     public event Action ObjectConnected = delegate { };
-
+    public event Action ReachedCastle = delegate { };
 
     System.Random rand;
     void Start()
@@ -213,6 +219,7 @@ public class SkeletonBehavior : MonoBehaviour
             unusedCounter = transform.Find("Timer").Find("TimerCanvas");
             unusedCounterText = unusedCounter.Find("Text").GetComponent<Text>();
         }
+        /*
         if (transform.GetComponent<SmallSkeleton>() != null)
         {
             isSmallSkeleton = true;
@@ -223,6 +230,7 @@ public class SkeletonBehavior : MonoBehaviour
         {
             isLizardSkeleton = true;
         }
+        */
         contactManager.GetComponent<ContactManager>().OreDetected += AddTarget;
         contactManager.GetComponent<ContactManager>().MinesDoorDetected += AddTarget;
         contactManager.GetComponent<ContactManager>().ObjectOverloaded += ShowEmotion;
@@ -231,7 +239,8 @@ public class SkeletonBehavior : MonoBehaviour
         {
             transform.GetComponent<CopycatCreator>().OriginTeleported += StopActivities;
         }
-        GotoCastle();
+        if (!homeVersion) { GotoCastle(); }
+        if (homeVersion) { navigationTarget = null; }
         
     }
 
@@ -347,11 +356,8 @@ public class SkeletonBehavior : MonoBehaviour
                 ShakePlayerCamera();
             }
         }
-
+        
         if (navigationTarget != null) { navMeshAgent.destination = navigationTarget.position; }
-        if (beingTested) { 
-            //Debug.Log(navigationTarget);
-        }
         if (CastleNavroutActive)
         {
             
@@ -367,7 +373,7 @@ public class SkeletonBehavior : MonoBehaviour
                     PotentialpositionsNavroutActive = true;
                     navigationTarget = castlePositionsManager.GetAvailablePosition();
                     occupiedArenaPosition = navigationTarget;
-                    Debug.Log("got this position " + occupiedArenaPosition);
+                    //Debug.Log("got this position " + occupiedArenaPosition);
                     CastleNavroutActive = false;
                 }
                 
@@ -379,7 +385,7 @@ public class SkeletonBehavior : MonoBehaviour
             if (navMeshAgent.velocity.magnitude < 0.15f)
             {
                 //Debug.Log("Reached Position");
-                
+                if (ReachedCastle != null) { ReachedCastle(); }
                 skeletonsStack.SaveSkeletonArena(transform);
                 reachedPosition = true;
                 PotentialpositionsNavroutActive = false;
@@ -545,6 +551,15 @@ public class SkeletonBehavior : MonoBehaviour
     public void DestroyManually()
     {
         StartCoroutine(DestroySkeleton());
+    }
+
+    public void DestroyCatapult()
+    {
+        if (connectedCatapult != null)
+        {
+            if (connectedCatapult.GetChild(0).Find("OreHealth").GetComponent<CatapultHealthDecreaser>() != null) { connectedCatapult.GetChild(0).Find("OreHealth").GetComponent<CatapultHealthDecreaser>().DestroyCatapult(); }
+            if (connectedCatapult.GetChild(0).Find("OreHealth").GetComponent<ObjectHealthDecreaser>() != null) { connectedCatapult.GetChild(0).Find("OreHealth").GetComponent<ObjectHealthDecreaser>().DestroyCatapult(); }
+        }
     }
 
     IEnumerator Unconjure()
@@ -884,7 +899,8 @@ public class SkeletonBehavior : MonoBehaviour
             }
             //Debug.Log(navigationTarget);
 
-        } else { Debug.Log("Skeleton is not connected to anything " + transform); }
+        } else { 
+            Debug.Log("Skeleton is not connected to anything "); }
     }
 
     public void ShowEmotion()
