@@ -69,7 +69,7 @@ public class SkeletonHouseInstantiator : MonoBehaviour
 
     void InstantiateNewInhouse()
     {
-        Transform newSkeleton = Instantiate(smallskeletonModel, transform.position, transform.rotation);
+        Transform newSkeleton = Instantiate(lizardskeletonModel, transform.position, transform.rotation);
         newSkeleton.gameObject.SetActive(true);
         newSkeleton.GetComponent<SkeletonBehavior>().SubscribeAfterInstantiation();
         //newSkeleton.GetComponent<SkeletonBehavior>().InstantiateSounds();

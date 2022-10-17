@@ -22,14 +22,17 @@ ModelImporter:
       74: -9205164807437543283
     second: RunBigSkeleton
   - first:
+      74: -7799538831203506681
+    second: ShootCatapultBig
+  - first:
       74: -3222528265009538966
     second: Armature.023|00TPose
   - first:
       74: -2225051269314102048
-    second: Armature.023|0TPose
+    second: 0TPose
   - first:
-      74: -1453350282258270765
-    second: Armature.023|0TPose.001
+      74: 4799750898807857925
+    second: Armature.023|Armature.024Action
   - first:
       74: 58815434648416186
     second: Armature.023|AtackSmallSkeleton
@@ -38,7 +41,7 @@ ModelImporter:
     second: Armature.023|AtackSmallSkeletonElternative
   - first:
       74: 8002306499412815517
-    second: Armature.023|ConjuredBigSkeleton
+    second: ConjuredBigSkeleton
   - first:
       74: -8096941771064018522
     second: Armature.023|ConjuredLizardSkeleton
@@ -51,9 +54,6 @@ ModelImporter:
   - first:
       74: -2303228934483389457
     second: Armature.023|Icosphere.013Action
-  - first:
-      74: 2035441946312856758
-    second: Armature.023|Icosphere.013Action.001
   - first:
       74: 7882140105459339801
     second: Armature.023|Idle
@@ -78,6 +78,15 @@ ModelImporter:
   - first:
       74: 5465624561063024108
     second: Armature.023|RunSmallSkeleton
+  - first:
+      74: 1713212530758939463
+    second: Armature.023|ShootCatapultBig
+  - first:
+      74: -7458062444233629850
+    second: Armature.023|ShootCatapultLizard
+  - first:
+      74: -8425482422637922480
+    second: Armature.023|ShootSmallSkeleton
   - first:
       74: -6130613996198533750
     second: Armature.023|Shouting
@@ -287,7 +296,36 @@ ModelImporter:
       takeName: RunBigSkeleton
       internalID: 0
       firstFrame: 0
-      lastFrame: 34
+      lastFrame: 35
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: ShootCatapultBig
+      takeName: ShootCatapultBig
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 60
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -341,7 +379,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature.023|0TPose
+      name: 0TPose
       takeName: Armature.023|0TPose
       internalID: 0
       firstFrame: 0
@@ -370,11 +408,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature.023|0TPose.001
-      takeName: Armature.023|0TPose.001
+      name: Armature.023|Armature.024Action
+      takeName: Armature.023|Armature.024Action
       internalID: 0
       firstFrame: 0
-      lastFrame: 34
+      lastFrame: 1
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -457,7 +495,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Armature.023|ConjuredBigSkeleton
+      name: ConjuredBigSkeleton
       takeName: Armature.023|ConjuredBigSkeleton
       internalID: 0
       firstFrame: 0
@@ -575,35 +613,6 @@ ModelImporter:
     - serializedVersion: 16
       name: Armature.023|Icosphere.013Action
       takeName: Armature.023|Icosphere.013Action
-      internalID: 0
-      firstFrame: 0
-      lastFrame: 1
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Armature.023|Icosphere.013Action.001
-      takeName: Armature.023|Icosphere.013Action.001
       internalID: 0
       firstFrame: 0
       lastFrame: 1
@@ -863,6 +872,93 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
+      name: Armature.023|ShootCatapultBig
+      takeName: Armature.023|ShootCatapultBig
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 60
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature.023|ShootCatapultLizard
+      takeName: Armature.023|ShootCatapultLizard
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 1
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature.023|ShootSmallSkeleton
+      takeName: Armature.023|ShootSmallSkeleton
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 90
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
       name: Armature.023|Shouting
       takeName: Armature.023|Shouting
       internalID: 0
@@ -1071,64 +1167,6 @@ ModelImporter:
       internalID: 0
       firstFrame: 0
       lastFrame: 44
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Armature.023|Walk
-      takeName: Armature.023|Walk
-      internalID: 0
-      firstFrame: 0
-      lastFrame: 25
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: Armature.023|WalkSmallSkeleton
-      takeName: Armature.023|WalkSmallSkeleton
-      internalID: 0
-      firstFrame: 0
-      lastFrame: 23
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

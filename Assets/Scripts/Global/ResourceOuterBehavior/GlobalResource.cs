@@ -7,8 +7,10 @@ public class GlobalResource : MonoBehaviour
 {
     [SerializeField] LayerMask layerMask;
     [SerializeField] int id;
+    [SerializeField] bool oreResource;
     SoundManager globalSoundManager;
     AudioSource fallingSound;
+    
 
     int count = 1;
     bool collidingSameResource;
@@ -47,8 +49,8 @@ public class GlobalResource : MonoBehaviour
         {
             //|| other.gameObject.layer == 0 && id != 1 && other.gameObject.GetComponent<GlobalResource>() == null
             //Debug.Log(other.gameObject.layer + " " + other.transform);
-            GetComponent<SphereCollider>().isTrigger = false;
-            fallingSound.Play();
+            if (!oreResource) { GetComponent<SphereCollider>().isTrigger = false; }
+            if (fallingSound != null) { fallingSound.Play(); }
             //transform.Find("SameResourceMagnetism(Clone)")?.gameObject.SetActive(true);
             //if (Vector3.Distance(transform.position, other.transform.position) > 2f)
             //{

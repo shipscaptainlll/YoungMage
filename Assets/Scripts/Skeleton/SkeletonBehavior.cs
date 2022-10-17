@@ -340,7 +340,7 @@ public class SkeletonBehavior : MonoBehaviour
                 }
             }
             navigationTarget = value;
-            //Debug.Log(navigationTarget + " " + transform);
+            Debug.Log(navigationTarget + " " + transform);
             UpdateAnimation();
 
         }
@@ -1121,7 +1121,7 @@ public class SkeletonBehavior : MonoBehaviour
         StopActivities(); activity = "NearCastle";
     }
 
-    void HitOre()
+    public void HitOre()
     {
         if (OreHitted != null)
         {
