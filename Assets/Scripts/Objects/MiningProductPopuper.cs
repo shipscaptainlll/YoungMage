@@ -38,7 +38,7 @@ public class MiningProductPopuper : MonoBehaviour
         objectsConnector.SubscribeOnOre(newObject);
         if (newObject.GetChild(0).GetChild(0) != null)
         {
-            var newObjectFine = newObject.GetChild(0);
+            var newObjectFine = newObject;
             newObject.localPosition = new Vector3(0, 0, 0);
             newObjectFine.localPosition = new Vector3(0, 0, 0);
             newObjectFine.gameObject.AddComponent<Rigidbody>();
@@ -52,7 +52,7 @@ public class MiningProductPopuper : MonoBehaviour
             //Transform countUIAdd = Instantiate(countUIAddon, newObjectFine.position + new Vector3(0, 0.5f, 0), newObjectFine.rotation);
             //countUIAdd.gameObject.SetActive(true);
             //countUIAdd.parent = newObject;
-            newObjectFine.gameObject.AddComponent<MidasResource>();
+            //newObjectFine.gameObject.AddComponent<MidasResource>();
             newObjectFine.gameObject.GetComponent<Rigidbody>().AddForce(popupOrigin.forward * popupForce);
             newObjectFine.gameObject.GetComponent<Rigidbody>().angularDrag = 150f;
             newObjectFine.gameObject.GetComponent<Rigidbody>().drag = 1f;
@@ -72,7 +72,7 @@ public class MiningProductPopuper : MonoBehaviour
             //Transform countUIAdd = Instantiate(countUIAddon, newObject.position + new Vector3(0, 0.5f, 0), newObject.rotation);
             //countUIAdd.gameObject.SetActive(true);
             //countUIAdd.parent = newObject;
-            newObject.gameObject.AddComponent<MidasResource>();
+            //newObject.gameObject.AddComponent<MidasResource>();
             newObject.gameObject.GetComponent<Rigidbody>().AddForce(popupOrigin.forward * popupForce);
             newObject.gameObject.GetComponent<Rigidbody>().angularDrag = 150f;
             newObject.gameObject.GetComponent<Rigidbody>().drag = 1f;

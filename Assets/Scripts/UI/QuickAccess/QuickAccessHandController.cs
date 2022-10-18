@@ -96,6 +96,7 @@ public class QuickAccessHandController : MonoBehaviour
             sacketModel.gameObject.SetActive(true);
             GameObject objectToTake = objectManager.TakeObject(targetCustomID);
             objectInHand = Instantiate(objectToTake, hand.position, hand.rotation);
+            objectInHand.transform.gameObject.AddComponent<HandResource>();
             SetLayerRecursively(objectInHand.transform, 11);
             objectInHand.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
             MaterializeEffect(objectInHand.transform, 0.65f);

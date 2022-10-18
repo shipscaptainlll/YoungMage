@@ -8,6 +8,7 @@ public class GlobalResource : MonoBehaviour
     [SerializeField] LayerMask layerMask;
     [SerializeField] int id;
     [SerializeField] bool oreResource;
+    [SerializeField] OreLevitator oreLevitator;
     SoundManager globalSoundManager;
     AudioSource fallingSound;
     
@@ -43,14 +44,16 @@ public class GlobalResource : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log(other.gameObject.layer + " " + other.transform);
+        
         if (!collidingSameResource && other.gameObject.layer == 6 && id != 1 
             )
         {
+            //Debug.Log(other.gameObject.layer + " " + other.transform);
             //|| other.gameObject.layer == 0 && id != 1 && other.gameObject.GetComponent<GlobalResource>() == null
             //Debug.Log(other.gameObject.layer + " " + other.transform);
-            if (!oreResource) { GetComponent<SphereCollider>().isTrigger = false; }
+            //if (!oreResource) { GetComponent<SphereCollider>().isTrigger = false; }
             if (fallingSound != null) { fallingSound.Play(); }
+            //if (oreLevitator != null) { oreLevitator.ActivateLevitation(); }
             //transform.Find("SameResourceMagnetism(Clone)")?.gameObject.SetActive(true);
             //if (Vector3.Distance(transform.position, other.transform.position) > 2f)
             //{

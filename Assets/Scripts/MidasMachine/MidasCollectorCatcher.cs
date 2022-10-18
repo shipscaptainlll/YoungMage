@@ -27,13 +27,17 @@ public class MidasCollectorCatcher : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<MidasResource>() != null)
+        if (other.GetComponent<MidasResource>() != null && !other.GetComponent<MidasResource>().BeingDissolved)
         {
-
+            other.GetComponent<MidasResource>().BeingDissolved = true;
             ApplySounds(other.transform);
             int resourceID = other.GetComponent<GlobalResource>().ID;
             if (ResourceEnteredCollector != null) { ResourceEnteredCollector(resourceID); }
+            other.GetComponent<ConnectableResource>().DissolvingDestruction();
+            other.GetComponent<MidasResource>().DissolvingDestruction();
             StartCoroutine(DematerializeProduct(other.transform, 4));
+            Debug.Log(other);
+            if (other.transform.GetChild(0).GetComponent<OreLevitator>() != null) { other.transform.GetChild(0).GetComponent<OreLevitator>().DeactivateLevitation(); }
         }
     }
 
@@ -50,8 +54,8 @@ public class MidasCollectorCatcher : MonoBehaviour
 
     IEnumerator DematerializeProduct(Transform productTransform, float duration)
     {
-        productTransform.GetComponent<Rigidbody>().velocity = new Vector3(0, -0.1f, 0);
-        productTransform.GetComponent<Rigidbody>().useGravity = false;
+        //productTransform.GetComponent<Rigidbody>().velocity = new Vector3(0, -0.1f, 0);
+        //productTransform.GetComponent<Rigidbody>().useGravity = false;
         
         float elapsed = 0;
         MeshRenderer productMeshrenderer = productTransform.GetChild(0).GetComponent<MeshRenderer>();

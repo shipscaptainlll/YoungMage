@@ -6,6 +6,7 @@ using UnityEngine;
 public class ConnectableResource : MonoBehaviour
 {
     [SerializeField] ParticleSystem destructionPS;
+    
     bool enabled;
     Transform targetConnection;
     Vector3 targetConnectionPosition;
@@ -29,7 +30,7 @@ public class ConnectableResource : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<ConnectableResource>() != null)
+        if (other.GetComponent<ConnectableResource>() != null && other.GetComponent<HandResource>() == null)
         {
             if (ContactedResource != null) { ContactedResource(transform, other.transform); }
         }
@@ -47,12 +48,13 @@ public class ConnectableResource : MonoBehaviour
     {
         if (!enabled)
         {
-            StartCoroutine(Destruction());
+            StartCoroutine(Destruction(0));
         }
     }
 
-    IEnumerator Destruction()
+    IEnumerator Destruction(float time)
     {
+        yield return new WaitForSeconds(time);
         Debug.Log("Being destroyed ");
         Transform destructionParticleSystem = Instantiate(destructionPS.transform, transform.position, transform.rotation);
         //destructionParticleSystem.parent = transform;
@@ -61,7 +63,7 @@ public class ConnectableResource : MonoBehaviour
         DirectParticles(destructionParticleSystem);
         destructionParticleSystem.transform.gameObject.SetActive(true);
         destructionParticleSystem.GetComponent<ParticleSystem>().Play();
-        Destroy(transform.parent.gameObject);
+        Destroy(transform.gameObject);
         yield return new WaitForSeconds(3);
         
     }
@@ -80,5 +82,11 @@ public class ConnectableResource : MonoBehaviour
         {
 
         }
+    }
+
+    public void DissolvingDestruction()
+    {
+        enabled = false;
+        
     }
 }

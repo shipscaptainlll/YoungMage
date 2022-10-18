@@ -21,6 +21,7 @@ public class SacketClickController : MonoBehaviour
     [SerializeField] Transform midasLayerHolder;
     [SerializeField] Transform countUIAddon;
     [SerializeField] BookSpellsActivator bookSpellsActivator;
+    [SerializeField] ObjectsConnector objectsConnector;
 
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
@@ -70,15 +71,16 @@ public class SacketClickController : MonoBehaviour
                 Transform objectReference = objectManager.TakeObject(quickAccessHandController.CurrentCustomID).transform;
 
                 var newObject = Instantiate(objectReference, characterHand.position, characterHand.rotation);
+                objectsConnector.SubscribeOnOre(newObject);
                 newObject.gameObject.AddComponent<Rigidbody>();
                 newObject.gameObject.AddComponent<Rotate>();
                 Rotate rotator = newObject.gameObject.GetComponent<Rotate>(); rotator.RotationSpeed = 10; rotator.XAxis = 1; rotator.YAxis = 1; rotator.ZAxis = 1;
-                newObject.gameObject.AddComponent<SphereCollider>();
-                newObject.gameObject.GetComponent<SphereCollider>().isTrigger = true;
-                newObject.gameObject.GetComponent<SphereCollider>().radius = 0.16f;
-                newObject.GetChild(0).gameObject.AddComponent<SphereCollider>();
-                newObject.GetChild(0).gameObject.GetComponent<SphereCollider>().isTrigger = true;
-                newObject.GetChild(0).gameObject.GetComponent<SphereCollider>().radius = 0.005f;
+                //newObject.gameObject.AddComponent<SphereCollider>();
+                //newObject.gameObject.GetComponent<SphereCollider>().isTrigger = true;
+                //newObject.gameObject.GetComponent<SphereCollider>().radius = 0.16f;
+                //newObject.GetChild(0).gameObject.AddComponent<SphereCollider>();
+                //newObject.GetChild(0).gameObject.GetComponent<SphereCollider>().isTrigger = true;
+                //newObject.GetChild(0).gameObject.GetComponent<SphereCollider>().radius = 0.005f;
                 newObject.gameObject.AddComponent<DefractorResource>();
                 newObject.gameObject.GetComponent<DefractorResource>().ID = quickAccessHandController.CurrentCustomID;
                 newObject.gameObject.GetComponent<DefractorResource>().DestroyableObjects = destroyableObjects;
@@ -90,18 +92,18 @@ public class SacketClickController : MonoBehaviour
                 newObject.gameObject.GetComponent<GlobalResource>().ID = quickAccessHandController.CurrentCustomID;
                 newObject.gameObject.GetComponent<GlobalResource>().GlobalSoundManager = soundManager;
                 //missed somewhereTransform magneticAdd = Instantiate(magnetismAddOn, newObject.position, newObject.rotation);
-                Transform countUIAdd = Instantiate(countUIAddon, newObject.position + new Vector3(0, 0.5f, 0), newObject.rotation);
-                countUIAdd.gameObject.SetActive(true);
+                //Transform countUIAdd = Instantiate(countUIAddon, newObject.position + new Vector3(0, 0.5f, 0), newObject.rotation);
+                //countUIAdd.gameObject.SetActive(true);
                 //missed somewheremagneticAdd.parent = newObject;
-                countUIAdd.parent = newObject;
+                //countUIAdd.parent = newObject;
                 //Transform anticolliderAdd = Instantiate(anticolliderAddOn, magneticAdd.position, magneticAdd.rotation);
                 //anticolliderAdd.parent = magneticAdd;
                 //newObject.Find("SameResourceMagnetism(Clone)").Find("AntiColliderField").GetComponent<AntiColliderField>().ID = quickAccessHandController.CurrentCustomID;
                 //newObject.Find("SameResourceMagnetism(Clone)").gameObject.GetComponent<ResourcesSameMagnetism>().ID = quickAccessHandController.CurrentCustomID;
                 //Debug.Log(sameMagnetismProduct);
                 //newObject.Find("SameResourceMagnetism(Clone)").gameObject.GetComponent<ResourcesSameMagnetism>().sameMagnetismProduct = sameMagnetismProduct;
-                newObject.gameObject.AddComponent<MidasResource>();
-
+                //newObject.gameObject.AddComponent<MidasResource>();
+                //newObject.gameObject.GetComponent<MidasResource>().InstantiateAfterCreation();
                 newObject.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * (Mathf.Cos(Mathf.Abs(((-cameraController.YRotation) * Mathf.PI) / 180)) + xAngleOffset) * xForcePower);
                 newObject.gameObject.GetComponent<Rigidbody>().angularDrag = 0.75f;
                 newObject.gameObject.GetComponent<Rigidbody>().drag = 0.4f;
@@ -148,15 +150,16 @@ public class SacketClickController : MonoBehaviour
     {
         foreach (Transform element in KickedOutItems)
         {
+            Debug.Log(element);
             if (element == objectTransform)
             {
-                element.gameObject.GetComponent<DefractorResource>().objectContactedDefractor += DestroyObject;
+                objectTransform.gameObject.GetComponent<DefractorResource>().objectContactedDefractor -= DestroyObject;
                 KickedOutItems.Remove(element);
                 var particles = Instantiate(destroyParticles, element.position, element.rotation);
                 particles.gameObject.SetActive(true);
                 
                 Destroy(element.gameObject);
-                //Debug.Log("was destroyed");
+                Debug.Log("was destroyed");
                 break;
             }
         }

@@ -20,7 +20,7 @@ public class ObjectsConnector : MonoBehaviour
 
     public void SubscribeOnOre(Transform newOre)
     {
-        newOre.GetChild(0).GetComponent<ConnectableResource>().ContactedResource += ConnectTwoOres;
+        newOre.GetComponent<ConnectableResource>().ContactedResource += ConnectTwoOres;
     }
 
     void ConnectTwoOres(Transform firstOre, Transform secondOre)
