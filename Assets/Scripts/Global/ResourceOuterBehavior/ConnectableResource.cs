@@ -6,12 +6,13 @@ using UnityEngine;
 public class ConnectableResource : MonoBehaviour
 {
     [SerializeField] ParticleSystem destructionPS;
-    
+    OreLevitator oreLevitator;
+
     bool enabled;
     Transform targetConnection;
     Vector3 targetConnectionPosition;
 
-
+    public OreLevitator OreLevitator { get { return oreLevitator; } }
     public event Action<Transform, Transform> ContactedResource = delegate { };
 
     public bool Enabled { get { return enabled; } set { enabled = value; DestroyOre(); } }
@@ -20,6 +21,7 @@ public class ConnectableResource : MonoBehaviour
     void Start()
     {
         enabled = true;
+        oreLevitator = transform.GetChild(0).GetComponent<OreLevitator>();
     }
 
     // Update is called once per frame
@@ -30,7 +32,7 @@ public class ConnectableResource : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<ConnectableResource>() != null && other.GetComponent<HandResource>() == null)
+        if (other.GetComponent<ConnectableResource>() != null && oreLevitator.LevitationActivated && other.GetComponent<HandResource>() == null)
         {
             if (ContactedResource != null) { ContactedResource(transform, other.transform); }
         }

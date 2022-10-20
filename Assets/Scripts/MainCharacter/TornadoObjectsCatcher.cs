@@ -37,7 +37,7 @@ public class TornadoObjectsCatcher : MonoBehaviour
         if (other.GetComponent<GlobalResource>() != null ||
             other.transform.parent != null && other.transform.parent.GetComponent<GlobalResource>() != null)
         {
-
+            if (other.transform.GetComponent<ConnectableResource>() != null && other.transform.GetComponent<ConnectableResource>().OreLevitator.LevitationActivated) { other.transform.GetComponent<ConnectableResource>().OreLevitator.DeactivateLevitation(); Debug.Log("Ore levitation stopped"); }
             if (Mathf.Abs(other.transform.position.x - transform.TransformPoint(transformBoxcollider.center).x) <= 0.5f
                 && Mathf.Abs(other.transform.position.y - transform.TransformPoint(transformBoxcollider.center).y) <= 0.5f)
             {

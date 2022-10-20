@@ -7,6 +7,7 @@ public class OreLevitator : MonoBehaviour
     [SerializeField] ParticleSystem levitationPS;
     [SerializeField] Transform body;
     [SerializeField] MidasResource midasResource;
+    Rigidbody bodyRigidbody;
     Animator levitationAnimator;
     Rigidbody transformRigibody;
 
@@ -18,6 +19,7 @@ public class OreLevitator : MonoBehaviour
     {
         levitationAnimator = transform.GetComponent<Animator>();
         levitationAnimator.enabled = false;
+        bodyRigidbody = body.GetComponent<Rigidbody>();
     }
 
     public void ActivateLevitation()
@@ -38,6 +40,7 @@ public class OreLevitator : MonoBehaviour
     {
         if (levitationActivated)
         {
+            RestartRigidbody();
             levitationActivated = false;
             levitationPS.Stop();
             Debug.Log("set dowwn");
@@ -49,12 +52,18 @@ public class OreLevitator : MonoBehaviour
 
     void EaseUpRigidbody()
     {
-        Rigidbody bodyRigidbody = body.GetComponent<Rigidbody>();
         bodyRigidbody.velocity = new Vector3(0, 0, 0);
         bodyRigidbody.angularVelocity = new Vector3(0, 0, 0);
         bodyRigidbody.isKinematic = true;
         //bodyRigidbody.useGravity = false;
         Debug.Log("we are here");
         body.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+    }
+
+    void RestartRigidbody()
+    {
+        bodyRigidbody.isKinematic = false;
+        //bodyRigidbody.useGravity = false;
+        Debug.Log("we are here 1");
     }
 }
