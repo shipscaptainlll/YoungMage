@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using System;
 
 public class RuneWordsCreator : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class RuneWordsCreator : MonoBehaviour
     [SerializeField] RuneWordsDictionary runeWordsDictionary;
 
     System.Random rand;
+
+    public event Action RuneWordsCreated = delegate { };
     // Start is called before the first frame update
     void Start()
     {
@@ -42,6 +45,7 @@ public class RuneWordsCreator : MonoBehaviour
                 runeWordsSpell.spells[i] = newSpell;
             }
         }
+        if (RuneWordsCreated != null) { RuneWordsCreated(); }
     }
 
     string GetRandomRunes(int runesNumber)
@@ -50,7 +54,11 @@ public class RuneWordsCreator : MonoBehaviour
         for (int i = 0; i < runesNumber; i++)
         {
             string newRune = runesDictionary.runes[rand.Next(0, runesDictionary.runes.Length)];
-            wordFull.Append(" " + newRune);
+            if (i == 0)
+            {
+                wordFull.Append(newRune);
+            } else { wordFull.Append(" " + newRune); }
+            
         }
         return wordFull.ToString();
     }
