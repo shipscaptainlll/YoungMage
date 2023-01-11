@@ -10,6 +10,7 @@ public class TransmutateAmuletsCounter : MonoBehaviour, ICounter, ISkeletonItems
     [SerializeField] int id;
     int count = 0;
     int maxCount = 7;
+    bool itemOpened = false;
 
     public int ID { get { return id; } }
 
@@ -20,6 +21,18 @@ public class TransmutateAmuletsCounter : MonoBehaviour, ICounter, ISkeletonItems
             return count;
         }
         set { count = value; }
+    }
+
+    public bool ItemOpened
+    {
+        get
+        {
+            return itemOpened;
+        }
+        set
+        {
+            itemOpened = value;
+        }
     }
 
     public event Action AmuletAdded = delegate { };

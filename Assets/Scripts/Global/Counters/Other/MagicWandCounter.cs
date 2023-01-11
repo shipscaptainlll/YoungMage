@@ -27,6 +27,10 @@ public class MagicWandCounter : MonoBehaviour, ICounter
         {
             return itemOpened;
         }
+        set
+        {
+            itemOpened = value;
+        }
     }
 
     public event Action<int> AmountChanged = delegate { };
@@ -40,6 +44,10 @@ public class MagicWandCounter : MonoBehaviour, ICounter
 
     public void AddResource(int ammount)
     {
+        if (count > 0)
+        {
+            return;
+        }
         count += ammount;
         if (AddedAmmount != null) { AddedAmmount(id, ammount); }
         NotifyAmountChanged(count);

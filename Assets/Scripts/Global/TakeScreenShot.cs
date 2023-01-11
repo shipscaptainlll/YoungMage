@@ -27,12 +27,12 @@ public class TakeScreenShot : MonoBehaviour
         }
     }
 
-    public void MakeScreenShot(GameObject referenceSavePanel, int saveId)
+    public void MakeScreenShot(GameObject referenceSavePanel, int saveId, int mainSaveId)
     {
-        StartCoroutine(LoadTexture(referenceSavePanel, saveId));
+        StartCoroutine(LoadTexture(referenceSavePanel, saveId, mainSaveId));
     }
 
-    IEnumerator LoadTexture(GameObject referenceSavePanel, int saveId)
+    IEnumerator LoadTexture(GameObject referenceSavePanel, int saveId, int mainSaveId)
     {
         saveMenuPanel.GetComponent<CanvasGroup>().alpha = 0;
         yield return 0;
@@ -53,6 +53,21 @@ public class TakeScreenShot : MonoBehaviour
         Texture2D screenShotTexture = new Texture2D(Screen.width, Screen.height);
         screenShotTexture.LoadImage(data);
         Sprite screenshotSprite = Sprite.Create(screenShotTexture, new Rect(0, 0, Screen.width, Screen.height), new Vector2(0.5f, 0.5f));
+
+        if (mainSaveId != -1)
+        {
+            System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(Application.persistentDataPath + "/Saves");
+            foreach (var element in dir.GetFiles())
+            {
+                if (element.Name == mainSaveId.ToString())
+                {
+                    Texture2D cacheTexture = screenshotSprite.texture;
+                    byte[] cacheByteArray = cacheTexture.EncodeToPNG();
+                    File.WriteAllBytes(Application.persistentDataPath + "/Saves" + "/" + element.Name + "/savePNG.pang", cacheByteArray);
+                }
+            }
+        }
+        
         screenshotSprite.name = "SavedScreenShot" + saveId;
         referenceSavePanel.transform.Find("Borders").Find("Image").GetComponent<Image>().sprite = screenshotSprite;
 

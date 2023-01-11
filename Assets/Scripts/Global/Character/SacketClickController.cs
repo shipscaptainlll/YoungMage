@@ -22,6 +22,7 @@ public class SacketClickController : MonoBehaviour
     [SerializeField] Transform countUIAddon;
     [SerializeField] BookSpellsActivator bookSpellsActivator;
     [SerializeField] ObjectsConnector objectsConnector;
+    [SerializeField] Transform contactableObjectsPool;
 
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
@@ -55,11 +56,11 @@ public class SacketClickController : MonoBehaviour
     {
         if (!delayActive)
         {
-            
+            Debug.Log(transform);
             bookSpellsActivator.CastThrowObject();
             bookSpellsActivator.CastNullSpell();
 
-            Debug.Log(transform);
+            
             if (objectManager.TakeObject(quickAccessHandController.CurrentCustomID) != null)
             {
                 float xTorque = (float)random.Next(-2, 2);
@@ -122,6 +123,7 @@ public class SacketClickController : MonoBehaviour
                 }
                 delayCoroutine = StartCoroutine(WaitDelay());
                 TakeFromCounter();
+                newObject.parent = contactableObjectsPool;
             }
             
             

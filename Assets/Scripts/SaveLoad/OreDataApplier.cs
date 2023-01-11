@@ -10,7 +10,10 @@ public static class OreDataApplier
     public static void ApplyOreData(Transform oreDataHolder, OreData oreData)
     {
         UpdateData(oreDataHolder, oreData);
+        Debug.Log(oreData.health.Length);
+        Debug.Log(oreData.healthVesibility.Length);
         ApplyHealth(oreDataHolder);
+        ApplyHealthVisibility(oreDataHolder);
         DisconnectData();
     }
 
@@ -28,10 +31,35 @@ public static class OreDataApplier
 
     static void ApplyHealth(Transform oresHolder)
     {
-        for (int i = 0; i < oresHolder.childCount; i++)
+        int indexer = 0;
+        foreach (Transform row in oresHolder)
         {
-            oresHolder.GetChild(i).GetChild(1).Find("OreHealth").GetComponent<OreHealthDecreaser>().CurrentHealth = oreDataLoaded.health[i];
+            foreach (Transform ore in row)
+            {
+                ore.GetChild(1).Find("OreHealth").GetComponent<OreHealthDecreaser>().CurrentHealth = oreDataLoaded.health[indexer++];
+                ore.GetChild(1).Find("OreHealth").GetComponent<OreHealthDecreaser>().UpdateOreHealth();
+            }
         }
+    }
 
+    static void ApplyHealthVisibility(Transform oresHolder)
+    {
+        int indexer = 0;
+        foreach (Transform row in oresHolder)
+        {
+            foreach (Transform ore in row)
+            {
+                if (oreDataLoaded.healthVesibility[indexer] == 1)
+                {
+                    ore.GetChild(1).GetComponent<OreMiningManager>().VisualiseOreHealthbar();
+                }
+                else
+                {
+                    ore.GetChild(1).GetComponent<OreMiningManager>().HideOreHealthbar();
+                }
+
+                indexer++;
+            }
+        }
     }
 }

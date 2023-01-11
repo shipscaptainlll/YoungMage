@@ -19,10 +19,10 @@ public class RunesKeywordsCreator : MonoBehaviour
 
         foreach (string spell in runesDictionary.runes)
         {
-            Debug.Log(spell);
+            //Debug.Log(spell);
             voiceReader.Actions.Add(spell, 1);
         }
-        Debug.Log(voiceReader.Actions.Count);
+        //Debug.Log(voiceReader.Actions.Count);
     }
 
 

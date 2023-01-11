@@ -35,6 +35,7 @@ public class SavePanel : MonoBehaviour
     {
         saveSound = soundManager.FindSound("Save");
         clickManager.FFiveClicked += AutoSave;
+        clickManager.FSixClicked += AutoLoad;
         miscPanel.AutosaveTimeChangeRequested += SetAutosaveRate;
 
         autosaveCoroutine = StartCoroutine(AutosaveCounter(autosaveRate));
@@ -74,9 +75,36 @@ public class SavePanel : MonoBehaviour
         loadMenuCopy.Find("Content").Find("SaveNumber").Find("Text").GetComponent<Text>().text = "Save #" + currentSavesCount;
         newSavedGame.name = "Save" + currentSavesCount;
         loadMenuCopy.name = "Load" + currentSavesCount;
-        takeScreenShot.MakeScreenShot(newSavedGame.gameObject, (int) currentSavesCount);
-
+        takeScreenShot.MakeScreenShot(newSavedGame.gameObject, (int) currentSavesCount, -1);
+        saveSystemSerialization.SaveProgress(false);
         Debug.Log("New game saved");
+    }
+
+    public void AutosaveGame(int mainsaveId)
+    {
+
+        Transform newSavedGame = Instantiate(newSaveTemplate, savesHolder.position, savesHolder.rotation);
+        Transform loadMenuCopy = Instantiate(loadMenuTemplate, loadsHolder.position, loadsHolder.rotation);
+        newSavedGame.parent = savesHolder;
+        loadMenuCopy.parent = loadsHolder;
+        newSavedGame.SetAsFirstSibling();
+        loadMenuCopy.SetAsFirstSibling();
+        newSavedGame.localScale = new Vector3(1, 1, 1);
+        loadMenuCopy.localScale = new Vector3(1, 1, 1);
+        RectTransform originRect = newSaveTemplate.GetComponent<RectTransform>();
+        newSavedGame.GetComponent<RectTransform>().sizeDelta = new Vector2(originRect.rect.width, originRect.rect.height);
+        loadMenuCopy.GetComponent<RectTransform>().sizeDelta = new Vector2(originRect.rect.width, originRect.rect.height);
+        newSavedGame.GetComponent<CanvasGroup>().alpha = 1;
+        loadMenuCopy.GetComponent<CanvasGroup>().alpha = 1;
+
+        currentSavesCount++;
+        newSavedGame.Find("Content").Find("SaveNumber").Find("Text").GetComponent<Text>().text = "Save #" + currentSavesCount;
+        loadMenuCopy.Find("Content").Find("SaveNumber").Find("Text").GetComponent<Text>().text = "Save #" + currentSavesCount;
+        newSavedGame.name = "Save" + currentSavesCount;
+        loadMenuCopy.name = "Load" + currentSavesCount;
+        takeScreenShot.MakeScreenShot(newSavedGame.gameObject, (int)currentSavesCount, mainsaveId);
+        //saveSystemSerialization.SaveProgress(false);
+        Debug.Log("New autosaved game saved");
     }
 
     public void RewriteExistingSave(Transform saveButtonTransform)
@@ -90,7 +118,7 @@ public class SavePanel : MonoBehaviour
         while (true)
         {
             float elapsed = 0;
-            while (elapsed < requiredAutosaveRate * 5)
+            while (elapsed < requiredAutosaveRate * 50)
             {
                 elapsed++;
                 yield return new WaitForSeconds(1f);
@@ -103,6 +131,14 @@ public class SavePanel : MonoBehaviour
     public void AutoSave()
     {
         saveSound.Play();
+        saveSystemSerialization.SaveProgress(true);
+        //Debug.Log("Game was autosaved");
+    }
+
+    public void AutoLoad()
+    {
+        saveSound.Play();
+        saveSystemSerialization.LoadProgress(1);
         //Debug.Log("Game was autosaved");
     }
 

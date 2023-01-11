@@ -30,6 +30,7 @@ public class ClickManager : MonoBehaviour
     public event Action<int> EightClicked = delegate { };
     public event Action<int> NineClicked = delegate { };
     public event Action FFiveClicked = delegate { };
+    public event Action FSixClicked = delegate { };
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -205,6 +206,13 @@ public class ClickManager : MonoBehaviour
             if (FFiveClicked != null)
             {
                 FFiveClicked();
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.F6))
+        {
+            if (FSixClicked != null)
+            {
+                FSixClicked();
             }
         }
     }

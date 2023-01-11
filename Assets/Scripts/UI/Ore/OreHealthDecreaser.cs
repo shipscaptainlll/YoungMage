@@ -17,7 +17,7 @@ public class OreHealthDecreaser : MonoBehaviour
 
     public float CurrentHealth { get { return currentHealth; } set { currentHealth = value; } }
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         currentDamage = 50;
         healthTransform = transform.Find("Borders").Find("Foreground").GetComponent<RectTransform>();
@@ -119,8 +119,13 @@ public class OreHealthDecreaser : MonoBehaviour
         yield return null;
     }
 
-    void UpdateOreHealth(float healthPercent)
+    public void UpdateOreHealth()
     {
-        
+        float leftHealthPercent = ((currentHealth) / maximumWidth) * 100;
+        //Debug.Log(currentHealth);
+        //Debug.Log(leftHealthPercent);
+        leftHealthPercent = Mathf.Clamp(leftHealthPercent, 0, 100);
+        int updatedWidth = (int)(leftHealthPercent * maximumWidth / 100);
+        healthTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, updatedWidth);
     }
 }

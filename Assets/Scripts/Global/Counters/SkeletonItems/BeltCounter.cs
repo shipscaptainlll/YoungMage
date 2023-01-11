@@ -27,6 +27,10 @@ public class GlovesCounter : MonoBehaviour, ICounter, ISkeletonItems
         {
             return itemOpened;
         }
+        set
+        {
+            itemOpened = value;
+        }
     }
 
     public event Action<int> AmountChanged = delegate { };

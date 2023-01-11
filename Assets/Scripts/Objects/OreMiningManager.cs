@@ -23,9 +23,12 @@ public class OreMiningManager : MonoBehaviour
     static int firstProductCount = 0;
     static int secondProductCount = 0;
 
+    bool healthVisible = false;
+
     int secondProductID;
 
     System.Random random;
+    public bool HealthVisible { get { return healthVisible; } }
     public Transform FirstProductInstance { get { return firstProductInstance; } }
     public Transform SecondProductInstance { get { return secondProductInstance; } }
     public SkeletonBehavior ConnectedSkeleton
@@ -150,9 +153,10 @@ public class OreMiningManager : MonoBehaviour
         }
     }
 
-    void VisualiseOreHealthbar()
+    public void VisualiseOreHealthbar()
     {
         oreHealthDecreaser.gameObject.GetComponent<CanvasGroup>().alpha = 1;
+        healthVisible = true;
     }
 
     void ConnectScriptsInterraction(SkeletonBehavior connectingSkeleton)
@@ -167,9 +171,10 @@ public class OreMiningManager : MonoBehaviour
         oreHealthDecreaser.CalculateDamage(connectedSkeleton);
     }
 
-    void HideOreHealthbar()
+    public void HideOreHealthbar()
     {
         oreHealthDecreaser.gameObject.GetComponent<CanvasGroup>().alpha = 0;
+        healthVisible = false;
     }
 
     void DisconnectScriptsInterraction(SkeletonBehavior connectingSkeleton)

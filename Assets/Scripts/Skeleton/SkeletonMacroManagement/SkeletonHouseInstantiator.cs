@@ -67,6 +67,19 @@ public class SkeletonHouseInstantiator : MonoBehaviour
         if (HouseSkeletonCreated != null) { HouseSkeletonCreated(newSkeleton); }
     }
 
+    public void InstantiateNewInhouse(Vector3 position, Quaternion rotation)
+    {
+        Transform skeletonToInstantiate = null;
+        skeletonToInstantiate = smallskeletonModel;
+
+        Transform newSkeleton = Instantiate(skeletonToInstantiate, position, rotation);
+        newSkeleton.gameObject.SetActive(true);
+        newSkeleton.GetComponent<SkeletonBehavior>().SubscribeAfterInstantiation();
+        newSkeleton.GetComponent<SkeletonBehavior>().Activity = "Idle";
+        newSkeleton.parent = homeSkeletonsHolder;
+        if (HouseSkeletonCreated != null) { HouseSkeletonCreated(newSkeleton); }
+    }
+
     void InstantiateNewInhouse()
     {
         Transform newSkeleton = Instantiate(lizardskeletonModel, transform.position, transform.rotation);

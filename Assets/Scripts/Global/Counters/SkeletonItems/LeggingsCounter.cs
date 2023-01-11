@@ -28,6 +28,10 @@ public class LeggingsCounter : MonoBehaviour, ICounter, ISkeletonItems
         {
             return itemOpened;
         }
+        set
+        {
+            itemOpened = value;
+        }
     }
 
     public event Action<int> AmountChanged = delegate { };

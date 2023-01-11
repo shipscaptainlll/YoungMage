@@ -10,6 +10,11 @@ public static class ItemsCounterDataSaver
     {
         BinaryFormatter formatter = new BinaryFormatter();
 
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+        }
+
         FileStream fileStream = new FileStream(path, FileMode.Append);
 
         ItemsCounterData itemsCounterData = new ItemsCounterData(countersHolder);

@@ -77,7 +77,7 @@ public class QuickAccessHandController : MonoBehaviour
         
     }
 
-    void pickUpFromInventory(int slotNumber)
+    public void pickUpFromInventory(int slotNumber)
     {
         if (objectInHand != null)
         {

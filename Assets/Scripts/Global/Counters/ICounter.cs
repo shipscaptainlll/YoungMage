@@ -7,6 +7,7 @@ public interface ICounter
 {
     public int Count { get; set; }
     public int ID { get; }
+    public bool ItemOpened { get; set; }
     
     public event Action<int> AmountChanged;
     public event Action<int, int> AddedAmmount;

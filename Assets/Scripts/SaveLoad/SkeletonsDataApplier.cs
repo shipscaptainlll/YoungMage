@@ -4,56 +4,94 @@ using UnityEngine;
 
 public static class SkeletonsDataApplier
 {
-    static PersonMovement playerScriptLoaded;
-    static CameraController cameraScriptLoaded;
-    static PlayerData playerDataLoaded;
+    static Transform skeletonsHolderLoad;
+    static SkeletonData skeletonDataLoaded;
 
-    public static void ApplyPlayerData(PersonMovement playerScript, CameraController cameraScript, PlayerData playerData)
+    public static void ApplySkeletonsData(Transform skeletonsHolder, SkeletonHouseInstantiator skeletonHouseInstantiator, PersonMovement personScript, Transform oresHolder, Transform tackledDoor, SkeletonData skeletonData)
     {
-        UpdateData(playerScript, cameraScript, playerData);
-        ApplyPlayerPosition();
-        ApplyPlayerRotation();
-        ApplyCameraRotation();
+        UpdateData(skeletonsHolder, skeletonData);
+        InstantiateLoadedSkeleton(skeletonsHolder, skeletonHouseInstantiator);
+        ApplyState(skeletonsHolder, personScript, tackledDoor, oresHolder);
         DisconnectData();
     }
 
-    static void UpdateData(PersonMovement playerScript, CameraController cameraScript, PlayerData playerData)
+    static void UpdateData(Transform skeletonsHolder, SkeletonData skeletonData)
     {
-        playerScriptLoaded = playerScript;
-        cameraScriptLoaded = cameraScript;
-        playerDataLoaded = playerData;
+        skeletonsHolderLoad = skeletonsHolder;
+        skeletonDataLoaded = skeletonData;
     }
 
     static void DisconnectData()
     {
-        playerScriptLoaded = null;
-        playerDataLoaded = null;
+        skeletonsHolderLoad = null;
+        skeletonDataLoaded = null;
     }
 
-    static void ApplyPlayerPosition()
+    static void InstantiateLoadedSkeleton(Transform skeletonsHolder, SkeletonHouseInstantiator skeletonHouseInstantiator)
     {
-        Vector3 playerPosition = new Vector3(playerDataLoaded.position[0], playerDataLoaded.position[1], playerDataLoaded.position[2]);
-        playerScriptLoaded.gameObject.SetActive(false);
-        playerScriptLoaded.gameObject.transform.position = playerPosition;
-        playerScriptLoaded.gameObject.SetActive(true);
+        int indexer = 0;
+        while (indexer < skeletonDataLoaded.positions.Length)
+        {
+            Vector3 skeletonPosition = new Vector3(skeletonDataLoaded.positions[indexer][0], skeletonDataLoaded.positions[indexer][1], skeletonDataLoaded.positions[indexer][2]);
+            Debug.Log("loaded one skeleton positions");
+            Vector3 skeletonRotation = new Vector3(skeletonDataLoaded.rotations[indexer][0], skeletonDataLoaded.rotations[indexer][1], skeletonDataLoaded.rotations[indexer][2]);
+            Debug.Log("loaded one skeleton rotations");
+            skeletonHouseInstantiator.InstantiateNewInhouse(skeletonPosition, Quaternion.Euler(skeletonRotation));
+            Debug.Log("instantiated one skeleton");
+            indexer++;
+        }
     }
 
-    static void ApplyPlayerRotation()
+    static void ApplyState(Transform skeletonsHolder, PersonMovement personScript, Transform tackledDoor, Transform oresHolder)
     {
-        Vector3 playerRotation = new Vector3(playerDataLoaded.rotation[0], playerDataLoaded.rotation[1], playerDataLoaded.rotation[2]);
-        playerScriptLoaded.gameObject.SetActive(false);
-        playerScriptLoaded.gameObject.transform.rotation = Quaternion.Euler(playerRotation);
-        playerScriptLoaded.gameObject.SetActive(true);
-    }
-
-    static void ApplyCameraRotation()
-    {
-        Vector3 cameraRotation = new Vector3(playerDataLoaded.cameraRotation[0], playerDataLoaded.cameraRotation[1], playerDataLoaded.cameraRotation[2]);
-        Debug.Log(cameraScriptLoaded.gameObject.transform.localRotation.eulerAngles);
-        cameraScriptLoaded.gameObject.SetActive(false);
-        if (cameraRotation.x > 50) { cameraRotation.x -= 360; }
-        cameraScriptLoaded.YRotation = cameraRotation.x;
-        Debug.Log(cameraRotation);
-        cameraScriptLoaded.gameObject.SetActive(true);
+        int indexer = 0;
+        Debug.Log("applied one skeleton state");
+        Debug.Log(skeletonsHolder.childCount);
+        foreach (Transform skeleton in skeletonsHolder)
+        {
+            Debug.Log("weel hello there0");
+            if (skeletonDataLoaded.isIdle[indexer])
+            {
+                Debug.Log("weel hello there");
+            }
+            else if (skeletonDataLoaded.connectedToPerson[indexer])
+            {
+                Debug.Log("weel hello there1");
+                Debug.Log(personScript.transform);
+                //skeleton.GetComponent<SkeletonBehavior>().NavigationTarget = null;
+                skeleton.GetComponent<SkeletonBehavior>().NavigationTarget = personScript.transform;
+                Debug.Log(personScript.transform);
+            }
+            else if (skeletonDataLoaded.connectedToOre[indexer])
+            {
+                int indexerOre = 0;
+                Debug.Log("weel hello there2");
+                foreach (Transform row in oresHolder)
+                {
+                    foreach (Transform ore in row)
+                    {
+                        if (indexerOre == skeletonDataLoaded.indexerOreSaved[indexer])
+                        {
+                            skeleton.GetComponent<SkeletonBehavior>().NavigationTarget = ore.GetChild(1);
+                            return;
+                        }
+                        indexerOre++;
+                    }
+                }
+            }
+            else if (skeletonDataLoaded.isTacklingDoor[indexer])
+            {
+                Debug.Log("weel hello there3");
+                skeleton.GetComponent<SkeletonBehavior>().AddTarget(tackledDoor.GetComponent<DoorTacklingManager>());
+            }
+            else if (skeletonDataLoaded.isExcomunicated[indexer])
+            {
+                Debug.Log("weel hello there4");
+                skeleton.GetComponent<SkeletonBehavior>().IsConjured = true;
+                skeleton.GetComponent<SkeletonBehavior>().NavigationTarget = null;
+            }
+            indexer++;
+            Debug.Log("applied one skeleton state");
+        }
     }
 }

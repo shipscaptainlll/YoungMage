@@ -20,8 +20,15 @@ public class SkeletonNecklessBehavior : MonoBehaviour
     public Transform LettersParticleSystem { get { return letersParticleSystem; } }
     public void ActivateConjurationNeckless()
     {
-        conjurationSound.Play();
-        skeletonWaves.Play();
+        if (conjurationSound != null)
+        {
+            conjurationSound.Play();
+        }
+        if (skeletonWaves != null)
+        {
+            skeletonWaves.Play();
+        }
+        
         necklessParticleSystem.gameObject.SetActive(true);
         necklessParticleSystem.GetComponent<ParticleSystem>().Play();
         letersParticleSystem.gameObject.SetActive(true);

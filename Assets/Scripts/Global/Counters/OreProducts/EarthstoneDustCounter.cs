@@ -26,6 +26,10 @@ public class EarthstoneDustCounter : MonoBehaviour, ICounter
         {
             return itemOpened;
         }
+        set
+        {
+            itemOpened = value;
+        }
     }
 
     public event Action<int> AmountChanged = delegate { };

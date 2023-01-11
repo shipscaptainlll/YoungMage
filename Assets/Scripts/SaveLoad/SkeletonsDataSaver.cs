@@ -6,19 +6,24 @@ using UnityEngine;
 
 public static class SkeletonsDataSaver
 {
-    public static void SavePlayerData(PersonMovement personMovement, CameraController cameraController, string path)
+    public static void SaveSkeletonData(Transform skeletonsHolder, Transform oresHolder, string path)
     {
         BinaryFormatter formatter = new BinaryFormatter();
 
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+        }
+
         FileStream fileStream = new FileStream(path, FileMode.Create);
 
-        PlayerData playerData = new PlayerData(personMovement, cameraController);
+        SkeletonData skeletonData = new SkeletonData(skeletonsHolder, oresHolder);
 
-        formatter.Serialize(fileStream, playerData);
+        formatter.Serialize(fileStream, skeletonData);
         fileStream.Close();
     }
 
-    public static PlayerData LoadPlayerData(string path)
+    public static SkeletonData LoadSkeletonData(string path)
     {
 
         if (File.Exists(path))
@@ -26,10 +31,10 @@ public static class SkeletonsDataSaver
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
 
-            PlayerData playerData = formatter.Deserialize(stream) as PlayerData;
+            SkeletonData skeletonData = formatter.Deserialize(stream) as SkeletonData;
             stream.Close();
 
-            return playerData;
+            return skeletonData;
         }
         else
         {

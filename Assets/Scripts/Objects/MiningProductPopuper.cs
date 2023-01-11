@@ -9,6 +9,7 @@ public class MiningProductPopuper : MonoBehaviour
     [SerializeField] PhysicMaterial oreFrictionMaterial;
     [SerializeField] ParticleSystem boomParticles;
     [SerializeField] ObjectsConnector objectsConnector;
+    [SerializeField] Transform collectableObjectsPool;
     Transform popupOrigin;
     Transform objectReference;
     System.Random random;
@@ -58,6 +59,7 @@ public class MiningProductPopuper : MonoBehaviour
             newObjectFine.gameObject.GetComponent<Rigidbody>().drag = 1f;
 
             boomParticles.Play();
+            newObjectFine.parent = collectableObjectsPool;
         } else
         {
             newObject.localPosition = new Vector3(0, 0, 0);
@@ -78,6 +80,7 @@ public class MiningProductPopuper : MonoBehaviour
             newObject.gameObject.GetComponent<Rigidbody>().drag = 1f;
 
             boomParticles.Play();
+            newObject.parent = collectableObjectsPool;
         }
         
     }

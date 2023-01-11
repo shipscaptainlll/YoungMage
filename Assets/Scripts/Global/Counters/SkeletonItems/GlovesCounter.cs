@@ -26,6 +26,10 @@ public class MagicGlovesCounter : MonoBehaviour, ICounter, ISkeletonItems
         {
             return itemOpened;
         }
+        set
+        {
+            itemOpened = value;
+        }
     }
 
     public int ID { get { return id; } }

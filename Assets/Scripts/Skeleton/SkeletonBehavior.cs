@@ -157,6 +157,8 @@ public class SkeletonBehavior : MonoBehaviour
     bool fifthConnectedNotified;
     bool sixthConnectedNotified;
 
+    public bool IsConjured { get { return isConjured; } set { isConjured = value; } }
+    public bool BeingUnconjured { get { return beingUnconjured; } }
     public Transform ConnectedCatapult { get { return connectedCatapult; } set { connectedCatapult = value; } }
     public int ConnectedObjects { get { return connectedObjects; } set { connectedObjects = value; } }
     public bool IsConnectedHands { get { return isConnectedHands; } set { isConnectedHands = value; NotifyObjectConnected(); } }
@@ -240,7 +242,7 @@ public class SkeletonBehavior : MonoBehaviour
             transform.GetComponent<CopycatCreator>().OriginTeleported += StopActivities;
         }
         if (!homeVersion) { GotoCastle(); }
-        if (homeVersion) { navigationTarget = null; }
+        if (homeVersion && !isConjured) { navigationTarget = null; }
         
     }
 
@@ -276,6 +278,7 @@ public class SkeletonBehavior : MonoBehaviour
         }
         set
         {
+            Debug.Log(value + " " + transform);
             isConjured = true;
             if (navigationTarget != null && navigationTarget.GetComponent<PortalCamera>() != null)
             {
@@ -305,7 +308,7 @@ public class SkeletonBehavior : MonoBehaviour
                 navigationTarget.parent.parent.GetComponent<DoorTacklingManager>().ConnectedSkeleton = null;
             } 
             
-            if (navigationTarget == null && value.GetComponent<PersonMovement>() != null)
+            if (navigationTarget == null && value != null && value.GetComponent<PersonMovement>() != null)
             {
                 value.GetComponent<PersonMovement>().SkeletonAttached = true;
                 //Debug.Log("Hello thereee1");
@@ -340,7 +343,7 @@ public class SkeletonBehavior : MonoBehaviour
                 }
             }
             navigationTarget = value;
-            Debug.Log(navigationTarget + " " + transform);
+            Debug.Log(value + " " + transform);
             UpdateAnimation();
 
         }
@@ -507,7 +510,7 @@ public class SkeletonBehavior : MonoBehaviour
 
     void UpdateAnimation()
     {
-        //Debug.Log(navigationTarget);
+        Debug.Log(navigationTarget);
         if (navigationTarget != null && navigationTarget.GetComponent<IOre>() == null && navigationTarget.parent.name != "SkeletonPositions")
         {
             localAnimator.Play("SkelIdle");
@@ -527,6 +530,7 @@ public class SkeletonBehavior : MonoBehaviour
     {
         if (navigationTarget == null && !beingUnconjured)
         {
+            Debug.Log("StartingUnconjuration");
             unconjuration = StartCoroutine(Unconjure());
             electricityOverload = StartCoroutine(OverloadBeforeDestruction());
             skeletonNecklessBehavior.ActivateDestructionMode();
@@ -890,7 +894,7 @@ public class SkeletonBehavior : MonoBehaviour
                 targetOre.GetComponent<NavMeshObstacle>().enabled = false;
             }
             
-            if (targetOre.name == "DoorCaveBump")
+            if (targetOre.name == "MinesDoor")
             {
                 NavigationTarget = DoorConnectionManager.GetPosition();
             } else
@@ -901,6 +905,11 @@ public class SkeletonBehavior : MonoBehaviour
 
         } else { 
             Debug.Log("Skeleton is not connected to anything "); }
+    }
+
+    public void AddTarget(DoorTacklingManager targetDoors)
+    {
+        NavigationTarget = DoorConnectionManager.GetPosition();
     }
 
     public void ShowEmotion()
@@ -1169,6 +1178,7 @@ public class SkeletonBehavior : MonoBehaviour
         contactManager.GetComponent<ContactManager>().ObjectOverloaded += ShowEmotion;
         connectedTeleport.GetComponent<Teleporter>().TeleportFound += StopGravity;
         transform.GetComponent<CopycatCreator>().OriginTeleported += StopActivities;
+        localAnimator = transform.GetComponent<Animator>();
     }
 
     public void UnsubscribeBeforeDestruction()

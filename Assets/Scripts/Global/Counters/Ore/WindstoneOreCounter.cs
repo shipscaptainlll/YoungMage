@@ -28,6 +28,10 @@ public class WindstoneOreCounter : MonoBehaviour, ICounter
         {
             return itemOpened;
         }
+        set
+        {
+            itemOpened = value;
+        }
     }
 
     public event Action<int> AmountChanged = delegate { };

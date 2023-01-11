@@ -31,30 +31,30 @@ public class ItemsCounterData
     void GetOthersCount(Transform countersHolder)
     {
         Transform subtypeHolder = countersHolder.GetChild(1);
-        oreCount = new float[subtypeHolder.childCount];
+        otherCount = new float[subtypeHolder.childCount];
         for (int i = 0; i < subtypeHolder.childCount; i++)
         {
-            oreCount[i] = subtypeHolder.GetChild(i).GetComponent<ICounter>().Count;
+            otherCount[i] = subtypeHolder.GetChild(i).GetComponent<ICounter>().Count;
         }
     }
 
     void GetSkeletonItemsCount(Transform countersHolder)
     {
         Transform subtypeHolder = countersHolder.GetChild(2);
-        oreCount = new float[subtypeHolder.childCount];
+        skeletonItemsCount = new float[subtypeHolder.childCount];
         for (int i = 0; i < subtypeHolder.childCount; i++)
         {
-            oreCount[i] = subtypeHolder.GetChild(i).GetComponent<ICounter>().Count;
+            skeletonItemsCount[i] = subtypeHolder.GetChild(i).GetComponent<ICounter>().Count;
         }
     }
 
     void GetOreProductsCount(Transform countersHolder)
     {
         Transform subtypeHolder = countersHolder.GetChild(3);
-        oreCount = new float[subtypeHolder.childCount];
+        oreProductsCount = new float[subtypeHolder.childCount];
         for (int i = 0; i < subtypeHolder.childCount; i++)
         {
-            oreCount[i] = subtypeHolder.GetChild(i).GetComponent<ICounter>().Count;
+            oreProductsCount[i] = subtypeHolder.GetChild(i).GetComponent<ICounter>().Count;
         }
     }
 }

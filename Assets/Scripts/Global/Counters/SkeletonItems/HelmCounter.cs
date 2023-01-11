@@ -28,6 +28,10 @@ public class HelmCounter : MonoBehaviour, ICounter, ISkeletonItems
         {
             return itemOpened;
         }
+        set
+        {
+            itemOpened = value;
+        }
     }
 
     public event Action<int> AmountChanged = delegate { };
