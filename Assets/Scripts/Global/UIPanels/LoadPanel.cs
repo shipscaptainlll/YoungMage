@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LoadPanel : MonoBehaviour
 {
@@ -23,7 +26,11 @@ public class LoadPanel : MonoBehaviour
 
     public void LoadGame(Transform buttonTransform)
     {
-        Debug.Log("was loaded + " + buttonTransform);
+        string loadText = buttonTransform.Find("Content").Find("SaveNumber").Find("Text").GetComponent<Text>().text;
+        string loadNumber = Regex.Match(loadText, @"\d+").Value;
+        int index = Int32.Parse(loadNumber);
+        saveSystemSerialization.LoadProgress(index);
+        //Debug.Log("was loaded + " + index);
     }
 
     public void LoadLastGame()

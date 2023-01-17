@@ -28,7 +28,7 @@ public static class GameDataApplier
 
     static void UpdateGameData(Transform timeHolder, GameSaveData gameSaveData)
     {
-        timeHolder.GetComponent<IngameTimer>().TimeIngame = gameSaveData.timeInGame;
+        timeHolder.GetComponent<IngameTimer>().TimeIngame = gameSaveData.secondsInGame;
         Debug.Log("time in game " + gameSaveData.timeInGame);
     }
 }

@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class TakeScreenShot : MonoBehaviour
 {
     [SerializeField] Transform saveMenuPanel;
+    [SerializeField] SaveSystemSerialization saveSystemSerialization;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,12 +28,12 @@ public class TakeScreenShot : MonoBehaviour
         }
     }
 
-    public void MakeScreenShot(GameObject referenceSavePanel, int saveId, int mainSaveId)
+    public void MakeScreenShot(GameObject referenceSavePanel, GameObject referenceLoadPanel, int saveId, int mainSaveId)
     {
-        StartCoroutine(LoadTexture(referenceSavePanel, saveId, mainSaveId));
+        StartCoroutine(LoadTexture(referenceSavePanel, referenceLoadPanel, saveId, mainSaveId));
     }
 
-    IEnumerator LoadTexture(GameObject referenceSavePanel, int saveId, int mainSaveId)
+    IEnumerator LoadTexture(GameObject referenceSavePanel, GameObject referenceLoadPanel, int saveId, int mainSaveId)
     {
         saveMenuPanel.GetComponent<CanvasGroup>().alpha = 0;
         yield return 0;
@@ -41,6 +42,11 @@ public class TakeScreenShot : MonoBehaviour
         yield return 0;
         yield return 0;
         yield return new WaitForFixedUpdate();
+        if (File.Exists(Application.dataPath + "/Resources/Screenshots/SavedGames/" + "SavedScreenShot" + saveId + ".png"))
+        {
+            File.Delete(Application.dataPath + "/Resources/Screenshots/SavedGames/" + "SavedScreenShot" + saveId + ".png");
+            File.Delete(Application.persistentDataPath + "/Saves/" + saveId + "/ScreenShot.png");
+        }
         ScreenCapture.CaptureScreenshot(Application.dataPath + "/Resources/Screenshots/SavedGames/" + "SavedScreenShot" + saveId + ".png");
         
         yield return 0;
@@ -48,8 +54,12 @@ public class TakeScreenShot : MonoBehaviour
         yield return 0;
         yield return 0;
         yield return 0;
+
+        
+        
         saveMenuPanel.GetComponent<CanvasGroup>().alpha = 1;
         byte[] data = File.ReadAllBytes(Application.dataPath + "/Resources/Screenshots/SavedGames/" + "SavedScreenShot" + saveId + ".png");
+        File.Move(Application.dataPath + "/Resources/Screenshots/SavedGames/" + "SavedScreenShot" + saveId + ".png", Application.persistentDataPath + "/Saves/" + saveSystemSerialization.SaveDirectoryPath + "/ScreenShot.png");
         Texture2D screenShotTexture = new Texture2D(Screen.width, Screen.height);
         screenShotTexture.LoadImage(data);
         Sprite screenshotSprite = Sprite.Create(screenShotTexture, new Rect(0, 0, Screen.width, Screen.height), new Vector2(0.5f, 0.5f));
@@ -70,6 +80,7 @@ public class TakeScreenShot : MonoBehaviour
         
         screenshotSprite.name = "SavedScreenShot" + saveId;
         referenceSavePanel.transform.Find("Borders").Find("Image").GetComponent<Image>().sprite = screenshotSprite;
+        referenceLoadPanel.gameObject.transform.Find("Borders").Find("Image").GetComponent<Image>().sprite = screenshotSprite;
 
         yield return null;
     }

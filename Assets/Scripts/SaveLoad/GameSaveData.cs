@@ -5,7 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class GameSaveData
 {
-    public int timeInGame;
+    public int secondsInGame;
+    public string timeInGame;
 
     public GameSaveData(Transform ingameTimeHolder)
     {
@@ -14,6 +15,8 @@ public class GameSaveData
 
     void GetTime(Transform ingameTimeHolder)
     {
-        timeInGame = ingameTimeHolder.GetComponent<IngameTimer>().TimeIngame;
+        secondsInGame = ingameTimeHolder.GetComponent<IngameTimer>().TimeIngame;
+        timeInGame = ingameTimeHolder.GetComponent<IngameTimer>().GetTimeIngame();
+        Debug.Log("Saved game it was " + timeInGame);
     }
 }

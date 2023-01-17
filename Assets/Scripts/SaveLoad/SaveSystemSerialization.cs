@@ -33,6 +33,13 @@ public class SaveSystemSerialization : MonoBehaviour
     string outdoorSkeletonsPath;
     int maxId;
 
+    public int SaveDirectoryPath { get { return saveDirectoryPath; } set { saveDirectoryPath = value; } }
+
+    private void Awake()
+    {
+        InstantiateSavingDirectories();
+    }
+
     private void Start()
     {
         saveDirectoryPath = GetLastsaveID();
@@ -41,10 +48,17 @@ public class SaveSystemSerialization : MonoBehaviour
 
     }
 
+    public void ResaveProgress(int saveId)
+    {
+        saveDirectoryPath = saveId;
+        UpdatePaths();
+        SaveProgress(true);
+    }
+
     public void SaveProgress(bool autosaving)
     {
         
-        if (!autosaving)
+        if (autosaving)
         {
 
         } else
@@ -55,7 +69,15 @@ public class SaveSystemSerialization : MonoBehaviour
             UpdatePaths();
         }
 
-        savePanel.AutosaveGame(saveDirectoryPath);
+        if (saveDirectoryPath == -1)
+        {
+            Directory.CreateDirectory(Application.persistentDataPath + "/Saves/" + maxId);
+            RenameLastsaveID();
+            maxId = GetNextID();
+            UpdatePaths();
+        }
+
+        //savePanel.AutosaveGame(saveDirectoryPath);
 
         GameDataSaver.SaveGameData(timeHolder, gameDataPath);
 
@@ -76,18 +98,34 @@ public class SaveSystemSerialization : MonoBehaviour
 
     public void LoadProgress(int saveId)
     {
-        if (saveId == 1)
+        if (saveId == -1 && saveDirectoryPath != -1)
         {
-            GameDataApplier.ApplyGameData(timeHolder, GameDataSaver.LoadGameData(gameDataPath));
+            LoadingProgress();
+        } else if (saveId > 0 && saveDirectoryPath != -1)
+        {
+            int cacheDirectoryPath = saveDirectoryPath;
+            saveDirectoryPath = saveId;
+            UpdatePaths();
 
-            PlayerDataApplier.ApplyPlayerData(mainCharacterScript, mainCharacterCamera, PlayerDataSaver.LoadPlayerData(playerPath));
+            LoadingProgress();
 
-            OreDataApplier.ApplyOreData(oresHolder, OreDataSaver.LoadOreData(orePath));
-            StartCoroutine(LoadGameDelayed());
+            saveDirectoryPath = cacheDirectoryPath;
+            UpdatePaths();
+        } else
+        {
+
         }
     }
 
-    
+    void LoadingProgress()
+    {
+        GameDataApplier.ApplyGameData(timeHolder, GameDataSaver.LoadGameData(gameDataPath));
+
+        PlayerDataApplier.ApplyPlayerData(mainCharacterScript, mainCharacterCamera, PlayerDataSaver.LoadPlayerData(playerPath));
+
+        OreDataApplier.ApplyOreData(oresHolder, OreDataSaver.LoadOreData(orePath));
+        StartCoroutine(LoadGameDelayed());
+    }
 
     IEnumerator LoadGameDelayed()
     {
@@ -107,12 +145,19 @@ public class SaveSystemSerialization : MonoBehaviour
     int GetLastsaveID()
     {
         System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(Application.persistentDataPath + "/lastSave");
-        return System.Int32.Parse(dir.GetDirectories()[0].Name);
+        if (dir.GetDirectories().Length > 0)
+        {
+            return System.Int32.Parse(dir.GetDirectories()[0].Name);
+        } else
+        {
+            Directory.CreateDirectory(Application.persistentDataPath + "/lastSave/-1");
+            return -1;
+        }
+        
     }
 
     void RenameLastsaveID()
     {
-
         Directory.Move(Application.persistentDataPath + "/lastSave" + "/" + saveDirectoryPath, Application.persistentDataPath + "/lastSave" + "/" + maxId);
         saveDirectoryPath = maxId;
     }
@@ -151,5 +196,17 @@ public class SaveSystemSerialization : MonoBehaviour
             Debug.Log(foundId);
         }
         return maxId + 1;
+    }
+
+    void InstantiateSavingDirectories()
+    {
+        System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(Application.persistentDataPath + "/lastSave");
+        if (!Directory.Exists(Application.persistentDataPath + "/lastSave"))
+        {
+            Directory.CreateDirectory(Application.persistentDataPath + "/lastSave");
+        } else
+        {
+            Debug.Log("Directory: lastSave already exists ");
+        }
     }
 }
