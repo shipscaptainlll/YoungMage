@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class LoadPanel : MonoBehaviour
 {
     [SerializeField] SaveSystemSerialization saveSystemSerialization;
+    [SerializeField] SavePanel savePanel;
 
     // Start is called before the first frame update
     void Start()
@@ -29,12 +30,13 @@ public class LoadPanel : MonoBehaviour
         string loadText = buttonTransform.Find("Content").Find("SaveNumber").Find("Text").GetComponent<Text>().text;
         string loadNumber = Regex.Match(loadText, @"\d+").Value;
         int index = Int32.Parse(loadNumber);
+        savePanel.FindSaveElement(index);
         saveSystemSerialization.LoadProgress(index);
         //Debug.Log("was loaded + " + index);
     }
 
     public void LoadLastGame()
     {
-
+        savePanel.AutoLoad();
     }
 }

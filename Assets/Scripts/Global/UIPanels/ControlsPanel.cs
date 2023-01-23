@@ -16,6 +16,21 @@ public class ControlsPanel : MonoBehaviour
     Button activeButton;
     bool shiftPressed;
     bool changingSettings;
+    [SerializeField] Slider mouseSensitivitySlider;
+    [SerializeField] Toggle autorunToggle;
+    [SerializeField] Toggle invertMouseToggle;
+    [SerializeField] Text castSpellText;
+    [SerializeField] Text interractText;
+    [SerializeField] Text jumpText;
+    [SerializeField] Text runText;
+    [SerializeField] Text shiftSpellText;
+    [SerializeField] Text forwardText;
+    [SerializeField] Text backText;
+    [SerializeField] Text leftText;
+    [SerializeField] Text rightText;
+    [SerializeField] Text inventoryText;
+    [SerializeField] Text escapeText;
+
 
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
@@ -30,6 +45,7 @@ public class ControlsPanel : MonoBehaviour
     {
         chooseSound = soundManager.FindSound("SettingElement");
         timeShiftPressed = Time.time;
+        UploadPlayerPrefs();
     }
 
     private void OnGUI()
@@ -137,6 +153,7 @@ public class ControlsPanel : MonoBehaviour
     public void ResetControls()
     {
         chooseSound.Play();
+        ApplyDefaultSettings();
         Debug.Log("Controls are reseted");
     }
 
@@ -147,5 +164,62 @@ public class ControlsPanel : MonoBehaviour
         if (autorunWasToggled != null) { autorunWasToggled(autorunToggled); }
         chooseSound.Play();
         Debug.Log("Autorun is toggle " + mouseInverted);
+    }
+
+    public void ApplyDefaultSettings()
+    {
+        mouseSensitivitySlider.value = 50;
+        autorunToggle.isOn = false;
+        invertMouseToggle.isOn = false;
+        castSpellText.text = "LMB";
+        interractText.text = "E";
+        jumpText.text = "SPACE";
+        runText.text = "SHIFT + W";
+        shiftSpellText.text = "SHIFT + SHIFT";
+        forwardText.text = "W";
+        backText.text = "S";
+        leftText.text = "A";
+        rightText.text = "D";
+        inventoryText.text = "I";
+        escapeText.text = "ESC";
+        SaveSettings();
+    }
+
+    public void SaveSettings()
+    {
+        PlayerPrefs.SetFloat("mouseSensitivity", mouseSensitivitySlider.value);
+        PlayerPrefs.SetInt("autorun", autorunToggle.isOn == true ? 1 : 0);
+        PlayerPrefs.SetInt("invertMouse", invertMouseToggle.isOn == true ? 1 : 0);
+        PlayerPrefs.SetString("castSpellButtons", castSpellText.text);
+        PlayerPrefs.SetString("interractButtons", interractText.text);
+        PlayerPrefs.SetString("jumpButtons", jumpText.text);
+        PlayerPrefs.SetString("runButtons", runText.text);
+        PlayerPrefs.SetString("shiftSpellButtons", shiftSpellText.text);
+        PlayerPrefs.SetString("forwardButtons", forwardText.text);
+        PlayerPrefs.SetString("backButtons", backText.text);
+        PlayerPrefs.SetString("leftButtons", leftText.text);
+        PlayerPrefs.SetString("rightButtons", rightText.text);
+        PlayerPrefs.SetString("inventoryButtons", inventoryText.text);
+        PlayerPrefs.SetString("escapeButtons", escapeText.text);
+        chooseSound.Play();
+        Debug.Log("all sounds settings was saved");
+    }
+
+    void UploadPlayerPrefs()
+    {
+        mouseSensitivitySlider.value = PlayerPrefs.GetFloat("mouseSensitivity", 50);
+        autorunToggle.isOn = PlayerPrefs.GetInt("autorun", 0) == 1 ? true : false;
+        invertMouseToggle.isOn = PlayerPrefs.GetInt("invertMouse", 0) == 1 ? true : false;
+        castSpellText.text = PlayerPrefs.GetString("castSpellButtons", "LMB");
+        interractText.text = PlayerPrefs.GetString("interractButtons", "E");
+        jumpText.text = PlayerPrefs.GetString("jumpButtons", "SPACE");
+        runText.text = PlayerPrefs.GetString("runButtons", "SHIFT + W");
+        shiftSpellText.text = PlayerPrefs.GetString("shiftSpellButtons", "SHIFT + SHIFT");
+        forwardText.text = PlayerPrefs.GetString("forwardButtons", "W");
+        backText.text = PlayerPrefs.GetString("backButtons", "S");
+        leftText.text = PlayerPrefs.GetString("leftButtons", "A");
+        rightText.text = PlayerPrefs.GetString("rightButtons", "D");
+        inventoryText.text = PlayerPrefs.GetString("inventoryButtons", "I");
+        escapeText.text = PlayerPrefs.GetString("escapeButtons", "ESC");
     }
 }

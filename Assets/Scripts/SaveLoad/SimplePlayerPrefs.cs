@@ -11,7 +11,7 @@ public class SimplePlayerPrefs : MonoBehaviour
     {
         unit = unityGameObject.GetComponent<PersonMovement>();
 
-        PlayerPrefs.DeleteAll();
+        //PlayerPrefs.DeleteAll();
     }
     // Start is called before the first frame update
     void Start()

@@ -8,9 +8,12 @@ using UnityEngine.UI;
 public class GraphicsPanel : MonoBehaviour
 {
     [Header("Basic Settings")]
-    [SerializeField] float pointLightShadows;
-    [SerializeField] string graphicsQuality;
+    [SerializeField] int pointLightShadows;
+    [SerializeField] Slider slider;
+    [SerializeField] int graphicsQuality;
+    [SerializeField] Dropdown dropdown;
     [SerializeField] bool activePointLightShadows;
+    [SerializeField] Toggle toggle;
 
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
@@ -23,6 +26,7 @@ public class GraphicsPanel : MonoBehaviour
     void Start()
     {
         chooseSound = soundManager.FindSound("SettingElement");
+        UploadPlayerPrefs();
     }
 
 
@@ -34,7 +38,7 @@ public class GraphicsPanel : MonoBehaviour
 
     public void SetPointLightShadows(Slider slider)
     {
-        pointLightShadows = slider.value;
+        pointLightShadows = (int) slider.value;
         if (SettingChanged != null) { SettingChanged(1); }
         chooseSound.Play();
         Debug.Log("Point light shadows changed: " + pointLightShadows);
@@ -42,7 +46,8 @@ public class GraphicsPanel : MonoBehaviour
 
     public void SetGraphicsQuality(Dropdown dropdown)
     {
-        graphicsQuality = dropdown.value.ToString();
+        graphicsQuality = dropdown.value;
+        dropdown.Hide();
         if (SettingChanged != null) { SettingChanged(1); }
         chooseSound.Play();
         Debug.Log("Graphics quality is: " + graphicsQuality);
@@ -54,5 +59,35 @@ public class GraphicsPanel : MonoBehaviour
         if (SettingChanged != null) { SettingChanged(1); }
         chooseSound.Play();
         Debug.Log("Point light shadows are active " + activePointLightShadows);
+    }
+
+    public void SaveSettings()
+    {
+        PlayerPrefs.SetInt("pointLightShadows", pointLightShadows);
+        Debug.Log("point light shadows are " + pointLightShadows);
+        Debug.Log("point light shadows are " + PlayerPrefs.GetFloat("pointLightShadows"));
+        PlayerPrefs.SetInt("graphicsQuality", graphicsQuality);
+        int cacheActivePointLightShadows = activePointLightShadows == true ? 1 : 0;
+        PlayerPrefs.SetInt("activePointLightShadows", cacheActivePointLightShadows);
+        chooseSound.Play();
+        Debug.Log("all graphics setting was saved");
+    }
+
+    void ApplyDefaultSettings()
+    {
+        
+    }
+
+    void UploadPlayerPrefs()
+    {
+        pointLightShadows = PlayerPrefs.GetInt("pointLightShadows", 50);
+        Debug.Log("point light shadows are " + PlayerPrefs.GetInt("pointLightShadows"));
+        Debug.Log("point light shadows are " + PlayerPrefs.GetInt("pointLightShadows", 50));
+        slider.value = pointLightShadows;
+        graphicsQuality = PlayerPrefs.GetInt("graphicsQuality", 1);
+        dropdown.value = graphicsQuality;
+        int cacheActivePointLightShadows = PlayerPrefs.GetInt("activePointLightShadows", 0);
+        activePointLightShadows = cacheActivePointLightShadows == 1 ? true : false;
+        toggle.isOn = activePointLightShadows;
     }
 }

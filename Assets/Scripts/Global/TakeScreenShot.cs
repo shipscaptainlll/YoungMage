@@ -45,7 +45,11 @@ public class TakeScreenShot : MonoBehaviour
         if (File.Exists(Application.dataPath + "/Resources/Screenshots/SavedGames/" + "SavedScreenShot" + saveId + ".png"))
         {
             File.Delete(Application.dataPath + "/Resources/Screenshots/SavedGames/" + "SavedScreenShot" + saveId + ".png");
-            File.Delete(Application.persistentDataPath + "/Saves/" + saveId + "/ScreenShot.png");
+        }
+
+        if (File.Exists(Application.persistentDataPath + "/Saves/" + saveSystemSerialization.SaveDirectoryPath + "/ScreenShot.png"))
+        {
+            File.Delete(Application.persistentDataPath + "/Saves/" + saveSystemSerialization.SaveDirectoryPath + "/ScreenShot.png");
         }
         ScreenCapture.CaptureScreenshot(Application.dataPath + "/Resources/Screenshots/SavedGames/" + "SavedScreenShot" + saveId + ".png");
         

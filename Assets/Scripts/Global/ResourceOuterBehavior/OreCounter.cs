@@ -15,7 +15,6 @@ public class OreCounter : MonoBehaviour
     public int OreCount { get { return oreCount; } set { oreCount = value; UpdateCounter(); } }
     void Start()
     {
-        OreCount = 1;
         oreCounter = oreCounterText.transform;
     }
 

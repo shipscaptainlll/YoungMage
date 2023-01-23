@@ -157,6 +157,7 @@ RectTransform:
   - {fileID: 19949429}
   - {fileID: 1430742054}
   - {fileID: 1610368217}
+  - {fileID: 1637993423}
   m_Father: {fileID: 445471346}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3171,7 +3172,7 @@ GameObject:
   - component: {fileID: 73494004}
   - component: {fileID: 73494003}
   - component: {fileID: 73494002}
-  - component: {fileID: 73494001}
+  - component: {fileID: 73494005}
   m_Layer: 5
   m_Name: LoadMenu
   m_TagString: Untagged
@@ -3200,19 +3201,6 @@ RectTransform:
   m_AnchoredPosition: {x: -0.00008678436, y: -38}
   m_SizeDelta: {x: 450, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &73494001
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 73493999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2dc771e5c689b144f840d23a16b1de45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  saveSystemSerialization: {fileID: 0}
 --- !u!225 &73494002
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -3263,6 +3251,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 73493999}
   m_CullTransparentMesh: 1
+--- !u!114 &73494005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73493999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfaa6140574a76049b202749f4fcaf02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadsHolder: {fileID: 185746431}
+  loadGameData: {fileID: 169130546}
+  panelsManagerMainmenu: {fileID: 427147995}
+  loadMenuTemplate: {fileID: 1756486148}
 --- !u!1 &77363080
 GameObject:
   m_ObjectHideFlags: 0
@@ -3388,6 +3392,182 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &82192382
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 82192383}
+  - component: {fileID: 82192388}
+  - component: {fileID: 82192387}
+  - component: {fileID: 82192386}
+  - component: {fileID: 82192385}
+  - component: {fileID: 82192384}
+  m_Layer: 5
+  m_Name: SaveControls
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &82192383
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82192382}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalScale: {x: 0.3299955, y: 0.32999548, z: 0.32999548}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1888009645}
+  - {fileID: 595223445}
+  m_Father: {fileID: 1096068324}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 264.5, y: 60}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &82192384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82192382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 1
+--- !u!114 &82192385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82192382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 0.37
+--- !u!114 &82192386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82192382}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 4
+  m_Spacing: 10.7
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
+--- !u!114 &82192387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82192382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.70980394, g: 0.70980394, b: 0.70980394, a: 1}
+    m_SelectedColor: {r: 0.7075472, g: 0.7075472, b: 0.7075472, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 82192385}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1186168192}
+        m_TargetAssemblyTypeName: ControlsPanel, Assembly-CSharp
+        m_MethodName: SaveSettings
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!222 &82192388
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82192382}
+  m_CullTransparentMesh: 1
 --- !u!1 &89207016
 GameObject:
   m_ObjectHideFlags: 0
@@ -11698,8 +11878,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PanelsManager, Assembly-CSharp
+      - m_Target: {fileID: 427147995}
+        m_TargetAssemblyTypeName: PanelsManagerMainmenu, Assembly-CSharp
         m_MethodName: ManageSettingsPanel
         m_Mode: 5
         m_Arguments:
@@ -17316,6 +17496,7 @@ Transform:
   - {fileID: 427147994}
   - {fileID: 1478879166}
   - {fileID: 2125151115}
+  - {fileID: 606254228}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -18606,7 +18787,7 @@ GameObject:
   - component: {fileID: 298561567}
   - component: {fileID: 298561566}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Borders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18623,7 +18804,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1414799241}
   m_Father: {fileID: 1756486148}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -18645,7 +18827,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.3882353}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -20744,7 +20926,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 384326452}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20754,7 +20936,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 369.6, y: 30}
+  m_SizeDelta: {x: 328.4, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &384326454
 MonoBehaviour:
@@ -26897,6 +27079,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dac05e894d47d0944a99909c09c6e494, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  overallVolumeSlider: {fileID: 757418159}
+  effectsVolumeSlider: {fileID: 750258202}
+  charactersSpeechVolumeSlider: {fileID: 1736818197}
+  musicVolumeSlider: {fileID: 1600600264}
+  soundsTurnedOffToggle: {fileID: 1101152734}
+  soundManager: {fileID: 606254229}
 --- !u!225 &445471348
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -33410,8 +33598,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PanelsManager, Assembly-CSharp
+      - m_Target: {fileID: 427147995}
+        m_TargetAssemblyTypeName: PanelsManagerMainmenu, Assembly-CSharp
         m_MethodName: ManageSettingsPanel
         m_Mode: 5
         m_Arguments:
@@ -34433,6 +34621,182 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &518449361
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 518449362}
+  - component: {fileID: 518449367}
+  - component: {fileID: 518449366}
+  - component: {fileID: 518449365}
+  - component: {fileID: 518449364}
+  - component: {fileID: 518449363}
+  m_Layer: 5
+  m_Name: SaveGraphics
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &518449362
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518449361}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.3299955, y: 0.32999548, z: 0.32999548}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2091243426}
+  - {fileID: 1435296316}
+  m_Father: {fileID: 1718146624}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 202, y: 40.7}
+  m_SizeDelta: {x: 264.5, y: 60}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &518449363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518449361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 1
+--- !u!114 &518449364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518449361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 0.37
+--- !u!114 &518449365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518449361}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 4
+  m_Spacing: 10.7
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
+--- !u!114 &518449366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518449361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.70980394, g: 0.70980394, b: 0.70980394, a: 1}
+    m_SelectedColor: {r: 0.7075472, g: 0.7075472, b: 0.7075472, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 518449364}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 586467927}
+        m_TargetAssemblyTypeName: GraphicsPanel, Assembly-CSharp
+        m_MethodName: SaveSettings
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!222 &518449367
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518449361}
+  m_CullTransparentMesh: 1
 --- !u!1 &521981715
 GameObject:
   m_ObjectHideFlags: 0
@@ -35220,6 +35584,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quickAccessPanel: {fileID: 0}
+  soundManager: {fileID: 0}
 --- !u!114 &542891643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36266,8 +36631,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointLightShadows: 100
-  graphicsQuality: Low
+  slider: {fileID: 463196757}
+  graphicsQuality: 0
+  dropdown: {fileID: 1686770743}
   activePointLightShadows: 1
+  toggle: {fileID: 885177532}
+  soundManager: {fileID: 606254229}
 --- !u!225 &586467928
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -36459,6 +36828,86 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 592858752}
+  m_CullTransparentMesh: 1
+--- !u!1 &595223444
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 595223445}
+  - component: {fileID: 595223447}
+  - component: {fileID: 595223446}
+  m_Layer: 5
+  m_Name: Name
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &595223445
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595223444}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 82192383}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.0000126434, y: -0.000046238718}
+  m_SizeDelta: {x: 600, y: 60}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &595223446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595223444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0.7254902, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 32
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 2
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Save Controls
+--- !u!222 &595223447
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595223444}
   m_CullTransparentMesh: 1
 --- !u!1 &596542041
 GameObject:
@@ -36871,6 +37320,4455 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 605700822}
   m_CullTransparentMesh: 1
+--- !u!1 &606254227
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 606254228}
+  - component: {fileID: 606254229}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &606254228
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606254227}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 263118845}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &606254229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606254227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 224091a30ab0dc34e9a77c5f56464de2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Walk
+    clip: {fileID: 8300000, guid: 72ca60a2b6e558349b2a16f7517ae2db, type: 3}
+    volume: 0.34
+    pitch: 0.94
+    spatialBlend: 0
+    audioRolloffMode: 0
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: Run
+    clip: {fileID: 8300000, guid: 72ca60a2b6e558349b2a16f7517ae2db, type: 3}
+    volume: 0.34
+    pitch: 1.51
+    spatialBlend: 0
+    audioRolloffMode: 0
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: StairsWalk
+    clip: {fileID: 8300000, guid: ab1580800c6a7a148a6b4092adf4ecca, type: 3}
+    volume: 0.137
+    pitch: 1.32
+    spatialBlend: 0
+    audioRolloffMode: 0
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: StairsRun
+    clip: {fileID: 8300000, guid: ab1580800c6a7a148a6b4092adf4ecca, type: 3}
+    volume: 0.137
+    pitch: 1.61
+    spatialBlend: 0
+    audioRolloffMode: 0
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: StoneWalk
+    clip: {fileID: 8300000, guid: 887e8a3b9254ac64988c3390bd157525, type: 3}
+    volume: 0.08
+    pitch: 0.98
+    spatialBlend: 0
+    audioRolloffMode: 0
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: StoneRun
+    clip: {fileID: 8300000, guid: 887e8a3b9254ac64988c3390bd157525, type: 3}
+    volume: 0.1
+    pitch: 1.32
+    spatialBlend: 0
+    audioRolloffMode: 0
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: WoodLandNormal
+    clip: {fileID: 8300000, guid: f91d0197576c6fd4b99c5edaca6ecb9d, type: 3}
+    volume: 0.166
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 0
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: WoodLandLoud
+    clip: {fileID: 8300000, guid: c71f568e404dc65439647f065f299d15, type: 3}
+    volume: 0.197
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 0
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: StoneLandNormal
+    clip: {fileID: 8300000, guid: e221d9ba2faee9741bae07c4fa749f8f, type: 3}
+    volume: 0.2
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 0
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: StoneLandLoud
+    clip: {fileID: 8300000, guid: e7e898db974ff86468e043c20a083edd, type: 3}
+    volume: 0.25
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 0
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Jump
+    clip: {fileID: 8300000, guid: 0618ec669f36be541801fec5a778f5b6, type: 3}
+    volume: 0.132
+    pitch: 2
+    spatialBlend: 0
+    audioRolloffMode: 0
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: DoubleJump
+    clip: {fileID: 8300000, guid: f6ba7f41deeec5746a6bd499f4eee285, type: 3}
+    volume: 0.133
+    pitch: 3
+    spatialBlend: 0
+    audioRolloffMode: 0
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: DoorOpening
+    clip: {fileID: 8300000, guid: 16d759786b2355741aa03ebdc9ad39a5, type: 3}
+    volume: 1
+    pitch: 0.35
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.011562347
+        value: 1
+        inSlope: -0.97680837
+        outSlope: -0.97680837
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1.0057831
+        value: 0.006248474
+        inSlope: -0.97680837
+        outSlope: -0.97680837
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 25
+    loop: 0
+    source: {fileID: 0}
+  - name: DoorClosing
+    clip: {fileID: 8300000, guid: 49add953e4ef6c447ac3d5a29e05a97b, type: 3}
+    volume: 0.65
+    pitch: 1.75
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 25
+    loop: 0
+    source: {fileID: 0}
+  - name: StoneOreMining
+    clip: {fileID: 8300000, guid: 94149213c9c90754bbd7c638f36f3756, type: 3}
+    volume: 0.619
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 25
+    loop: 0
+    source: {fileID: 0}
+  - name: MetalOreMining
+    clip: {fileID: 8300000, guid: ef63792318eed914987fae9c24fbd1ec, type: 3}
+    volume: 0.611
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 25
+    loop: 0
+    source: {fileID: 0}
+  - name: WindstoneOreMining
+    clip: {fileID: 8300000, guid: 5dfb655d0db1a844c850985dcea4ed55, type: 3}
+    volume: 0.611
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 25
+    loop: 0
+    source: {fileID: 0}
+  - name: LavastoneOreMining
+    clip: {fileID: 8300000, guid: 3291b3b0840a60342862d68b06d6a983, type: 3}
+    volume: 0.611
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 25
+    loop: 0
+    source: {fileID: 0}
+  - name: DoorBump
+    clip: {fileID: 8300000, guid: 6b531c55738960d468197e3c1dfea58c, type: 3}
+    volume: 0.216
+    pitch: 0.66
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 25
+    loop: 0
+    source: {fileID: 0}
+  - name: PopUp
+    clip: {fileID: 8300000, guid: 678dab0b2f4379c4eb3a5d9466b9f105, type: 3}
+    volume: 0.349
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 10
+    loop: 0
+    source: {fileID: 0}
+  - name: Chair
+    clip: {fileID: 8300000, guid: 9a3560190c97ea34081750fb0f252d70, type: 3}
+    volume: 0.552
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 10
+    loop: 0
+    source: {fileID: 0}
+  - name: WhooshFirst
+    clip: {fileID: 8300000, guid: 69bb956a87906a14f8749c88b395b5e6, type: 3}
+    volume: 0.108
+    pitch: 1.71
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 10
+    loop: 0
+    source: {fileID: 0}
+  - name: SleepingMage
+    clip: {fileID: 8300000, guid: 9bc3682e75828314a973b93cb57195ed, type: 3}
+    volume: 0.108
+    pitch: 1.1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 40
+    loop: 0
+    source: {fileID: 0}
+  - name: TableSlap
+    clip: {fileID: 8300000, guid: 20c018052fa163e47a88ca278275ea55, type: 3}
+    volume: 0.3
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 40
+    loop: 0
+    source: {fileID: 0}
+  - name: BookOpening
+    clip: {fileID: 8300000, guid: 1c8375773da93d847a5dd2861d0b661e, type: 3}
+    volume: 0.192
+    pitch: 2
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 10
+    loop: 0
+    source: {fileID: 0}
+  - name: ObjectAcquiringFirst
+    clip: {fileID: 8300000, guid: 4a8a66fbb75bcea488f0071f93734270, type: 3}
+    volume: 0.5
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 10
+    loop: 0
+    source: {fileID: 0}
+  - name: ObjectDroppingFirst
+    clip: {fileID: 8300000, guid: b4954edac09711e45b026d7eb993acc0, type: 3}
+    volume: 0.5
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 25
+    loop: 0
+    source: {fileID: 0}
+  - name: StoneOreLanding
+    clip: {fileID: 8300000, guid: 17ff82a11ffea0147827e4db06d31dec, type: 3}
+    volume: 0.16
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 25
+    loop: 0
+    source: {fileID: 0}
+  - name: MetalOreLanding
+    clip: {fileID: 8300000, guid: fc13780ce7d790742af448bd8d68b400, type: 3}
+    volume: 0.026
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 20
+    loop: 0
+    source: {fileID: 0}
+  - name: NothingHappens
+    clip: {fileID: 8300000, guid: 8638e5cfc38f59b4081ad49904b7b1be, type: 3}
+    volume: 0.16
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 25
+    loop: 0
+    source: {fileID: 0}
+  - name: SettingElement
+    clip: {fileID: 8300000, guid: 43ececc9d4011c043b8782522ad25ad1, type: 3}
+    volume: 0.178
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 25
+    loop: 0
+    source: {fileID: 0}
+  - name: ChanginHandElement
+    clip: {fileID: 8300000, guid: 0cffb85154368bf469c1f732a4a7e68b, type: 3}
+    volume: 0.282
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 25
+    loop: 0
+    source: {fileID: 0}
+  - name: NewObjectAppearingUI
+    clip: {fileID: 8300000, guid: 8b48de365af659f40875dc0f46a6e0a5, type: 3}
+    volume: 0.283
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 25
+    loop: 0
+    source: {fileID: 0}
+  - name: Shift
+    clip: {fileID: 8300000, guid: 508b7b1bef2229b4ca146f0afd0ced94, type: 3}
+    volume: 0.184
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 25
+    loop: 0
+    source: {fileID: 0}
+  - name: YoungMageExclaiming
+    clip: {fileID: 8300000, guid: 4c1059293b4c4e34fb40dd5a3b7b7c0c, type: 3}
+    volume: 0.045
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 25
+    loop: 0
+    source: {fileID: 0}
+  - name: YoungMageThinking
+    clip: {fileID: 8300000, guid: 7c728bfd4b9267b4aac74cb48bf63d72, type: 3}
+    volume: 0.045
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 25
+    loop: 0
+    source: {fileID: 0}
+  - name: SkeletonWalkGround
+    clip: {fileID: 8300000, guid: 73ef34dfef1d340409931245a4ab9348, type: 3}
+    volume: 0.707
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 25
+    loop: 1
+    source: {fileID: 0}
+  - name: SkeletonWalkStairs
+    clip: {fileID: 8300000, guid: 1a906ef8d78c575439094f8174bebee1, type: 3}
+    volume: 0.707
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 25
+    loop: 1
+    source: {fileID: 0}
+  - name: SkeletonWalkStone
+    clip: {fileID: 8300000, guid: 5d0503a21ff3d1d428d1576d7b5ae973, type: 3}
+    volume: 0.707
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 25
+    loop: 1
+    source: {fileID: 0}
+  - name: DoorCaveBump
+    clip: {fileID: 8300000, guid: 6932e0281227633469b41dbcf9fc114a, type: 3}
+    volume: 0.563
+    pitch: 0.94
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 25
+    loop: 0
+    source: {fileID: 0}
+  - name: WoodSkreak
+    clip: {fileID: 8300000, guid: 4c4b1acda1f8e604e918f7f347083685, type: 3}
+    volume: 1
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 25
+    loop: 0
+    source: {fileID: 0}
+  - name: SkeletonBlast
+    clip: {fileID: 8300000, guid: ee220d8c3a58004499745bbce470e2fd, type: 3}
+    volume: 1
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 25
+    loop: 0
+    source: {fileID: 0}
+  - name: NullSpell
+    clip: {fileID: 8300000, guid: a1fe1aaa21f33f54bb1445934eae5d66, type: 3}
+    volume: 1
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 25
+    loop: 0
+    source: {fileID: 0}
+  - name: FloatingCastle
+    clip: {fileID: 8300000, guid: 003db914869721e4295201f9758c695b, type: 3}
+    volume: 0.469
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -0.96318364
+        outSlope: -0.96318364
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 4.4
+    loop: 1
+    source: {fileID: 0}
+  - name: DoorCaveBlast
+    clip: {fileID: 8300000, guid: e82e40ea65ab2d142bc5f95469a60f9a, type: 3}
+    volume: 1
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 25
+    loop: 0
+    source: {fileID: 0}
+  - name: CastingSpell
+    clip: {fileID: 8300000, guid: 58055951c4758ec4b80f61f75b1d1832, type: 3}
+    volume: 0.6
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: CaveEnvironmentBulpFirst
+    clip: {fileID: 8300000, guid: 4f82b60e9d2278244b896094c937bf52, type: 3}
+    volume: 0.643
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 25
+    loop: 0
+    source: {fileID: 0}
+  - name: CaveEnvironmentBulpSecond
+    clip: {fileID: 8300000, guid: 2347763ffb6ece04c8f612d4a2b13e81, type: 3}
+    volume: 0.637
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 25
+    loop: 0
+    source: {fileID: 0}
+  - name: DissolvingObject
+    clip: {fileID: 8300000, guid: a0fb239566a1a51418a2532106f98dcb, type: 3}
+    volume: 0.157
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: EarthstoneLanding
+    clip: {fileID: 8300000, guid: 2fc39db3ed2058940b542b43098b32d6, type: 3}
+    volume: 0.445
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 20
+    loop: 0
+    source: {fileID: 0}
+  - name: EarthstoneMining
+    clip: {fileID: 8300000, guid: a9e593830aa927e46ba088b654dc8713, type: 3}
+    volume: 0.306
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 20
+    loop: 0
+    source: {fileID: 0}
+  - name: InventoryOpening
+    clip: {fileID: 8300000, guid: 626eb1579f030c34eb63068bc39e6bfc, type: 3}
+    volume: 0.285
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 20
+    loop: 0
+    source: {fileID: 0}
+  - name: LavastoneoreLanding
+    clip: {fileID: 8300000, guid: aca9274290028e343bef4fe037cf23ee, type: 3}
+    volume: 0.488
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 20
+    loop: 0
+    source: {fileID: 0}
+  - name: MagicstoneoreLanding
+    clip: {fileID: 8300000, guid: 9fefd644df1c5e341b7865c1a84c6171, type: 3}
+    volume: 0.36
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 20
+    loop: 0
+    source: {fileID: 0}
+  - name: MagicstoneoreMining
+    clip: {fileID: 8300000, guid: 9ca0c124258dd104ba90c26c1f8d44d5, type: 3}
+    volume: 0.098
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 20
+    loop: 0
+    source: {fileID: 0}
+  - name: PortalClosing
+    clip: {fileID: 8300000, guid: 532eb1497ddedb34bb04ba959243f70b, type: 3}
+    volume: 0.557
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 10
+    loop: 0
+    source: {fileID: 0}
+  - name: PortalOpening
+    clip: {fileID: 8300000, guid: dc7158c08030c0f44853f58ae378fc2b, type: 3}
+    volume: 0.621
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 10
+    loop: 0
+    source: {fileID: 0}
+  - name: PortalWorking
+    clip: {fileID: 8300000, guid: cef066492e551044abc126ce9955776c, type: 3}
+    volume: 0.654
+    pitch: 0.64
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 10
+    loop: 1
+    source: {fileID: 0}
+  - name: WaterstoneOreLanding
+    clip: {fileID: 8300000, guid: 553579d91b2cfcf43b03955cacc70a10, type: 3}
+    volume: 0.247
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 20
+    loop: 0
+    source: {fileID: 0}
+  - name: WaterstoneOreMining
+    clip: {fileID: 8300000, guid: 76a62fabc8e4d3c408ec58587a9d353e, type: 3}
+    volume: 0.413
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 20
+    loop: 0
+    source: {fileID: 0}
+  - name: YoungmageHardBreathing
+    clip: {fileID: 8300000, guid: 89b3d302ff907754f9be8011b46d4328, type: 3}
+    volume: 1
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 20
+    loop: 0
+    source: {fileID: 0}
+  - name: OnButtonUI
+    clip: {fileID: 8300000, guid: 53c23c97f601d3348b7abd8cf894fe71, type: 3}
+    volume: 1
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 20
+    loop: 0
+    source: {fileID: 0}
+  - name: RockoreDestruction
+    clip: {fileID: 8300000, guid: e15fcce0037970342957f03eb2e1b52d, type: 3}
+    volume: 1
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 20
+    loop: 0
+    source: {fileID: 0}
+  - name: SomeUI
+    clip: {fileID: 8300000, guid: b923618fdee5f16438fdd29aa245603e, type: 3}
+    volume: 1
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 20
+    loop: 0
+    source: {fileID: 0}
+  - name: TransmutationtableApply
+    clip: {fileID: 8300000, guid: 8cddd7fa71595dc43b0aa1d0baff9ec9, type: 3}
+    volume: 1
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 20
+    loop: 0
+    source: {fileID: 0}
+  - name: MagicLettersAppear
+    clip: {fileID: 8300000, guid: 465e75086b14f07428ddcfac67cf0dd9, type: 3}
+    volume: 0.162
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 10
+    loop: 0
+    source: {fileID: 0}
+  - name: WaterFallinSoundFirst
+    clip: {fileID: 8300000, guid: 0c556c769e29cea428989b2172860b3f, type: 3}
+    volume: 0.915
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 10
+    loop: 0
+    source: {fileID: 0}
+  - name: WaterFallinSoundSecond
+    clip: {fileID: 8300000, guid: 53545fac4581d2648a8d87f6a70d4082, type: 3}
+    volume: 0.941
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 10
+    loop: 0
+    source: {fileID: 0}
+  - name: WaterFallinSoundThird
+    clip: {fileID: 8300000, guid: 7ad6baaf5c42a984aa580f11beadb9d9, type: 3}
+    volume: 0.936
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 10
+    loop: 0
+    source: {fileID: 0}
+  - name: QuestUIAppear
+    clip: {fileID: 8300000, guid: 3f75ea245bdd49347b525f6b7e5706db, type: 3}
+    volume: 1
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 10
+    loop: 0
+    source: {fileID: 0}
+  - name: QuestUIDisappear
+    clip: {fileID: 8300000, guid: 43203cc02b547484e8381c539cdc073c, type: 3}
+    volume: 1
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 10
+    loop: 0
+    source: {fileID: 0}
+  - name: CoinAppear
+    clip: {fileID: 8300000, guid: 6ef90da5648bfcf43b32d19bd963a18d, type: 3}
+    volume: 0.284
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: CoinFallingMetal
+    clip: {fileID: 8300000, guid: 875a280c2371b4343a8cdaa4b45e4fa1, type: 3}
+    volume: 0.21
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: CoinFallPilecoinsFirst
+    clip: {fileID: 8300000, guid: 5a3883d03faccdd4ca4f2d7cfeab67a1, type: 3}
+    volume: 0.184
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: CoinFallPilecoinsSecond
+    clip: {fileID: 8300000, guid: a512d98c5bce7af409c3b49b1b5ad678, type: 3}
+    volume: 0.242
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: CoinFallPilecoinsThird
+    clip: {fileID: 8300000, guid: 77e72a5408c6de744be60844fc45e1ec, type: 3}
+    volume: 0.216
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: CoinPay
+    clip: {fileID: 8300000, guid: 5d26cdf9f4ce39243babd43376f7a43e, type: 3}
+    volume: 0.605
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: WaterfallOnMetal
+    clip: {fileID: 8300000, guid: c99939e085b27e741adad7d21da905fc, type: 3}
+    volume: 0.023
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 6.5
+    loop: 1
+    source: {fileID: 0}
+  - name: OnElementAlchtab
+    clip: {fileID: 8300000, guid: b19f8fa15207558449b4baf413b1d0aa, type: 3}
+    volume: 0.061
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 10
+    loop: 0
+    source: {fileID: 0}
+  - name: RotateElementAlchtab
+    clip: {fileID: 8300000, guid: d3914f789aac47d409d4155894130eb2, type: 3}
+    volume: 0.266
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: ApplyElementAlchtab
+    clip: {fileID: 8300000, guid: e1ef221e4e02b3b4ca2ccad48ad14aed, type: 3}
+    volume: 0.362
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: BedWalk
+    clip: {fileID: 8300000, guid: 9e9a3a612a5463e46972c669286a5ec4, type: 3}
+    volume: 0.493
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 10
+    loop: 0
+    source: {fileID: 0}
+  - name: BedJump
+    clip: {fileID: 8300000, guid: c70e3aadaaf58e34abf8ab37e869a663, type: 3}
+    volume: 0.493
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 10
+    loop: 0
+    source: {fileID: 0}
+  - name: BedDoubleJump
+    clip: {fileID: 8300000, guid: 04b95d3e50d982b4aa17e7336e30e79f, type: 3}
+    volume: 0.493
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 10
+    loop: 0
+    source: {fileID: 0}
+  - name: GoingThroughPortal
+    clip: {fileID: 8300000, guid: 05de6bfbfda714b4ab694724e627f1fc, type: 3}
+    volume: 1
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: OnElementRegtab
+    clip: {fileID: 8300000, guid: 62bb3fad0e95b3b4e9a808713466e1f6, type: 3}
+    volume: 0.117
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: ApplyElementSkeleton
+    clip: {fileID: 8300000, guid: 0c6e7e14cfb576e4098d0b62ad1642cb, type: 3}
+    volume: 1
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: MageHardBreathing
+    clip: {fileID: 8300000, guid: 89b3d302ff907754f9be8011b46d4328, type: 3}
+    volume: 0.328
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: WindstoneLanding
+    clip: {fileID: 8300000, guid: ed71fdee8152776449fe00f3c0acfc97, type: 3}
+    volume: 0.355
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: CursedoreMining
+    clip: {fileID: 8300000, guid: 64a097643a03acd4bbe8211838cb1d53, type: 3}
+    volume: 0.03
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: CursedoreLanding
+    clip: {fileID: 8300000, guid: 79c9500763271f54dab9ec88198e8350, type: 3}
+    volume: 0.184
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: ConjurationCircleAppear
+    clip: {fileID: 8300000, guid: f52896d117189304c93349666a39bf61, type: 3}
+    volume: 1
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: CameraZoomIn
+    clip: {fileID: 8300000, guid: abf70b444743af5449dc1890d4dad744, type: 3}
+    volume: 0.154
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: CameraZoomOut
+    clip: {fileID: 8300000, guid: 684952d7b6ca9404bad0bde3b51f0ca4, type: 3}
+    volume: 0.062
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: ElectricitySound
+    clip: {fileID: 8300000, guid: 1cff43ea999c4ff4daefc63ce14e11a6, type: 3}
+    volume: 0.508
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 1
+    source: {fileID: 0}
+  - name: OnNormalElement
+    clip: {fileID: 8300000, guid: b3c25e23387ad5341b3e2d1e3a8a9082, type: 3}
+    volume: 0.078
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: PickaxeWaves
+    clip: {fileID: 8300000, guid: 0493c0d8d2fc7e840bd6e476dcd57e76, type: 3}
+    volume: 0.352
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 2
+    loop: 1
+    source: {fileID: 0}
+  - name: QuestFinished
+    clip: {fileID: 8300000, guid: 5d91277e27fbb234bbfb1ba7799f1dba, type: 3}
+    volume: 0.802
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 2
+    loop: 0
+    source: {fileID: 0}
+  - name: DefractorFlyingObject
+    clip: {fileID: 8300000, guid: 7ec5a2fcd884ea24a93e153d88689e7f, type: 3}
+    volume: 1
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: DefractorRotation
+    clip: {fileID: 8300000, guid: b849017d1c4fa3b4ca53344a76c39b2b, type: 3}
+    volume: 1
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: DefractorRotationStop
+    clip: {fileID: 8300000, guid: be711ebb780bb6b489714c390d291d60, type: 3}
+    volume: 0.721
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: TransmutationPotentialProduct
+    clip: {fileID: 8300000, guid: 621a7ab5292f7b644aa8024a868d8291, type: 3}
+    volume: 0.721
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: SettingMainChange
+    clip: {fileID: 8300000, guid: e2438a597612fe6448f70cedf13c7602, type: 3}
+    volume: 0.888
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: Save
+    clip: {fileID: 8300000, guid: 9446ac0a0404a3347979e6c7eea5efb1, type: 3}
+    volume: 0.61
+    pitch: 1
+    spatialBlend: 0
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: SkeletonConjuration
+    clip: {fileID: 8300000, guid: 5ce02fda56cc0fe479e2793adb6fb9e4, type: 3}
+    volume: 1
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: SkeletonDeconjuration
+    clip: {fileID: 8300000, guid: a710b613100a67a46a3738ca9332ed99, type: 3}
+    volume: 1
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: SkeletonWaves
+    clip: {fileID: 8300000, guid: e9c56f2e035cb674e8be9c1b344d533d, type: 3}
+    volume: 0.314
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 7
+    loop: 1
+    source: {fileID: 0}
+  - name: CrystalsDeactivating
+    clip: {fileID: 8300000, guid: e740689e334732f4c896f4d40036d70e, type: 3}
+    volume: 0.314
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: CrystalActivation
+    clip: {fileID: 8300000, guid: 0ad1b5339b4e0ba428aa9d8ad8348c31, type: 3}
+    volume: 0.64
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: CrystalWorkingUnderwater
+    clip: {fileID: 8300000, guid: ae2733623addf67489a934e460009599, type: 3}
+    volume: 0.314
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 1
+    source: {fileID: 0}
+  - name: CrystalWorking
+    clip: {fileID: 8300000, guid: 8793ff5647f43f94db8adea7562e5dad, type: 3}
+    volume: 0.254
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 3.8
+    loop: 1
+    source: {fileID: 0}
+  - name: PortalOpeningDefractor
+    clip: {fileID: 8300000, guid: 48610faa77e564943bc34ce34ae7b59c, type: 3}
+    volume: 0.116
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: PortalClosingDefractor
+    clip: {fileID: 8300000, guid: 770b9bb090418d545ade62834e692c0f, type: 3}
+    volume: 0.181
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 0
+    source: {fileID: 0}
+  - name: RegenerationwallRegeneration
+    clip: {fileID: 8300000, guid: 51cb9defe35293545ac492da0ec4cfca, type: 3}
+    volume: 0.468
+    pitch: 1
+    spatialBlend: 1
+    audioRolloffMode: 2
+    audioSourceCurveType: 0
+    audioSourceAnimationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: -0.005783081
+        value: 0.98750305
+        inSlope: -0.5356563
+        outSlope: -0.5356563
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.7153409
+        value: 0.6012285
+        inSlope: -1.2909453
+        outSlope: -1.2909453
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0.018749237
+        inSlope: -2.0462344
+        outSlope: -2.0462344
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    minDistance: 0
+    maxDistance: 15
+    loop: 1
+    source: {fileID: 0}
 --- !u!1 &609245645
 GameObject:
   m_ObjectHideFlags: 0
@@ -37468,7 +42366,7 @@ RectTransform:
   - {fileID: 725855148}
   - {fileID: 1017704818}
   m_Father: {fileID: 1096068324}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -48910,7 +53808,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 885177530}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -54801,8 +59699,9 @@ RectTransform:
   m_Children:
   - {fileID: 1988949097}
   - {fileID: 833415826}
-  - {fileID: 2107632184}
   - {fileID: 645040383}
+  - {fileID: 2107632184}
+  - {fileID: 82192383}
   m_Father: {fileID: 1018108731}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -71524,9 +76423,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SavePanel, Assembly-CSharp
-        m_MethodName: SaveNewGame
+      - m_Target: {fileID: 73494005}
+        m_TargetAssemblyTypeName: LoadPanelsMain, Assembly-CSharp
+        m_MethodName: LoadLastGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -71844,6 +76743,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentlyPressedKeys: 
+  mouseSensitivitySlider: {fileID: 2110117488}
+  autorunToggle: {fileID: 1887807872}
+  invertMouseToggle: {fileID: 725855149}
+  castSpellText: {fileID: 1569710376}
+  interractText: {fileID: 1212100297}
+  jumpText: {fileID: 1766205497}
+  runText: {fileID: 535169835}
+  shiftSpellText: {fileID: 2125374838}
+  forwardText: {fileID: 585006757}
+  backText: {fileID: 22072679}
+  leftText: {fileID: 1563789343}
+  rightText: {fileID: 2006492924}
+  inventoryText: {fileID: 993080451}
+  escapeText: {fileID: 734916108}
+  soundManager: {fileID: 606254229}
 --- !u!225 &1186168193
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -75054,7 +79968,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 224.6, y: -47.9}
+  m_AnchoredPosition: {x: 225, y: -71}
   m_SizeDelta: {x: 600, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1323537929
@@ -75075,7 +79989,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: -92
+  m_Spacing: -22.9
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -77965,6 +82879,82 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1413300795}
   m_CullTransparentMesh: 1
+--- !u!1 &1414799240
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1414799241}
+  - component: {fileID: 1414799243}
+  - component: {fileID: 1414799242}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1414799241
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414799240}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.000017170587}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 298561565}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.00007247925, y: 0.000017166138}
+  m_SizeDelta: {x: 40, y: 40}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1414799242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414799240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1414799243
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414799240}
+  m_CullTransparentMesh: 1
 --- !u!1 &1415120431
 GameObject:
   m_ObjectHideFlags: 0
@@ -78801,6 +83791,86 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1433877756}
+  m_CullTransparentMesh: 1
+--- !u!1 &1435296315
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1435296316}
+  - component: {fileID: 1435296318}
+  - component: {fileID: 1435296317}
+  m_Layer: 5
+  m_Name: Name
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1435296316
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1435296315}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 518449362}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.0000126434, y: -0.000046238718}
+  m_SizeDelta: {x: 600, y: 60}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1435296317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1435296315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0.7254902, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 32
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 2
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Save Graphics
+--- !u!222 &1435296318
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1435296315}
   m_CullTransparentMesh: 1
 --- !u!1 &1442071125
 GameObject:
@@ -84021,6 +89091,182 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1637993422
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1637993423}
+  - component: {fileID: 1637993428}
+  - component: {fileID: 1637993427}
+  - component: {fileID: 1637993426}
+  - component: {fileID: 1637993425}
+  - component: {fileID: 1637993424}
+  m_Layer: 5
+  m_Name: SaveSounds
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1637993423
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637993422}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.000034341174}
+  m_LocalScale: {x: 0.3299955, y: 0.32999548, z: 0.32999548}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1666299479}
+  - {fileID: 1823198183}
+  m_Father: {fileID: 4730920}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 201.99994, y: 50.29991}
+  m_SizeDelta: {x: 264.5, y: 60}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1637993424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637993422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 1
+--- !u!114 &1637993425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637993422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 0.37
+--- !u!114 &1637993426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637993422}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 4
+  m_Spacing: 10.7
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
+--- !u!114 &1637993427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637993422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.70980394, g: 0.70980394, b: 0.70980394, a: 1}
+    m_SelectedColor: {r: 0.7075472, g: 0.7075472, b: 0.7075472, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1637993425}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 445471347}
+        m_TargetAssemblyTypeName: AudioPanel, Assembly-CSharp
+        m_MethodName: SaveSettings
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!222 &1637993428
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637993422}
+  m_CullTransparentMesh: 1
 --- !u!1 &1638239927
 GameObject:
   m_ObjectHideFlags: 0
@@ -84901,6 +90147,82 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1666299478
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1666299479}
+  - component: {fileID: 1666299481}
+  - component: {fileID: 1666299480}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1666299479
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666299478}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1637993423}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 600, y: 60}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1666299480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666299478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.38679248, g: 0.37037206, b: 0.37037206, a: 0.72156864}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: b1c55378b04b5e744b04da365b6af638, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1666299481
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666299478}
+  m_CullTransparentMesh: 1
 --- !u!1 &1668670191
 GameObject:
   m_ObjectHideFlags: 0
@@ -90958,6 +96280,7 @@ RectTransform:
   - {fileID: 812775891}
   - {fileID: 103572355}
   - {fileID: 1323537928}
+  - {fileID: 518449362}
   m_Father: {fileID: 586467926}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -92426,8 +97749,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 73494001}
-        m_TargetAssemblyTypeName: LoadPanel, Assembly-CSharp
+      - m_Target: {fileID: 73494005}
+        m_TargetAssemblyTypeName: LoadPanelsMain, Assembly-CSharp
         m_MethodName: LoadGame
         m_Mode: 2
         m_Arguments:
@@ -93556,6 +98879,86 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1815829939}
+  m_CullTransparentMesh: 1
+--- !u!1 &1823198182
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1823198183}
+  - component: {fileID: 1823198185}
+  - component: {fileID: 1823198184}
+  m_Layer: 5
+  m_Name: Name
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1823198183
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823198182}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1637993423}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.0000126434, y: -0.000046238718}
+  m_SizeDelta: {x: 600, y: 60}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1823198184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823198182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0.7254902, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 32
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 2
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Save Sounds
+--- !u!222 &1823198185
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823198182}
   m_CullTransparentMesh: 1
 --- !u!1 &1824432987
 GameObject:
@@ -100359,6 +105762,82 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!1 &1888009644
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1888009645}
+  - component: {fileID: 1888009647}
+  - component: {fileID: 1888009646}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1888009645
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1888009644}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 82192383}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 600, y: 60}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1888009646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1888009644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.38679248, g: 0.37037206, b: 0.37037206, a: 0.72156864}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: b1c55378b04b5e744b04da365b6af638, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1888009647
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1888009644}
+  m_CullTransparentMesh: 1
 --- !u!1 &1900255375
 GameObject:
   m_ObjectHideFlags: 0
@@ -100687,6 +106166,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 305000fd22c19c04885ab8437629c7bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slider: {fileID: 998563180}
+  soundManager: {fileID: 606254229}
 --- !u!225 &1930756655
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -101333,13 +106814,13 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1957318851}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PanelsManager, Assembly-CSharp
+      - m_Target: {fileID: 427147995}
+        m_TargetAssemblyTypeName: PanelsManagerMainmenu, Assembly-CSharp
         m_MethodName: ManageSettingsPanel
         m_Mode: 5
         m_Arguments:
@@ -101712,8 +107193,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PanelsManager, Assembly-CSharp
+      - m_Target: {fileID: 427147995}
+        m_TargetAssemblyTypeName: PanelsManagerMainmenu, Assembly-CSharp
         m_MethodName: ManageSettingsPanel
         m_Mode: 5
         m_Arguments:
@@ -110052,6 +115533,82 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2089744161}
   m_CullTransparentMesh: 1
+--- !u!1 &2091243425
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2091243426}
+  - component: {fileID: 2091243428}
+  - component: {fileID: 2091243427}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2091243426
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091243425}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 518449362}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 600, y: 60}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2091243427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091243425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.38679248, g: 0.37037206, b: 0.37037206, a: 0.72156864}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: b1c55378b04b5e744b04da365b6af638, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &2091243428
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091243425}
+  m_CullTransparentMesh: 1
 --- !u!1 &2092092232
 GameObject:
   m_ObjectHideFlags: 0
@@ -110423,7 +115980,7 @@ RectTransform:
   - {fileID: 761262616}
   - {fileID: 1551683400}
   m_Father: {fileID: 1096068324}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

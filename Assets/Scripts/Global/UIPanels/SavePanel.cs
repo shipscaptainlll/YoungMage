@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -18,6 +19,8 @@ public class SavePanel : MonoBehaviour
     [SerializeField]    float savesMaximumCount;
     [SerializeField] IngameTimer ingameTimer;
     float currentSavesCount = 0;
+    Transform lastSavedButton;
+    public Transform LastSavedButton { get { return lastSavedButton; } }
     
 
     [Header("SaveNewGame Settings")]
@@ -85,12 +88,28 @@ public class SavePanel : MonoBehaviour
         newSavedGame.Find("Content").Find("TimePlayed").Find("Text").GetComponent<Text>().text = "Time played " + ingameTimer.GetTimeIngame();
         loadMenuCopy.Find("Content").Find("TimePlayed").Find("Text").GetComponent<Text>().text = "Time played " + ingameTimer.GetTimeIngame();
         saveSystemSerialization.SaveProgress(false);
-        Debug.Log("New game saved");
+        lastSavedButton = newSavedGame;
+        //Debug.Log("New game saved");
+    }
+
+    public void FindSaveElement(int requiredIndex)
+    {
+        foreach (Transform element in savesHolder)
+        {
+            if (GetPanelIndex(element) == requiredIndex)
+            {
+                //element.Find("Content").Find("TimePlayed").Find("Text").GetComponent<Text>().text = "Time played " + ingameTimer.GetTimeIngame();
+                //element.SetAsFirstSibling();
+                lastSavedButton = element;
+                break;
+            }
+        }
     }
 
 
     public void RewriteExistingSave(Transform saveButtonTransform)
     {
+        lastSavedButton = saveButtonTransform;
         int requiredIndex = GetPanelIndex(saveButtonTransform);
         Transform savePanel = null;
         Transform loadPanel = null;
@@ -119,7 +138,7 @@ public class SavePanel : MonoBehaviour
         takeScreenShot.MakeScreenShot(savePanel.gameObject, loadPanel.gameObject, (int)requiredIndex, -1);
 
         saveSystemSerialization.ResaveProgress(requiredIndex);
-        Debug.Log("Game was rewritten " + saveButtonTransform);
+        //Debug.Log("Game was rewritten " + saveButtonTransform);
     }
 
     int GetPanelIndex(Transform panel)
@@ -148,14 +167,27 @@ public class SavePanel : MonoBehaviour
     public void AutoSave()
     {
         saveSound.Play();
-        saveSystemSerialization.SaveProgress(true);
-        //Debug.Log("Game was autosaved");
+        if (saveSystemSerialization.NeverSaved)
+        {
+            SaveNewGame();
+            saveSystemSerialization.NeverSaved = false;
+            return;
+        }
+        if (lastSavedButton != null )
+        {
+            RewriteExistingSave(lastSavedButton);
+        } else
+        {
+            SaveNewGame();
+        }
+        //saveSystemSerialization.AutoSaveProgress();
+        //Debug.Log("Game was autosaved " + saveSystemSerialization.SaveDirectoryPath);
     }
 
     public void AutoLoad()
     {
         saveSound.Play();
-        saveSystemSerialization.LoadProgress(1);
+        saveSystemSerialization.LoadProgress(saveSystemSerialization.SaveDirectoryPath);
         //Debug.Log("Game was autosaved");
     }
 
@@ -169,13 +201,20 @@ public class SavePanel : MonoBehaviour
     void UploadSavedGames()
     {
         System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(Application.persistentDataPath + "/Saves");
-        Debug.Log("New save initialized1");
+        //Debug.Log("New save initialized1");
+        var result = dir.GetDirectories().OrderBy(t => t.LastWriteTime).ToList();
 
-        foreach (var element in dir.GetDirectories())
+        foreach (var element in result)
         {
-            Debug.Log("New save initialized2");
+            //Debug.Log(element.Name);
+        }
+
+        foreach (var element in result)
+        {
+            //Debug.Log("New save initialized2");
             Transform newSavedGame = Instantiate(newSaveTemplate, savesHolder.position, savesHolder.rotation);
             Transform loadMenuCopy = Instantiate(loadMenuTemplate, loadsHolder.position, loadsHolder.rotation);
+            lastSavedButton = newSavedGame;
             newSavedGame.parent = savesHolder;
             loadMenuCopy.parent = loadsHolder;
             newSavedGame.SetAsFirstSibling();
@@ -201,7 +240,7 @@ public class SavePanel : MonoBehaviour
 
             newSavedGame.gameObject.transform.Find("Borders").Find("Image").GetComponent<Image>().sprite = screenshotSprite;
             loadMenuCopy.gameObject.transform.Find("Borders").Find("Image").GetComponent<Image>().sprite = screenshotSprite;
-            Debug.Log("New save initialized");
+            //Debug.Log("New save initialized");
             string path = Application.persistentDataPath + "/Saves/" + element.Name + "/gameData.fun";
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
@@ -210,7 +249,7 @@ public class SavePanel : MonoBehaviour
             
             newSavedGame.Find("Content").Find("TimePlayed").Find("Text").GetComponent<Text>().text = "Time played " + gameSaveData.timeInGame;
             loadMenuCopy.Find("Content").Find("TimePlayed").Find("Text").GetComponent<Text>().text = "Time played " + gameSaveData.timeInGame;
-            Debug.Log(gameSaveData.timeInGame + " we were in game");
+            //Debug.Log(gameSaveData.timeInGame + " we were in game");
             stream.Close();
         }
     }

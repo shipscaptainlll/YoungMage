@@ -7,10 +7,10 @@ public static class CollectableDataApplier
     static CollectableObjectsInstantiator collectableInstantiatorLoad;
     static CollectableData collectableDataLoaded;
 
-    public static void ApplyCollectableData(CollectableObjectsInstantiator collectableObjectsInstantiator, CollectableData collectableData)
+    public static void ApplyCollectableData(CollectableObjectsDeleter collectableObjectsDeleter, CollectableObjectsInstantiator collectableObjectsInstantiator, CollectableData collectableData)
     {
         UpdateData(collectableObjectsInstantiator, collectableData);
-        InstantiateLoadedCollectable(collectableObjectsInstantiator, collectableData);
+        InstantiateLoadedCollectable(collectableObjectsDeleter, collectableObjectsInstantiator, collectableData);
         DisconnectData();
     }
 
@@ -26,9 +26,10 @@ public static class CollectableDataApplier
         collectableDataLoaded = null;
     }
 
-    static void InstantiateLoadedCollectable(CollectableObjectsInstantiator collectableObjectsInstantiator, CollectableData collectableData)
+    static void InstantiateLoadedCollectable(CollectableObjectsDeleter collectableObjectsDeleter, CollectableObjectsInstantiator collectableObjectsInstantiator, CollectableData collectableData)
     {
         int indexer = 0;
+        collectableObjectsDeleter.DestroyCollectableObjects();
         while (indexer < collectableDataLoaded.positions.Length)
         {
             Vector3 collectablePosition = new Vector3(collectableDataLoaded.positions[indexer][0], collectableDataLoaded.positions[indexer][1], collectableDataLoaded.positions[indexer][2]);

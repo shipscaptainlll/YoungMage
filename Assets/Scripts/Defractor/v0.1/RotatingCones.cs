@@ -13,8 +13,10 @@ public class RotatingCones : MonoBehaviour
     [SerializeField] ParticleSystem rotationParticleSystem;
     [SerializeField] AppearanceTransmutationCircle appearanceTransmutationCircle;
     float currentSpeed = 0;
-    bool rotating = false;
+    bool rotating = false; 
     bool slowingDown = false;
+
+    public bool Rotating { get { return rotating; } }
 
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
@@ -65,6 +67,13 @@ public class RotatingCones : MonoBehaviour
         }
         
         
+    }
+
+    public void ImmediateStopRotation()
+    {
+        if (soundManager != null && knivesRotationSounds.isPlaying) { knivesRotationSounds.Stop(); }
+        StopAllCoroutines();
+        transform.Rotate(0, 0, 0);
     }
 
     IEnumerator Delay()

@@ -17,6 +17,6 @@ public class GameSaveData
     {
         secondsInGame = ingameTimeHolder.GetComponent<IngameTimer>().TimeIngame;
         timeInGame = ingameTimeHolder.GetComponent<IngameTimer>().GetTimeIngame();
-        Debug.Log("Saved game it was " + timeInGame);
+        //Debug.Log("Saved game it was " + timeInGame);
     }
 }

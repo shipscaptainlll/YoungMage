@@ -6,6 +6,7 @@ public class CollectableObjectsInstantiator : MonoBehaviour
 {
     [SerializeField] ObjectManager objectManager;
     [SerializeField] Transform collectableObjectsPool;
+    [SerializeField] SacketClickController sacketClickController;
     System.Random random;
 
     // Start is called before the first frame update
@@ -16,6 +17,8 @@ public class CollectableObjectsInstantiator : MonoBehaviour
 
     public void InstantiateLoadedCollectable(int objectId, Vector3 position, Quaternion rotation, int count)
     {
+        sacketClickController.KickOutItem(objectId, position, rotation, count);
+        /*
         float xTorque = (float)random.Next(-2, 2);
         float yTorque = (float)random.Next(-2, 2);
         float zTorque = (float)random.Next(-2, 2);
@@ -32,6 +35,7 @@ public class CollectableObjectsInstantiator : MonoBehaviour
         newObject.GetComponent<OreCounter>().OreCount = count;
         Debug.Log("count was " + count);
         newObject.parent = collectableObjectsPool;
+        */
 
     }
 }

@@ -19,7 +19,7 @@ public class IngameTimer : MonoBehaviour
         {
             yield return new WaitForSecondsRealtime(1f);
             timeIngame++;
-            Debug.Log("time in game " + timeIngame);
+            //Debug.Log("time in game " + timeIngame);
         }
     }
 

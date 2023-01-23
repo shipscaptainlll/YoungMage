@@ -123,12 +123,62 @@ public class SacketClickController : MonoBehaviour
                 }
                 delayCoroutine = StartCoroutine(WaitDelay());
                 TakeFromCounter();
+                newObject.GetComponent<OreCounter>().OreCount = 1;
                 newObject.parent = contactableObjectsPool;
             }
             
             
         }
         
+    }
+
+    public void KickOutItem(int objectId, Vector3 position, Quaternion rotation, int count)
+    {
+        Debug.Log(transform);
+
+
+        if (objectManager.TakeObject(objectId) != null)
+        {
+            float xTorque = (float)random.Next(-2, 2);
+            float yTorque = (float)random.Next(-2, 2);
+            float zTorque = (float)random.Next(-2, 2);
+            Transform objectReference = objectManager.TakeObject(objectId).transform;
+
+            var newObject = Instantiate(objectReference, position, rotation);
+            objectsConnector.SubscribeOnOre(newObject);
+            newObject.gameObject.AddComponent<Rigidbody>();
+            newObject.gameObject.AddComponent<Rotate>();
+            Rotate rotator = newObject.gameObject.GetComponent<Rotate>(); rotator.RotationSpeed = 10; rotator.XAxis = 1; rotator.YAxis = 1; rotator.ZAxis = 1;
+            
+            newObject.gameObject.AddComponent<DefractorResource>();
+            newObject.gameObject.GetComponent<DefractorResource>().ID = objectId;
+            newObject.gameObject.GetComponent<DefractorResource>().DestroyableObjects = destroyableObjects;
+            newObject.gameObject.GetComponent<DefractorResource>().objectContactedDefractor += DestroyObject;
+            newObject.gameObject.GetComponent<DefractorResource>().SoundManagerScript = soundManager;
+            newObject.gameObject.AddComponent<GlobalResource>();
+            newObject.gameObject.GetComponent<GlobalResource>().WasCollected = true;
+            newObject.gameObject.GetComponent<GlobalResource>().TargetLayerMask = midasLayerHolder.GetComponent<LayerMaskSettings>().TargetLayer;
+            newObject.gameObject.GetComponent<GlobalResource>().ID = objectId;
+            newObject.gameObject.GetComponent<GlobalResource>().GlobalSoundManager = soundManager;
+
+            newObject.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * (Mathf.Cos(Mathf.Abs(((-cameraController.YRotation) * Mathf.PI) / 180)) + xAngleOffset) * xForcePower);
+            newObject.gameObject.GetComponent<Rigidbody>().angularDrag = 0.75f;
+            newObject.gameObject.GetComponent<Rigidbody>().drag = 0.4f;
+            newObject.gameObject.GetComponent<Rigidbody>().AddTorque(100 * xTorque, 100 * yTorque, 100 * zTorque);
+            if (-cameraController.YRotation > 0)
+            {
+                newObject.gameObject.GetComponent<Rigidbody>().AddForce(transform.up * Mathf.Sin(Mathf.Abs(((-cameraController.YRotation) * Mathf.PI) / 180)) * yForcePower);
+            }
+            else { newObject.gameObject.GetComponent<Rigidbody>().AddForce(transform.up * Mathf.Sin(Mathf.Abs(((-cameraController.YRotation) * Mathf.PI) / 180)) * -yForcePower); }
+
+            KickedOutItems.Add(newObject);
+            newObject.GetComponent<OreCounter>().OreCount = count;
+            Debug.Log("count was " + count);
+            newObject.parent = contactableObjectsPool;
+        }
+
+
+
     }
 
     IEnumerator WaitDelay()

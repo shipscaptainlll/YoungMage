@@ -18,7 +18,7 @@ public class LeetCode : MonoBehaviour
         hello.Remove(300);
         foreach (var element in hello)
         {
-            Debug.Log(element);
+            //Debug.Log(element);
         }
     }
 

@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class MiscPanel : MonoBehaviour
 {
+    [SerializeField] Slider slider;
+    
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
 
@@ -20,6 +22,7 @@ public class MiscPanel : MonoBehaviour
     void Start()
     {
         chooseSound = soundManager.FindSound("SettingElement");
+        UploadPlayerPrefs();
     }
 
     // Update is called once per frame
@@ -53,5 +56,16 @@ public class MiscPanel : MonoBehaviour
         if (SettingChanged != null) { SettingChanged(1); }
         chooseSound.Play();
         Debug.Log("AutosaveTimeSet on " + newAutosaveDelay + " mins");
+    }
+
+    public void SaveSettings()
+    {
+        PlayerPrefs.SetFloat("autoSaveDelay", slider.value);
+        Debug.Log("all misc settings was saved");
+    }
+
+    public void UploadPlayerPrefs()
+    {
+        slider.value = PlayerPrefs.GetFloat("autoSaveDelay", 3);
     }
 }

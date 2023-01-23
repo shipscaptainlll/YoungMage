@@ -2,6 +2,7 @@ using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Collections;
+using System.Linq;
 
 public class SaveSystemSerialization : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class SaveSystemSerialization : MonoBehaviour
     [SerializeField] Transform tackledDoor;
     [SerializeField] Transform collectablesHolder;
     [SerializeField] CollectableObjectsInstantiator collectableObjectsInstantiator;
+    [SerializeField] CollectableObjectsDeleter collectableObjectsDeleter;
+    [SerializeField] DefractorStateMachine defractorStateMachine;
     int saveDirectoryPath;
     string gameDataPath;
     string playerPath;
@@ -28,10 +31,14 @@ public class SaveSystemSerialization : MonoBehaviour
     string inventoryPath;
     string indoorSkeletonsPath;
     string collectablePath;
+    string defractorDataPath;
     string arrowCatapultsPath;
     string stoneCatapultsPath;
     string outdoorSkeletonsPath;
     int maxId;
+    bool neverSaved = false;
+
+    public bool NeverSaved { get { return neverSaved; } set { neverSaved = value; } }
 
     public int SaveDirectoryPath { get { return saveDirectoryPath; } set { saveDirectoryPath = value; } }
 
@@ -44,12 +51,19 @@ public class SaveSystemSerialization : MonoBehaviour
     {
         saveDirectoryPath = GetLastsaveID();
         maxId = GetNextID();
+        Debug.Log("Max id is " + maxId);
         UpdatePaths();
 
     }
 
+    public void AutoSaveProgress()
+    {
+        SaveProgress(true);
+    }
+
     public void ResaveProgress(int saveId)
     {
+        RenameLastsaveID(saveId);
         saveDirectoryPath = saveId;
         UpdatePaths();
         SaveProgress(true);
@@ -57,16 +71,20 @@ public class SaveSystemSerialization : MonoBehaviour
 
     public void SaveProgress(bool autosaving)
     {
-        
-        if (autosaving)
+        if (saveDirectoryPath != -1)
         {
+            if (autosaving)
+            {
 
-        } else
-        {
-            Directory.CreateDirectory(Application.persistentDataPath + "/Saves/" + maxId);
-            RenameLastsaveID();
-            maxId = GetNextID();
-            UpdatePaths();
+            }
+            else
+            {
+                Directory.CreateDirectory(Application.persistentDataPath + "/Saves/" + maxId);
+                RenameLastsaveID();
+                maxId = GetNextID();
+                UpdatePaths();
+                Debug.Log("created new game save ");
+            }
         }
 
         if (saveDirectoryPath == -1)
@@ -75,7 +93,10 @@ public class SaveSystemSerialization : MonoBehaviour
             RenameLastsaveID();
             maxId = GetNextID();
             UpdatePaths();
+            Debug.Log("save directory path was -1 ");
         }
+
+        Debug.Log("currently updating " + saveDirectoryPath);
 
         //savePanel.AutosaveGame(saveDirectoryPath);
 
@@ -93,7 +114,9 @@ public class SaveSystemSerialization : MonoBehaviour
 
         CollectableDataSaver.SaveCollectableData(collectablesHolder, collectablePath);
 
-        Debug.Log("game was saved");
+        DefractorDataSaver.SaveDefractorData(defractorStateMachine, defractorDataPath);
+
+        //Debug.Log("game was saved");
     }
 
     public void LoadProgress(int saveId)
@@ -109,11 +132,12 @@ public class SaveSystemSerialization : MonoBehaviour
 
             LoadingProgress();
 
-            saveDirectoryPath = cacheDirectoryPath;
+            saveDirectoryPath = saveId;
             UpdatePaths();
         } else
         {
-
+            neverSaved = true;
+            Debug.Log("Never saved is true");
         }
     }
 
@@ -137,7 +161,9 @@ public class SaveSystemSerialization : MonoBehaviour
 
         SkeletonsDataApplier.ApplySkeletonsData(skeletonsIndoorHolder, skeletonHouseInstantiator, mainCharacterScript, oresHolder, tackledDoor, SkeletonsDataSaver.LoadSkeletonData(indoorSkeletonsPath));
 
-        CollectableDataApplier.ApplyCollectableData(collectableObjectsInstantiator, CollectableDataSaver.LoadCollectableData(collectablePath));
+        CollectableDataApplier.ApplyCollectableData(collectableObjectsDeleter, collectableObjectsInstantiator, CollectableDataSaver.LoadCollectableData(collectablePath));
+
+        DefractorDataApplier.ApplyDefractorData(defractorStateMachine, DefractorDataSaver.LoadDefractorData(defractorDataPath));
 
         Debug.Log("game was loaded");
     }
@@ -147,7 +173,9 @@ public class SaveSystemSerialization : MonoBehaviour
         System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(Application.persistentDataPath + "/lastSave");
         if (dir.GetDirectories().Length > 0)
         {
-            return System.Int32.Parse(dir.GetDirectories()[0].Name);
+            var result = dir.GetDirectories().OrderBy(t => t.LastWriteTime).ToList();
+            Debug.Log("Last save is " + result[0].Name);
+            return System.Int32.Parse(result[0].Name);
         } else
         {
             Directory.CreateDirectory(Application.persistentDataPath + "/lastSave/-1");
@@ -162,6 +190,16 @@ public class SaveSystemSerialization : MonoBehaviour
         saveDirectoryPath = maxId;
     }
 
+    void RenameLastsaveID(int newId)
+    {
+        if (saveDirectoryPath == newId)
+        {
+            return;
+        }
+        Directory.Move(Application.persistentDataPath + "/lastSave" + "/" + saveDirectoryPath, Application.persistentDataPath + "/lastSave" + "/" + newId);
+        saveDirectoryPath = newId;
+    }
+
     void UpdatePaths()
     {
         gameDataPath = GetPath("gameData");
@@ -171,6 +209,7 @@ public class SaveSystemSerialization : MonoBehaviour
         inventoryPath = GetPath("inventory");
         indoorSkeletonsPath = GetPath("indoorSkeleton");
         collectablePath = GetPath("collectable");
+        defractorDataPath = GetPath("defractorData");
         arrowCatapultsPath = GetPath("arrowCatapult");
         stoneCatapultsPath = GetPath("stoneCatapult");
         outdoorSkeletonsPath = GetPath("outdoorSkeleton");
@@ -193,7 +232,7 @@ public class SaveSystemSerialization : MonoBehaviour
             {
                 maxId = foundId;
             }
-            Debug.Log(foundId);
+            //Debug.Log(foundId);
         }
         return maxId + 1;
     }

@@ -166,10 +166,12 @@ public class PersonMovement : MonoBehaviour
 
     void LateUpdate()
     {
+        //if (characterController.velocity.magnitude == 0) { isRunning = false; }
         if (Input.GetKeyDown(KeyCode.O))
         {
             
         }
+        //Debug.Log("is walking " + isWalking + " and is running " + isRunning + " running with speed " + characterController.velocity + " and magnitude " + characterController.velocity.magnitude);
         if (!occupied)
             MoveCharacter();
         if (isWalking && !onStone && !onStairs && !onOtherGround && isGrounded) { RandomWoodcreakInitiator(); if (!walkingSound.isPlaying) { walkingSound.Play(); } } else { if (walkingSound.isPlaying) { walkingSound.Stop(); } }
@@ -178,7 +180,10 @@ public class PersonMovement : MonoBehaviour
         if (isRunning && onStairs) { if (!runningStairsSound.isPlaying) { runningStairsSound.Play(); } } else { if (runningStairsSound.isPlaying) { runningStairsSound.Stop(); } }
         if (isWalking && onStone) { if (!walkingStoneSound.isPlaying) { walkingStoneSound.Play(); } } else { if (walkingStoneSound.isPlaying) { walkingStoneSound.Stop(); } }
         if (isRunning && onStone) { if (!runningStoneSound.isPlaying) { runningStoneSound.Play(); } } else { if (runningStoneSound.isPlaying) { runningStoneSound.Stop(); } }
-
+        if (onStairs)
+        {
+            
+        }
         if ((isWalking && onStone) || (isRunning && onStone)) { RandomCavebulpInitiator(); }
 
         if (isWalking && onOtherGround && currentObjectGround == "Bed") { if (!walkingBedSound.isPlaying) { walkingBedSound.Play(); } } else { if (walkingBedSound.isPlaying) { walkingBedSound.Stop(); } }
@@ -267,7 +272,11 @@ public class PersonMovement : MonoBehaviour
             isWalking = false;
         }
 
-        if ((!isShifting && !isCrouching && Input.GetKey(KeyCode.LeftShift)) || isAutoRunning && !isShifting)
+        if ((!isShifting && !isCrouching && Input.GetKey(KeyCode.LeftShift)) || isAutoRunning && !isShifting &&
+            (Input.GetKey(KeyCode.W)
+            || Input.GetKey(KeyCode.A)
+            || Input.GetKey(KeyCode.F)
+            || Input.GetKey(KeyCode.S)))
         {
             keyPushedLength += Time.deltaTime;
             {
@@ -279,6 +288,9 @@ public class PersonMovement : MonoBehaviour
                     isWalking = false; isRunning = true;
                 }
             }
+        } else
+        {
+            isRunning = false;
         }
         if (!isShifting && !isCrouching && Input.GetKeyUp(KeyCode.LeftShift) && !isAutoRunning)
         {
