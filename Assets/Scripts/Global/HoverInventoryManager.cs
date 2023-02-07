@@ -132,30 +132,30 @@ public class HoverInventoryManager : MonoBehaviour
     {
         if (originalText.Length > sizeLimit)
         {
-            Debug.Log("Length of text " + originalText.Length);
+            //Debug.Log("Length of text " + originalText.Length);
             string newString = "";
             float floatDivision = (float)originalText.Length / (float)sizeLimit;
-            Debug.Log("float division " + floatDivision);
+            //Debug.Log("float division " + floatDivision);
             int divisionRemainder = originalText.Length % sizeLimit;
-            Debug.Log("Division remainder" + divisionRemainder);
+            //Debug.Log("Division remainder" + divisionRemainder);
             int substrCount = (int) Mathf.Ceil(floatDivision);
 
-            Debug.Log("Count of substrings " + substrCount);
+            //Debug.Log("Count of substrings " + substrCount);
             for (int i = 0; i <= substrCount - 1; i++)
             {
-                Debug.Log("entering loop");
+                //Debug.Log("entering loop");
                 if (i == substrCount - 1 && divisionRemainder != 0)
                 {
-                    Debug.Log("entering last loop");
+                    //Debug.Log("entering last loop");
                     newString += originalText.Substring(sizeLimit * i, divisionRemainder);
-                    Debug.Log("New line1 " + newString);
+                    //Debug.Log("New line1 " + newString);
                 } else
                 {
-                    Debug.Log(originalText.Substring(sizeLimit * i, sizeLimit) != null);
+                    //Debug.Log(originalText.Substring(sizeLimit * i, sizeLimit) != null);
                     newString += originalText.Substring(sizeLimit * i, sizeLimit);
                     if (i != substrCount - 1);
                     newString += "\n";
-                    Debug.Log("New line " + newString);
+                    //Debug.Log("New line " + newString);
                 }
                 
             }

@@ -89,8 +89,8 @@ public class BookSpellsNotifier : MonoBehaviour
         }
         else if (currentObject.GetComponent<GlobalResource>() != null)
         {
-            Debug.Log("found resource");
-            Debug.Log(BookInHands());
+            //Debug.Log("found resource");
+            //Debug.Log(BookInHands());
             if (BookInHands()) { CastTornadoSpell(); }
             else if (ObjectInHands() || ItemInHands()) { CastThrowObject(); } else { CastIdle(); }
         } else

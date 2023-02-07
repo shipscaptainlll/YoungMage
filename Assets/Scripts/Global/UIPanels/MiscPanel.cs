@@ -55,7 +55,7 @@ public class MiscPanel : MonoBehaviour
         if (AutosaveTimeChangeRequested != null) { AutosaveTimeChangeRequested(newAutosaveDelay); }
         if (SettingChanged != null) { SettingChanged(1); }
         chooseSound.Play();
-        Debug.Log("AutosaveTimeSet on " + newAutosaveDelay + " mins");
+        //Debug.Log("AutosaveTimeSet on " + newAutosaveDelay + " mins");
     }
 
     public void SaveSettings()

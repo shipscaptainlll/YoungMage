@@ -50,7 +50,7 @@ public class GraphicsPanel : MonoBehaviour
         dropdown.Hide();
         if (SettingChanged != null) { SettingChanged(1); }
         chooseSound.Play();
-        Debug.Log("Graphics quality is: " + graphicsQuality);
+        //Debug.Log("Graphics quality is: " + graphicsQuality);
     }
 
     public void SetActivePointLightShadows(Toggle toggle)
@@ -81,8 +81,8 @@ public class GraphicsPanel : MonoBehaviour
     void UploadPlayerPrefs()
     {
         pointLightShadows = PlayerPrefs.GetInt("pointLightShadows", 50);
-        Debug.Log("point light shadows are " + PlayerPrefs.GetInt("pointLightShadows"));
-        Debug.Log("point light shadows are " + PlayerPrefs.GetInt("pointLightShadows", 50));
+        //Debug.Log("point light shadows are " + PlayerPrefs.GetInt("pointLightShadows"));
+        //Debug.Log("point light shadows are " + PlayerPrefs.GetInt("pointLightShadows", 50));
         slider.value = pointLightShadows;
         graphicsQuality = PlayerPrefs.GetInt("graphicsQuality", 1);
         dropdown.value = graphicsQuality;

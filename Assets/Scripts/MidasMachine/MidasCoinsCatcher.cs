@@ -7,8 +7,11 @@ public class MidasCoinsCatcher : MonoBehaviour
 {
     [SerializeField] CoinsAccumulationModels coinsAccumulationModels;
     [SerializeField] Transform coinsAccumulationPosition;
+    [SerializeField] Transform coinsAccumulationHolder;
     GameObject currentAccumulationForm = null;
     int coinsCount = 0;
+
+    public int CoinsCount { get { return coinsCount; } set { coinsCount = value; } }
 
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
@@ -53,6 +56,7 @@ public class MidasCoinsCatcher : MonoBehaviour
 
     public void CountCoins()
     {
+        if (coinsCount == 0) { ResetModel(); return; }
         if (coinsCount == 1) { singleCoinSound.Play(); }
         else if (coinsCount > 1)
         {
@@ -62,11 +66,27 @@ public class MidasCoinsCatcher : MonoBehaviour
             else if (randomInt > 2) { pileCoinsSoundThird.Play(); }
         }
         GameObject potentialAccumulationForm = coinsAccumulationModels.TakeModel(coinsCount);
+        Debug.Log("here we gooo " + coinsCount);
+        Debug.Log(currentAccumulationForm == null);
+        Debug.Log(potentialAccumulationForm != null);
         if (currentAccumulationForm != potentialAccumulationForm && potentialAccumulationForm != null)
         {
             Debug.Log(potentialAccumulationForm);
             UpdateAccumulationState(potentialAccumulationForm);
+        } else if (currentAccumulationForm == null && potentialAccumulationForm != null)
+        {
+            UpdateAccumulationState(potentialAccumulationForm);
         }
+    }
+
+    void ResetModel()
+    {
+        if (coinsAccumulationHolder.childCount > 0)
+        {
+            Destroy(coinsAccumulationHolder.GetChild(0).gameObject);
+            currentAccumulationForm = null;
+        }
+        
     }
 
     void UpdateAccumulationState(GameObject finalAccumulationForm)
@@ -75,11 +95,13 @@ public class MidasCoinsCatcher : MonoBehaviour
             currentAccumulationForm = null;
         }
 
+
+        Debug.Log("here we go ");
         if (coinsCount < 2500)
         {
             currentAccumulationForm = Instantiate(finalAccumulationForm, coinsAccumulationPosition.position, Quaternion.Euler(new Vector3(90, 0, 0)));
         } else { currentAccumulationForm = Instantiate(finalAccumulationForm, coinsAccumulationPosition.position, Quaternion.Euler(new Vector3(0, 0, 0))); }
-        
+        currentAccumulationForm.transform.parent = coinsAccumulationHolder;
         currentAccumulationForm.AddComponent<AdditionalCoinsCatcher>();
         currentAccumulationForm.GetComponent<AdditionalCoinsCatcher>().MidasCoinsCatcher = transform;
         currentAccumulationForm.AddComponent<Rigidbody>();

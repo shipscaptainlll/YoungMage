@@ -8,6 +8,8 @@ public class PipeElementInstantiator : MonoBehaviour
     [SerializeField] Transform pipeObjectVariant;
     [SerializeField] Transform pipeCoinVariant;
     [SerializeField] Transform pipeSystemLibrary;
+    [SerializeField] Transform pipeMaterialsHolder;
+    [SerializeField] Transform pipeCoinsHolder;
     System.Random random;
     float torqueForce = 100;
     Transform pipeObjectActual;
@@ -27,7 +29,11 @@ public class PipeElementInstantiator : MonoBehaviour
     public void InstantiatePipeObject()
     {
         pipeObjectActual = Instantiate(pipeObjectVariant, transform.position, transform.rotation);
-        pipeObjectActual.parent = pipeSystemLibrary;
+        Debug.Log("Hello there it was ");
+        Debug.Log(pipeObjectActual + " is located at " + pipeObjectActual.parent);
+        //pipeObjectActual.parent = pipeSystemLibrary;
+        pipeObjectActual.parent = pipeMaterialsHolder;
+        Debug.Log(pipeObjectActual + " is located at " + pipeObjectActual.parent);
         pipeObjectActual.gameObject.SetActive(true);
         pipeObjectActual.GetComponent<PipeSystemElement>().MidasPipesTransmission = midasPipesTransmission;
         SetTorqueRotation();
@@ -35,14 +41,41 @@ public class PipeElementInstantiator : MonoBehaviour
         SetAnimationSpeed();
     }
 
+    public void InstantiatePipeObject(Vector3 position, Quaternion rotation, float second)
+    {
+        pipeObjectActual = Instantiate(pipeObjectVariant, position, rotation);
+        //pipeObjectActual.parent = pipeSystemLibrary;
+        pipeObjectActual.parent = pipeMaterialsHolder;
+        pipeObjectActual.gameObject.SetActive(true);
+        pipeObjectActual.GetComponent<PipeSystemElement>().MidasPipesTransmission = midasPipesTransmission;
+        SetTorqueRotation();
+        SetSize();
+        SetAnimationSpeed();
+        SetAnimationState(second);
+    }
+
     public void InstantiateCoinObject()
     {
         pipeObjectActual = Instantiate(pipeCoinVariant, transform.position, transform.rotation);
-        pipeObjectActual.parent = pipeSystemLibrary;
+        //pipeObjectActual.parent = pipeSystemLibrary;
+        pipeObjectActual.parent = pipeCoinsHolder;
         pipeObjectActual.gameObject.SetActive(true);
         pipeObjectActual.GetComponent<PipeSystemElement>().MidasPipesTransmission = midasPipesTransmission;
         SetTorqueRotation();
         SetAnimationSpeed();
+        StartCoroutine(MaaterializeProduct(pipeObjectActual, 1.5f));
+    }
+
+    public void InstantiateCoinObject(Vector3 position, Quaternion rotation, float second)
+    {
+        pipeObjectActual = Instantiate(pipeCoinVariant, position, rotation);
+        //pipeObjectActual.parent = pipeSystemLibrary;
+        pipeObjectActual.parent = pipeCoinsHolder;
+        pipeObjectActual.gameObject.SetActive(true);
+        pipeObjectActual.GetComponent<PipeSystemElement>().MidasPipesTransmission = midasPipesTransmission;
+        SetTorqueRotation();
+        SetAnimationSpeed();
+        SetCoinAnimationState(second);
         StartCoroutine(MaaterializeProduct(pipeObjectActual, 1.5f));
     }
 
@@ -66,6 +99,16 @@ public class PipeElementInstantiator : MonoBehaviour
     {
         float speedRandom = (float)random.Next(1, 4);
         pipeObjectActual.GetComponent<Animator>().speed = 1f / speedRandom;
+    }
+
+    void SetAnimationState(float seconds)
+    {
+        pipeObjectActual.GetComponent<Animator>().Play("StartPathPipes", 0, seconds);
+    }
+
+    void SetCoinAnimationState(float seconds)
+    {
+        pipeObjectActual.GetComponent<Animator>().Play("MiddlePathPipes", 0, seconds);
     }
 
     IEnumerator MaaterializeProduct(Transform productTransform, float duration)

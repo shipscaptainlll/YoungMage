@@ -32,7 +32,7 @@ public class DefractorResource : MonoBehaviour
     {
         if (other.GetComponent<RotatingCones>() != null)
         {
-            Debug.Log("triggered");
+            //Debug.Log("triggered");
             InstantiateDestroyableVersion();
             if (objectContactedDefractor != null) { objectContactedDefractor(transform); }
             

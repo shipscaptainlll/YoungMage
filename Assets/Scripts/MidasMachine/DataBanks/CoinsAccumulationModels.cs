@@ -35,23 +35,23 @@ public class CoinsAccumulationModels : MonoBehaviour
                 return null;
             case 1:
                 return oneCoin;
-            case 2:
+            case int n when (n >= 2 && n <5):
                 return twoCoins;
-            case 5:
+            case int n when (n >= 5 && n < 10):
                 return fewCoins;
-            case 10:
+            case int n when (n >= 10 && n < 25):
                 return smallAmmountCoins;
-            case 25:
+            case int n when (n >= 25 && n < 100):
                 return normalAmmountCoins;
-            case 100:
+            case int n when (n >= 100 && n < 125):
                 return bigAmmountCoins;
-            case 125:
+            case int n when (n >= 125 && n < 250):
                 return bigSmallAmmountCoins;
-            case 250:
+            case int n when (n >= 250 && n < 1000):
                 return bigNormalAmmountCoins;
-            case 1000:
+            case int n when (n >= 1000 && n < 2500):
                 return bigBigAmmountCoins;
-            case 2500:
+            case int n when (n >= 2500):
                 return sacketAmmountCoins;
         }
         return null;

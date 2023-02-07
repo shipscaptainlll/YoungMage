@@ -30,12 +30,6 @@ public class MidasConversionProcess : MonoBehaviour
         waterFallSound.Play();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void StartConversion(int resourceID)
     {
         ManageTransformationPS();
@@ -72,8 +66,16 @@ public class MidasConversionProcess : MonoBehaviour
         }
     }
 
+    public void ManuallyActivateDelay()
+    {
+        Debug.Log("We are here");
+        if (delayPSCoroutine != null) { Debug.Log("Coroutine has been started"); StopCoroutine(delayPSCoroutine); }
+        delayPSCoroutine = StartCoroutine(delayPS());
+    }
+
     IEnumerator delayPS()
     {
+        Debug.Log("Coroutine has been started");
         yield return new WaitForSeconds(17f);
         appearanceTransmutationCircle.CircleDisappearance();
         //transformationPS.Stop();

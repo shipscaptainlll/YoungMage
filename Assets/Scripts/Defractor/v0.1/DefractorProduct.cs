@@ -39,9 +39,10 @@ public class DefractorProduct : MonoBehaviour
                 if (element.GetComponent<ICounter>().ID == id)
                 {
                     element.GetComponent<ICounter>().AddResource(1);
-                    //Debug.Log("Aded to counter some resource " + element);
+                    Debug.Log("Aded to counter some resource " + element);
                 }
             }
+            Debug.Log("no counter was found" + id);
             Destroy(gameObject);
         }
     }

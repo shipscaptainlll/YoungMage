@@ -49,11 +49,11 @@ public static class PlayerDataApplier
     static void ApplyCameraRotation()
     {
         Vector3 cameraRotation = new Vector3(playerDataLoaded.cameraRotation[0], playerDataLoaded.cameraRotation[1], playerDataLoaded.cameraRotation[2]);
-        Debug.Log(cameraScriptLoaded.gameObject.transform.localRotation.eulerAngles);
+        //Debug.Log(cameraScriptLoaded.gameObject.transform.localRotation.eulerAngles);
         cameraScriptLoaded.gameObject.SetActive(false);
         if (cameraRotation.x > 50) { cameraRotation.x -= 360; }
         cameraScriptLoaded.YRotation = cameraRotation.x;
-        Debug.Log(cameraRotation);
+        //Debug.Log(cameraRotation);
         cameraScriptLoaded.gameObject.SetActive(true);
     }
 }

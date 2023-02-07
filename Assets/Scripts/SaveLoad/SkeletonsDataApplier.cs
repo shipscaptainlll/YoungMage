@@ -45,8 +45,8 @@ public static class SkeletonsDataApplier
     static void ApplyState(Transform skeletonsHolder, PersonMovement personScript, Transform tackledDoor, Transform oresHolder)
     {
         int indexer = 0;
-        Debug.Log("applied one skeleton state");
-        Debug.Log(skeletonsHolder.childCount);
+        //Debug.Log("applied one skeleton state");
+        //Debug.Log(skeletonsHolder.childCount);
         foreach (Transform skeleton in skeletonsHolder)
         {
             Debug.Log("weel hello there0");

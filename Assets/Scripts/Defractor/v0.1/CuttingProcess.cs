@@ -27,6 +27,18 @@ public class CuttingProcess : MonoBehaviour
         if (RotationStarted != null) { RotationStarted(); }
     }
 
+    public void StartRotationDelayed(float delay)
+    {
+        rotatingConeFirst.StartRotation(delay);
+        rotatingConeSecond.StartRotation(delay);
+    }
+
+    public void StartConesSlowingDown(float delay)
+    {
+        rotatingConeFirst.StopRotation(delay);
+        rotatingConeSecond.StopRotation(delay);
+    }
+
     public void StopConesRotation()
     {
         Debug.Log("cones rotation immediately stopped");

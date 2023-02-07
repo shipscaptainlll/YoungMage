@@ -23,6 +23,7 @@ public class SaveSystemSerialization : MonoBehaviour
     [SerializeField] CollectableObjectsInstantiator collectableObjectsInstantiator;
     [SerializeField] CollectableObjectsDeleter collectableObjectsDeleter;
     [SerializeField] DefractorStateMachine defractorStateMachine;
+    [SerializeField] MidasStateMachine midasStateMachine;
     int saveDirectoryPath;
     string gameDataPath;
     string playerPath;
@@ -32,9 +33,11 @@ public class SaveSystemSerialization : MonoBehaviour
     string indoorSkeletonsPath;
     string collectablePath;
     string defractorDataPath;
+    string midasDataPath;
     string arrowCatapultsPath;
     string stoneCatapultsPath;
     string outdoorSkeletonsPath;
+    
     int maxId;
     bool neverSaved = false;
 
@@ -51,7 +54,7 @@ public class SaveSystemSerialization : MonoBehaviour
     {
         saveDirectoryPath = GetLastsaveID();
         maxId = GetNextID();
-        Debug.Log("Max id is " + maxId);
+        //Debug.Log("Max id is " + maxId);
         UpdatePaths();
 
     }
@@ -96,7 +99,7 @@ public class SaveSystemSerialization : MonoBehaviour
             Debug.Log("save directory path was -1 ");
         }
 
-        Debug.Log("currently updating " + saveDirectoryPath);
+        //Debug.Log("currently updating " + saveDirectoryPath);
 
         //savePanel.AutosaveGame(saveDirectoryPath);
 
@@ -115,6 +118,8 @@ public class SaveSystemSerialization : MonoBehaviour
         CollectableDataSaver.SaveCollectableData(collectablesHolder, collectablePath);
 
         DefractorDataSaver.SaveDefractorData(defractorStateMachine, defractorDataPath);
+
+        MidasDataSaver.SaveMidasData(midasStateMachine, midasDataPath);
 
         //Debug.Log("game was saved");
     }
@@ -165,6 +170,8 @@ public class SaveSystemSerialization : MonoBehaviour
 
         DefractorDataApplier.ApplyDefractorData(defractorStateMachine, DefractorDataSaver.LoadDefractorData(defractorDataPath));
 
+        MidasDataDataApplier.ApplyMidasData(midasStateMachine, MidasDataSaver.LoadMidasData(midasDataPath));
+
         Debug.Log("game was loaded");
     }
 
@@ -174,7 +181,7 @@ public class SaveSystemSerialization : MonoBehaviour
         if (dir.GetDirectories().Length > 0)
         {
             var result = dir.GetDirectories().OrderBy(t => t.LastWriteTime).ToList();
-            Debug.Log("Last save is " + result[0].Name);
+            //Debug.Log("Last save is " + result[0].Name);
             return System.Int32.Parse(result[0].Name);
         } else
         {
@@ -213,6 +220,7 @@ public class SaveSystemSerialization : MonoBehaviour
         arrowCatapultsPath = GetPath("arrowCatapult");
         stoneCatapultsPath = GetPath("stoneCatapult");
         outdoorSkeletonsPath = GetPath("outdoorSkeleton");
+        midasDataPath = GetPath("midasDataPath");
     }
 
     string GetPath(string subName)
@@ -245,7 +253,7 @@ public class SaveSystemSerialization : MonoBehaviour
             Directory.CreateDirectory(Application.persistentDataPath + "/lastSave");
         } else
         {
-            Debug.Log("Directory: lastSave already exists ");
+            //Debug.Log("Directory: lastSave already exists ");
         }
     }
 }

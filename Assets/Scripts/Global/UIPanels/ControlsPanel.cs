@@ -139,7 +139,7 @@ public class ControlsPanel : MonoBehaviour
         mouseInverted = invertMouseToggle.isOn;
         if (SettingChanged != null) { SettingChanged(1); }
         chooseSound.Play();
-        Debug.Log("Mouse is inverted " + mouseInverted);
+        //Debug.Log("Mouse is inverted " + mouseInverted);
     }
 
     public void SetMouseSensitivity(Slider mouseSensitivitySlider)
@@ -147,7 +147,7 @@ public class ControlsPanel : MonoBehaviour
         mouseSensitivity = mouseSensitivitySlider.value;
         if (SettingChanged != null) { SettingChanged(1); }
         chooseSound.Play();
-        Debug.Log("Mouse sensitivity is setted: " + mouseSensitivity);
+        //Debug.Log("Mouse sensitivity is setted: " + mouseSensitivity);
     }
 
     public void ResetControls()
@@ -163,7 +163,7 @@ public class ControlsPanel : MonoBehaviour
         if (SettingChanged != null) { SettingChanged(1); }
         if (autorunWasToggled != null) { autorunWasToggled(autorunToggled); }
         chooseSound.Play();
-        Debug.Log("Autorun is toggle " + mouseInverted);
+        //Debug.Log("Autorun is toggle " + mouseInverted);
     }
 
     public void ApplyDefaultSettings()

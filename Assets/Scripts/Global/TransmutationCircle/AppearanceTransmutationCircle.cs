@@ -7,12 +7,14 @@ public class AppearanceTransmutationCircle : MonoBehaviour
     [Header("Main Part")]
     [SerializeField] ParticleSystem outerCirclePS;
     [SerializeField] ParticleSystem innerCirclePS;
+    bool circleShown;
 
     [Header("AppearanceSettings")]
     [SerializeField] Gradient appearanceGradient;
     [SerializeField] Gradient disappearanceGradient;
     Coroutine circleCoroutine;
 
+    public bool CircleShown { get { return circleShown; } }
     ParticleSystem.Particle[] outerParticles = new ParticleSystem.Particle[1];
     ParticleSystem.Particle[] innerParticles = new ParticleSystem.Particle[1];
 
@@ -38,13 +40,27 @@ public class AppearanceTransmutationCircle : MonoBehaviour
     public void CircleAppearance()
     {
         if (circleCoroutine != null) { StopCoroutine(circleCoroutine); }
+        circleShown = true;
         circleCoroutine = StartCoroutine(AppearCircle());
     }
 
     public void CircleDisappearance()
     {
         if (circleCoroutine != null) { StopCoroutine(circleCoroutine); }
+        circleShown = false;
         circleCoroutine = StartCoroutine(DisappearCircle());
+    }
+
+    public void ImmediateCircleDisappearance()
+    {
+        outerParticles = new ParticleSystem.Particle[1];
+        outerCirclePS.GetParticles(outerParticles);
+        if (innerCirclePS != null)
+        {
+            innerParticles = new ParticleSystem.Particle[1];
+            innerCirclePS.GetParticles(innerParticles);
+        }
+        outerCirclePS.gameObject.SetActive(false);
     }
 
     IEnumerator AppearCircle()

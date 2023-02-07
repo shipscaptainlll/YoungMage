@@ -10,8 +10,8 @@ public static class OreDataApplier
     public static void ApplyOreData(Transform oreDataHolder, OreData oreData)
     {
         UpdateData(oreDataHolder, oreData);
-        Debug.Log(oreData.health.Length);
-        Debug.Log(oreData.healthVesibility.Length);
+        //Debug.Log(oreData.health.Length);
+        //Debug.Log(oreData.healthVesibility.Length);
         ApplyHealth(oreDataHolder);
         ApplyHealthVisibility(oreDataHolder);
         DisconnectData();

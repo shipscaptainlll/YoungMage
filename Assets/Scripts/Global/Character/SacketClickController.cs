@@ -56,7 +56,7 @@ public class SacketClickController : MonoBehaviour
     {
         if (!delayActive)
         {
-            Debug.Log(transform);
+            //Debug.Log(transform);
             bookSpellsActivator.CastThrowObject();
             bookSpellsActivator.CastNullSpell();
 
@@ -202,7 +202,7 @@ public class SacketClickController : MonoBehaviour
     {
         foreach (Transform element in KickedOutItems)
         {
-            Debug.Log(element);
+            //Debug.Log(element);
             if (element == objectTransform)
             {
                 objectTransform.gameObject.GetComponent<DefractorResource>().objectContactedDefractor -= DestroyObject;
@@ -211,7 +211,7 @@ public class SacketClickController : MonoBehaviour
                 particles.gameObject.SetActive(true);
                 
                 Destroy(element.gameObject);
-                Debug.Log("was destroyed");
+                //Debug.Log("was destroyed");
                 break;
             }
         }

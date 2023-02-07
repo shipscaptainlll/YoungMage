@@ -13,10 +13,15 @@ public class RotatingCones : MonoBehaviour
     [SerializeField] ParticleSystem rotationParticleSystem;
     [SerializeField] AppearanceTransmutationCircle appearanceTransmutationCircle;
     float currentSpeed = 0;
+    float elapsed;
     bool rotating = false; 
     bool slowingDown = false;
+    bool circleShown;
 
     public bool Rotating { get { return rotating; } }
+    public bool SlowingDown { get { return slowingDown; } }
+    public float Elapsed { get { return elapsed; } }
+    public bool CircleShown { get { return circleShown; } }
 
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
@@ -39,14 +44,14 @@ public class RotatingCones : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //Debug.Log("Current state: is rotating " + rotating + " is slowing down " + slowingDown + " with elapsed " + elapsed);
     }
 
     void StartRotation()
     {
         if ( soundManager != null && !knivesRotationSounds.isPlaying) { knivesRotationSounds.Play(); }
         ActivateRotationPS();
-        Debug.Log("started cones rotation2");
+        //Debug.Log("started cones rotation2");
         rotating = true;
         slowingDown = false;
         StopAllCoroutines();
@@ -62,17 +67,51 @@ public class RotatingCones : MonoBehaviour
         {
             slowingDown = true;
             rotating = false;
+            elapsed = 0;
             StopAllCoroutines();
             StartCoroutine(StopRotationCoroutine());
         }
-        
-        
+    }
+
+    public void StopRotation(float delay)
+    {
+        if (soundManager != null && knivesRotationSounds.isPlaying) { knivesRotationSounds.Stop(); knivesStopSounds.Play(); }
+        //DeactivateRotationPS();
+        slowingDown = true;
+        rotating = false;
+        elapsed = delay;
+        StopAllCoroutines();
+        StartCoroutine(StopRotationCoroutine(elapsed));
+    }
+
+    public void StartRotation(float delay)
+    {
+        if (soundManager != null && !knivesRotationSounds.isPlaying) { knivesRotationSounds.Play(); }
+        //ActivateRotationPS();
+        Debug.Log("started cones rotation2");
+        rotating = true;
+        slowingDown = false;
+        StopAllCoroutines();
+        StartCoroutine(RotateCoroutine(delay));
+        StartCoroutine(Delay(delay));
+    }
+
+    public void StartSlowingDown()
+    {
+        slowingDown = true;
+        rotating = false;
+        elapsed = 0;
+        StopAllCoroutines();
+        StartCoroutine(StopRotationCoroutine());
     }
 
     public void ImmediateStopRotation()
     {
         if (soundManager != null && knivesRotationSounds.isPlaying) { knivesRotationSounds.Stop(); }
         StopAllCoroutines();
+        slowingDown = false;
+        rotating = false;
+        elapsed = 0;
         transform.Rotate(0, 0, 0);
     }
 
@@ -82,10 +121,16 @@ public class RotatingCones : MonoBehaviour
         StopRotation();
     }
 
+    IEnumerator Delay(float delay)
+    {
+        yield return new WaitForSeconds(5 - delay);
+        StopRotation();
+    }
+
     IEnumerator RotateCoroutine()
     {
-        Debug.Log("started cones rotation3");
-        float elapsed = 0;
+        //Debug.Log("started cones rotation3");
+        elapsed = 0;
         var done = false;
         while (true)
         {
@@ -95,6 +140,28 @@ public class RotatingCones : MonoBehaviour
                 elapsed += Time.deltaTime;
                 currentSpeed += Time.deltaTime * 100;
             } else if (!done && currentSpeed >= requiredSpeed) { done = true; currentSpeed = requiredSpeed; }
+            //.Log(currentSpeed);
+            //Debug.Log("started cones rotation4");
+            transform.Rotate(0, 0, currentSpeed * direction * Time.deltaTime);
+        }
+    }
+
+    IEnumerator RotateCoroutine(float delay)
+    {
+        Debug.Log("started cones rotation3");
+        elapsed = delay;
+        var done = false;
+        currentSpeed = Time.deltaTime * 100 * 60 * delay;
+        while (true)
+        {
+            yield return null;
+            if (!done && currentSpeed < requiredSpeed)
+            {
+                elapsed += Time.deltaTime;
+                //Debug.Log(currentSpeed);
+                currentSpeed += Time.deltaTime * 100;
+            }
+            else if (!done && currentSpeed >= requiredSpeed) { done = true; currentSpeed = requiredSpeed; }
             //Debug.Log("started cones rotation4");
             transform.Rotate(0, 0, currentSpeed * direction * Time.deltaTime);
         }
@@ -103,7 +170,7 @@ public class RotatingCones : MonoBehaviour
     IEnumerator StopRotationCoroutine()
     {
         slowingDown = true;
-        float elapsed = 0;
+        elapsed = 0;
         
         var done = false;
         while (true)
@@ -114,8 +181,30 @@ public class RotatingCones : MonoBehaviour
                 elapsed += Time.deltaTime;
                 currentSpeed -= Time.deltaTime * 100;
                 //Debug.Log(currentSpeed);
+                //Debug.Log(currentSpeed);
             }
-            else if (!done && currentSpeed <= requiredSpeed) { done = true; currentSpeed = 0; slowingDown = false; StopAllCoroutines(); }
+            else if (!done && currentSpeed <= requiredSpeed) { done = true; currentSpeed = 0; slowingDown = false; elapsed = 0; StopAllCoroutines(); }
+            transform.Rotate(0, 0, currentSpeed * direction * Time.deltaTime);
+        }
+    }
+
+    IEnumerator StopRotationCoroutine(float delay)
+    {
+        slowingDown = true;
+        elapsed = delay;
+        currentSpeed = 250 - Time.deltaTime * 100 * 60 * delay;
+        var done = false;
+        while (true)
+        {
+            yield return null;
+            if (!done && currentSpeed > 0)
+            {
+                elapsed += Time.deltaTime;
+                //Debug.Log(currentSpeed);
+                currentSpeed -= Time.deltaTime * 100;
+                //Debug.Log(currentSpeed);
+            }
+            else if (!done && currentSpeed <= requiredSpeed) { done = true; currentSpeed = 0; slowingDown = false; elapsed = 0; StopAllCoroutines(); }
             transform.Rotate(0, 0, currentSpeed * direction * Time.deltaTime);
         }
     }
@@ -126,7 +215,16 @@ public class RotatingCones : MonoBehaviour
         {
             appearanceTransmutationCircle.CircleAppearance();
             conjurationAppearSound.Play();
+            circleShown = true;
         }
+    }
+
+    public void ImmediateActivateRotationPS()
+    {
+        ImmediateDeactivateRotationPS();
+        appearanceTransmutationCircle.CircleAppearance();
+        conjurationAppearSound.Play();
+        circleShown = true;
     }
 
     void DeactivateRotationPS()
@@ -134,6 +232,13 @@ public class RotatingCones : MonoBehaviour
         if (soundManager != null && rotationParticleSystem.isPlaying)
         {
             appearanceTransmutationCircle.CircleDisappearance();
+            circleShown = false;
         }
+    }
+
+    public void ImmediateDeactivateRotationPS()
+    {
+        appearanceTransmutationCircle.ImmediateCircleDisappearance();
+        circleShown = false;
     }
 }

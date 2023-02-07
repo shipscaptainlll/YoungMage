@@ -8,6 +8,7 @@ public class MidasCollectorCatcher : MonoBehaviour
 {
     [SerializeField] Material dematerializeMaterial;
     [SerializeField] SoundManager soundManager;
+    [SerializeField] Transform incomeObjectsPool;
     AudioSource dissolvingSound;
     AudioSource waterFallinSound;
 
@@ -29,12 +30,15 @@ public class MidasCollectorCatcher : MonoBehaviour
     {
         if (other.GetComponent<MidasResource>() != null && !other.GetComponent<MidasResource>().BeingDissolved)
         {
+            Debug.Log("Catched " + other);
             other.GetComponent<MidasResource>().BeingDissolved = true;
             ApplySounds(other.transform);
             int resourceID = other.GetComponent<GlobalResource>().ID;
             if (ResourceEnteredCollector != null) { ResourceEnteredCollector(resourceID); }
             other.GetComponent<ConnectableResource>().DissolvingDestruction();
             other.GetComponent<MidasResource>().DissolvingDestruction();
+            other.transform.Find("LevitationPS").gameObject.SetActive(false);
+            other.transform.parent = incomeObjectsPool;
             StartCoroutine(DematerializeProduct(other.transform, 4));
             Debug.Log(other);
             if (other.transform.GetChild(0).GetComponent<OreLevitator>() != null) { other.transform.GetChild(0).GetComponent<OreLevitator>().DeactivateLevitation(); }
@@ -50,6 +54,19 @@ public class MidasCollectorCatcher : MonoBehaviour
         dissolvingSound = soundManager.LocateAudioSource("DissolvingObject", appliedToObject);
         dissolvingSound.Play();
         waterFallinSound.Play();
+    }
+
+    public void DematerializeUploaded(Transform uploadedOre)
+    {
+        uploadedOre.GetComponent<MidasResource>().BeingDissolved = true;
+        ApplySounds(uploadedOre.transform);
+        uploadedOre.GetComponent<ConnectableResource>().DissolvingDestruction();
+        uploadedOre.GetComponent<MidasResource>().DissolvingDestruction();
+        uploadedOre.Find("LevitationPS").gameObject.SetActive(false);
+        uploadedOre.transform.parent = incomeObjectsPool;
+        StartCoroutine(DematerializeProduct(uploadedOre, 4));
+        if (uploadedOre.transform.GetChild(0).GetComponent<OreLevitator>() != null) { uploadedOre.transform.GetChild(0).GetComponent<OreLevitator>().DeactivateLevitation(); }
+        
     }
 
     IEnumerator DematerializeProduct(Transform productTransform, float duration)
