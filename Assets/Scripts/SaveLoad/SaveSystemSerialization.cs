@@ -24,6 +24,7 @@ public class SaveSystemSerialization : MonoBehaviour
     [SerializeField] CollectableObjectsDeleter collectableObjectsDeleter;
     [SerializeField] DefractorStateMachine defractorStateMachine;
     [SerializeField] MidasStateMachine midasStateMachine;
+    [SerializeField] CityUpgradeStateMachine cityUpgradeStateMachine;
     int saveDirectoryPath;
     string gameDataPath;
     string playerPath;
@@ -34,6 +35,7 @@ public class SaveSystemSerialization : MonoBehaviour
     string collectablePath;
     string defractorDataPath;
     string midasDataPath;
+    string cityUpgradeDataPath;
     string arrowCatapultsPath;
     string stoneCatapultsPath;
     string outdoorSkeletonsPath;
@@ -121,6 +123,8 @@ public class SaveSystemSerialization : MonoBehaviour
 
         MidasDataSaver.SaveMidasData(midasStateMachine, midasDataPath);
 
+        CityUpgradeDataSaver.SaveCityUpgradeData(cityUpgradeStateMachine, cityUpgradeDataPath);
+
         //Debug.Log("game was saved");
     }
 
@@ -172,6 +176,8 @@ public class SaveSystemSerialization : MonoBehaviour
 
         MidasDataDataApplier.ApplyMidasData(midasStateMachine, MidasDataSaver.LoadMidasData(midasDataPath));
 
+        CityUpgradeDataApplier.ApplyCityUpgradeData(cityUpgradeStateMachine, CityUpgradeDataSaver.LoadCityUpgradeData(cityUpgradeDataPath));
+
         Debug.Log("game was loaded");
     }
 
@@ -221,6 +227,7 @@ public class SaveSystemSerialization : MonoBehaviour
         stoneCatapultsPath = GetPath("stoneCatapult");
         outdoorSkeletonsPath = GetPath("outdoorSkeleton");
         midasDataPath = GetPath("midasDataPath");
+        cityUpgradeDataPath = GetPath("cityUpgradeDataPath");
     }
 
     string GetPath(string subName)

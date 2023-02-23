@@ -26,6 +26,10 @@ public class CastleHealthDecreaser : MonoBehaviour
 
     public float CurrentHealth
     {
+        get
+        {
+            return currentHealth;
+        }
         set
         {
             currentHealth = value;

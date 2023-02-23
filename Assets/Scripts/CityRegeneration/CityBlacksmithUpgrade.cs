@@ -28,12 +28,14 @@ public class CityBlacksmithUpgrade : MonoBehaviour
     float offsetUpgrade;
 
     int upgradeCost;
+    int defaultUpgradeCost;
     float costModifier;
 
     bool coroutineIsRunning;
     Coroutine scrollingCoroutine;
 
     int countUpgradesQuests;
+    public int UpgradeCurrentCount { get { return upgradeCurrentCount; } }
     public int CountUpgradesQuests { get { return countUpgradesQuests; } }
     public event Action<int> BlacksmithUpgradedQuests = delegate { };
     // Start is called before the first frame update
@@ -42,6 +44,7 @@ public class CityBlacksmithUpgrade : MonoBehaviour
         upgradeCurrentCount = 1;
         offsetUpgrade = 0.075f;
         upgradeCost = 100;
+        defaultUpgradeCost = upgradeCost;
         costModifier = 2.5f;
         upgradesMaxCount = contentHolder.childCount - 4;
         upgradesBar.value = ((float)(upgradeCurrentCount) / (float)(upgradesMaxCount+2.5f)) + offsetUpgrade;
@@ -49,11 +52,6 @@ public class CityBlacksmithUpgrade : MonoBehaviour
         //Debug.Log(upgradesBar.value);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void UpgradeBlacksmith()
     {
@@ -78,6 +76,15 @@ public class CityBlacksmithUpgrade : MonoBehaviour
         }
     }
 
+    public void UploadBlacksmithLevel(int uploadedLevel)
+    {
+        upgradeCurrentCount = uploadedLevel;
+        InitiateScrolling();
+
+        UpgradeCost();
+        UpdateCostText();
+    }
+
     bool TakeUpgradeMoney()
     { 
         if (goldCoinsCounter.Count <= upgradeCost)
@@ -90,7 +97,12 @@ public class CityBlacksmithUpgrade : MonoBehaviour
 
     void UpgradeCost()
     {
-        upgradeCost = (int) (upgradeCost * costModifier);
+        float cacheUpgradeCost = defaultUpgradeCost;
+        for (int i = 1; i < upgradeCurrentCount; i++)
+        {
+            cacheUpgradeCost *= costModifier;
+        }
+        upgradeCost = (int) (cacheUpgradeCost);
     }
 
     void UpdateCostText()
