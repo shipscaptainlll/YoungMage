@@ -17,10 +17,17 @@ public class MagicDoor : MonoBehaviour
     Coroutine closingCoroutine;
     Vector3 startRotation;
 
+    float coroutineStage;
+
     bool playerInInitiator;
     bool doorOpened;
     bool bumpSoundPlayed;
+
+    public float CoroutineStage { get { return coroutineStage; } }
     public bool PlayerInInitiator { get { return playerInInitiator; } set { playerInInitiator = value; } }
+    public bool DoorOpened { get { return doorOpened; } }
+    public Coroutine OpeningCoroutineGetter { get { return openingCoroutine; } }
+    public Coroutine ClosingCoroutineGetter { get { return closingCoroutine; } }
 
     void Start()
     {
@@ -63,6 +70,17 @@ public class MagicDoor : MonoBehaviour
         }
     }
 
+    public void UploadDoorOpening(float uploadedElapsed)
+    {
+        StopAllCoroutines();
+        openingCoroutine = null;
+        closingCoroutine = null;
+        coroutineStage = 0;
+        doorOpened = true;
+        doorOpeningSound.Play();
+        openingCoroutine = StartCoroutine(OpeningCoroutine(5, uploadedElapsed));
+    }
+
     public void CloseTheDoor()
     {
         if (doorOpened)
@@ -80,6 +98,33 @@ public class MagicDoor : MonoBehaviour
         }
     }
 
+    public void UploadDoorClosing(float uploadedElapsed)
+    {
+        StopAllCoroutines();
+        openingCoroutine = null;
+        closingCoroutine = null;
+        coroutineStage = 0;
+        doorClosingSound.Play();
+        closingCoroutine = StartCoroutine(ClosingCoroutine(uploadedElapsed));
+    }
+
+    public void UploadDoorState(bool doorUploadedOpened)
+    {
+        StopAllCoroutines();
+        openingCoroutine = null;
+        closingCoroutine = null;
+        coroutineStage = 0;
+        doorOpened = doorUploadedOpened;
+        if (doorUploadedOpened)
+        {
+            transform.rotation = Quaternion.Euler(new Vector3(startRotation.x, startRotation.y, startRotation.z - 60));
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(new Vector3(startRotation.x, startRotation.y, startRotation.z));
+        }
+    }
+
     IEnumerator OpeningCoroutine(float delay)
     {
         float elapsed = 0;
@@ -88,6 +133,26 @@ public class MagicDoor : MonoBehaviour
         while (elapsed < delay)
         {
             elapsed += Time.deltaTime;
+            coroutineStage = elapsed;
+            currentRotation = Mathf.Lerp(startRotation.z, startRotation.z - 60, openingAnimationCurve.Evaluate(elapsed / delay));
+            transform.rotation = Quaternion.Euler(new Vector3(startRotation.x, startRotation.y, currentRotation));
+            yield return null;
+        }
+
+        transform.rotation = Quaternion.Euler(new Vector3(startRotation.x, startRotation.y, startRotation.z - 60));
+        openingCoroutine = null;
+        yield return null;
+    }
+
+    IEnumerator OpeningCoroutine(float delay, float uploadedElapsed)
+    {
+        float elapsed = uploadedElapsed;
+        float currentRotation = 0;
+
+        while (elapsed < delay)
+        {
+            elapsed += Time.deltaTime;
+            coroutineStage = elapsed;
             currentRotation = Mathf.Lerp(startRotation.z, startRotation.z - 60, openingAnimationCurve.Evaluate(elapsed / delay));
             transform.rotation = Quaternion.Euler(new Vector3(startRotation.x, startRotation.y, currentRotation));
             yield return null;
@@ -109,6 +174,7 @@ public class MagicDoor : MonoBehaviour
         while (elapsed < delay)
         {
             elapsed += Time.deltaTime;
+            coroutineStage = elapsed;
             currentRotation = Mathf.Lerp(zStartRotation, startRotation.z, closingAnimationCurve.Evaluate(elapsed / delay));
             if (!bumpSoundPlayed && elapsed > 0.4f)
             {
@@ -116,6 +182,41 @@ public class MagicDoor : MonoBehaviour
                 bumpSoundPlayed = true;
             }
             
+            transform.rotation = Quaternion.Euler(new Vector3(startRotation.x, startRotation.y, currentRotation));
+            yield return null;
+        }
+        transform.rotation = Quaternion.Euler(new Vector3(startRotation.x, startRotation.y, startRotation.z));
+
+        bumpSoundPlayed = false;
+        closingCoroutine = null;
+        doorOpened = false;
+        yield return null;
+    }
+
+    IEnumerator ClosingCoroutine(float uploadedElapsed)
+    {
+        float elapsed = uploadedElapsed;
+        float delay = 1;
+        float zStartRotation = transform.rotation.eulerAngles.z;
+        float currentRotation;
+        //float currentRotation = 0;
+
+        if (elapsed > 0.4f)
+        {
+            bumpSoundPlayed = true;
+        }
+
+        while (elapsed < delay)
+        {
+            elapsed += Time.deltaTime;
+            coroutineStage = elapsed;
+            currentRotation = Mathf.Lerp(zStartRotation, startRotation.z, closingAnimationCurve.Evaluate(elapsed / delay));
+            if (!bumpSoundPlayed && elapsed > 0.4f)
+            {
+                doorBumpingSound.Play();
+                bumpSoundPlayed = true;
+            }
+
             transform.rotation = Quaternion.Euler(new Vector3(startRotation.x, startRotation.y, currentRotation));
             yield return null;
         }

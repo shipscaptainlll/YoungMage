@@ -25,6 +25,7 @@ public class SaveSystemSerialization : MonoBehaviour
     [SerializeField] DefractorStateMachine defractorStateMachine;
     [SerializeField] MidasStateMachine midasStateMachine;
     [SerializeField] CityUpgradeStateMachine cityUpgradeStateMachine;
+    [SerializeField] DoorsStateMachine doorsStateMachine;
     int saveDirectoryPath;
     string gameDataPath;
     string playerPath;
@@ -36,6 +37,7 @@ public class SaveSystemSerialization : MonoBehaviour
     string defractorDataPath;
     string midasDataPath;
     string cityUpgradeDataPath;
+    string doorsDataPath;
     string arrowCatapultsPath;
     string stoneCatapultsPath;
     string outdoorSkeletonsPath;
@@ -125,6 +127,8 @@ public class SaveSystemSerialization : MonoBehaviour
 
         CityUpgradeDataSaver.SaveCityUpgradeData(cityUpgradeStateMachine, cityUpgradeDataPath);
 
+        DoorsDataSaver.SaveDoorsData(doorsStateMachine, doorsDataPath);
+
         //Debug.Log("game was saved");
     }
 
@@ -152,6 +156,8 @@ public class SaveSystemSerialization : MonoBehaviour
 
     void LoadingProgress()
     {
+        DoorsDataApplier.ApplyDoorsData(doorsStateMachine, DoorsDataSaver.LoadDoorsData(doorsDataPath));
+
         GameDataApplier.ApplyGameData(timeHolder, GameDataSaver.LoadGameData(gameDataPath));
 
         PlayerDataApplier.ApplyPlayerData(mainCharacterScript, mainCharacterCamera, PlayerDataSaver.LoadPlayerData(playerPath));
@@ -177,6 +183,8 @@ public class SaveSystemSerialization : MonoBehaviour
         MidasDataDataApplier.ApplyMidasData(midasStateMachine, MidasDataSaver.LoadMidasData(midasDataPath));
 
         CityUpgradeDataApplier.ApplyCityUpgradeData(cityUpgradeStateMachine, CityUpgradeDataSaver.LoadCityUpgradeData(cityUpgradeDataPath));
+
+        
 
         Debug.Log("game was loaded");
     }
@@ -228,6 +236,7 @@ public class SaveSystemSerialization : MonoBehaviour
         outdoorSkeletonsPath = GetPath("outdoorSkeleton");
         midasDataPath = GetPath("midasDataPath");
         cityUpgradeDataPath = GetPath("cityUpgradeDataPath");
+        doorsDataPath = GetPath("doorsDataPath");
     }
 
     string GetPath(string subName)

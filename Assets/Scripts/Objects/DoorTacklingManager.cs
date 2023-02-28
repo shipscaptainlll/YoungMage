@@ -38,12 +38,6 @@ public class DoorTacklingManager : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void ConnectSkeleton(SkeletonBehavior connectingSkeleton)
     {
         VisualiseOreHealthbar();

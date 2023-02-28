@@ -92,7 +92,7 @@ public class DoorHealthDecreaser : MonoBehaviour
         destroyPSNew.gameObject.AddComponent<DestroyableParticleSystem>();
         destroyPSNew.gameObject.GetComponent<DestroyableParticleSystem>().TimeDestruction = 7;
         destroyableDoorNew.Rotate(0, 90, 0);
-        Destroy(motherGameObject);
+        motherGameObject.SetActive(false);
     }
 
     IEnumerator SmoothHealthIncrease(float updatedWidth)
