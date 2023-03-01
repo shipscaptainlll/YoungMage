@@ -5,7 +5,7 @@ using UnityEngine;
 public class DoorConnectionManager : MonoBehaviour
 {
     [SerializeField] Transform doorsPotentialPositions;
-    static List<Transform> actualPositions = new List<Transform>();
+    List<Transform> actualPositions = new List<Transform>();
     // Start is called before the first frame update
     void Start()
     {
@@ -15,8 +15,10 @@ public class DoorConnectionManager : MonoBehaviour
         }
     }
 
-    public static Transform GetPosition()
+    public Transform GetPosition()
     {
+        Debug.Log("was connected to doors number " + transform.name);
+        Debug.Log("number of left positions " + actualPositions.Count);
         if (actualPositions.Count > 0)
         {
             int positionId = Random.Range(0, actualPositions.Count);
@@ -28,7 +30,16 @@ public class DoorConnectionManager : MonoBehaviour
         return null;
     }
 
-    public static void ReturnPosition(Transform position)
+    public void ResetPositions()
+    {
+        actualPositions = new List<Transform>();
+        foreach (Transform positon in doorsPotentialPositions)
+        {
+            actualPositions.Add(positon);
+        }
+    }
+
+    public void ReturnPosition(Transform position)
     {
         //Debug.Log(actualPositions.Count);
         actualPositions.Add(position);

@@ -13,6 +13,7 @@ public class SkeletonData
     public bool[] isExcomunicated;
     public bool[] isTacklingDoor;
     public int[] indexerOreSaved;
+    public int[] connectedDoorIndex;
 
     public SkeletonData(Transform skeletonsHolder, Transform oresHolder)
     {
@@ -100,6 +101,7 @@ public class SkeletonData
             {
                 Debug.Log("skeleton was tackling door");
                 isTacklingDoor[indexer] = true;
+                connectedDoorIndex[indexer] = skeleton.GetComponent<SkeletonBehavior>().NavigationTarget.parent.GetComponent<DoorTacklingManager>().DoorLevel;
             } else if (skeleton.GetComponent<SkeletonBehavior>().BeingUnconjured)
             {
                 Debug.Log("skeleton was unconjured");

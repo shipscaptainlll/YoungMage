@@ -66,6 +66,11 @@ public class SkeletonsStack : MonoBehaviour
 
     }
 
+    public void DeleteHouseSkeletons()
+    {
+        skeletonsStack = new List<Transform>();
+    }
+
     void DeleteHouseSkeleton(Transform deletedSkeleton)
     {
         skeletonsHouseStack.Remove(deletedSkeleton);

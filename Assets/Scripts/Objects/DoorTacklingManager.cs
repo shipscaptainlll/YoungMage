@@ -7,6 +7,7 @@ public class DoorTacklingManager : MonoBehaviour
     [SerializeField] DoorHealthDecreaser doorHealthDecreaser;
     [SerializeField] DoorOpen leftDoorOpener;
     [SerializeField] DoorOpen rightDoorOpener;
+    [SerializeField] int doorLevel;
 
     [Header("Audio Connection")]
     [SerializeField] SoundManager soundManager;
@@ -31,6 +32,8 @@ public class DoorTacklingManager : MonoBehaviour
             connectedSkeleton = value;
         }
     }
+
+    public int DoorLevel { get { return doorLevel; } }
     // Start is called before the first frame update
     void Start()
     {

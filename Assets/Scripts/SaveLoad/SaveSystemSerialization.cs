@@ -26,6 +26,7 @@ public class SaveSystemSerialization : MonoBehaviour
     [SerializeField] MidasStateMachine midasStateMachine;
     [SerializeField] CityUpgradeStateMachine cityUpgradeStateMachine;
     [SerializeField] DoorsStateMachine doorsStateMachine;
+    [SerializeField] SkeletonsDeleter skeletonsDeleter;
     int saveDirectoryPath;
     string gameDataPath;
     string playerPath;
@@ -174,7 +175,7 @@ public class SaveSystemSerialization : MonoBehaviour
 
         InventoryDataApplier.ApplyInventoryData(mainInventoryHolder, innerQuickaccessHolder, outerQuickaccessHolder, quickAccessHandController, InventoryDataSaver.LoadInventoryData(inventoryPath));
 
-        SkeletonsDataApplier.ApplySkeletonsData(skeletonsIndoorHolder, skeletonHouseInstantiator, mainCharacterScript, oresHolder, tackledDoor, SkeletonsDataSaver.LoadSkeletonData(indoorSkeletonsPath));
+        SkeletonsDataApplier.ApplySkeletonsData(skeletonsIndoorHolder, skeletonHouseInstantiator, mainCharacterScript, oresHolder, tackledDoor, SkeletonsDataSaver.LoadSkeletonData(indoorSkeletonsPath), skeletonsDeleter);
 
         CollectableDataApplier.ApplyCollectableData(collectableObjectsDeleter, collectableObjectsInstantiator, CollectableDataSaver.LoadCollectableData(collectablePath));
 

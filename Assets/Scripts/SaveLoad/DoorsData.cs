@@ -11,6 +11,7 @@ public class DoorsData
     public bool hallDoorOpened;
     public float hallDoorStage;
     public bool thirdDoorActive;
+    public float thirdDoorHealth;
 
 
     public DoorsData(DoorsStateMachine doorsStateMachine)
@@ -18,6 +19,7 @@ public class DoorsData
         GetMinesEntranceState(doorsStateMachine);
         GetHallDoorState(doorsStateMachine);
         GetThirdDoorState(doorsStateMachine);
+        GetThirdDoorHealth(doorsStateMachine);
     }
 
     void GetMinesEntranceState(DoorsStateMachine doorsStateMachine)
@@ -55,6 +57,11 @@ public class DoorsData
     void GetHallDoorStage(DoorsStateMachine doorsStateMachine)
     {
         hallDoorStage = doorsStateMachine.GetHallDoorStage();
+    }
+
+    void GetThirdDoorHealth(DoorsStateMachine doorsStateMachine)
+    {
+        thirdDoorHealth = doorsStateMachine.GetThirdDoorHealth();
     }
 
 }

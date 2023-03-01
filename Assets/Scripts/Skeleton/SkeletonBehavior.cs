@@ -46,6 +46,7 @@ public class SkeletonBehavior : MonoBehaviour
     [SerializeField] SkeletonsStack skeletonsStack;
     [SerializeField] bool beingTested;
     [SerializeField] bool homeVersion;
+    [SerializeField] Transform doorsHolder;
     Transform attachedCopycat;
     Transform occupiedArenaPosition;
     Transform fracturedSkeleton;
@@ -304,7 +305,8 @@ public class SkeletonBehavior : MonoBehaviour
             } else if (navigationTarget != null && navigationTarget.parent.name == "SkeletonPositions" && value != null && value.parent.name != "SkeletonPositions")
             {
                 //Debug.Log("Disconnected from the ore");
-                DoorConnectionManager.ReturnPosition(navigationTarget);
+                
+                navigationTarget.parent.parent.GetComponent<DoorConnectionManager>().ReturnPosition(navigationTarget);
                 navigationTarget.parent.parent.GetComponent<DoorTacklingManager>().ConnectedSkeleton = null;
             } 
             
@@ -763,6 +765,16 @@ public class SkeletonBehavior : MonoBehaviour
         yield return null;
     }
 
+    public void DestroyUploadSkeleton()
+    {
+        bodySkinnedrenderer.gameObject.SetActive(false);
+        unusedCounter.gameObject.GetComponent<CanvasGroup>().alpha = 0;
+        Destroy(walkingGroundSound);
+        Destroy(walkingStoneSound);
+        Destroy(walkingStairsSound);
+        DestroyImmediate(gameObject);
+    }
+
     void ShakePlayerCamera()
     {
         //Debug.Log(Vector3.Distance(playerTransform.position, this.transform.position));
@@ -894,9 +906,22 @@ public class SkeletonBehavior : MonoBehaviour
                 targetOre.GetComponent<NavMeshObstacle>().enabled = false;
             }
             
-            if (targetOre.name == "MinesDoor")
+            if (targetOre.transform.GetComponent<DoorTacklingManager>() != null)
             {
-                NavigationTarget = DoorConnectionManager.GetPosition();
+                int doorIndex = targetOre.transform.GetComponent<DoorTacklingManager>().DoorLevel;
+                Debug.Log("found door hand index " + doorIndex);
+                DoorConnectionManager targetConnectionManager = null;
+                foreach (Transform door in doorsHolder)
+                {
+                    Debug.Log("searched door hand index " + door.GetComponent<DoorTacklingManager>().DoorLevel);
+                    if (door.GetComponent<DoorTacklingManager>().DoorLevel == doorIndex)
+                    {
+                        targetConnectionManager = door.GetComponent<DoorConnectionManager>();
+                        break;
+                    }
+                    
+                }
+                NavigationTarget = targetConnectionManager.GetPosition();
             } else
             {
                 NavigationTarget = targetOre;
@@ -907,9 +932,10 @@ public class SkeletonBehavior : MonoBehaviour
             Debug.Log("Skeleton is not connected to anything "); }
     }
 
-    public void AddTarget(DoorTacklingManager targetDoors)
+    public void AddTarget(DoorConnectionManager targetDoors)
     {
-        NavigationTarget = DoorConnectionManager.GetPosition();
+        NavigationTarget = targetDoors.GetPosition();
+
     }
 
     public void ShowEmotion()

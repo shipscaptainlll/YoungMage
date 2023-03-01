@@ -7,9 +7,10 @@ public static class SkeletonsDataApplier
     static Transform skeletonsHolderLoad;
     static SkeletonData skeletonDataLoaded;
 
-    public static void ApplySkeletonsData(Transform skeletonsHolder, SkeletonHouseInstantiator skeletonHouseInstantiator, PersonMovement personScript, Transform oresHolder, Transform tackledDoor, SkeletonData skeletonData)
+    public static void ApplySkeletonsData(Transform skeletonsHolder, SkeletonHouseInstantiator skeletonHouseInstantiator, PersonMovement personScript, Transform oresHolder, Transform tackledDoor, SkeletonData skeletonData, SkeletonsDeleter skeletonsDeleter)
     {
         UpdateData(skeletonsHolder, skeletonData);
+        DeletePreviousSkeletons(skeletonsDeleter, skeletonsHolder);
         InstantiateLoadedSkeleton(skeletonsHolder, skeletonHouseInstantiator);
         ApplyState(skeletonsHolder, personScript, tackledDoor, oresHolder);
         DisconnectData();
@@ -25,6 +26,11 @@ public static class SkeletonsDataApplier
     {
         skeletonsHolderLoad = null;
         skeletonDataLoaded = null;
+    }
+
+    static void DeletePreviousSkeletons(SkeletonsDeleter skeletonsDeleter, Transform skeletonsHolder)
+    {
+        skeletonsDeleter.DeleteInhouseSkeeletons(skeletonsHolder);
     }
 
     static void InstantiateLoadedSkeleton(Transform skeletonsHolder, SkeletonHouseInstantiator skeletonHouseInstantiator)
@@ -46,10 +52,11 @@ public static class SkeletonsDataApplier
     {
         int indexer = 0;
         //Debug.Log("applied one skeleton state");
-        //Debug.Log(skeletonsHolder.childCount);
+        Debug.Log("skeletons in holder " + skeletonsHolder.childCount);
+        
         foreach (Transform skeleton in skeletonsHolder)
         {
-            Debug.Log("weel hello there0");
+            Debug.Log("weel hello there0 + indexer " + indexer);
             if (skeletonDataLoaded.isIdle[indexer])
             {
                 Debug.Log("weel hello there");
@@ -82,7 +89,18 @@ public static class SkeletonsDataApplier
             else if (skeletonDataLoaded.isTacklingDoor[indexer])
             {
                 Debug.Log("weel hello there3");
-                skeleton.GetComponent<SkeletonBehavior>().AddTarget(tackledDoor.GetComponent<DoorTacklingManager>());
+                Transform searchedDoor = null;
+                foreach (Transform door in tackledDoor)
+                {
+                    if (door.GetComponent<DoorTacklingManager>().DoorLevel == skeletonDataLoaded.connectedDoorIndex[indexer])
+                    {
+                        Debug.Log("skeleton was connected to the door number " + skeletonDataLoaded.connectedDoorIndex[indexer]);
+                        searchedDoor = door;
+                        break;
+                    }
+                    
+                }
+                skeleton.GetComponent<SkeletonBehavior>().AddTarget(searchedDoor.GetComponent<DoorConnectionManager>());
             }
             else if (skeletonDataLoaded.isExcomunicated[indexer])
             {

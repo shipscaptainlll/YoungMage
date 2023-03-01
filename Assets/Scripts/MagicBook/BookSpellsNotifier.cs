@@ -42,7 +42,7 @@ public class BookSpellsNotifier : MonoBehaviour
             if (SkeletonConnected() && BookInHands()) { CastMiningSpell(); }
             else if (ObjectInHands() || ItemInHands()) { CastThrowObject(); } else { CastIdle(); }
         }
-        else if (currentObject.name == "MinesDoor")
+        else if (currentObject.transform.GetComponent<DoorTacklingManager>() != null)
         {
             if (SkeletonConnected() && BookInHands()) { CastMiningSpell(); }
             else if (ObjectInHands() || ItemInHands()) { CastThrowObject(); } else { CastIdle(); }

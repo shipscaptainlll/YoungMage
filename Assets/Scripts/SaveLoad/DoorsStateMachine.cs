@@ -7,6 +7,8 @@ public class DoorsStateMachine : MonoBehaviour
     [SerializeField] DoorOpener doorOpener;
     [SerializeField] MagicDoor magicDoor;
     [SerializeField] GameObject thirdDoor;
+    [SerializeField] DoorHealthDecreaser thirdDoorHealthDecreaser;
+    [SerializeField] DoorConnectionManager doorConnectionManager;
 
 
     public bool GetMinesEntranceState()
@@ -59,8 +61,14 @@ public class DoorsStateMachine : MonoBehaviour
         return thirdDoor.activeSelf;
     }
 
+    public float GetThirdDoorHealth()
+    {
+        return thirdDoorHealthDecreaser.CurrentHealth;
+    }
+
     public void ApplyThirdDoorState(DoorsData doorsData)
     {
+        doorConnectionManager.ResetPositions();
         if (doorsData.thirdDoorActive)
         {
             if (!thirdDoor.activeSelf)
@@ -76,5 +84,12 @@ public class DoorsStateMachine : MonoBehaviour
         }
         
     }
+
+    public void ApplyThirdDoorHealth(DoorsData doorsData)
+    {
+        thirdDoorHealthDecreaser.UploadDoorsHealth(doorsData.thirdDoorHealth);
+    }
+
+    
 
 }

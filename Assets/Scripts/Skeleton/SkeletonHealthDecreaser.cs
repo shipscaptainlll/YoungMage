@@ -53,6 +53,14 @@ public class SkeletonHealthDecreaser : MonoBehaviour
         if (portalOpener.ChoosenSkeleton == transform) { portalOpener.InitiatePortalOpening(); }
     }
 
+    public void DestroyUploading()
+    {
+        //isDestroyable = false;
+        //UnscubscribeSkeletonSoldier();
+        //DestroySkeleton();
+        //skeletonBehavior.DestroyUploadSkeleton();
+    }
+
     public void UnscubscribeSkeletonSoldier()
     {
         if (SkeletonUnsubscribed != null) { SkeletonUnsubscribed(); }

@@ -34,5 +34,6 @@ public static class DoorsDataApplier
         else if (doorsData.hallDoorClosing) { Debug.Log("halls doors were closing"); doorsStateMachine.ApplyHallDoorClosing(doorsData); } 
         else { Debug.Log("halls doors were opened" + doorsData.hallDoorOpened); doorsStateMachine.ApplyHallDoorState(doorsData); }
         doorsStateMachine.ApplyThirdDoorState(doorsData);
+        Debug.Log("Current health of third door is " + doorsData.thirdDoorHealth); doorsStateMachine.ApplyThirdDoorHealth(doorsData);
     }
 }

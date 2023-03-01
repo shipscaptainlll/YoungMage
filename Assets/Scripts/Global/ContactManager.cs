@@ -192,10 +192,10 @@ public class ContactManager : MonoBehaviour
                     bookSpellsActivator.CastContactMachinery();
 
                 }
-                else if (contactedObject.name == "MinesDoor")
+                else if (contactedObject.transform.GetComponent<DoorTacklingManager>() != null)
                 {
                     //Debug.Log("found mines foor");
-                    if (DoorConnectionManager.GetPosition() != null) {
+                    if (contactedObject.transform.GetComponent<DoorConnectionManager>().GetPosition() != null) {
                         if (MinesDoorDetected != null)
                         {
                             MinesDoorDetected(contactedObject);

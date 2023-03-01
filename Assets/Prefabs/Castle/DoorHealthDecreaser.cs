@@ -24,6 +24,7 @@ public class DoorHealthDecreaser : MonoBehaviour
 
     int currentDamage;
     RectTransform healthTransform;
+    Coroutine healthDecreasingCoroutine;
     public event Action HealthReachedZero = delegate { };
 
     public float CurrentHealth { get { return currentHealth; } set { currentHealth = value; } }
@@ -53,10 +54,20 @@ public class DoorHealthDecreaser : MonoBehaviour
     public void DealDamage(float damage)
     {
         currentHealth -= currentDamage;
+        int updatedWidth = CalculateTargetWidth(damage);
+        if (healthDecreasingCoroutine != null)
+        {
+            StopCoroutine(healthDecreasingCoroutine);
+            healthDecreasingCoroutine = null;
+        }
+        healthDecreasingCoroutine = StartCoroutine(SmoothHealthDecrease(updatedWidth));
+    }
+
+    int CalculateTargetWidth(float damage)
+    {
         float leftHealthPercent = ((currentHealth - damage) / maximumWidth) * 100;
         leftHealthPercent = Mathf.Clamp(leftHealthPercent, 0, 100);
-        int updatedWidth = (int)(leftHealthPercent * maximumWidth / 100);
-        StartCoroutine(SmoothHealthDecrease(updatedWidth));
+        return (int)(leftHealthPercent * maximumWidth / 100);
     }
 
     IEnumerator SmoothHealthDecrease(float updatedWidth)
@@ -79,6 +90,17 @@ public class DoorHealthDecreaser : MonoBehaviour
             DestroyDoor();
         }
         yield return null;
+    }
+
+    public void UploadDoorsHealth(float uploadedHealth)
+    {
+        if (healthDecreasingCoroutine != null)
+        {
+            StopCoroutine(healthDecreasingCoroutine);
+            healthDecreasingCoroutine = null;
+        }
+        currentHealth = uploadedHealth;
+        healthTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, CalculateTargetWidth(0));
     }
 
     void DestroyDoor()
