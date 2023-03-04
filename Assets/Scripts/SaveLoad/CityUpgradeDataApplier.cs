@@ -29,6 +29,7 @@ public static class CityUpgradeDataApplier
     static void ApplyCastleState(CityUpgradeStateMachine cityUpgradeDataStateMachine, CityUpgradeData cityUpgradeData)
     {
         Debug.Log("Applying city upgrade state");
+        Debug.Log("castle health was on " + cityUpgradeData.currentCastleHealth);
         if (cityUpgradeData.currentCastleHealth != 0) { Debug.Log("castle health was on " + cityUpgradeData.currentCastleHealth); cityUpgradeDataStateMachine.ApplyCastleHealth(cityUpgradeData); } else { Debug.Log("castle health was not on " + cityUpgradeData.currentCastleHealth); }
         if (cityUpgradeData.currentBlacksmithLevel != 0) { Debug.Log("blacksmith level was on " + cityUpgradeData.currentBlacksmithLevel); cityUpgradeDataStateMachine.ApplyBlacksmithParameters(cityUpgradeData); } else { Debug.Log("blacksmith level was not on " + cityUpgradeData.currentBlacksmithLevel); }
         if (cityUpgradeData.currentSphereLevel != 0 || cityUpgradeData.currentCountLevel != 0) { Debug.Log("castle sphere level was on " + cityUpgradeData.currentSphereLevel + " " + cityUpgradeData.currentCountLevel); cityUpgradeDataStateMachine.ApplyCastleData(cityUpgradeData); } else { Debug.Log("castle level was not on " + cityUpgradeData.currentSphereLevel + " " + cityUpgradeData.currentCountLevel); }

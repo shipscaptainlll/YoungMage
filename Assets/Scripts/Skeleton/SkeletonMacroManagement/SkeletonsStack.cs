@@ -9,6 +9,7 @@ public class SkeletonsStack : MonoBehaviour
     [SerializeField] CrossbowCatapultArenaInstantiator crossbowCatapultArenaInstantiator;
     [SerializeField] CatapultArenaInstantiator catapultArenaInstantiator;
     [SerializeField] SkeletonHouseInstantiator skeletonHouseInstantiator;
+    [SerializeField] Transform arenaSkeletonsHolder;
     List<Transform> skeletonsStack = new List<Transform>();//in field
     List<Transform> skeletonsHouseStack = new List<Transform>();
     List<Transform> skeletonsArena = new List<Transform>();
@@ -43,10 +44,32 @@ public class SkeletonsStack : MonoBehaviour
 
     }
 
+    public void ResetSkeletonsStack()
+    {
+        skeletonsStack = new List<Transform>();
+    }
+
     public void SaveSkeletonArena(Transform newSkeleton)
     {
         skeletonsArena.Add(newSkeleton);
         if (SkeletonArenaAdded != null) { SkeletonArenaAdded(); }
+    }
+
+    public void ResetSkeletonsArena()
+    {
+        int cacheCount = arenaSkeletonsHolder.childCount;
+        for (int i = 0; i < cacheCount; i++)
+        {
+            arenaSkeletonsHolder.GetChild(0).GetComponent<SkeletonBehavior>().UnsubscribeBeforeDestruction();
+            //Debug.Log("Count in lists: " + skeletonsStack.Count);
+
+            if (arenaSkeletonsHolder.GetChild(0).GetComponent<SkeletonBehavior>().FracturedSkeleton != null)
+            {
+                Destroy(arenaSkeletonsHolder.GetChild(0).GetComponent<SkeletonBehavior>().FracturedSkeleton.gameObject);
+            }
+            Destroy(arenaSkeletonsHolder.GetChild(0).gameObject);
+        }
+        skeletonsArena = new List<Transform>();
     }
 
     public void DeleteSkeleton(Transform deletedSkeleton)

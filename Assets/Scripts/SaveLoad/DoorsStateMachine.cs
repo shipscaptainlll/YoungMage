@@ -6,9 +6,18 @@ public class DoorsStateMachine : MonoBehaviour
 {
     [SerializeField] DoorOpener doorOpener;
     [SerializeField] MagicDoor magicDoor;
+    [SerializeField] GameObject firstDoor;
+    [SerializeField] DoorHealthDecreaser firstDoorHealthDecreaser;
+    [SerializeField] DoorConnectionManager firstDoorConnectionManager;
+    [SerializeField] DoorTacklingManager firstDoorTacklingManager;
+    [SerializeField] GameObject secondDoor;
+    [SerializeField] DoorHealthDecreaser secondDoorHealthDecreaser;
+    [SerializeField] DoorConnectionManager secondDoorConnectionManager;
+    [SerializeField] DoorTacklingManager secondDoorTacklingManager;
     [SerializeField] GameObject thirdDoor;
     [SerializeField] DoorHealthDecreaser thirdDoorHealthDecreaser;
-    [SerializeField] DoorConnectionManager doorConnectionManager;
+    [SerializeField] DoorConnectionManager thirdDoorConnectionManager;
+    [SerializeField] DoorTacklingManager thirdDoorTacklingManager;
 
 
     public bool GetMinesEntranceState()
@@ -56,9 +65,96 @@ public class DoorsStateMachine : MonoBehaviour
         magicDoor.UploadDoorState(doorsData.hallDoorOpened);
     }
 
+    public bool GetFirstDoorState()
+    {
+        return firstDoor.activeSelf;
+    }
+
+    public bool GetFirstDoorHealthVisible()
+    {
+        return firstDoorTacklingManager.HealthIsVisible;
+    }
+
+    public float GetFirstDoorHealth()
+    {
+        return firstDoorHealthDecreaser.CurrentHealth;
+    }
+
+    public void ApplyFirstDoorState(DoorsData doorsData)
+    {
+        firstDoorConnectionManager.ResetPositions();
+        if (doorsData.firstDoorActive)
+        {
+            if (!firstDoor.activeSelf)
+            {
+                firstDoor.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            if (firstDoor.activeSelf)
+            {
+                firstDoor.gameObject.SetActive(false);
+            }
+        }
+
+    }
+
+    public void ApplyFirstDoorHealth(DoorsData doorsData)
+    {
+        firstDoorHealthDecreaser.UploadDoorsHealth(doorsData.firstDoorHealth);
+        if (doorsData.firstDoorHealthVisible) { firstDoorTacklingManager.VisualiseOreHealthbar(); } else { firstDoorTacklingManager.HideOreHealthbar(); }
+    }
+
+    public bool GetSecondDoorState()
+    {
+        return secondDoor.activeSelf;
+    }
+
+    public bool GetSecondDoorHealthVisible()
+    {
+        return secondDoorTacklingManager.HealthIsVisible;
+    }
+
+    public float GetSecondDoorHealth()
+    {
+        return secondDoorHealthDecreaser.CurrentHealth;
+    }
+
+    public void ApplySecondDoorState(DoorsData doorsData)
+    {
+        secondDoorConnectionManager.ResetPositions();
+        if (doorsData.secondDoorActive)
+        {
+            if (!secondDoor.activeSelf)
+            {
+                secondDoor.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            if (secondDoor.activeSelf)
+            {
+                secondDoor.gameObject.SetActive(false);
+            }
+        }
+
+    }
+
+    public void ApplySecondDoorHealth(DoorsData doorsData)
+    {
+        secondDoorHealthDecreaser.UploadDoorsHealth(doorsData.secondDoorHealth);
+        if (doorsData.secondDoorHealthVisible) { secondDoorTacklingManager.VisualiseOreHealthbar(); } else { secondDoorTacklingManager.HideOreHealthbar(); }
+    }
+
     public bool GetThirdDoorState()
     {
         return thirdDoor.activeSelf;
+    }
+
+    public bool GetThirdDoorHealthVisible()
+    {
+        return thirdDoorTacklingManager.HealthIsVisible;
     }
 
     public float GetThirdDoorHealth()
@@ -68,7 +164,7 @@ public class DoorsStateMachine : MonoBehaviour
 
     public void ApplyThirdDoorState(DoorsData doorsData)
     {
-        doorConnectionManager.ResetPositions();
+        thirdDoorConnectionManager.ResetPositions();
         if (doorsData.thirdDoorActive)
         {
             if (!thirdDoor.activeSelf)
@@ -88,6 +184,7 @@ public class DoorsStateMachine : MonoBehaviour
     public void ApplyThirdDoorHealth(DoorsData doorsData)
     {
         thirdDoorHealthDecreaser.UploadDoorsHealth(doorsData.thirdDoorHealth);
+        if (doorsData.thirdDoorHealthVisible) { thirdDoorTacklingManager.VisualiseOreHealthbar(); } else { thirdDoorTacklingManager.HideOreHealthbar(); }
     }
 
     

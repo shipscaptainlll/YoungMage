@@ -47,6 +47,7 @@ public class SkeletonBehavior : MonoBehaviour
     [SerializeField] bool beingTested;
     [SerializeField] bool homeVersion;
     [SerializeField] Transform doorsHolder;
+    [SerializeField] Transform fracturedSkeletonsHolder;
     Transform attachedCopycat;
     Transform occupiedArenaPosition;
     Transform fracturedSkeleton;
@@ -59,7 +60,7 @@ public class SkeletonBehavior : MonoBehaviour
     [SerializeField] bool isLizardSkeleton;
     bool isCrouching;
 
-    public float Speed { get { return speed; } set { speed = value; 
+    public float Speed { get { return speed; } set { speed = value;
             navMeshAgent.speed = speed; } }
     public bool IsCrouching { get { return isCrouching; } set { isCrouching = value; isMoving = false; } }
     public Transform AttachedCopycat { get { return attachedCopycat; } set { attachedCopycat = value; } }
@@ -99,7 +100,7 @@ public class SkeletonBehavior : MonoBehaviour
     SkinnedMeshRenderer bodySkinnedrenderer;
 
     [Header("Castle Nav")]
-    List <Transform> CastleNavrout = new List<Transform>();
+    List<Transform> CastleNavrout = new List<Transform>();
 
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
@@ -109,11 +110,11 @@ public class SkeletonBehavior : MonoBehaviour
     AudioSource walkingStoneSound;
     AudioSource destroySkeletonSound;
     AudioSource goingThroughPortal;
-    
+
     bool goingPortalPlayed;
 
 
-    bool CastleNavroutActive;
+    bool castleNavroutActive;
     bool PotentialpositionsNavroutActive;
     int castleNavpointNumber;
     NavMeshAgent navMeshAgent;
@@ -136,8 +137,10 @@ public class SkeletonBehavior : MonoBehaviour
     bool rotatedEnough = false;
     string activity;
     bool cache = false;
+    bool hittingCastle = false;
+    bool connectedToPortal = false;
     Transform connectedCatapult;
-    
+
     bool reachedPosition;
     Coroutine changeColorCounter;
     Coroutine changeScaleCounter;
@@ -160,6 +163,10 @@ public class SkeletonBehavior : MonoBehaviour
 
     public bool IsConjured { get { return isConjured; } set { isConjured = value; } }
     public bool BeingUnconjured { get { return beingUnconjured; } }
+    public bool CastleNavroutActive { get { return castleNavroutActive; } set { castleNavroutActive = value; } }
+    public int CastleNavpointNumber { get { return castleNavpointNumber; } set { castleNavpointNumber = value; } }
+    public bool HittingCastle { get { return hittingCastle; } set { hittingCastle = value; } }
+    public bool ConnectedToPortal { get { return connectedToPortal; } set { connectedToPortal = value; } }
     public Transform ConnectedCatapult { get { return connectedCatapult; } set { connectedCatapult = value; } }
     public int ConnectedObjects { get { return connectedObjects; } set { connectedObjects = value; } }
     public bool IsConnectedHands { get { return isConnectedHands; } set { isConnectedHands = value; NotifyObjectConnected(); } }
@@ -242,7 +249,7 @@ public class SkeletonBehavior : MonoBehaviour
         {
             transform.GetComponent<CopycatCreator>().OriginTeleported += StopActivities;
         }
-        if (!homeVersion) { GotoCastle(); }
+        if (!homeVersion && !hittingCastle) { GotoCastle(); }
         if (homeVersion && !isConjured) { navigationTarget = null; }
         
     }
@@ -279,10 +286,20 @@ public class SkeletonBehavior : MonoBehaviour
         }
         set
         {
+            Debug.Log("hello there");
+            Debug.Log(value);
+            if (transform == null)
+            {
+                Debug.Log("was null");
+                return;
+            }
+            Debug.Log(transform);
             Debug.Log(value + " " + transform);
             isConjured = true;
             if (navigationTarget != null && navigationTarget.GetComponent<PortalCamera>() != null)
             {
+                if (hittingCastle) { hittingCastle = false; }
+                connectedToPortal = true;
                 StartCoroutine(CountDistancePortal());
             }
             if (navigationTarget != null && navigationTarget.GetComponent<IOre>() != null)
@@ -363,7 +380,7 @@ public class SkeletonBehavior : MonoBehaviour
         }
         
         if (navigationTarget != null) { navMeshAgent.destination = navigationTarget.position; }
-        if (CastleNavroutActive)
+        if (castleNavroutActive)
         {
             
             
@@ -372,14 +389,18 @@ public class SkeletonBehavior : MonoBehaviour
                 castleNavpointNumber++;
                 if (CastleNavrout.Count > (castleNavpointNumber))
                 {
+                    Debug.Log("current navpoint " + castleNavpointNumber);
+                    Debug.Log("heading to " + CastleNavrout[castleNavpointNumber]);
                     navigationTarget = CastleNavrout[castleNavpointNumber];
                 } else
                 {
+                    Debug.Log("Straifing to there");
                     PotentialpositionsNavroutActive = true;
+                    hittingCastle = true;
                     navigationTarget = castlePositionsManager.GetAvailablePosition();
                     occupiedArenaPosition = navigationTarget;
                     //Debug.Log("got this position " + occupiedArenaPosition);
-                    CastleNavroutActive = false;
+                    castleNavroutActive = false;
                 }
                 
             }
@@ -389,7 +410,7 @@ public class SkeletonBehavior : MonoBehaviour
         {
             if (navMeshAgent.velocity.magnitude < 0.15f)
             {
-                //Debug.Log("Reached Position");
+                Debug.Log("Reached Position");
                 if (ReachedCastle != null) { ReachedCastle(); }
                 skeletonsStack.SaveSkeletonArena(transform);
                 reachedPosition = true;
@@ -466,14 +487,52 @@ public class SkeletonBehavior : MonoBehaviour
     {
         if (CastleNavroutHolder != null)
         {
+            CastleNavrout = new List<Transform>();
             foreach (Transform point in CastleNavroutHolder)
             {
                 CastleNavrout.Add(point);
             }
-            CastleNavroutActive = true;
-            navigationTarget = CastleNavrout[0];
-            castleNavpointNumber = 0;
+            castleNavroutActive = true;
+            
+            if (castleNavpointNumber < 1)
+            {
+                castleNavpointNumber = 0;
+            }
+            Debug.Log("current started navpoitn " + castleNavpointNumber);
+            navigationTarget = CastleNavrout[castleNavpointNumber];
         }
+    }
+
+    public void UploadCastleRouteNumber(int narvoutNumber)
+    {
+        Debug.Log("hello2");
+        CastleNavrout = new List<Transform>();
+        if (CastleNavroutHolder != null)
+        {
+            Debug.Log("hello3");
+            foreach (Transform point in CastleNavroutHolder)
+            {
+                CastleNavrout.Add(point);
+            }
+            castleNavroutActive = true;
+            castleNavpointNumber = narvoutNumber;
+            if (castleNavpointNumber < 1)
+            {
+                castleNavpointNumber = 0;
+            }
+            navigationTarget = CastleNavrout[castleNavpointNumber];
+            Debug.Log("current uploaded navpoitn " + castleNavpointNumber);
+        }
+    }
+
+    public void UploadCastleHitting()
+    {
+        PotentialpositionsNavroutActive = true;
+        hittingCastle = true;
+        navigationTarget = castlePositionsManager.GetAvailablePosition();
+        occupiedArenaPosition = navigationTarget;
+        Debug.Log("1got this position " + occupiedArenaPosition);
+        castleNavroutActive = false;
     }
 
     void CheckIfStopped()
@@ -733,6 +792,7 @@ public class SkeletonBehavior : MonoBehaviour
         bodySkinnedrenderer.gameObject.SetActive(false);
         GameObject instantiatedDestroyedSkeleton = Instantiate(destroyedSkeleton, transform.position, transform.rotation);
         fracturedSkeleton = instantiatedDestroyedSkeleton.transform;
+        fracturedSkeleton.parent = fracturedSkeletonsHolder;
         destroySkeletonSound = soundManager.LocateAudioSource("SkeletonBlast", instantiatedDestroyedSkeleton.transform);
         destroySkeletonSound.Play();
         unusedCounter.gameObject.GetComponent<CanvasGroup>().alpha = 0;
@@ -896,7 +956,7 @@ public class SkeletonBehavior : MonoBehaviour
     public void AddTarget(Transform targetOre)
     {
         Debug.Log(navigationTarget);
-        Debug.Log(navigationTarget.GetComponent<PersonMovement>() != null);
+        //Debug.Log(navigationTarget.GetComponent<PersonMovement>() != null);
         if (navigationTarget != null && navigationTarget.GetComponent<PersonMovement>() != null)
         {
             navigationTarget.GetComponent<PersonMovement>().SkeletonAttached = false;

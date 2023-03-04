@@ -30,6 +30,7 @@ public static class SkeletonsDataApplier
 
     static void DeletePreviousSkeletons(SkeletonsDeleter skeletonsDeleter, Transform skeletonsHolder)
     {
+        skeletonsDeleter.DeleteFracturedSkeletons();
         skeletonsDeleter.DeleteInhouseSkeeletons(skeletonsHolder);
     }
 
@@ -92,6 +93,9 @@ public static class SkeletonsDataApplier
                 Transform searchedDoor = null;
                 foreach (Transform door in tackledDoor)
                 {
+                    Debug.Log(door.name);
+                    Debug.Log(door.GetComponent<DoorTacklingManager>().DoorLevel);
+                    Debug.Log(skeletonDataLoaded.connectedDoorIndex[indexer]);
                     if (door.GetComponent<DoorTacklingManager>().DoorLevel == skeletonDataLoaded.connectedDoorIndex[indexer])
                     {
                         Debug.Log("skeleton was connected to the door number " + skeletonDataLoaded.connectedDoorIndex[indexer]);

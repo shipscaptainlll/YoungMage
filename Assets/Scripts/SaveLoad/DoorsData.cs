@@ -10,7 +10,14 @@ public class DoorsData
     public bool hallDoorClosing;
     public bool hallDoorOpened;
     public float hallDoorStage;
+    public bool firstDoorActive;
+    public bool firstDoorHealthVisible;
+    public float firstDoorHealth;
+    public bool secondDoorActive;
+    public bool secondDoorHealthVisible;
+    public float secondDoorHealth;
     public bool thirdDoorActive;
+    public bool thirdDoorHealthVisible;
     public float thirdDoorHealth;
 
 
@@ -18,6 +25,10 @@ public class DoorsData
     {
         GetMinesEntranceState(doorsStateMachine);
         GetHallDoorState(doorsStateMachine);
+        GetFirstDoorHealth(doorsStateMachine);
+        GetFirstDoorState(doorsStateMachine);
+        GetSecondDoorHealth(doorsStateMachine);
+        GetSecondDoorState(doorsStateMachine);
         GetThirdDoorState(doorsStateMachine);
         GetThirdDoorHealth(doorsStateMachine);
     }
@@ -35,9 +46,37 @@ public class DoorsData
         GetHallDoorStage(doorsStateMachine);
     }
 
+    void GetFirstDoorState(DoorsStateMachine doorsStateMachine)
+    {
+        firstDoorActive = doorsStateMachine.GetFirstDoorState();
+        firstDoorHealthVisible = doorsStateMachine.GetFirstDoorHealthVisible();
+    }
+
+    void GetFirstDoorHealth(DoorsStateMachine doorsStateMachine)
+    {
+        firstDoorHealth = doorsStateMachine.GetFirstDoorHealth();
+    }
+
+    void GetSecondDoorState(DoorsStateMachine doorsStateMachine)
+    {
+        secondDoorActive = doorsStateMachine.GetSecondDoorState();
+        secondDoorHealthVisible = doorsStateMachine.GetSecondDoorHealthVisible();
+    }
+
+    void GetSecondDoorHealth(DoorsStateMachine doorsStateMachine)
+    {
+        secondDoorHealth = doorsStateMachine.GetSecondDoorHealth();
+    }
+
     void GetThirdDoorState(DoorsStateMachine doorsStateMachine)
     {
         thirdDoorActive = doorsStateMachine.GetThirdDoorState();
+        thirdDoorHealthVisible = doorsStateMachine.GetThirdDoorHealthVisible();
+    }
+
+    void GetThirdDoorHealth(DoorsStateMachine doorsStateMachine)
+    {
+        thirdDoorHealth = doorsStateMachine.GetThirdDoorHealth();
     }
 
     void GetHallDoorOpening(DoorsStateMachine doorsStateMachine)
@@ -59,9 +98,6 @@ public class DoorsData
         hallDoorStage = doorsStateMachine.GetHallDoorStage();
     }
 
-    void GetThirdDoorHealth(DoorsStateMachine doorsStateMachine)
-    {
-        thirdDoorHealth = doorsStateMachine.GetThirdDoorHealth();
-    }
+    
 
 }

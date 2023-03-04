@@ -33,6 +33,10 @@ public static class DoorsDataApplier
         if (doorsData.hallDoorOpening) { Debug.Log("halls doors were opening"); doorsStateMachine.ApplyHallDoorOpening(doorsData); }
         else if (doorsData.hallDoorClosing) { Debug.Log("halls doors were closing"); doorsStateMachine.ApplyHallDoorClosing(doorsData); } 
         else { Debug.Log("halls doors were opened" + doorsData.hallDoorOpened); doorsStateMachine.ApplyHallDoorState(doorsData); }
+        doorsStateMachine.ApplyFirstDoorState(doorsData);
+        Debug.Log("Current health of first door is " + doorsData.firstDoorHealth); doorsStateMachine.ApplyFirstDoorHealth(doorsData);
+        doorsStateMachine.ApplySecondDoorState(doorsData);
+        Debug.Log("Current health of second door is " + doorsData.secondDoorHealth); doorsStateMachine.ApplySecondDoorHealth(doorsData);
         doorsStateMachine.ApplyThirdDoorState(doorsData);
         Debug.Log("Current health of third door is " + doorsData.thirdDoorHealth); doorsStateMachine.ApplyThirdDoorHealth(doorsData);
     }

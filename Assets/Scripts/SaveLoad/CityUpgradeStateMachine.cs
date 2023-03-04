@@ -16,6 +16,7 @@ public class CityUpgradeStateMachine : MonoBehaviour
 
     public void ApplyCastleHealth(CityUpgradeData cityUpgradeData)
     {
+        Debug.Log("current health was " + cityUpgradeData.currentCastleHealth);
         castleHealthDecreaser.CurrentHealth = cityUpgradeData.currentCastleHealth;
     }
 

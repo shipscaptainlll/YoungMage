@@ -12,6 +12,7 @@ public class SkeletonHealthDecreaser : MonoBehaviour
     bool isDestroyable;
     float health;
 
+    public float Health { get { return health; } set { health = value; } }
     public event Action SkeletonUnsubscribed = delegate { };
     // Start is called before the first frame update
     void Start()

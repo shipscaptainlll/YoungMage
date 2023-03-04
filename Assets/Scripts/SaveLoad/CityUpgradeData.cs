@@ -33,6 +33,7 @@ public class CityUpgradeData
     void GetWallsParameters(CityUpgradeStateMachine cityUpgradeStateMachine)
     {
         currentCastleHealth = cityUpgradeStateMachine.GetCastleHealth();
+        Debug.Log("current health " + currentCastleHealth);
     }
 
 }

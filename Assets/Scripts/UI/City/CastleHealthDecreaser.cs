@@ -11,6 +11,7 @@ public class CastleHealthDecreaser : MonoBehaviour
     float maximumWidth = 10000;
     float currentHealth = 10000;
     float calibrationHealth;
+
     public float MaximumWidth
     {
         get { return maximumWidth; }

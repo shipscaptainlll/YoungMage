@@ -34,6 +34,17 @@ public class CastlePositionsManager : MonoBehaviour
 
     }
 
+
+    public void ResetAllPositions()
+    {
+        castlePotentialPositions = new List<Transform>();
+        castleOccupiedPositions = new List<Transform>();
+        foreach (Transform potentialPosition in transform)
+        {
+            castlePotentialPositions.Add(potentialPosition);
+        }
+    }
+
     public void RegeneratePositions(Transform returnedPosition)
     {
         returnedPosition.gameObject.SetActive(true);

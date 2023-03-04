@@ -61,6 +61,7 @@ public class SkeletonData
         isExcomunicated = new bool[skeletonsHolder.childCount];
         isTacklingDoor = new bool[skeletonsHolder.childCount];
         indexerOreSaved = new int[skeletonsHolder.childCount];
+        connectedDoorIndex = new int[skeletonsHolder.childCount];
         foreach (Transform skeleton in skeletonsHolder)
         {
             connectedToOre[indexer] = false;
@@ -101,7 +102,13 @@ public class SkeletonData
             {
                 Debug.Log("skeleton was tackling door");
                 isTacklingDoor[indexer] = true;
-                connectedDoorIndex[indexer] = skeleton.GetComponent<SkeletonBehavior>().NavigationTarget.parent.GetComponent<DoorTacklingManager>().DoorLevel;
+                Debug.Log(skeleton);
+                Debug.Log(skeleton.GetComponent<SkeletonBehavior>());
+                Debug.Log(skeleton.GetComponent<SkeletonBehavior>().NavigationTarget);
+                Debug.Log(skeleton.GetComponent<SkeletonBehavior>().NavigationTarget.parent);
+                Debug.Log(skeleton.GetComponent<SkeletonBehavior>().NavigationTarget.parent.parent);
+                Debug.Log(skeleton.GetComponent<SkeletonBehavior>().NavigationTarget.parent.parent.GetComponent<DoorTacklingManager>().DoorLevel);
+                connectedDoorIndex[indexer] = skeleton.GetComponent<SkeletonBehavior>().NavigationTarget.parent.parent.GetComponent<DoorTacklingManager>().DoorLevel;
             } else if (skeleton.GetComponent<SkeletonBehavior>().BeingUnconjured)
             {
                 Debug.Log("skeleton was unconjured");

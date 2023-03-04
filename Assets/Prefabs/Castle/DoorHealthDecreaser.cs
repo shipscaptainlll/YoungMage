@@ -105,6 +105,7 @@ public class DoorHealthDecreaser : MonoBehaviour
 
     void DestroyDoor()
     {
+        doorTacklingManager.DisconnectSkeleton();
         doorTacklingManager.ConnectedSkeleton.NavigationTarget = null;
         Transform destroyableDoorNew = Instantiate(destroyableDoor, instantiationPoint.position, transform.rotation);
         ParticleSystem destroyPSNew = Instantiate(destroyParticleSystem, PSInstantiationPoint.position, transform.rotation);
@@ -112,7 +113,7 @@ public class DoorHealthDecreaser : MonoBehaviour
         doorBlastSound.Play();
         destroyPSNew.gameObject.SetActive(true);
         destroyPSNew.gameObject.AddComponent<DestroyableParticleSystem>();
-        destroyPSNew.gameObject.GetComponent<DestroyableParticleSystem>().TimeDestruction = 7;
+        destroyPSNew.gameObject.GetComponent<DestroyableParticleSystem>().TimeDestruction = 7; 
         destroyableDoorNew.Rotate(0, 90, 0);
         motherGameObject.SetActive(false);
     }

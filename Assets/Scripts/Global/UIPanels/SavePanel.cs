@@ -18,6 +18,7 @@ public class SavePanel : MonoBehaviour
     [SerializeField] ClickManager clickManager;
     [SerializeField]    float savesMaximumCount;
     [SerializeField] IngameTimer ingameTimer;
+    [SerializeField] PortalOpener portalOpener;
     float currentSavesCount = 0;
     Transform lastSavedButton;
     public Transform LastSavedButton { get { return lastSavedButton; } }
@@ -166,6 +167,10 @@ public class SavePanel : MonoBehaviour
 
     public void AutoSave()
     {
+        if (portalOpener.PortalOpened)
+        {
+            return;
+        }
         saveSound.Play();
         if (saveSystemSerialization.NeverSaved)
         {

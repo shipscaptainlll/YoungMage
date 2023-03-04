@@ -14,6 +14,9 @@ public class DoorTacklingManager : MonoBehaviour
     AudioSource doorTacklingSound;
     SkeletonBehavior connectedSkeleton;
 
+    bool heatlhIsVisible;
+    public bool HealthIsVisible { get { return heatlhIsVisible; } }
+
     public SkeletonBehavior ConnectedSkeleton
     {
         get
@@ -48,7 +51,7 @@ public class DoorTacklingManager : MonoBehaviour
         ConnectScriptsInterraction(connectingSkeleton);
     }
 
-    void DisconnectSkeleton()
+    public void DisconnectSkeleton()
     {
         HideOreHealthbar();
         DisconnectScriptsInterraction(connectedSkeleton);
@@ -66,9 +69,10 @@ public class DoorTacklingManager : MonoBehaviour
         doorTacklingSound.Play();
     }
 
-    void VisualiseOreHealthbar()
+    public void VisualiseOreHealthbar()
     {
         doorHealthDecreaser.gameObject.GetComponent<CanvasGroup>().alpha = 1;
+        heatlhIsVisible = true;
     }
 
     void ConnectScriptsInterraction(SkeletonBehavior connectingSkeleton)
@@ -83,9 +87,10 @@ public class DoorTacklingManager : MonoBehaviour
         doorHealthDecreaser.CalculateDamage(connectedSkeleton);
     }
 
-    void HideOreHealthbar()
+    public void HideOreHealthbar()
     {
         doorHealthDecreaser.gameObject.GetComponent<CanvasGroup>().alpha = 0;
+        heatlhIsVisible = false;
     }
 
     void DisconnectScriptsInterraction(SkeletonBehavior connectingSkeleton)

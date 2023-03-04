@@ -29,6 +29,7 @@ public class PortalOpener : MonoBehaviour
     Transform choosenSkeleton;
     System.Random random;
 
+    public bool PortalOpened { get { return portalOpened; } }
     public Transform ChoosenSkeleton { get { return choosenSkeleton; } }
     // Start is called before the first frame update
     void Start()

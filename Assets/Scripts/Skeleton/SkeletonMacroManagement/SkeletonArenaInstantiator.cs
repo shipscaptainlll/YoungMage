@@ -45,6 +45,7 @@ public class SkeletonArenaInstantiator : MonoBehaviour
     {
         if (skeletonsCount < skeletonsMaxCount)
         {
+            Debug.Log("skeleton instantiated");
             skeletonsCount++;
             //Debug.Log("instantiated new one4");
             //Debug.Log("skeletons count" + skeletonsCount);
@@ -74,5 +75,34 @@ public class SkeletonArenaInstantiator : MonoBehaviour
             
         }
         
+    }
+
+    public void ResetCounter()
+    {
+        skeletonsCount = 0;
+    }
+
+    public void InstantiateUploadedSkeleton(Vector3 skeletonPosition, Quaternion skeletonRotation)
+    {
+
+        if (skeletonsCount < skeletonsMaxCount)
+        {
+            Debug.Log("skeleton instantiated");
+            skeletonsCount++;
+            //Debug.Log("instantiated new one4");
+            //Debug.Log("skeletons count" + skeletonsCount);
+            //Debug.Log("skeletons max count" + skeletonsMaxCount);
+            //Debug.Log(skeletonsCount < skeletonsMaxCount);
+
+            float xPositionOffset = (float)random.Next(-10, 10);
+            float zPositionOffset = (float)random.Next(-10, 10);
+            Transform newSkeleton = Instantiate(skeletonModel, skeletonPosition + new Vector3(xPositionOffset, 0, zPositionOffset), skeletonRotation);
+
+            newSkeleton.gameObject.SetActive(true);
+            newSkeleton.parent = skeletonsHolder;
+            if (SkeletonInstantiated != null) { SkeletonInstantiated(newSkeleton); }
+
+        }
+
     }
 }

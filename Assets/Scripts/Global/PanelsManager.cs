@@ -26,6 +26,7 @@ public class PanelsManager : MonoBehaviour
     [SerializeField] Transform defaultPosition;
     [SerializeField] Transform quickaccessinvisiblePosition;
     [SerializeField] Transform quickaccessdefaultPosition;
+    [SerializeField] PortalOpener portalOpener;
 
     [Header("Sound Manager")]
     [SerializeField] SoundManager soundManager;
@@ -122,6 +123,10 @@ public class PanelsManager : MonoBehaviour
 
     void ChooseEscapeActions()
     {
+        if (portalOpener.PortalOpened)
+        {
+            return;
+        }
         if (currentlyOpened != null)
         {
             closeCurrentPanel();
