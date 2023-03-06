@@ -7,6 +7,7 @@ public class ObjectHealthDecreaser : MonoBehaviour
 {
     [SerializeField] Transform masterObject;
     [SerializeField] Transform partsObject;
+    [SerializeField] Transform partsHolder;
     float minimalWidth = 0;
     float maximumWidth = 1000;
     float maximumHealth = 1000;
@@ -73,6 +74,7 @@ public class ObjectHealthDecreaser : MonoBehaviour
     public void DestroyCatapult()
     {
         Transform parts = Instantiate(partsObject, transform.parent.parent.position, transform.parent.parent.rotation);
+        parts.parent = partsHolder;
         parts.position = transform.parent.parent.position;
         Destroy(masterObject.gameObject);
     }

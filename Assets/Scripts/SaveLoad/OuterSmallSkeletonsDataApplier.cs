@@ -39,6 +39,11 @@ public static class OuterSmallSkeletonsDataApplier
     static void InstantiateLoadedSkeleton(Transform skeletonsHolder, SkeletonArenaInstantiator skeletonArenaInstantiator)
     {
         int indexer = 0;
+
+        skeletonArenaInstantiator.SkeletonsMaxCount = outerSmallSkeletonDataLoaded.instantiatorMaxCount;
+
+        Debug.Log("Max count for small skeletons was " + outerSmallSkeletonDataLoaded.instantiatorMaxCount);
+
         while (indexer < outerSmallSkeletonDataLoaded.positions.Length)
         {
             Vector3 skeletonPosition = new Vector3(outerSmallSkeletonDataLoaded.positions[indexer][0], outerSmallSkeletonDataLoaded.positions[indexer][1], outerSmallSkeletonDataLoaded.positions[indexer][2]);

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public static class OuterSmallSkeletonsDataSaver
 {
-    public static void SaveSkeletonData(Transform skeletonsHolder, string path)
+    public static void SaveSkeletonData(Transform skeletonsHolder, SkeletonArenaInstantiator skeletonArenaInstantiator, string path)
     {
         BinaryFormatter formatter = new BinaryFormatter();
 
@@ -17,7 +17,7 @@ public static class OuterSmallSkeletonsDataSaver
 
         FileStream fileStream = new FileStream(path, FileMode.Create);
 
-        OuterSmallSkeletonData outerSmallSkeletonData = new OuterSmallSkeletonData(skeletonsHolder);
+        OuterSmallSkeletonData outerSmallSkeletonData = new OuterSmallSkeletonData(skeletonsHolder, skeletonArenaInstantiator);
 
         formatter.Serialize(fileStream, outerSmallSkeletonData);
         fileStream.Close();

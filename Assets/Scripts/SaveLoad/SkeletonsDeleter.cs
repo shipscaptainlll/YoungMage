@@ -7,6 +7,9 @@ public class SkeletonsDeleter : MonoBehaviour
     [SerializeField] SkeletonsStack skeletonsStack;
     [SerializeField] Transform fracturedSkeletonsHolder;
     [SerializeField] SkeletonArenaInstantiator skeletonArenaInstantiator;
+    [SerializeField] CrossbowCatapultArenaInstantiator crossbowCatapultArenaInstantiator;
+    [SerializeField] CatapultArenaInstantiator catapultArenaInstantiator;
+    
 
     public void ResetSkeletonsStack()
     {
@@ -16,6 +19,28 @@ public class SkeletonsDeleter : MonoBehaviour
     public void DeleteArenaSkeletons()
     {
         skeletonsStack.ResetSkeletonsArena();
+    }
+
+    public void DeleteCatapultSkeletons()
+    {
+        skeletonsStack.ResetCatapultsArena();
+        skeletonsStack.DeleteCatapultsParts();
+    }
+
+    public void DeleteCrossbowSkeletons()
+    {
+        skeletonsStack.ResetCrossbowsArena();
+        skeletonsStack.DeleteCrossbowCatapultsParts();
+    }
+
+    public void ResetCrossbowArenaInstatiator()
+    {
+        crossbowCatapultArenaInstantiator.ResetCounter();
+    }
+
+    public void ResetCatapultArenaInstantiator()
+    {
+        catapultArenaInstantiator.ResetCounter();
     }
 
     public void ResetSkeletonsArenaInstatiator()

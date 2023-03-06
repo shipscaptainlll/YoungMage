@@ -20,6 +20,7 @@ public class CatapultArenaInstantiator : MonoBehaviour
     [SerializeField] ClickManager clickManager;
     System.Random random;
 
+    public int CatapultsMaxCount { get { return catapultsMaxCount; } set { catapultsMaxCount = value; } }
     public int CatapultsCount { get { return catapultsCount; } set { catapultsCount = value; } }
     public int SkeletonsCount { get { return skeletonsCount; } set { skeletonsCount = value; } }
     public event Action<Transform> SkeletonInstantiated = delegate { };
@@ -41,7 +42,7 @@ public class CatapultArenaInstantiator : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(14f);
+            yield return new WaitForSeconds(1f);
             InstantiateCatapult();
         }
         
@@ -82,4 +83,36 @@ public class CatapultArenaInstantiator : MonoBehaviour
         }
         
     }
+
+    public void ResetCounter()
+    {
+        catapultsCount = 0;
+    }
+
+    public void InstantiateUploadedSkeleton(Vector3 skeletonPosition, Quaternion skeletonRotation)
+    {
+
+        if (catapultsCount < catapultsMaxCount)
+        {
+            catapultsCount++;
+            float xPositionOffset = (float)random.Next(-10, 10);
+            float zPositionOffset = (float)random.Next(-10, 10);
+
+            Transform newSkeleton = Instantiate(skeletonModel, skeletonPosition + new Vector3(xPositionOffset, 0, zPositionOffset), skeletonRotation);
+            newSkeleton.gameObject.SetActive(true);
+            Transform newCatapult = Instantiate(catapultModel, skeletonPosition + new Vector3(xPositionOffset, 0, zPositionOffset), skeletonRotation);
+            newSkeleton.GetComponent<SkeletonBehavior>().ConnectedCatapult = newCatapult;
+            newCatapult.GetComponent<CatapultMovement>().InstantiationSetUp();
+            newCatapult.GetComponent<CatapultMovement>().SubscribeOnSkeleton(newSkeleton);
+            newCatapult.gameObject.SetActive(true);
+            newCatapult.GetChild(0).GetChild(1).GetComponent<CatapultFire>().CastleHealthDecreaser = castleHealthDecreaser;
+
+            newSkeleton.parent = skeletonsHolder;
+            if (SkeletonInstantiated != null) { SkeletonInstantiated(newSkeleton); }
+            newCatapult.parent = catapultsHolder;
+            if (CatapultInstantiated != null) { CatapultInstantiated(newCatapult); }
+        }
+
+    }
+
 }

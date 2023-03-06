@@ -559,7 +559,9 @@ public class SkeletonBehavior : MonoBehaviour
         {
             isMoving = true;
             if (isCrouching) { localAnimator.Play("CrouchSmallSkeleton"); }
-            else { localAnimator.Play("SkelMove"); }
+            else { localAnimator.Play("SkelMove");
+                Debug.Log(transform + " is moving animation");
+            }
             
         }
         else if (navMeshAgent.velocity.magnitude > 0.15f && isMoving)

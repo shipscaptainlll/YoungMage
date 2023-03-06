@@ -123,16 +123,17 @@ public class PanelsManager : MonoBehaviour
 
     void ChooseEscapeActions()
     {
-        if (portalOpener.PortalOpened)
-        {
-            return;
-        }
+        
         if (currentlyOpened != null)
         {
             closeCurrentPanel();
             CameraVolumeController.UnBlurScreen();
         } else
         {
+            if (portalOpener.PortalOpened)
+            {
+                return;
+            }
             OpenEscapemenuPanel();
         }
     }

@@ -12,12 +12,13 @@ public class OuterSmallSkeletonData
     public bool[] inCastle;
     public int[] currentHealth;
     public bool[] portalConnected;
+    public int instantiatorMaxCount;
 
-    public OuterSmallSkeletonData(Transform skeletonsHolder)
+    public OuterSmallSkeletonData(Transform skeletonsHolder, SkeletonArenaInstantiator skeletonArenaInstantiator)
     {
         GetPositions(skeletonsHolder);
         GetRotations(skeletonsHolder);
-        GetState(skeletonsHolder);
+        GetState(skeletonsHolder, skeletonArenaInstantiator);
     }
 
     void GetPositions(Transform skeletonsHolder)
@@ -50,8 +51,9 @@ public class OuterSmallSkeletonData
         }
     }
 
-    void GetState(Transform skeletonsHolder)
+    void GetState(Transform skeletonsHolder, SkeletonArenaInstantiator skeletonArenaInstantiator)
     {
+        instantiatorMaxCount = skeletonArenaInstantiator.SkeletonsMaxCount;
         int indexer = 0;
         onRoute = new bool[skeletonsHolder.childCount];
         routeState = new int[skeletonsHolder.childCount];

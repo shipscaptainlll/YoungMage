@@ -18,6 +18,8 @@ public class SaveSystemSerialization : MonoBehaviour
     [SerializeField] QuickAccessHandController quickAccessHandController;
     [SerializeField] Transform skeletonsIndoorHolder;
     [SerializeField] Transform outerSmallSkeletonsHolder;
+    [SerializeField] Transform outerBigSkeletonsHolder;
+    [SerializeField] Transform outerLizardSkeletonsHolder;
     [SerializeField] SkeletonHouseInstantiator skeletonHouseInstantiator;
     [SerializeField] Transform tackledDoor;
     [SerializeField] Transform collectablesHolder;
@@ -30,6 +32,10 @@ public class SaveSystemSerialization : MonoBehaviour
     [SerializeField] SkeletonsDeleter skeletonsDeleter;
     [SerializeField] CastlePositionsManager castlePositionsManager;
     [SerializeField] SkeletonArenaInstantiator skeletonArenaInstantiator;
+    [SerializeField] CastlePositionsManager catapultPositionsManager;
+    [SerializeField] CatapultArenaInstantiator catapultArenaInstantiator;
+    [SerializeField] CastlePositionsManager crossbowPositionsManager;
+    [SerializeField] CrossbowCatapultArenaInstantiator crossbowCatapultArenaInstantiator;
     int saveDirectoryPath;
     string gameDataPath;
     string playerPath;
@@ -43,6 +49,8 @@ public class SaveSystemSerialization : MonoBehaviour
     string cityUpgradeDataPath;
     string doorsDataPath;
     string outerSmallSkeletonsPath;
+    string outerBigSkeletonsPath;
+    string outerLizardSkeletonsPath;
     string arrowCatapultsPath;
     string stoneCatapultsPath;
     string outdoorSkeletonsPath;
@@ -124,7 +132,11 @@ public class SaveSystemSerialization : MonoBehaviour
         
         SkeletonsDataSaver.SaveSkeletonData(skeletonsIndoorHolder, oresHolder, indoorSkeletonsPath);
 
-        OuterSmallSkeletonsDataSaver.SaveSkeletonData(outerSmallSkeletonsHolder, outerSmallSkeletonsPath);
+        OuterSmallSkeletonsDataSaver.SaveSkeletonData(outerSmallSkeletonsHolder, skeletonArenaInstantiator, outerSmallSkeletonsPath);
+
+        OuterBigSkeletonsDataSaver.SaveSkeletonData(outerBigSkeletonsHolder, catapultArenaInstantiator, outerBigSkeletonsPath);
+
+        OuterLizardSkeletonsDataSaver.SaveSkeletonData(outerLizardSkeletonsHolder, crossbowCatapultArenaInstantiator, outerLizardSkeletonsPath);
 
         CollectableDataSaver.SaveCollectableData(collectablesHolder, collectablePath);
 
@@ -184,6 +196,10 @@ public class SaveSystemSerialization : MonoBehaviour
         SkeletonsDataApplier.ApplySkeletonsData(skeletonsIndoorHolder, skeletonHouseInstantiator, mainCharacterScript, oresHolder, tackledDoor, SkeletonsDataSaver.LoadSkeletonData(indoorSkeletonsPath), skeletonsDeleter);
 
         OuterSmallSkeletonsDataApplier.ApplySkeletonsData(outerSmallSkeletonsHolder, OuterSmallSkeletonsDataSaver.LoadSkeletonData(outerSmallSkeletonsPath), skeletonsDeleter, castlePositionsManager, skeletonArenaInstantiator);
+
+        OuterBigSkeletonsDataApplier.ApplySkeletonsData(outerBigSkeletonsHolder, OuterBigSkeletonsDataSaver.LoadSkeletonData(outerBigSkeletonsPath), skeletonsDeleter, catapultPositionsManager, catapultArenaInstantiator);
+
+        OuterLizardSkeletonsDataApplier.ApplySkeletonsData(outerLizardSkeletonsHolder, OuterLizardSkeletonsDataSaver.LoadSkeletonData(outerLizardSkeletonsPath), skeletonsDeleter, crossbowPositionsManager, crossbowCatapultArenaInstantiator);
 
         CollectableDataApplier.ApplyCollectableData(collectableObjectsDeleter, collectableObjectsInstantiator, CollectableDataSaver.LoadCollectableData(collectablePath));
 
@@ -247,6 +263,8 @@ public class SaveSystemSerialization : MonoBehaviour
         cityUpgradeDataPath = GetPath("cityUpgradeDataPath");
         doorsDataPath = GetPath("doorsDataPath");
         outerSmallSkeletonsPath = GetPath("outerSmallSkeletonsPath");
+        outerBigSkeletonsPath = GetPath("outerBigSkeletonsPath");
+        outerLizardSkeletonsPath = GetPath("outerLizardSkeletonsPath");
     }
 
     string GetPath(string subName)

@@ -167,6 +167,7 @@ public class PortalOpener : MonoBehaviour
         DeactivateParticleSystem();
         housePortal.gameObject.SetActive(false);
         fieldPortal.gameObject.SetActive(false);
+        portalOpened = false;
         //fieldPortalContainer.gameObject.SetActive(false);
     }
 
