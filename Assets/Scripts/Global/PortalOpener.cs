@@ -25,10 +25,12 @@ public class PortalOpener : MonoBehaviour
     Transform housePortal;
     Transform fieldPortal;
     bool cycleRunning = false;
+    bool circleVisible;
 
     Transform choosenSkeleton;
     System.Random random;
 
+    public bool CircleVisible { get { return circleVisible; } }
     public bool PortalOpened { get { return portalOpened; } }
     public Transform ChoosenSkeleton { get { return choosenSkeleton; } }
     // Start is called before the first frame update
@@ -265,19 +267,27 @@ public class PortalOpener : MonoBehaviour
         //choosenSkeleton.GetComponent<CopycatCreator>().enabled = true;
     }
 
-    void ActivateParticleSystem()
+    public void ActivateParticleSystem()
     {
         appearanceTransmutationCircle.CircleAppearance();
         secondTransmutationCircle.CircleAppearance();
+        circleVisible = true;
         //portalPS.gameObject.SetActive(true);
         //portalPS.Play();
     }
-    void DeactivateParticleSystem()
+    public void DeactivateParticleSystem()
     {
         appearanceTransmutationCircle.CircleDisappearance();
         secondTransmutationCircle.CircleDisappearance();
+        circleVisible = false;
         //portalPS.Play();
         //portalPS.gameObject.SetActive(false);
+    }
+
+    public void ImmediateDeactivateParticleSystem()
+    {
+        appearanceTransmutationCircle.ImmediateCircleDisappearance();
+        secondTransmutationCircle.ImmediateCircleDisappearance();
     }
 
 }

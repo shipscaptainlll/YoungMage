@@ -15,6 +15,8 @@ public class AppearanceTransmutationCircle : MonoBehaviour
     Coroutine circleCoroutine;
 
     public bool CircleShown { get { return circleShown; } }
+    public ParticleSystem OuterCirclePS { get { return outerCirclePS; } }
+    
     ParticleSystem.Particle[] outerParticles = new ParticleSystem.Particle[1];
     ParticleSystem.Particle[] innerParticles = new ParticleSystem.Particle[1];
 

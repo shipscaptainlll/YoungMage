@@ -67,10 +67,21 @@ public class SkeletonHouseInstantiator : MonoBehaviour
         if (HouseSkeletonCreated != null) { HouseSkeletonCreated(newSkeleton); }
     }
 
-    public void InstantiateNewInhouse(Vector3 position, Quaternion rotation)
+    public void InstantiateNewInhouse(Vector3 position, Quaternion rotation, string skeletonType)
     {
         Transform skeletonToInstantiate = null;
-        skeletonToInstantiate = smallskeletonModel;
+        if (skeletonType == "smallSkeleton")
+        {
+            skeletonToInstantiate = smallskeletonModel;
+        }
+        else if (skeletonType == "bigSkeleton")
+        {
+            skeletonToInstantiate = bigskeletonModel;
+        }
+        else if (skeletonType == "lizardSkeleton")
+        {
+            skeletonToInstantiate = lizardskeletonModel;
+        }
 
         Transform newSkeleton = Instantiate(skeletonToInstantiate, position, rotation);
         newSkeleton.gameObject.SetActive(true);

@@ -241,13 +241,13 @@ public class SkeletonBehavior : MonoBehaviour
             isLizardSkeleton = true;
         }
         */
-        contactManager.GetComponent<ContactManager>().OreDetected += AddTarget;
-        contactManager.GetComponent<ContactManager>().MinesDoorDetected += AddTarget;
-        contactManager.GetComponent<ContactManager>().ObjectOverloaded += ShowEmotion;
-        connectedTeleport.GetComponent<Teleporter>().TeleportFound += StopGravity;
+        //contactManager.GetComponent<ContactManager>().OreDetected += AddTarget;
+        //contactManager.GetComponent<ContactManager>().MinesDoorDetected += AddTarget;
+        //contactManager.GetComponent<ContactManager>().ObjectOverloaded += ShowEmotion;
+        //connectedTeleport.GetComponent<Teleporter>().TeleportFound += StopGravity;
         if (hasPortal)
         {
-            transform.GetComponent<CopycatCreator>().OriginTeleported += StopActivities;
+            //transform.GetComponent<CopycatCreator>().OriginTeleported += StopActivities;
         }
         if (!homeVersion && !hittingCastle) { GotoCastle(); }
         if (homeVersion && !isConjured) { navigationTarget = null; }
@@ -287,6 +287,7 @@ public class SkeletonBehavior : MonoBehaviour
         set
         {
             Debug.Log("hello there");
+            Debug.Log("skeleton get conjured to " + navigationTarget);
             Debug.Log(value);
             if (transform == null)
             {
@@ -829,6 +830,7 @@ public class SkeletonBehavior : MonoBehaviour
 
     public void DestroyUploadSkeleton()
     {
+        UnsubscribeBeforeDestruction();
         bodySkinnedrenderer.gameObject.SetActive(false);
         unusedCounter.gameObject.GetComponent<CanvasGroup>().alpha = 0;
         Destroy(walkingGroundSound);
@@ -1272,10 +1274,7 @@ public class SkeletonBehavior : MonoBehaviour
     public void UnsubscribeBeforeDestruction()
     {
         //Debug.Log("hello there11");
-        foreach(Transform skeleton in skeletonsStack.SkeletonsArena)
-        {
-            if (skeleton == transform) { Debug.Log("found"); skeletonsStack.SkeletonsArena.Remove(transform); return; }
-        }
+        
         contactManager.GetComponent<ContactManager>().OreDetected -= AddTarget;
         contactManager.GetComponent<ContactManager>().MinesDoorDetected -= AddTarget;
         contactManager.GetComponent<ContactManager>().ObjectOverloaded -= ShowEmotion;

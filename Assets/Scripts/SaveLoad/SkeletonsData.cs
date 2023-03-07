@@ -14,6 +14,7 @@ public class SkeletonData
     public bool[] isTacklingDoor;
     public int[] indexerOreSaved;
     public int[] connectedDoorIndex;
+    public string[] skeletonType;
 
     public SkeletonData(Transform skeletonsHolder, Transform oresHolder)
     {
@@ -54,6 +55,7 @@ public class SkeletonData
 
     void GetState(Transform skeletonsHolder,Transform oresHolder)
     {
+        
         int indexer = 0;
         connectedToOre = new bool[skeletonsHolder.childCount];
         connectedToPerson = new bool[skeletonsHolder.childCount];
@@ -62,24 +64,28 @@ public class SkeletonData
         isTacklingDoor = new bool[skeletonsHolder.childCount];
         indexerOreSaved = new int[skeletonsHolder.childCount];
         connectedDoorIndex = new int[skeletonsHolder.childCount];
+        skeletonType = new string[skeletonsHolder.childCount];
         foreach (Transform skeleton in skeletonsHolder)
         {
+            SkeletonBehavior loadedSkeletonBehavior = skeleton.GetComponent<SkeletonBehavior>();
+
             connectedToOre[indexer] = false;
             connectedToPerson[indexer] = false;
             isIdle[indexer] = false;
             isExcomunicated[indexer] = false;
             isTacklingDoor[indexer] = false;
             indexerOreSaved[indexer] = 0;
+            skeletonType[indexer] = GetSkeletonType(loadedSkeletonBehavior);
 
-            if (!skeleton.GetComponent<SkeletonBehavior>().IsConjured)
+            if (!loadedSkeletonBehavior.IsConjured)
             {
                 isIdle[indexer] = true;
                 Debug.Log("skeleton was idle");
-            } else if (skeleton.GetComponent<SkeletonBehavior>().NavigationTarget != null && skeleton.GetComponent<SkeletonBehavior>().NavigationTarget.GetComponent<PersonMovement>() != null)
+            } else if (loadedSkeletonBehavior.NavigationTarget != null && loadedSkeletonBehavior.NavigationTarget.GetComponent<PersonMovement>() != null)
             {
                 Debug.Log("skeleton was following mage");
                 connectedToPerson[indexer] = true;
-            } else if (skeleton.GetComponent<SkeletonBehavior>().NavigationTarget != null && skeleton.GetComponent<SkeletonBehavior>().NavigationTarget.GetComponent<IOre>() != null)
+            } else if (loadedSkeletonBehavior.NavigationTarget != null && loadedSkeletonBehavior.NavigationTarget.GetComponent<IOre>() != null)
             {
                 Debug.Log("skeleton was ore connected");
                 connectedToOre[indexer] = true;
@@ -88,7 +94,7 @@ public class SkeletonData
                 {
                     foreach (Transform ore in row)
                     {
-                        if (skeleton.GetComponent<SkeletonBehavior>().NavigationTarget == ore.GetChild(1))
+                        if (loadedSkeletonBehavior.NavigationTarget == ore.GetChild(1))
                         {
                             indexerOreSaved[indexer] = indexerOre;
                             Debug.Log("saved one skeleton state");
@@ -98,24 +104,37 @@ public class SkeletonData
                         indexerOre++;
                     }
                 }
-            } else if (skeleton.GetComponent<SkeletonBehavior>().NavigationTarget != null && skeleton.GetComponent<SkeletonBehavior>().NavigationTarget.parent.name == "SkeletonPositions")
+            } else if (loadedSkeletonBehavior.NavigationTarget != null && loadedSkeletonBehavior.NavigationTarget.parent.name == "SkeletonPositions")
             {
                 Debug.Log("skeleton was tackling door");
                 isTacklingDoor[indexer] = true;
-                Debug.Log(skeleton);
-                Debug.Log(skeleton.GetComponent<SkeletonBehavior>());
-                Debug.Log(skeleton.GetComponent<SkeletonBehavior>().NavigationTarget);
-                Debug.Log(skeleton.GetComponent<SkeletonBehavior>().NavigationTarget.parent);
-                Debug.Log(skeleton.GetComponent<SkeletonBehavior>().NavigationTarget.parent.parent);
-                Debug.Log(skeleton.GetComponent<SkeletonBehavior>().NavigationTarget.parent.parent.GetComponent<DoorTacklingManager>().DoorLevel);
-                connectedDoorIndex[indexer] = skeleton.GetComponent<SkeletonBehavior>().NavigationTarget.parent.parent.GetComponent<DoorTacklingManager>().DoorLevel;
-            } else if (skeleton.GetComponent<SkeletonBehavior>().BeingUnconjured)
+
+                connectedDoorIndex[indexer] = loadedSkeletonBehavior.NavigationTarget.parent.parent.GetComponent<DoorTacklingManager>().DoorLevel;
+            } else if (loadedSkeletonBehavior.BeingUnconjured)
             {
                 Debug.Log("skeleton was unconjured");
                 isExcomunicated[indexer] = true;
             }
             indexer++;
             Debug.Log("saved one skeleton state");
+        }
+    }
+
+    string GetSkeletonType(SkeletonBehavior skeletonBehavior)
+    {
+        Debug.Log("our " + skeletonBehavior.transform + " skeleton is small " + skeletonBehavior.IsSmallSkeleton + " our skeleton is big " + skeletonBehavior.IsBigSkeleton + " our skeleton is lizard " + skeletonBehavior.IsLizardSkeleton);
+        if (skeletonBehavior.IsSmallSkeleton)
+        {
+            return "smallSkeleton";
+        } else if (skeletonBehavior.IsBigSkeleton)
+        {
+            return "bigSkeleton";
+        } else if (skeletonBehavior.IsLizardSkeleton)
+        {
+            return "lizardSkeleton";
+        } else
+        {
+            return "";
         }
     }
 

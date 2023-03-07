@@ -8,12 +8,13 @@ public static class PlayerDataApplier
     static CameraController cameraScriptLoaded;
     static PlayerData playerDataLoaded;
 
-    public static void ApplyPlayerData(PersonMovement playerScript, CameraController cameraScript, PlayerData playerData)
+    public static void ApplyPlayerData(PersonMovement playerScript, CameraController cameraScript, PlayerData playerData, PortalOpener portalOpener)
     {
         UpdateData(playerScript, cameraScript, playerData);
         ApplyPlayerPosition();
         ApplyPlayerRotation();
         ApplyCameraRotation();
+        ApplyCircleState(playerData, portalOpener);
         DisconnectData();
     }
 
@@ -55,5 +56,10 @@ public static class PlayerDataApplier
         cameraScriptLoaded.YRotation = cameraRotation.x;
         //Debug.Log(cameraRotation);
         cameraScriptLoaded.gameObject.SetActive(true);
+    }
+
+    static void ApplyCircleState(PlayerData player, PortalOpener portalOpener)
+    {
+        if (player.catchCircleShown) { Debug.Log("portal circle was on " + player.catchCircleShown); portalOpener.ImmediateDeactivateParticleSystem(); } else { Debug.Log("portal circle was on " + player.catchCircleShown); portalOpener.ImmediateDeactivateParticleSystem(); }
     }
 }

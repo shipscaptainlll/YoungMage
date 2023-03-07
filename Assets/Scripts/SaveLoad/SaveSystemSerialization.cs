@@ -36,6 +36,7 @@ public class SaveSystemSerialization : MonoBehaviour
     [SerializeField] CatapultArenaInstantiator catapultArenaInstantiator;
     [SerializeField] CastlePositionsManager crossbowPositionsManager;
     [SerializeField] CrossbowCatapultArenaInstantiator crossbowCatapultArenaInstantiator;
+    [SerializeField] PortalOpener portalOpener;
     int saveDirectoryPath;
     string gameDataPath;
     string playerPath;
@@ -122,7 +123,7 @@ public class SaveSystemSerialization : MonoBehaviour
 
         GameDataSaver.SaveGameData(timeHolder, gameDataPath);
 
-        PlayerDataSaver.SavePlayerData(mainCharacterScript, mainCharacterCamera, playerPath);
+        PlayerDataSaver.SavePlayerData(mainCharacterScript, mainCharacterCamera, portalOpener, playerPath);
         
         OreDataSaver.SaveOreData(oresHolder, orePath);
         
@@ -179,7 +180,7 @@ public class SaveSystemSerialization : MonoBehaviour
 
         GameDataApplier.ApplyGameData(timeHolder, GameDataSaver.LoadGameData(gameDataPath));
 
-        PlayerDataApplier.ApplyPlayerData(mainCharacterScript, mainCharacterCamera, PlayerDataSaver.LoadPlayerData(playerPath));
+        PlayerDataApplier.ApplyPlayerData(mainCharacterScript, mainCharacterCamera, PlayerDataSaver.LoadPlayerData(playerPath), portalOpener);
 
         OreDataApplier.ApplyOreData(oresHolder, OreDataSaver.LoadOreData(orePath));
         StartCoroutine(LoadGameDelayed());

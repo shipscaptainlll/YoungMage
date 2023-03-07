@@ -34,7 +34,18 @@ public class ContactManager : MonoBehaviour
     private void Start()
     {
         ClickManager.LMBClicked += ContactObject;
+        
         characterScript = mainCharacter.GetComponent<PersonMovement>();
+    }
+
+    private void Update()
+    {
+        ClickManager.IClicked += ShowNumberOfConnected;
+    }
+
+    void ShowNumberOfConnected()
+    {
+        Debug.Log("right now invokation list is " + OreDetected.GetInvocationList().Length);
     }
 
     void ContactObject()
@@ -60,6 +71,9 @@ public class ContactManager : MonoBehaviour
                         if (OreDetected != null)
                         {
                             if (potentialPositioner.IsActive) { PotentialPositionerDeactivated(); }
+                            
+
+                            
                             OreDetected(contactedObject);
                         }
                     } else

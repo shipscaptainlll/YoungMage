@@ -11,7 +11,7 @@ public static class SkeletonsDataApplier
     {
         UpdateData(skeletonsHolder, skeletonData);
         DeletePreviousSkeletons(skeletonsDeleter, skeletonsHolder);
-        InstantiateLoadedSkeleton(skeletonsHolder, skeletonHouseInstantiator);
+        InstantiateLoadedSkeleton(skeletonsHolder, skeletonHouseInstantiator, skeletonData);
         ApplyState(skeletonsHolder, personScript, tackledDoor, oresHolder);
         DisconnectData();
     }
@@ -34,7 +34,7 @@ public static class SkeletonsDataApplier
         skeletonsDeleter.DeleteInhouseSkeeletons(skeletonsHolder);
     }
 
-    static void InstantiateLoadedSkeleton(Transform skeletonsHolder, SkeletonHouseInstantiator skeletonHouseInstantiator)
+    static void InstantiateLoadedSkeleton(Transform skeletonsHolder, SkeletonHouseInstantiator skeletonHouseInstantiator, SkeletonData skeletonData)
     {
         int indexer = 0;
         while (indexer < skeletonDataLoaded.positions.Length)
@@ -43,7 +43,7 @@ public static class SkeletonsDataApplier
             Debug.Log("loaded one skeleton positions");
             Vector3 skeletonRotation = new Vector3(skeletonDataLoaded.rotations[indexer][0], skeletonDataLoaded.rotations[indexer][1], skeletonDataLoaded.rotations[indexer][2]);
             Debug.Log("loaded one skeleton rotations");
-            skeletonHouseInstantiator.InstantiateNewInhouse(skeletonPosition, Quaternion.Euler(skeletonRotation));
+            skeletonHouseInstantiator.InstantiateNewInhouse(skeletonPosition, Quaternion.Euler(skeletonRotation), skeletonData.skeletonType[indexer]);
             Debug.Log("instantiated one skeleton");
             indexer++;
         }

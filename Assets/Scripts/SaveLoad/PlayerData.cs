@@ -8,13 +8,14 @@ public class PlayerData
     public float[] position;
     public float[] rotation;
     public float[] cameraRotation;
+    public bool catchCircleShown;
 
-    public PlayerData (PersonMovement personMovement, CameraController cameraController)
+    public PlayerData (PersonMovement personMovement, CameraController cameraController, PortalOpener portalOpener)
     {
         GetPosition(personMovement);
         GetCameraRotation(cameraController);
         GetRotation(personMovement);
-        
+        GetCatchCircleState(portalOpener);
     }
 
     void GetPosition(PersonMovement personMovement)
@@ -39,5 +40,10 @@ public class PlayerData
         cameraRotation[0] = cameraController.gameObject.transform.rotation.eulerAngles.x;
         cameraRotation[1] = cameraController.gameObject.transform.rotation.eulerAngles.y;
         cameraRotation[2] = cameraController.gameObject.transform.rotation.eulerAngles.z;
+    }
+
+    void GetCatchCircleState(PortalOpener portalOpener)
+    {
+        catchCircleShown = portalOpener.CircleVisible;
     }
 }

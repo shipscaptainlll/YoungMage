@@ -4,13 +4,13 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public static class PlayerDataSaver
 {
-    public static void SavePlayerData(PersonMovement personMovement, CameraController cameraController, string path)
+    public static void SavePlayerData(PersonMovement personMovement, CameraController cameraController, PortalOpener portalOpener, string path)
     {
         BinaryFormatter formatter = new BinaryFormatter();
 
         FileStream fileStream = new FileStream(path, FileMode.Create);
 
-        PlayerData playerData = new PlayerData(personMovement, cameraController);
+        PlayerData playerData = new PlayerData(personMovement, cameraController, portalOpener);
 
         formatter.Serialize(fileStream, playerData);
         fileStream.Close();
