@@ -60,6 +60,9 @@ public class SacketClickController : MonoBehaviour
             bookSpellsActivator.CastThrowObject();
             bookSpellsActivator.CastNullSpell();
 
+            if(quickAccessHandController.CurrentCustomID == 10) { 
+                return;
+            }
             
             if (objectManager.TakeObject(quickAccessHandController.CurrentCustomID) != null)
             {
@@ -219,6 +222,11 @@ public class SacketClickController : MonoBehaviour
     
     void TakeFromCounter()
     {
+        Debug.Log(quickAccessHandController.CurrentCustomID + " well hello there");
+        if (quickAccessHandController.CurrentCustomID == 10)
+        {
+            return;
+        }
         quickAccessHandController.CurrentCounter.GetComponent<ICounter>().GetResource(1);
     }
 }

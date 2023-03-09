@@ -27,7 +27,7 @@ public class LoadPanel : MonoBehaviour
 
     public void LoadGame(Transform buttonTransform)
     {
-        string loadText = buttonTransform.Find("Content").Find("SaveNumber").Find("Text").GetComponent<Text>().text;
+        string loadText = buttonTransform.name;
         string loadNumber = Regex.Match(loadText, @"\d+").Value;
         int index = Int32.Parse(loadNumber);
         savePanel.FindSaveElement(index);

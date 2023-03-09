@@ -37,6 +37,7 @@ public class SaveSystemSerialization : MonoBehaviour
     [SerializeField] CastlePositionsManager crossbowPositionsManager;
     [SerializeField] CrossbowCatapultArenaInstantiator crossbowCatapultArenaInstantiator;
     [SerializeField] PortalOpener portalOpener;
+    [SerializeField] TransmutationTableStateMachine transmutationTableStateMachine;
     int saveDirectoryPath;
     string gameDataPath;
     string playerPath;
@@ -46,6 +47,7 @@ public class SaveSystemSerialization : MonoBehaviour
     string indoorSkeletonsPath;
     string collectablePath;
     string defractorDataPath;
+    string transmutationTableDataPath;
     string midasDataPath;
     string cityUpgradeDataPath;
     string doorsDataPath;
@@ -74,7 +76,7 @@ public class SaveSystemSerialization : MonoBehaviour
         maxId = GetNextID();
         //Debug.Log("Max id is " + maxId);
         UpdatePaths();
-
+        
     }
 
     public void AutoSaveProgress()
@@ -143,6 +145,8 @@ public class SaveSystemSerialization : MonoBehaviour
 
         DefractorDataSaver.SaveDefractorData(defractorStateMachine, defractorDataPath);
 
+        transmutationTableDataSaver.SaveTransmutationTableData(transmutationTableStateMachine, transmutationTableDataPath);
+
         MidasDataSaver.SaveMidasData(midasStateMachine, midasDataPath);
 
         CityUpgradeDataSaver.SaveCityUpgradeData(cityUpgradeStateMachine, cityUpgradeDataPath);
@@ -206,6 +210,8 @@ public class SaveSystemSerialization : MonoBehaviour
 
         DefractorDataApplier.ApplyDefractorData(defractorStateMachine, DefractorDataSaver.LoadDefractorData(defractorDataPath));
 
+        TransmutationTableDataApplier.ApplyTransmutationTableData(transmutationTableStateMachine, transmutationTableDataSaver.LoadTransmutationTableData(transmutationTableDataPath));
+
         MidasDataDataApplier.ApplyMidasData(midasStateMachine, MidasDataSaver.LoadMidasData(midasDataPath));
 
         CityUpgradeDataApplier.ApplyCityUpgradeData(cityUpgradeStateMachine, CityUpgradeDataSaver.LoadCityUpgradeData(cityUpgradeDataPath));
@@ -266,6 +272,7 @@ public class SaveSystemSerialization : MonoBehaviour
         outerSmallSkeletonsPath = GetPath("outerSmallSkeletonsPath");
         outerBigSkeletonsPath = GetPath("outerBigSkeletonsPath");
         outerLizardSkeletonsPath = GetPath("outerLizardSkeletonsPath");
+        transmutationTableDataPath = GetPath("transmutationTableDataPath");
     }
 
     string GetPath(string subName)

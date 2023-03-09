@@ -24,6 +24,7 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
 
     List<GameObject> _accessibleResources = new List<GameObject>();
     Transform _chosenResource;
+    int currentID;
     float _currentAngle = 0f;
     float _circleRadius = 0.25f;
     float _angleOffset = 0;
@@ -41,6 +42,7 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
         }
     }
 
+    public int CurrentID { get { return currentID; } }
     public Transform ChosenResource { get { return _chosenResource; } }
 
     public event Action<string> ObjectFound = delegate { };
@@ -262,6 +264,7 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
         {
             if (panel.GetComponent<AlchemistTableResource>().ID == targetObject.transform.GetComponent<AlchemistTableResource>().ID)
             {
+                currentID = targetObject.transform.GetComponent<AlchemistTableResource>().ID;
                 panel.GetComponent<AlchemistTableResource>().gameObject.GetComponent<MeshRenderer>().enabled = true;
                 _chosenResource = panel;
                 if (ResourceChosen != null)
@@ -280,6 +283,7 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
         {
             if (panel.GetComponent<AlchemistTableResource>().ID == 0)
             {
+                currentID = 0;
                 panel.GetComponent<AlchemistTableResource>().gameObject.GetComponent<MeshRenderer>().enabled = true;
                 _chosenResource = panel;
                 if (ResourceChosen != null)

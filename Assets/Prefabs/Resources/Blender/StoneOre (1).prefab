@@ -174,8 +174,8 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
   looping: 1
-  prewarm: 0
-  playOnAwake: 1
+  prewarm: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -5066,6 +5066,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   oreLevitator: {fileID: 4686621286300807412}
+  oreCounter: {fileID: 4477315545983180311}
+  firstCircle: {fileID: 3927075898618260325}
+  secondCircle: {fileID: 5698583895049079423}
 --- !u!65 &7532749936738913133
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5177,6 +5180,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  canvasGroup: {fileID: 6070314650963975276}
 --- !u!114 &1008088953852703454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5191,8 +5195,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layerMask:
     serializedVersion: 2
-    m_Bits: 0
-  id: 9
+    m_Bits: 64
+  id: 2
   oreResource: 1
   oreLevitator: {fileID: 4686621286300807412}
 --- !u!114 &7038426390757381541
@@ -5423,7 +5427,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7585417001422960220}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -5477,7 +5481,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -6790,7 +6794,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 0}
+        key0: {r: 0, g: 1, b: 0.25233483, a: 0}
         key1: {r: 1, g: 1, b: 1, a: 1}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
@@ -10347,7 +10351,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:

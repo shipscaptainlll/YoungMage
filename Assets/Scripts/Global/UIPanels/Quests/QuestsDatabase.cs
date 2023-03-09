@@ -161,6 +161,13 @@ public class QuestsDatabase : MonoBehaviour
         if (shownCompletedQuests < maxShownCompletedQuests)
         {
             coroutineFinished = false;
+            Quest foundQuest = quests.Find(x => x.Id == id);
+            if (foundQuest == null)
+            {
+                Debug.Log("CAUTION quest was not found ");
+                coroutineFinished = true;
+                yield break;
+            }
             //Debug.Log("adding of completed has started");
             shownCompletedQuests++;
             foreach (Quest quest in quests)
@@ -168,7 +175,8 @@ public class QuestsDatabase : MonoBehaviour
                 //Debug.Log("Available quest " + quest.Id + " " + quest.Description);
             }
             //Debug.Log(id);
-            Quest foundQuest = quests.Find(x => x.Id == id);
+            
+            
             //Debug.Log(quests.Find(x => x.Id == id) + " quest ");
             //Debug.Log(potentialQuests.Find(x => x.Id == id) + " potential quest ");
             finishedQuests.Add(foundQuest);

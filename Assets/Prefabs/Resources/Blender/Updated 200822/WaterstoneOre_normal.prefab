@@ -110,7 +110,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 935977566652891507}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -160,6 +160,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   oreLevitator: {fileID: 4065427409046959884}
+  oreCounter: {fileID: 6293900073565889273}
+  firstCircle: {fileID: 8703185272491371954}
+  secondCircle: {fileID: 1775424664459308195}
 --- !u!65 &4670762605838464606
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -271,6 +274,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  canvasGroup: {fileID: 514286981316610763}
 --- !u!114 &3514291491614060082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -377,7 +381,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -5455,7 +5459,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:

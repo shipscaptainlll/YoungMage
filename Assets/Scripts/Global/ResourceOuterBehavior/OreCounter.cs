@@ -7,6 +7,7 @@ public class OreCounter : MonoBehaviour
 {
     [SerializeField] Text oreCounterText;
     [SerializeField] AnimationCurve animationCurve;
+    [SerializeField] CanvasGroup canvasGroup;
     Coroutine popUpCoroutine;
     Transform oreCounter;
     int oreCount;
@@ -16,6 +17,10 @@ public class OreCounter : MonoBehaviour
     void Start()
     {
         oreCounter = oreCounterText.transform;
+        if (oreCount <= 1)
+        {
+            oreCount = 1;
+        }
     }
 
     void Update()
@@ -35,6 +40,11 @@ public class OreCounter : MonoBehaviour
     {
         if (popUpCoroutine != null) { StopCoroutine(popUpCoroutine); }
         popUpCoroutine = StartCoroutine(CounterPopingUp());
+    }
+
+    public void ShowCounter()
+    {
+        canvasGroup.alpha = 1;
     }
 
     IEnumerator CounterPopingUp()

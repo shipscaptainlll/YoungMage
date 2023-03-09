@@ -20,12 +20,19 @@ public class ObjectsConnector : MonoBehaviour
 
     public void SubscribeOnOre(Transform newOre)
     {
+        if (newOre.GetComponent<ConnectableResource>() == null)
+        {
+            Debug.Log("CARE doesn´t have ConnectableResource component attached");
+            return;
+        }
         newOre.GetComponent<ConnectableResource>().ContactedResource += ConnectTwoOres;
     }
 
     void ConnectTwoOres(Transform firstOre, Transform secondOre)
     {
         Debug.Log("entering " + firstOre + " " + secondOre);
+        Debug.Log(firstOre.GetComponent<OreCounter>().OreCount);
+        Debug.Log(secondOre.GetComponent<OreCounter>().OreCount);
         if (CheckObjectsEnabled(firstOre, secondOre) && CheckSameMaterial(firstOre, secondOre))
         {
             

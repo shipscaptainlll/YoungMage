@@ -46,6 +46,7 @@ public class SpriteManager : MonoBehaviour
     {
         switch (customeID)
         {
+            
             case 0:
                 return nothing;
             case 1:
@@ -98,6 +99,8 @@ public class SpriteManager : MonoBehaviour
                 return waterStoneDust;
             case 25:
                 return windStoneDust;
+            default:
+                return null;
 
         }
         return nothing;

@@ -43,12 +43,6 @@ public class PotentialProductVisualisation : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void InititalisePotentialProducts()
     {
         

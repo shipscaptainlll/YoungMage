@@ -19,6 +19,7 @@ public class SavePanel : MonoBehaviour
     [SerializeField]    float savesMaximumCount;
     [SerializeField] IngameTimer ingameTimer;
     [SerializeField] PortalOpener portalOpener;
+    [SerializeField] SaveNameChanger saveNameChanger;
     float currentSavesCount = 0;
     Transform lastSavedButton;
     public Transform LastSavedButton { get { return lastSavedButton; } }
@@ -81,14 +82,18 @@ public class SavePanel : MonoBehaviour
         loadMenuCopy.GetComponent<CanvasGroup>().alpha = 1;
 
         currentSavesCount++;
-        newSavedGame.Find("Content").Find("SaveNumber").Find("Text").GetComponent<Text>().text = "Save #" + currentSavesCount;
-        loadMenuCopy.Find("Content").Find("SaveNumber").Find("Text").GetComponent<Text>().text = "Save #" + currentSavesCount;
-        newSavedGame.name = "Save" + currentSavesCount;
-        loadMenuCopy.name = "Load" + currentSavesCount;
+        
+        
         takeScreenShot.MakeScreenShot(newSavedGame.gameObject, loadMenuCopy.gameObject, (int) currentSavesCount, -1);
         newSavedGame.Find("Content").Find("TimePlayed").Find("Text").GetComponent<Text>().text = "Time played " + ingameTimer.GetTimeIngame();
         loadMenuCopy.Find("Content").Find("TimePlayed").Find("Text").GetComponent<Text>().text = "Time played " + ingameTimer.GetTimeIngame();
         saveSystemSerialization.SaveProgress(false);
+
+        newSavedGame.Find("Content").Find("SaveNumber").Find("Text").GetComponent<Text>().text = "Save #" + currentSavesCount;
+        loadMenuCopy.Find("Content").Find("SaveNumber").Find("Text").GetComponent<Text>().text = "Save #" + currentSavesCount;
+        newSavedGame.name = "Save" + currentSavesCount;
+        loadMenuCopy.name = "Load" + currentSavesCount;
+
         lastSavedButton = newSavedGame;
         //Debug.Log("New game saved");
     }
@@ -144,7 +149,7 @@ public class SavePanel : MonoBehaviour
 
     int GetPanelIndex(Transform panel)
     {
-        string loadText = panel.Find("Content").Find("SaveNumber").Find("Text").GetComponent<Text>().text;
+        string loadText = panel.name;
         string loadNumber = Regex.Match(loadText, @"\d+").Value;
         int index = Int32.Parse(loadNumber);
         return index;
@@ -202,6 +207,8 @@ public class SavePanel : MonoBehaviour
         autosaveCoroutine = StartCoroutine(AutosaveCounter(newAutosaveRate));
         //Debug.Log("New autosave rate was setted");
     }
+
+    
 
     void UploadSavedGames()
     {
