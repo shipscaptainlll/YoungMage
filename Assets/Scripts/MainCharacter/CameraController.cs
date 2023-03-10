@@ -18,6 +18,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] PersonMovement personMovement;
     [SerializeField] CameraShake cameraShake;
     [SerializeField] Transform ladder;
+    bool tutorialModeActivated;
     float yRotation;
     float xRotation;
     RaycastHit hit = new RaycastHit();
@@ -28,6 +29,7 @@ public class CameraController : MonoBehaviour
     Vector3 startRotation;
     bool cityRegenerationMode;
     
+    public bool TutorialModeActivated { get { return tutorialModeActivated; } set { tutorialModeActivated = value; } }
     public bool CityRegenerationMode { get { return cityRegenerationMode; } set { startRotation = transform.localRotation.eulerAngles;  cityRegenerationMode = value; yRotation = startRotation.y; xRotation = startRotation.x; } }
     Vector3 StartRotation { get { return startRotation; } set { startRotation = value; } }
     public float YRotation { get { return yRotation; } set { yRotation = value; } }
@@ -41,9 +43,16 @@ public class CameraController : MonoBehaviour
         }
     }
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         
+        StartCoroutine(SeeObject());
+        OnDrawGizmosSelected();
+    }
+
+    public void ReinitialiseAfterLoading()
+    {
+        Debug.Log("was reloaded, but something is off");
         StartCoroutine(SeeObject());
         OnDrawGizmosSelected();
     }
@@ -52,7 +61,7 @@ public class CameraController : MonoBehaviour
     void LateUpdate()
     {
         //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward * 3), Color.red);
-        if (!cursorManager.SomethingOpened)
+        if (!cursorManager.SomethingOpened && !tutorialModeActivated)
         {
             RotateHead();
             DetectObject();
@@ -146,10 +155,10 @@ public class CameraController : MonoBehaviour
 
         while (true)
         {
-
+            //Debug.Log("working");
             if (Physics.SphereCast(transform.position, 0.1f, transform.TransformDirection(Vector3.forward * contactingRayDistance), out hitThird, contactingRayDistance, clickableLayerMask))
             {
-                
+                //Debug.Log(hitThird.transform + "here there");
                 objectOutliner.StoreVewedObject(hitThird.transform); 
             } else { objectOutliner.StoreVewedObject(null);  }
             yield return new WaitForSeconds(0.033f);

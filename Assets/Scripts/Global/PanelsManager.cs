@@ -22,6 +22,7 @@ public class PanelsManager : MonoBehaviour
     [SerializeField] Transform midasCauldronTablePanel;
     [SerializeField] Transform defractorTablePanel;
     [SerializeField] Transform quickAccessPanel;
+    [SerializeField] Transform tutorialPanel;
     [SerializeField] Transform invisiblePosition;
     [SerializeField] Transform defaultPosition;
     [SerializeField] Transform quickaccessinvisiblePosition;
@@ -71,6 +72,12 @@ public class PanelsManager : MonoBehaviour
         whooshFirstSound = soundManager.FindSound("WhooshFirst");
         inventoryOpenSound = soundManager.FindSound("InventoryOpening");
         settingsSubpanelSound = soundManager.FindSound("SettingMainChange");
+        Debug.Log("here we are");
+    }
+
+    void Update()
+    {
+        //Debug.Log(currentlyOpened);
     }
 
     void decideNextState()
@@ -115,7 +122,7 @@ public class PanelsManager : MonoBehaviour
 
     void closePanel(Transform panelToClose)
     {
-        if (panelToClose != null)
+        if (panelToClose != null && panelToClose != tutorialPanel)
         {
             StartCoroutine(CacheClosePanel(panelToClose, false));
         }
@@ -138,11 +145,25 @@ public class PanelsManager : MonoBehaviour
         }
     }
 
-    public void closeCurrentPanel()
+    public void CloseUploadPanel()
     {
-        closePanel(currentlyOpened);
+        if (currentlyOpened != null)
+        {
+            RelocateFarAway(currentlyOpened);
+        }
         currentlyOpened = null;
         considerQuickAccessPanel();
+        CameraVolumeController.UnBlurScreen();
+    }
+
+    public void closeCurrentPanel()
+    {
+        if (currentlyOpened != tutorialPanel)
+        {
+            closePanel(currentlyOpened);
+            currentlyOpened = null;
+            considerQuickAccessPanel();
+        }
     }
 
     void openPanel(Transform panelToOpen)
@@ -274,6 +295,26 @@ public class PanelsManager : MonoBehaviour
 #endif
     }
 
+    public void OpenTutorialPanel()
+    {
+        StopAllCoroutines();
+        Debug.Log("we are here ");
+        nextToOpen = tutorialPanel;
+        decideNextState();
+    }
+
+    public void CloseTutorialPanel()
+    {
+        if (currentlyOpened == tutorialPanel)
+        {
+            Debug.Log("we are here1 ");
+            StartCoroutine(CacheClosePanel(currentlyOpened, false));
+            currentlyOpened = null;
+            considerQuickAccessPanel();
+        }
+        
+    }
+
     IEnumerator CacheOpenPanel(Transform panelToOpen)
     {
         CanvasGroup panelCanvasGroup = panelToOpen.GetComponent<CanvasGroup>();
@@ -317,7 +358,9 @@ public class PanelsManager : MonoBehaviour
 
     void RelocateDefaultPosition(Transform panelToMove)
     {
+        Debug.Log(panelToMove.position);
         panelToMove.position = defaultPosition.position;
+        Debug.Log(panelToMove.position);
     }
 
     IEnumerator openQuickAccess(Transform panelToOpen)

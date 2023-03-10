@@ -66,6 +66,13 @@ public class PotentialProductVisualisation : MonoBehaviour
         ShowChoosenResources();
     }
 
+    public void VisualisePotentialProduct()
+    {
+        UpdateUsedResources();
+        GroupResourcesIDs();
+        ShowChoosenResources();
+    }
+
     void UpdateUsedResources()
     {
         resourcesIDs.Clear();

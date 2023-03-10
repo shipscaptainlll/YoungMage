@@ -22,6 +22,7 @@ public class PotentialProductAppearance : MonoBehaviour
     [SerializeField] AppearanceTransmutationCircle appearanceTransmutationCircle;
 
     [SerializeField] EClickVariations eClickVariations;
+    [SerializeField] Transform instantiatedProductHolder;
     Transform createdObject;
     bool isCreated = false;
 
@@ -29,6 +30,9 @@ public class PotentialProductAppearance : MonoBehaviour
     [SerializeField] SoundManager soundManager;
     AudioSource conjurationAppearSound;
     AudioSource throughPortalSound;
+
+    public Transform InstantiatedProductHolder { get { return instantiatedProductHolder; } }
+    public Transform CreatedObject { get { return createdObject; } }
 
     public event Action<int> ObjectProduced = delegate { };
     public bool IsCreated
@@ -72,10 +76,28 @@ public class PotentialProductAppearance : MonoBehaviour
                     StartCoroutine(PortalSoundDelay());
                     createdObject.GetComponent<TransmutationProduct>().EnteredPortal += DestroyObject;
                     createdObject.GetComponent<MeshRenderer>().enabled = true;
+                    createdObject.parent = instantiatedProductHolder;
                     //createdObject.GetComponent<Rigidbody>().useGravity = true;
                     StartCoroutine(MaterializeProduct(createdObject, 1f));
                     break;
                 }
+            }
+        }
+    }
+
+    public void InstantiateProduct(int uploadedID, Vector3 position)
+    {
+        ActivateProductPS();
+        foreach (Transform element in productsHolder)
+        {
+            if (element.GetComponent<TransmutationProduct>().ID == uploadedID)
+            {
+                createdObject = Instantiate(element, position, element.rotation);
+                createdObject.GetComponent<TransmutationProduct>().EnteredPortal += DestroyObject;
+                createdObject.GetComponent<MeshRenderer>().enabled = true;
+                createdObject.parent = instantiatedProductHolder;
+                StartCoroutine(MaterializeProduct(createdObject, 1f));
+                break;
             }
         }
     }
@@ -104,6 +126,7 @@ public class PotentialProductAppearance : MonoBehaviour
                             itemsCounterQuests.countCreatedQuest(element.GetComponent<TransmutationProduct>().ID);
                             createdObject.GetComponent<TransmutationProduct>().EnteredPortal += DestroyObject;
                             createdObject.GetComponent<MeshRenderer>().enabled = true;
+                            createdObject.parent = instantiatedProductHolder;
                             //createdObject.GetComponent<Rigidbody>().useGravity = true;
                             foreach (Transform resourcePack in resourcePacksHolder)
                             {
@@ -144,6 +167,7 @@ public class PotentialProductAppearance : MonoBehaviour
                             itemsCounterQuests.countCreatedQuest(element.GetComponent<TransmutationProduct>().ID);
                             createdObject.GetComponent<TransmutationProduct>().EnteredPortal += DestroyObject;
                             createdObject.GetComponent<MeshRenderer>().enabled = true;
+                            createdObject.parent = instantiatedProductHolder;
                             //createdObject.GetComponent<Rigidbody>().useGravity = true;
                             amulet.GetComponent<TransmutationAmulet>().ID = element.GetComponent<TransmutationProduct>().ID;
                             StartCoroutine(MaterializeProduct(createdObject, 1f));
@@ -204,6 +228,17 @@ public class PotentialProductAppearance : MonoBehaviour
         Debug.Log(1);
         ObjectTeleported();
         StartCoroutine(WaitDelay());
+    }
+
+    public void ReleaseProduct()
+    {
+        StopAllCoroutines();
+        
+        if (InstantiatedProductHolder.childCount > 0)
+        {
+            DestroyImmediate(InstantiatedProductHolder.GetChild(0).gameObject);
+        }
+        
     }
 
     IEnumerator WaitDelay()

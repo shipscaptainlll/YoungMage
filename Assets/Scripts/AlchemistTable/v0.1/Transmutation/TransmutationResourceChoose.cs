@@ -24,6 +24,9 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
 
     List<GameObject> _accessibleResources = new List<GameObject>();
     Transform _chosenResource;
+    bool resourcePackShown;
+    bool resourceShown;
+    
     int currentID;
     float _currentAngle = 0f;
     float _circleRadius = 0.25f;
@@ -42,6 +45,9 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
         }
     }
 
+    public bool ResourcePackShown { get { return resourcePackShown; } }
+    public float CurrentAngle { get { return _currentAngle; } }
+    public bool ResourceShown { get { return resourceShown; } }
     public int CurrentID { get { return currentID; } }
     public Transform ChosenResource { get { return _chosenResource; } }
 
@@ -193,9 +199,32 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
         if (engagedResourcePack.parent.Find("ChooseResource") == transform)
         {
             ResetChosenResource();
+            currentID = 0;
             HideResourcePack();
             _transmutationEnabled = false;
         }
+    }
+
+    public void ResetResourceChoosing()
+    {
+        if (transform.parent.Find("ChooseResource") == transform)
+        {
+            ResetChosenResource();
+            currentID = 0;
+            HideResourcePack();
+            _transmutationEnabled = false;
+        }
+    }
+
+    public void UploadRotation(float angle)
+    {
+        if (_isRotating)
+        {
+            StopAllCoroutines();
+            _isRotating = false;
+        }
+        transform.localRotation = Quaternion.Euler(new Vector3(transform.eulerAngles.x, transform.eulerAngles.y + angle, transform.eulerAngles.z));
+        transform.parent.Find("OutlineResource").localRotation = Quaternion.Euler(new Vector3(transform.eulerAngles.x, transform.eulerAngles.y + angle, transform.eulerAngles.z));
     }
 
     void RotateResourcesLeft()
@@ -267,6 +296,34 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
                 currentID = targetObject.transform.GetComponent<AlchemistTableResource>().ID;
                 panel.GetComponent<AlchemistTableResource>().gameObject.GetComponent<MeshRenderer>().enabled = true;
                 _chosenResource = panel;
+                resourceShown = true;
+                if (ResourceChosen != null)
+                {
+                    ResourceChosen(transform);
+                }
+            }
+        }
+    }
+
+    public void UploadChoosenResourceID(int id)
+    {
+        currentID = id;
+    }
+
+    public void VisualizeChosenResource(int ID)
+    {
+        ClearChosenVisualisation();
+        GameObject targetObject = GetChoosenResource(ID);
+        transmutationCircleRotation.CircleChoosenRotation();
+        //Debug.Log("Hello there12");
+        foreach (Transform panel in _choosenResourcesHolder.transform)
+        {
+            if (panel.GetComponent<AlchemistTableResource>().ID == targetObject.transform.GetComponent<AlchemistTableResource>().ID)
+            {
+                currentID = targetObject.transform.GetComponent<AlchemistTableResource>().ID;
+                panel.GetComponent<AlchemistTableResource>().gameObject.GetComponent<MeshRenderer>().enabled = true;
+                _chosenResource = panel;
+                resourceShown = true;
                 if (ResourceChosen != null)
                 {
                     ResourceChosen(transform);
@@ -286,6 +343,7 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
                 currentID = 0;
                 panel.GetComponent<AlchemistTableResource>().gameObject.GetComponent<MeshRenderer>().enabled = true;
                 _chosenResource = panel;
+                resourceShown = true;
                 if (ResourceChosen != null)
                 {
                     ResourceChosen(transform);
@@ -300,6 +358,17 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
         {
             resource.gameObject.GetComponent<MeshRenderer>().enabled = false;
         }
+        resourceShown = false;
+        _chosenResource = null;
+    }
+
+    public void UploadHidingElement()
+    {
+        foreach (Transform resource in _choosenResourcesHolder.transform)
+        {
+            resource.gameObject.GetComponent<MeshRenderer>().enabled = false;
+        }
+        resourceShown = false;
         _chosenResource = null;
     }
 
@@ -315,12 +384,24 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
         return null;
     }
 
-    
-
-    void HideResourcePack()
+    GameObject GetChoosenResource(int id)
     {
-        
-        
+        foreach (GameObject resource in _accessibleResources)
+        {
+            if (resource.transform.GetComponent<AlchemistTableResource>().ID == id)
+            {
+                return resource;
+            }
+        }
+        return null;
+    }
+
+
+
+    public void HideResourcePack()
+    {
+
+        resourcePackShown = false;
         foreach (GameObject resource in _accessibleResources)
         {
             resource.GetComponent<MeshRenderer>().enabled = false;
@@ -339,9 +420,9 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
         }
     }
 
-    void ShowResourcePack()
+    public void ShowResourcePack()
     {
-        
+        resourcePackShown = true;
         foreach (GameObject resource in _accessibleResources)
         {
             //Debug.Log("Shown");
@@ -354,9 +435,10 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
     {
         openingSound.Play();
         transmutationCircleRotation.CircleLookRotation();
-        //Debug.Log("Hello there1");
+        Debug.Log("Hello there1" + _transmutationEnabled + _characterOccupation.IsOccupied);
         if (!_transmutationEnabled && !_characterOccupation.IsOccupied)
         {
+
             foreach (GameObject resource in _accessibleResources)
             {
                 resource.GetComponent<MeshRenderer>().enabled = true;

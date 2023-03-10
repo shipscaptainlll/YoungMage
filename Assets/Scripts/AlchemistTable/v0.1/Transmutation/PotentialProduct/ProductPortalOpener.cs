@@ -17,13 +17,11 @@ public class ProductPortalOpener : MonoBehaviour
     {
         
         housePortal = transform.Find("Simple Portal").Find("Visualisation");
+        if (housePortal.localScale.x > 0.5f)
+        {
+            return;
+        }
         housePortal.localScale = new Vector3(0.1f, 0.1f, housePortal.localScale.z);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void InitiatePortalOpening()
@@ -36,6 +34,18 @@ public class ProductPortalOpener : MonoBehaviour
             StartVFX();
             StartCoroutine(OpenPortal());
         }
+    }
+
+    public void InitiateImmediatePortalOpening()
+    {
+        StopAllCoroutines();
+        housePortal = transform.Find("Simple Portal").Find("Visualisation");
+        cycleRunning = true;
+        EnablePortals();
+        StartVFX();
+        housePortal.GetComponent<MeshRenderer>().enabled = true;
+
+        housePortal.localScale = new Vector3(0.6137492f, 0.865296f, housePortal.localScale.z);
     }
 
     public void InitiatePortalClosing()

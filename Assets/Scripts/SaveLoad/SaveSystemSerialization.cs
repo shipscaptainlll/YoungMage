@@ -8,6 +8,7 @@ public class SaveSystemSerialization : MonoBehaviour
 {
     [SerializeField] PersonMovement mainCharacterScript;
     [SerializeField] CameraController mainCharacterCamera;
+    [SerializeField] GameReloadingInitialiser gameReloadingInitialiser;
     [SerializeField] SavePanel savePanel;
     [SerializeField] Transform timeHolder;
     [SerializeField] Transform oresHolder;
@@ -38,6 +39,8 @@ public class SaveSystemSerialization : MonoBehaviour
     [SerializeField] CrossbowCatapultArenaInstantiator crossbowCatapultArenaInstantiator;
     [SerializeField] PortalOpener portalOpener;
     [SerializeField] TransmutationTableStateMachine transmutationTableStateMachine;
+    [SerializeField] TutorialsInstantiator tutorialsInstantiator;
+    [SerializeField] PanelsManager panelsManager;
     int saveDirectoryPath;
     string gameDataPath;
     string playerPath;
@@ -54,9 +57,7 @@ public class SaveSystemSerialization : MonoBehaviour
     string outerSmallSkeletonsPath;
     string outerBigSkeletonsPath;
     string outerLizardSkeletonsPath;
-    string arrowCatapultsPath;
-    string stoneCatapultsPath;
-    string outdoorSkeletonsPath;
+    string tutorialsPath;
     
     int maxId;
     bool neverSaved = false;
@@ -153,6 +154,8 @@ public class SaveSystemSerialization : MonoBehaviour
 
         DoorsDataSaver.SaveDoorsData(doorsStateMachine, doorsDataPath);
 
+        TutorialsDataSaver.SaveTutorialsData(tutorialsInstantiator, tutorialsPath);
+
         //Debug.Log("game was saved");
     }
 
@@ -160,13 +163,16 @@ public class SaveSystemSerialization : MonoBehaviour
     {
         if (saveId == -1 && saveDirectoryPath != -1)
         {
+            gameReloadingInitialiser.MassiveReinitialiseAfterLoading();
+            panelsManager.CloseUploadPanel();
             LoadingProgress();
         } else if (saveId > 0 && saveDirectoryPath != -1)
         {
             int cacheDirectoryPath = saveDirectoryPath;
             saveDirectoryPath = saveId;
             UpdatePaths();
-
+            gameReloadingInitialiser.MassiveReinitialiseAfterLoading();
+            panelsManager.CloseUploadPanel();
             LoadingProgress();
 
             saveDirectoryPath = saveId;
@@ -216,7 +222,9 @@ public class SaveSystemSerialization : MonoBehaviour
 
         CityUpgradeDataApplier.ApplyCityUpgradeData(cityUpgradeStateMachine, CityUpgradeDataSaver.LoadCityUpgradeData(cityUpgradeDataPath));
 
-        
+        TutorialsDataApplier.ApplyTutorialsData(tutorialsInstantiator, TutorialsDataSaver.LoadTutorialsData(tutorialsPath));
+
+        gameReloadingInitialiser.MassiveReinitialiseAfterLoading();
 
         Debug.Log("game was loaded");
     }
@@ -263,9 +271,6 @@ public class SaveSystemSerialization : MonoBehaviour
         indoorSkeletonsPath = GetPath("indoorSkeleton");
         collectablePath = GetPath("collectable");
         defractorDataPath = GetPath("defractorData");
-        arrowCatapultsPath = GetPath("arrowCatapult");
-        stoneCatapultsPath = GetPath("stoneCatapult");
-        outdoorSkeletonsPath = GetPath("outdoorSkeleton");
         midasDataPath = GetPath("midasDataPath");
         cityUpgradeDataPath = GetPath("cityUpgradeDataPath");
         doorsDataPath = GetPath("doorsDataPath");
@@ -273,6 +278,7 @@ public class SaveSystemSerialization : MonoBehaviour
         outerBigSkeletonsPath = GetPath("outerBigSkeletonsPath");
         outerLizardSkeletonsPath = GetPath("outerLizardSkeletonsPath");
         transmutationTableDataPath = GetPath("transmutationTableDataPath");
+        tutorialsPath = GetPath("tutorialsPath");
     }
 
     string GetPath(string subName)

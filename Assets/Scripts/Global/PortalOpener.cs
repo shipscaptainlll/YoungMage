@@ -15,6 +15,7 @@ public class PortalOpener : MonoBehaviour
     [SerializeField] ParticleSystem portalPS;
     [SerializeField] AppearanceTransmutationCircle appearanceTransmutationCircle;
     [SerializeField] AppearanceTransmutationCircle secondTransmutationCircle;
+    [SerializeField] SkeletonPortalActivator skeletonPortalActivator;
 
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
@@ -56,9 +57,9 @@ public class PortalOpener : MonoBehaviour
 
     public void InitiatePortalOpening()
     {
-        if (!portalOpened)
+        if (!portalOpened && skeletonPortalActivator.InsidePortal)
         {
-            
+            Debug.Log("portal opening initiated");
             portalOpened = true;
             //Debug.Log("OpeningPortal");
             if (!cycleRunning && eClickVariations.IsOpeningPortal)
@@ -70,6 +71,17 @@ public class PortalOpener : MonoBehaviour
                 ActivateParticleSystem();
                 //Debug.Log("OpeningPortal3");
                 ChooseSkeletonInstance();
+
+                if (choosenSkeleton == null)
+                {
+                    portalOpened = false;
+
+                    cycleRunning = false;
+                    //Debug.Log("ClosingPortal2");
+                    StartCoroutine(ClosePortal());
+                    //Debug.Log("ClosingPortal3");
+                    StartCoroutine(CloseVFX());
+                }
                 //Debug.Log("OpeningPortal4");
                 ChangePortalPosition();
                 //Debug.Log("OpeningPortal5");
