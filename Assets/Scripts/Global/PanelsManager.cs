@@ -23,6 +23,7 @@ public class PanelsManager : MonoBehaviour
     [SerializeField] Transform defractorTablePanel;
     [SerializeField] Transform quickAccessPanel;
     [SerializeField] Transform tutorialPanel;
+    [SerializeField] Transform introPanel;
     [SerializeField] Transform invisiblePosition;
     [SerializeField] Transform defaultPosition;
     [SerializeField] Transform quickaccessinvisiblePosition;
@@ -39,8 +40,11 @@ public class PanelsManager : MonoBehaviour
     Transform currentSettingsSubpanel;
     Transform nextToOpen;
     float updateSpeed;
+    bool introMode;
 
     bool escapeMenuBlocked;
+
+    public bool IntroMode { get { return introMode; } set { introMode = value; } }
     public Transform CurrentlyOpened
     {
         get
@@ -82,6 +86,10 @@ public class PanelsManager : MonoBehaviour
 
     void decideNextState()
     {
+        if (currentlyOpened == tutorialPanel || currentlyOpened == introPanel)
+        {
+            return;
+        }
         if (nextToOpen != inventoryPanel)
         {
             whooshFirstSound.Play();
@@ -315,6 +323,20 @@ public class PanelsManager : MonoBehaviour
         
     }
 
+    public void OpenIntroPanel()
+    {
+        nextToOpen = introPanel;
+        decideNextState();
+    }
+
+    public void CloseIntroPanel()
+    {
+        Debug.Log("we are here2 ");
+        if (currentlyOpened != null) { StartCoroutine(CacheClosePanel(currentlyOpened, false)); }
+        currentlyOpened = null;
+        considerQuickAccessPanel();
+    }
+
     IEnumerator CacheOpenPanel(Transform panelToOpen)
     {
         CanvasGroup panelCanvasGroup = panelToOpen.GetComponent<CanvasGroup>();
@@ -334,6 +356,7 @@ public class PanelsManager : MonoBehaviour
     }
     IEnumerator CacheClosePanel(Transform panelToClose, bool isSubpanel)
     {
+        
         CanvasGroup panelCanvasGroup = panelToClose.GetComponent<CanvasGroup>();
         float elapsed = 0;
         float alphaMaxValue = 1;

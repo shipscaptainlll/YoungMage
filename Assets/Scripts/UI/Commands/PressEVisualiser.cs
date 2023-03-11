@@ -30,13 +30,13 @@ public class PressEVisualiser : MonoBehaviour
         //potentialProductAppearance.ObjectTeleported += TemporarilyEnable;
     }
 
-    void JustShow()
+    public void JustShow()
     {
         fadeEffects.StartEffects();
         
     }
 
-    void JustHide()
+    public void JustHide()
     {
         fadeEffects.ResetEffects();
 

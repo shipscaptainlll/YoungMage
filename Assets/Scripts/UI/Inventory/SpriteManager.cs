@@ -133,5 +133,6 @@ public class SpriteManager : MonoBehaviour
         SpriteDictionary.Add(23, magicStoneDust);
         SpriteDictionary.Add(24, waterStoneDust);
         SpriteDictionary.Add(25, windStoneDust);
+        SpriteDictionary.Add(26, null);
     }
 }

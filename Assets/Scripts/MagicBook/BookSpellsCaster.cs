@@ -201,7 +201,7 @@ public class BookSpellsCaster : MonoBehaviour
 
     public void StartShowingLetters()
     {
-        if (castedSpell.spellName != "NullSpell")
+        if (castedSpell != null && castedSpell.spellName != "NullSpell")
         {
             if (showLettersCoroutine != null) { StopCoroutine(showLettersCoroutine); }
             showLettersCoroutine = StartCoroutine(ShowingLetters(castedSpell.spellDuration));

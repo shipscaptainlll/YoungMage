@@ -8,6 +8,7 @@ public class MidasCoinsCatcher : MonoBehaviour
     [SerializeField] CoinsAccumulationModels coinsAccumulationModels;
     [SerializeField] Transform coinsAccumulationPosition;
     [SerializeField] Transform coinsAccumulationHolder;
+    [SerializeField] GoldCoinsCounter goldCoinsCounter;
     GameObject currentAccumulationForm = null;
     int coinsCount = 0;
 
@@ -47,6 +48,13 @@ public class MidasCoinsCatcher : MonoBehaviour
             AddToCount();
             CountCoins();
         }
+    }
+
+    public void CollectAccumulatedGold()
+    {
+        goldCoinsCounter.AddResource(coinsCount);
+        coinsCount = 0;
+        CountCoins();
     }
 
     public void AddToCount()
@@ -105,6 +113,6 @@ public class MidasCoinsCatcher : MonoBehaviour
         currentAccumulationForm.AddComponent<AdditionalCoinsCatcher>();
         currentAccumulationForm.GetComponent<AdditionalCoinsCatcher>().MidasCoinsCatcher = transform;
         currentAccumulationForm.AddComponent<Rigidbody>();
-        currentAccumulationForm.AddComponent<MeshCollider>().convex = true;
+        //currentAccumulationForm.AddComponent<MeshCollider>().convex = true;
     }
 }

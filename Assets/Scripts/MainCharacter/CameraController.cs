@@ -28,7 +28,9 @@ public class CameraController : MonoBehaviour
 
     Vector3 startRotation;
     bool cityRegenerationMode;
+    bool introMode;
     
+    public bool IntroMode { get { return introMode; } set { introMode = value; } }
     public bool TutorialModeActivated { get { return tutorialModeActivated; } set { tutorialModeActivated = value; } }
     public bool CityRegenerationMode { get { return cityRegenerationMode; } set { startRotation = transform.localRotation.eulerAngles;  cityRegenerationMode = value; yRotation = startRotation.y; xRotation = startRotation.x; } }
     Vector3 StartRotation { get { return startRotation; } set { startRotation = value; } }
@@ -75,6 +77,12 @@ public class CameraController : MonoBehaviour
 
     void RotateHead()
     {
+        if (introMode)
+        {
+            return;
+            
+        }
+
         float xRot = Input.GetAxis("Mouse X") * Time.deltaTime * mouseSensitivity;
         float yRot = Input.GetAxis("Mouse Y") * Time.deltaTime * mouseSensitivity;
 
@@ -104,6 +112,7 @@ public class CameraController : MonoBehaviour
 
         }
        
+        
         
         if (!cityRegenerationMode)
         {
@@ -158,8 +167,16 @@ public class CameraController : MonoBehaviour
             //Debug.Log("working");
             if (Physics.SphereCast(transform.position, 0.1f, transform.TransformDirection(Vector3.forward * contactingRayDistance), out hitThird, contactingRayDistance, clickableLayerMask))
             {
-                //Debug.Log(hitThird.transform + "here there");
-                objectOutliner.StoreVewedObject(hitThird.transform); 
+                if (hitThird.transform.gameObject.layer == 12)
+                {
+                    //Debug.Log(hitThird.transform + "here there");
+                    objectOutliner.StoreVewedObject(hitThird.transform);
+                } else if (hitThird.transform.gameObject.layer == 28)
+                {
+                    objectOutliner.StoreVewedObject(null);
+                    //Debug.Log(hitThird.transform + " found this one");
+                }
+                
             } else { objectOutliner.StoreVewedObject(null);  }
             yield return new WaitForSeconds(0.033f);
         }        

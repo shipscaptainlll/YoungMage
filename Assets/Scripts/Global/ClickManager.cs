@@ -20,6 +20,7 @@ public class ClickManager : MonoBehaviour
     public event Action QLClicked = delegate { };
     public event Action TabClicked = delegate { };
     public event Action EnterClicked = delegate { };
+    public event Action SpaceClicked = delegate { };
     public event Action<int> OneClicked = delegate { };
     public event Action<int> TwoClicked = delegate { };
     public event Action<int> ThreeClicked = delegate { };
@@ -137,7 +138,13 @@ public class ClickManager : MonoBehaviour
                 EnterClicked();
             }
         }
-
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (SpaceClicked != null)
+            {
+                SpaceClicked();
+            }
+        }
         if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
         {
             if (OneClicked != null)

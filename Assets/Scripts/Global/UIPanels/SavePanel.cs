@@ -20,6 +20,7 @@ public class SavePanel : MonoBehaviour
     [SerializeField] IngameTimer ingameTimer;
     [SerializeField] PortalOpener portalOpener;
     [SerializeField] SaveNameChanger saveNameChanger;
+    [SerializeField] TurnOffVisualiser turnOffVisualiser;
     float currentSavesCount = 0;
     Transform lastSavedButton;
     public Transform LastSavedButton { get { return lastSavedButton; } }
@@ -37,6 +38,10 @@ public class SavePanel : MonoBehaviour
     [Header("Saves Manager")]
     [SerializeField] SoundManager soundManager;
     AudioSource saveSound;
+
+    bool isTutorialMode;
+
+    public bool IsTutorialMode { get { return isTutorialMode; } set { isTutorialMode = value; } }
     
 
 
@@ -172,8 +177,9 @@ public class SavePanel : MonoBehaviour
 
     public void AutoSave()
     {
-        if (portalOpener.PortalOpened)
+        if (portalOpener.PortalOpened || isTutorialMode)
         {
+            turnOffVisualiser.JustShow();
             return;
         }
         saveSound.Play();
@@ -196,6 +202,11 @@ public class SavePanel : MonoBehaviour
 
     public void AutoLoad()
     {
+        if (isTutorialMode)
+        {
+            turnOffVisualiser.JustShow();
+            return;
+        }
         saveSound.Play();
         saveSystemSerialization.LoadProgress(saveSystemSerialization.SaveDirectoryPath);
         //Debug.Log("Game was autosaved");

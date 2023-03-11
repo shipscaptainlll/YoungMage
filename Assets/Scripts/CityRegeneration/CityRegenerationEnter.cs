@@ -63,6 +63,7 @@ public class CityRegenerationEnter : MonoBehaviour
     {
         if (isActive)
         {
+            personMovement.transform.LookAt(lookAtTransform);
             cameraTransform.LookAt(lookAtTransform);
         }
         

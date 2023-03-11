@@ -223,7 +223,7 @@ public class ContactManager : MonoBehaviour
                         Debug.Log("is full");
                     }
                     
-                }
+                } 
             }
         }
     }
