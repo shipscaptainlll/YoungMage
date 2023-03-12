@@ -53,27 +53,27 @@ public static class SkeletonsDataApplier
     {
         int indexer = 0;
         //Debug.Log("applied one skeleton state");
-        Debug.Log("skeletons in holder " + skeletonsHolder.childCount);
+        //Debug.Log("skeletons in holder " + skeletonsHolder.childCount);
         
         foreach (Transform skeleton in skeletonsHolder)
         {
-            Debug.Log("weel hello there0 + indexer " + indexer);
+            //Debug.Log("weel hello there0 + indexer " + indexer);
             if (skeletonDataLoaded.isIdle[indexer])
             {
-                Debug.Log("weel hello there");
+                //Debug.Log("weel hello there");
             }
             else if (skeletonDataLoaded.connectedToPerson[indexer])
             {
-                Debug.Log("weel hello there1");
-                Debug.Log(personScript.transform);
+                //Debug.Log("weel hello there1");
+                //Debug.Log(personScript.transform);
                 //skeleton.GetComponent<SkeletonBehavior>().NavigationTarget = null;
                 skeleton.GetComponent<SkeletonBehavior>().NavigationTarget = personScript.transform;
-                Debug.Log(personScript.transform);
+                //Debug.Log(personScript.transform);
             }
             else if (skeletonDataLoaded.connectedToOre[indexer])
             {
                 int indexerOre = 0;
-                Debug.Log("weel hello there2");
+                //Debug.Log("weel hello there2");
                 foreach (Transform row in oresHolder)
                 {
                     foreach (Transform ore in row)
@@ -89,13 +89,13 @@ public static class SkeletonsDataApplier
             }
             else if (skeletonDataLoaded.isTacklingDoor[indexer])
             {
-                Debug.Log("weel hello there3");
+                //Debug.Log("weel hello there3");
                 Transform searchedDoor = null;
                 foreach (Transform door in tackledDoor)
                 {
-                    Debug.Log(door.name);
-                    Debug.Log(door.GetComponent<DoorTacklingManager>().DoorLevel);
-                    Debug.Log(skeletonDataLoaded.connectedDoorIndex[indexer]);
+                    //Debug.Log(door.name);
+                    //Debug.Log(door.GetComponent<DoorTacklingManager>().DoorLevel);
+                    //Debug.Log(skeletonDataLoaded.connectedDoorIndex[indexer]);
                     if (door.GetComponent<DoorTacklingManager>().DoorLevel == skeletonDataLoaded.connectedDoorIndex[indexer])
                     {
                         Debug.Log("skeleton was connected to the door number " + skeletonDataLoaded.connectedDoorIndex[indexer]);
@@ -108,7 +108,7 @@ public static class SkeletonsDataApplier
             }
             else if (skeletonDataLoaded.isExcomunicated[indexer])
             {
-                Debug.Log("weel hello there4");
+                //Debug.Log("weel hello there4");
                 skeleton.GetComponent<SkeletonBehavior>().IsConjured = true;
                 skeleton.GetComponent<SkeletonBehavior>().NavigationTarget = null;
             }

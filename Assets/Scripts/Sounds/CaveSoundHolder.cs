@@ -21,7 +21,7 @@ public class CaveSoundHolder : MonoBehaviour
 
     public void PlaySound()
     {
-        Debug.Log("Here: ");
+        //Debug.Log("Here: ");
         int randomNumber = rand.Next(1, 10);
         if (randomNumber > 5)
         {

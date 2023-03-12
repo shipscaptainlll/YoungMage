@@ -8,30 +8,19 @@ public class CheckGroundResource : MonoBehaviour
     [SerializeField] OreCounter oreCounter;
     [SerializeField] ParticleSystem firstCircle;
     [SerializeField] ParticleSystem secondCircle;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    bool checkGroundActivated;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 6 || other.gameObject.layer == 24
-            )
+        Debug.Log("just contacted " + other + " with layer mask " + other.gameObject.layer);
+        if (!checkGroundActivated && 
+            (other.gameObject.layer == 6 || other.gameObject.layer == 24))
         {
-            //Debug.Log(other.gameObject.layer + " contacted ground " + other.transform);
+            checkGroundActivated = true;
             oreLevitator.ActivateLevitation();
             oreCounter.ShowCounter();
             firstCircle.Play();
             secondCircle.Play();
-            //Destroy(transform.parent.parent.gameObject);
         }
     }
 }

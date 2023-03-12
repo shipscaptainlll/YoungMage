@@ -52,12 +52,12 @@ public class SkeletonsDeleter : MonoBehaviour
     {
         skeletonsStack.DeleteHouseSkeletons();
         int count = skeletonsHolder.childCount;
-        Debug.Log("count is " + count);
+        //Debug.Log("count is " + count);
         for (int i = 0; i < count; i++)
         {
-            Debug.Log("before deleted and count in holder is " + skeletonsHolder.childCount);
+            //Debug.Log("before deleted and count in holder is " + skeletonsHolder.childCount);
             skeletonsHolder.GetChild(0).GetComponent<SkeletonBehavior>().DestroyUploadSkeleton();
-            Debug.Log("was deleted and count in holder is " + skeletonsHolder.childCount);
+            //Debug.Log("was deleted and count in holder is " + skeletonsHolder.childCount);
         }
     }
 

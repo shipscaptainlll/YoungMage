@@ -24,7 +24,6 @@ public class TutorialsInstantiator : MonoBehaviour
     public void ActivateTutorial(int id)
     {
         TutorialElement tutorial = FindTutorial(id);
-        Debug.Log("well hello thr " + tutorial.transform);
         SaveData(id, tutorial);
         ShowTutorialPanel(tutorial);
         tutorialModeActivator.ApplyTutorialReadingMode();

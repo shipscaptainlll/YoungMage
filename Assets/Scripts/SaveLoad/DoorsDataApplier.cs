@@ -32,7 +32,7 @@ public static class DoorsDataApplier
         Debug.Log("mines entrance doors were opened " + doorsData.minesEntranceDoorOpened); doorsStateMachine.ApplyMinesEntranceState(doorsData);
         if (doorsData.hallDoorOpening) { Debug.Log("halls doors were opening"); doorsStateMachine.ApplyHallDoorOpening(doorsData); }
         else if (doorsData.hallDoorClosing) { Debug.Log("halls doors were closing"); doorsStateMachine.ApplyHallDoorClosing(doorsData); } 
-        else { Debug.Log("halls doors were opened" + doorsData.hallDoorOpened); doorsStateMachine.ApplyHallDoorState(doorsData); }
+        else { Debug.Log("halls doors were opened " + doorsData.hallDoorOpened); doorsStateMachine.ApplyHallDoorState(doorsData); }
         doorsStateMachine.ApplyFirstDoorState(doorsData);
         Debug.Log("Current health of first door is " + doorsData.firstDoorHealth); doorsStateMachine.ApplyFirstDoorHealth(doorsData);
         doorsStateMachine.ApplySecondDoorState(doorsData);

@@ -117,10 +117,10 @@ public class AudioPanel : MonoBehaviour
         int cacheSoundsTurnedOff = PlayerPrefs.GetInt("soundsTurnedOff", 0);
         soundsTurnedOff = cacheSoundsTurnedOff == 1 ? true : false;
         soundsTurnedOffToggle.isOn = soundsTurnedOff;
-        Debug.Log(overallVolume);
-        Debug.Log(effectsVolume);
-        Debug.Log(charactersSpeechVolume);
-        Debug.Log(musicVolume);
-        Debug.Log(cacheSoundsTurnedOff);
+        Debug.Log("Player prefs uploaded: overall volume " + overallVolume);
+        Debug.Log("Player prefs uploaded: effects volume " + effectsVolume);
+        Debug.Log("Player prefs uploaded: characters speech volume " + charactersSpeechVolume);
+        Debug.Log("Player prefs uploaded: music volume " + musicVolume);
+        Debug.Log("Player prefs uploaded: cache sound volume " + cacheSoundsTurnedOff);
     }
 }

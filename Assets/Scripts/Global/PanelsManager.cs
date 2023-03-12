@@ -41,7 +41,7 @@ public class PanelsManager : MonoBehaviour
     Transform nextToOpen;
     float updateSpeed;
     bool introMode;
-
+    bool tutorialMode;
     bool escapeMenuBlocked;
 
     public bool IntroMode { get { return introMode; } set { introMode = value; } }
@@ -76,7 +76,6 @@ public class PanelsManager : MonoBehaviour
         whooshFirstSound = soundManager.FindSound("WhooshFirst");
         inventoryOpenSound = soundManager.FindSound("InventoryOpening");
         settingsSubpanelSound = soundManager.FindSound("SettingMainChange");
-        Debug.Log("here we are");
     }
 
     void Update()
@@ -97,6 +96,7 @@ public class PanelsManager : MonoBehaviour
         if (checkIfAlreadyOpened())
         {
             closeCurrentPanel();
+            nextToOpen = null;
         }
         else if (!checkIfAlreadyOpened())
         {
@@ -138,10 +138,14 @@ public class PanelsManager : MonoBehaviour
 
     void ChooseEscapeActions()
     {
-        
+        if (tutorialMode)
+        {
+            return;
+        }
         if (currentlyOpened != null)
         {
             closeCurrentPanel();
+            nextToOpen = null;
             CameraVolumeController.UnBlurScreen();
         } else
         {
@@ -155,6 +159,11 @@ public class PanelsManager : MonoBehaviour
 
     public void CloseUploadPanel()
     {
+        //currentlyOpened.GetComponent<CanvasGroup>().alpha = 0;
+        if (nextToOpen != null)
+        {
+            nextToOpen = null;
+        }
         if (currentlyOpened != null)
         {
             RelocateFarAway(currentlyOpened);
@@ -188,7 +197,7 @@ public class PanelsManager : MonoBehaviour
 
     void openInventory()
     {
-        if (currentlyOpened != escapeMenuPanel)
+        if (currentlyOpened != escapeMenuPanel && !tutorialMode)
         {
             nextToOpen = inventoryPanel;
             inventoryOpenSound.Play();
@@ -216,6 +225,10 @@ public class PanelsManager : MonoBehaviour
 
     void OpenEscapemenuPanel()
     {
+        if (tutorialMode)
+        {
+            return;
+        }
         if (!escapeMenuBlocked)
         {
             CameraVolumeController.BlurScreen();
@@ -226,6 +239,10 @@ public class PanelsManager : MonoBehaviour
 
     public void OpenSettingsPanel()
     {
+        if (tutorialMode)
+        {
+            return;
+        }
         nextToOpen = settingsMenuPanel;
         decideNextState();
     }
@@ -305,19 +322,24 @@ public class PanelsManager : MonoBehaviour
 
     public void OpenTutorialPanel()
     {
+        Debug.Log("currently opened panel is " + currentlyOpened + " and next to open is " + nextToOpen);
         StopAllCoroutines();
-        Debug.Log("we are here ");
-        nextToOpen = tutorialPanel;
+        tutorialMode = true;
         decideNextState();
     }
 
     public void CloseTutorialPanel()
     {
+        tutorialMode = false;
         if (currentlyOpened == tutorialPanel)
         {
-            Debug.Log("we are here1 ");
+            Debug.Log("exited tutorial");
             StartCoroutine(CacheClosePanel(currentlyOpened, false));
             currentlyOpened = null;
+            closeCurrentPanel();
+            nextToOpen = null;
+            
+            
             considerQuickAccessPanel();
         }
         
@@ -334,6 +356,7 @@ public class PanelsManager : MonoBehaviour
         Debug.Log("we are here2 ");
         if (currentlyOpened != null) { StartCoroutine(CacheClosePanel(currentlyOpened, false)); }
         currentlyOpened = null;
+        nextToOpen = null;
         considerQuickAccessPanel();
     }
 
@@ -381,9 +404,7 @@ public class PanelsManager : MonoBehaviour
 
     void RelocateDefaultPosition(Transform panelToMove)
     {
-        Debug.Log(panelToMove.position);
         panelToMove.position = defaultPosition.position;
-        Debug.Log(panelToMove.position);
     }
 
     IEnumerator openQuickAccess(Transform panelToOpen)

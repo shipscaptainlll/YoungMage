@@ -29,6 +29,7 @@ public class CameraController : MonoBehaviour
     Vector3 startRotation;
     bool cityRegenerationMode;
     bool introMode;
+    bool seeingTutorial;
     
     public bool IntroMode { get { return introMode; } set { introMode = value; } }
     public bool TutorialModeActivated { get { return tutorialModeActivated; } set { tutorialModeActivated = value; } }
@@ -37,6 +38,7 @@ public class CameraController : MonoBehaviour
     public float YRotation { get { return yRotation; } set { yRotation = value; } }
     public bool IsOnStairs { get { return isOnStairs; } set { isOnStairs = value; } }
     public bool UpperStairs { get { return upperStairs; } set { upperStairs = value; } }
+    public bool SeeingTutorial { get { return seeingTutorial; } }
     public RaycastHit ObservedObject
     {
         get
@@ -44,6 +46,7 @@ public class CameraController : MonoBehaviour
             return hit;
         }
     }
+    public RaycastHit HitThird { get { return hitThird; } }
     // Start is called before the first frame update
     void Awake()
     {
@@ -54,7 +57,7 @@ public class CameraController : MonoBehaviour
 
     public void ReinitialiseAfterLoading()
     {
-        Debug.Log("was reloaded, but something is off");
+        //Debug.Log("was reloaded, but something is off");
         StartCoroutine(SeeObject());
         OnDrawGizmosSelected();
     }
@@ -62,6 +65,7 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
+        //Debug.Log("tutorialModeActivated " + tutorialModeActivated);
         //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward * 3), Color.red);
         if (!cursorManager.SomethingOpened && !tutorialModeActivated)
         {
@@ -82,7 +86,7 @@ public class CameraController : MonoBehaviour
             return;
             
         }
-
+        
         float xRot = Input.GetAxis("Mouse X") * Time.deltaTime * mouseSensitivity;
         float yRot = Input.GetAxis("Mouse Y") * Time.deltaTime * mouseSensitivity;
 
@@ -171,13 +175,17 @@ public class CameraController : MonoBehaviour
                 {
                     //Debug.Log(hitThird.transform + "here there");
                     objectOutliner.StoreVewedObject(hitThird.transform);
-                } else if (hitThird.transform.gameObject.layer == 28)
+                    seeingTutorial = false;
+                } else if (hitThird.transform.gameObject.layer == 3)
                 {
                     objectOutliner.StoreVewedObject(null);
+                    seeingTutorial = true;
                     //Debug.Log(hitThird.transform + " found this one");
                 }
                 
-            } else { objectOutliner.StoreVewedObject(null);  }
+            } else { objectOutliner.StoreVewedObject(null);
+                seeingTutorial = false;
+            }
             yield return new WaitForSeconds(0.033f);
         }        
     }

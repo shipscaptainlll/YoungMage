@@ -69,10 +69,10 @@ public static class OuterSmallSkeletonsDataApplier
         {
 
             skeleton.GetComponent<SkeletonHealthDecreaser>().Health = outerSmallSkeletonDataLoaded.currentHealth[indexer];
-            Debug.Log("hello");
+            //Debug.Log("hello");
             if (outerSmallSkeletonDataLoaded.onRoute[indexer])
             {
-                Debug.Log("hello1");
+                //Debug.Log("hello1");
                 skeleton.GetComponent<SkeletonBehavior>().CastleNavroutActive = true;
                 skeleton.GetComponent<SkeletonBehavior>().UploadCastleRouteNumber(outerSmallSkeletonDataLoaded.routeState[indexer]);
             }

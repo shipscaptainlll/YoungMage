@@ -17,8 +17,8 @@ public class DoorConnectionManager : MonoBehaviour
 
     public Transform GetPosition()
     {
-        Debug.Log("was connected to doors number " + transform.name);
-        Debug.Log("number of left positions " + actualPositions.Count);
+        //Debug.Log("was connected to doors number " + transform.name);
+        //Debug.Log("number of left positions " + actualPositions.Count);
         if (actualPositions.Count > 0)
         {
             int positionId = Random.Range(0, actualPositions.Count);

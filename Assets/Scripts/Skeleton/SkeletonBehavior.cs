@@ -59,6 +59,7 @@ public class SkeletonBehavior : MonoBehaviour
     [SerializeField] bool isBigSkeleton;
     [SerializeField] bool isLizardSkeleton;
     bool isCrouching;
+    bool isConnectedToMage;
 
     public float Speed { get { return speed; } set { speed = value;
             navMeshAgent.speed = speed; } }
@@ -286,16 +287,16 @@ public class SkeletonBehavior : MonoBehaviour
         }
         set
         {
-            Debug.Log("hello there");
+            //Debug.Log("hello there");
             Debug.Log("skeleton get conjured to " + navigationTarget);
-            Debug.Log(value);
+            //Debug.Log(value);
             if (transform == null)
             {
-                Debug.Log("was null");
+                //Debug.Log("was null");
                 return;
             }
-            Debug.Log(transform);
-            Debug.Log(value + " " + transform);
+            //Debug.Log(transform);
+            //Debug.Log(value + " " + transform);
             isConjured = true;
             if (navigationTarget != null && navigationTarget.GetComponent<PortalCamera>() != null)
             {
@@ -331,11 +332,17 @@ public class SkeletonBehavior : MonoBehaviour
             if (navigationTarget == null && value != null && value.GetComponent<PersonMovement>() != null)
             {
                 value.GetComponent<PersonMovement>().SkeletonAttached = true;
-                //Debug.Log("Hello thereee1");
+                isConnectedToMage = true;
+                if (contactManager.GetComponent<ContactManager>().ContactedSkeleton != transform)
+                {
+                    contactManager.GetComponent<ContactManager>().ContactedSkeleton = transform;
+                }
+                Debug.Log("Hello thereee1");
             } else if (navigationTarget != null && navigationTarget.GetComponent<PersonMovement>() != null && value == null)
             {
                 navigationTarget.GetComponent<PersonMovement>().SkeletonAttached = false;
-                //Debug.Log("Hello thereee2");
+                isConnectedToMage = false;
+                Debug.Log("Hello thereee2");
             }
             
             
@@ -363,7 +370,7 @@ public class SkeletonBehavior : MonoBehaviour
                 }
             }
             navigationTarget = value;
-            Debug.Log(value + " " + transform);
+            //Debug.Log(value + " " + transform);
             UpdateAnimation();
 
         }
@@ -390,12 +397,11 @@ public class SkeletonBehavior : MonoBehaviour
                 castleNavpointNumber++;
                 if (CastleNavrout.Count > (castleNavpointNumber))
                 {
-                    Debug.Log("current navpoint " + castleNavpointNumber);
-                    Debug.Log("heading to " + CastleNavrout[castleNavpointNumber]);
+
                     navigationTarget = CastleNavrout[castleNavpointNumber];
                 } else
                 {
-                    Debug.Log("Straifing to there");
+
                     PotentialpositionsNavroutActive = true;
                     hittingCastle = true;
                     navigationTarget = castlePositionsManager.GetAvailablePosition();
@@ -411,7 +417,7 @@ public class SkeletonBehavior : MonoBehaviour
         {
             if (navMeshAgent.velocity.magnitude < 0.15f)
             {
-                Debug.Log("Reached Position");
+                //Debug.Log("Reached Position");
                 if (ReachedCastle != null) { ReachedCastle(); }
                 skeletonsStack.SaveSkeletonArena(transform);
                 reachedPosition = true;
@@ -499,7 +505,6 @@ public class SkeletonBehavior : MonoBehaviour
             {
                 castleNavpointNumber = 0;
             }
-            Debug.Log("current started navpoitn " + castleNavpointNumber);
             navigationTarget = CastleNavrout[castleNavpointNumber];
         }
     }
@@ -532,7 +537,7 @@ public class SkeletonBehavior : MonoBehaviour
         hittingCastle = true;
         navigationTarget = castlePositionsManager.GetAvailablePosition();
         occupiedArenaPosition = navigationTarget;
-        Debug.Log("1got this position " + occupiedArenaPosition);
+        Debug.Log("1 got this position " + occupiedArenaPosition);
         castleNavroutActive = false;
     }
 
@@ -561,7 +566,7 @@ public class SkeletonBehavior : MonoBehaviour
             isMoving = true;
             if (isCrouching) { localAnimator.Play("CrouchSmallSkeleton"); }
             else { localAnimator.Play("SkelMove");
-                Debug.Log(transform + " is moving animation");
+
             }
             
         }
@@ -574,7 +579,7 @@ public class SkeletonBehavior : MonoBehaviour
 
     void UpdateAnimation()
     {
-        Debug.Log(navigationTarget);
+        //Debug.Log(navigationTarget);
         if (navigationTarget != null && navigationTarget.GetComponent<IOre>() == null && navigationTarget.parent.name != "SkeletonPositions")
         {
             localAnimator.Play("SkelIdle");
@@ -973,11 +978,11 @@ public class SkeletonBehavior : MonoBehaviour
             if (targetOre.transform.GetComponent<DoorTacklingManager>() != null)
             {
                 int doorIndex = targetOre.transform.GetComponent<DoorTacklingManager>().DoorLevel;
-                Debug.Log("found door hand index " + doorIndex);
+                //Debug.Log("found door hand index " + doorIndex);
                 DoorConnectionManager targetConnectionManager = null;
                 foreach (Transform door in doorsHolder)
                 {
-                    Debug.Log("searched door hand index " + door.GetComponent<DoorTacklingManager>().DoorLevel);
+                    //Debug.Log("searched door hand index " + door.GetComponent<DoorTacklingManager>().DoorLevel);
                     if (door.GetComponent<DoorTacklingManager>().DoorLevel == doorIndex)
                     {
                         targetConnectionManager = door.GetComponent<DoorConnectionManager>();

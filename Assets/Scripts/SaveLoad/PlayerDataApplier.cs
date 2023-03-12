@@ -11,6 +11,7 @@ public static class PlayerDataApplier
     public static void ApplyPlayerData(PersonMovement playerScript, CameraController cameraScript, PlayerData playerData, PortalOpener portalOpener)
     {
         UpdateData(playerScript, cameraScript, playerData);
+        ResetContactManager(playerScript);
         ApplyPlayerPosition();
         ApplyPlayerRotation();
         ApplyCameraRotation();
@@ -29,6 +30,11 @@ public static class PlayerDataApplier
     {
         playerScriptLoaded = null;
         playerDataLoaded = null;
+    }
+
+    static void ResetContactManager(PersonMovement playerScript)
+    {
+        playerScript.ResetContactManager();
     }
 
     static void ApplyPlayerPosition()

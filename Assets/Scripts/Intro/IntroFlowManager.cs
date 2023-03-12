@@ -6,6 +6,7 @@ public class IntroFlowManager : MonoBehaviour
 {
     [SerializeField] IntroEntering introEntering;
     [SerializeField] IntroScenesChanger scenesChanger;
+    [SerializeField] SkeletonArenaInstantiator skeletonArenaInstantiator;
     [SerializeField] IntroMessagesInstantiator messagesInstantiator;
     [SerializeField] CharactersEmotionsShower charactersEmotionsShower;
     [SerializeField] PanelsManager panelsManager;
@@ -43,7 +44,7 @@ public class IntroFlowManager : MonoBehaviour
             if (messagesInstantiator.IntroIndex == messagesInstantiator.NumberOfMessages) { ExitIntro(); return; }
             messagesInstantiator.ShowNextMessage();
             charactersEmotionsShower.ShowAnEmotion(messagesInstantiator.IntroIndex);
-            if (messagesInstantiator.IntroIndex == 4 && scenesChanger.SceneIndex == 0) { scenesChanger.ShowNextScene(); }
+            if (messagesInstantiator.IntroIndex == 4 && scenesChanger.SceneIndex == 0) { skeletonArenaInstantiator.CreateIntroScene(); scenesChanger.ShowNextScene(); }
             if (messagesInstantiator.IntroIndex == 6 && scenesChanger.SceneIndex == 1) { scenesChanger.ShowNextScene(); }
             if (messagesInstantiator.IntroIndex == 8 && scenesChanger.SceneIndex == 2) { scenesChanger.ShowNextScene(); }
         }

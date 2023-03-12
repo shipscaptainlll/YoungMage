@@ -17,7 +17,7 @@ public class HoverSound : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         if (currentObject == null)
         {
             currentObject = DetectObject();
-            Debug.Log(currentObject);
+
             if (currentObject != null) { currentObject.GetComponent<HoverSoundElement>().StartSound(); }
             currentObject = null;
         }
@@ -46,7 +46,6 @@ public class HoverSound : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             foreach (RaycastResult result in hitObjects)
             {
-                Debug.Log(result);
                 if (result.gameObject.GetComponent<HoverSoundElement>() != null) { return result.gameObject; }
             }
         }

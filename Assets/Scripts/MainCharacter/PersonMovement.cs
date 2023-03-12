@@ -22,6 +22,7 @@ public class PersonMovement : MonoBehaviour
     [SerializeField] float gravity;
     [SerializeField] Transform caveBulpsHolder;
     [SerializeField] Transform mainCamera;
+    [SerializeField] ContactManager contactManager;
     CameraController cameraController;
     bool isAutoRunning;
     bool tutorialModeActivated;
@@ -68,9 +69,9 @@ public class PersonMovement : MonoBehaviour
     float checkRadius;
     float stairsCheckRadius;
     bool occupied;
-    VisualEffect movementVFX;
-    VisualEffect jumpVFX;
-    VisualEffect landVFX;
+    [SerializeField] VisualEffect movementVFX;
+    [SerializeField] VisualEffect jumpVFX;
+    [SerializeField] VisualEffect landVFX;
     [SerializeField] ParticleSystem doubleShiftPS;
 
 
@@ -132,9 +133,9 @@ public class PersonMovement : MonoBehaviour
         occupied = false;
         checkRadius = 0.5f;
         stairsCheckRadius = 1.3f;
-        movementVFX = transform.Find("VFX").Find("vfxgraph_StylizedSmoke").GetComponent<VisualEffect>();
-        jumpVFX = transform.Find("VFX").Find("vfxgraph_StylizedSmokeJump").GetComponent<VisualEffect>();
-        landVFX = transform.Find("VFX").Find("vfxgraph_StylizedSmokeLand").GetComponent<VisualEffect>();
+        //movementVFX = transform.Find("VFX").Find("vfxgraph_StylizedSmoke").GetComponent<VisualEffect>();
+        //jumpVFX = transform.Find("VFX").Find("vfxgraph_StylizedSmokeJump").GetComponent<VisualEffect>();
+        //landVFX = transform.Find("VFX").Find("vfxgraph_StylizedSmokeLand").GetComponent<VisualEffect>();
         _characterOccupation.CharacterEngagedSomething += PreventMoving;
         _characterOccupation.CharacterDisengagedSomething += EnableMoving;
         miscPanel.WarpBaseRequested += WarpBase;
@@ -214,10 +215,10 @@ public class PersonMovement : MonoBehaviour
         if (caveDelayElapsed)
         {
             int randomNumber = rand.Next(1, 10);
-            Debug.Log("Creak random number: " + randomNumber);
+            //Debug.Log("Creak random number: " + randomNumber);
             if (randomNumber > 7)
             {
-                Debug.Log("there: " + randomNumber);
+                //Debug.Log("there: " + randomNumber);
                 int randNumberBulps = rand.Next(0, caveBulpsHolder.childCount);
                 caveBulpsHolder.GetChild(randNumberBulps).GetComponent<CaveSoundHolder>().PlaySound();
             }
@@ -392,9 +393,9 @@ public class PersonMovement : MonoBehaviour
             }
         }
 
-        if (isGrounded && velocity.y < 0)
+        if (isGrounded && velocity.y < -10)
         {
-            velocity.y = -60f;
+            velocity.y = 0f;
             
             if (onStone)
             {
@@ -415,10 +416,13 @@ public class PersonMovement : MonoBehaviour
         {
             jumps++;
             if (CharacterJumped != null) { CharacterJumped(jumps); }
-            jumpVFX.SetVector3("SphereCenterPosition", jumpVFX.transform.position); 
+            Vector3 cacheJumpPosition = new Vector3(jumpVFX.transform.position.x, jumpVFX.transform.position.y, jumpVFX.transform.position.z);
+            jumpVFX.SetVector3("SphereCenterPosition", cacheJumpPosition); 
             jumpVFX.SendEvent("CharacterJumped");
             jumped = true;
             //Debug.Log(jumped);
+
+            
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             if (hardBreathingSound.isPlaying) { hardBreathingSound.Stop(); }
             if (!isGrounded) { 
@@ -440,8 +444,9 @@ public class PersonMovement : MonoBehaviour
             
         }
 
-
         velocity.y += gravity * Time.deltaTime;
+        
+        
 
         characterController.Move(velocity * Time.deltaTime);
     }
@@ -485,5 +490,10 @@ public class PersonMovement : MonoBehaviour
         if (isRunning && !hardBreathingSound.isPlaying) { hardBreathingSound.Play(); }
         isWalking = true; isRunning = false;
         keyPushedLength = 0;
+    }
+
+    public void ResetContactManager()
+    {
+        contactManager.ContactedSkeleton = null;
     }
 }

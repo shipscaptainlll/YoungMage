@@ -435,7 +435,7 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
     {
         openingSound.Play();
         transmutationCircleRotation.CircleLookRotation();
-        Debug.Log("Hello there1" + _transmutationEnabled + _characterOccupation.IsOccupied);
+        //Debug.Log("Hello there1" + _transmutationEnabled + _characterOccupation.IsOccupied);
         if (!_transmutationEnabled && !_characterOccupation.IsOccupied)
         {
 

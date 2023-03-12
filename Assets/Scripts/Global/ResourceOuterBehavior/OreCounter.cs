@@ -11,8 +11,10 @@ public class OreCounter : MonoBehaviour
     Coroutine popUpCoroutine;
     Transform oreCounter;
     int oreCount;
-    
+    bool counterOn;
 
+    
+    public bool CounterOn { get { return counterOn; } }
     public int OreCount { get { return oreCount; } set { oreCount = value; UpdateCounter(); } }
     void Start()
     {
@@ -20,14 +22,6 @@ public class OreCounter : MonoBehaviour
         if (oreCount <= 1)
         {
             oreCount = 1;
-        }
-    }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            PopUpCounter();
         }
     }
 
@@ -45,6 +39,7 @@ public class OreCounter : MonoBehaviour
     public void ShowCounter()
     {
         canvasGroup.alpha = 1;
+        counterOn = true;
     }
 
     IEnumerator CounterPopingUp()

@@ -10,6 +10,9 @@ public class SkeletonArenaInstantiator : MonoBehaviour
     [SerializeField] Transform skeletonsPotentionalPositions;
     [SerializeField] Transform castlePosition;
     [SerializeField] Transform skeletonsHolder;
+    [SerializeField] Transform firstSceneSkeletonsPositions;
+    [SerializeField] Transform secondSceneSkeletonsPositions;
+    [SerializeField] int[] introNavroutIndexes;
 
     int skeletonsCount = 0;
     [SerializeField] int skeletonsMaxCount;
@@ -46,7 +49,6 @@ public class SkeletonArenaInstantiator : MonoBehaviour
     {
         if (skeletonsCount < skeletonsMaxCount)
         {
-            Debug.Log("skeleton instantiated");
             skeletonsCount++;
             //Debug.Log("instantiated new one4");
             //Debug.Log("skeletons count" + skeletonsCount);
@@ -105,5 +107,69 @@ public class SkeletonArenaInstantiator : MonoBehaviour
 
         }
 
+    }
+
+    public void InstantiateIntroSkeletons(Vector3 introPosition)
+    {
+
+        float xPositionOffset = (float)random.Next(-10, 10);
+        float zPositionOffset = (float)random.Next(-10, 10);
+        Transform newSkeleton = Instantiate(skeletonModel, introPosition + new Vector3(xPositionOffset, 0, zPositionOffset), skeletonModel.rotation);
+        newSkeleton.gameObject.SetActive(true);
+        foreach (Transform position in skeletonsPotentionalPositions)
+        {
+            if (position.gameObject.activeSelf)
+            {
+
+                //Debug.Log(newSkeleton.GetComponent<SkeletonBehavior>());
+                newSkeleton.GetComponent<SkeletonBehavior>().ConnectToPosition(position);
+                newSkeleton.parent = skeletonsHolder;
+                newSkeleton.GetComponent<SkeletonBehavior>().UploadCastleHitting();
+                //Debug.Log(newSkeleton.GetComponent<SkeletonBehavior>().Activity);
+                position.gameObject.SetActive(false);
+                if (SkeletonInstantiated != null) { SkeletonInstantiated(newSkeleton); }
+                return;
+            }
+
+        }
+    }
+
+    public void InstantiateIntroSkeletons(Vector3 introPosition, int castleNavroutIndex)
+    {
+
+        float xPositionOffset = (float)random.Next(-10, 10);
+        float zPositionOffset = (float)random.Next(-10, 10);
+        Transform newSkeleton = Instantiate(skeletonModel, introPosition + new Vector3(xPositionOffset, 0, zPositionOffset), skeletonModel.rotation);
+        newSkeleton.gameObject.SetActive(true);
+        foreach (Transform position in skeletonsPotentionalPositions)
+        {
+            if (position.gameObject.activeSelf)
+            {
+
+                //Debug.Log(newSkeleton.GetComponent<SkeletonBehavior>());
+                newSkeleton.GetComponent<SkeletonBehavior>().ConnectToPosition(position);
+                newSkeleton.parent = skeletonsHolder;
+                newSkeleton.GetComponent<SkeletonBehavior>().UploadCastleRouteNumber(castleNavroutIndex);
+                //Debug.Log(newSkeleton.GetComponent<SkeletonBehavior>().Activity);
+                position.gameObject.SetActive(false);
+                if (SkeletonInstantiated != null) { SkeletonInstantiated(newSkeleton); }
+                return;
+            }
+
+        }
+    }
+
+    public void CreateIntroScene()
+    {
+        int indexer = 0;
+        foreach (Transform position in firstSceneSkeletonsPositions)
+        {
+            InstantiateIntroSkeletons(position.position, introNavroutIndexes[indexer]);
+            indexer++;
+        }
+        foreach (Transform position in secondSceneSkeletonsPositions)
+        {
+            InstantiateIntroSkeletons(position.position);
+        }
     }
 }

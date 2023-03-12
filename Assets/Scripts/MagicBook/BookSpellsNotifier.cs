@@ -10,6 +10,7 @@ public class BookSpellsNotifier : MonoBehaviour
     [SerializeField] QuickAccessHandController quickAccessHandController;
 
     Transform currentObject;
+    public Transform CurrentObject { get { return currentObject; } set { currentObject = value; }  }
     // Start is called before the first frame update
     void Start()
     {

@@ -38,7 +38,13 @@ public static class TutorialsDataApplier
         indexer = 0;
         foreach (Transform element in tutorialsInstantiator.TutorialInvokersHolder)
         {
-            element.GetComponent<TutorialInvoker>().IsCompleted = tutorialsData.tutorialInvokerWasTriggered[indexer];
+            if (tutorialsData.tutorialInvokerWasTriggered[indexer])
+            {
+                element.GetComponent<TutorialInvoker>().TurnOffInvoker();
+            } else
+            {
+                element.GetComponent<TutorialInvoker>().TurnOnInvoker();
+            }
             indexer++;
         }
         Debug.Log(tutorialsData.currentTutorial + " tutorial was not zero");

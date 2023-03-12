@@ -29,7 +29,7 @@ public class ObjectOutliner : MonoBehaviour
             if (currentlyViewedObject != null) { currentlyViewedObject.GetComponent<IShowClickable>().Hide(); }
             
             currentlyViewedObject = viewedObject;
-            Debug.Log(currentlyViewedObject);
+            
             if (currentlyViewedObject != null) { currentlyViewedObject.GetComponent<IShowClickable>().Show(); }
         }
     }

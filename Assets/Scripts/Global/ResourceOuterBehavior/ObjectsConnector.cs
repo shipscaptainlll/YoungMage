@@ -31,8 +31,8 @@ public class ObjectsConnector : MonoBehaviour
     void ConnectTwoOres(Transform firstOre, Transform secondOre)
     {
         Debug.Log("entering " + firstOre + " " + secondOre);
-        Debug.Log(firstOre.GetComponent<OreCounter>().OreCount);
-        Debug.Log(secondOre.GetComponent<OreCounter>().OreCount);
+        //Debug.Log(firstOre.GetComponent<OreCounter>().OreCount);
+        //Debug.Log(secondOre.GetComponent<OreCounter>().OreCount);
         if (CheckObjectsEnabled(firstOre, secondOre) && CheckSameMaterial(firstOre, secondOre))
         {
             
@@ -66,10 +66,11 @@ public class ObjectsConnector : MonoBehaviour
     void UpdateOreCounter(Transform updatedOre, Transform destroyedOre)
     {
         int destroyedCount = destroyedOre.GetComponent<OreCounter>().OreCount;
-        Debug.Log(destroyedCount);
-        Debug.Log(updatedOre.GetComponent<OreCounter>().OreCount);
+        if (!updatedOre.GetComponent<OreCounter>().CounterOn) { updatedOre.GetComponent<OreCounter>().ShowCounter(); }
+        //Debug.Log(destroyedCount);
+        //Debug.Log(updatedOre.GetComponent<OreCounter>().OreCount);
         updatedOre.GetComponent<OreCounter>().OreCount += destroyedCount;
-        Debug.Log(updatedOre.GetComponent<OreCounter>().OreCount);
+        //Debug.Log(updatedOre.GetComponent<OreCounter>().OreCount);
     }
 
     Transform GetBiggestOre(Transform firstOre, Transform secondOre)
