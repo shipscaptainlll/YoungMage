@@ -44,7 +44,7 @@ public class DefractorPortalInstantiator : MonoBehaviour
 
     IEnumerator Delay()
     {
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(8f);
         ClosePortal();
     }
 

@@ -63,7 +63,6 @@ public class CityRegenerationEnter : MonoBehaviour
     {
         if (isActive)
         {
-            personMovement.transform.LookAt(lookAtTransform);
             cameraTransform.LookAt(lookAtTransform);
         }
         
@@ -74,6 +73,8 @@ public class CityRegenerationEnter : MonoBehaviour
         Debug.Log("Here2");
         if (!isActive)
         {
+            //personMovement.transform.LookAt(lookAtTransform);
+            
             Debug.Log("Here1");
             zoomInSound.Play();
             HideSpellsBook();

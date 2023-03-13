@@ -6,6 +6,8 @@ public class Fade : MonoBehaviour
 {
     [SerializeField] Transform targetObject;
     [SerializeField] float updateSpeed;
+    [SerializeField] float fadeValue;
+    float targetFade = 0.1f;
     CanvasGroup targetCanvasGroup;
     Coroutine fade;
     Coroutine appear;
@@ -15,7 +17,7 @@ public class Fade : MonoBehaviour
     {
         targetCanvasGroup = targetObject.GetComponent<CanvasGroup>();
         ResetEffects();
-        
+        if (fadeValue != 0) { targetFade = fadeValue; }
     }
 
     // Update is called once per frame
@@ -41,7 +43,7 @@ public class Fade : MonoBehaviour
         while (elapsed < updateSpeed)
         {
             elapsed += Time.deltaTime;
-            targetCanvasGroup.alpha = Mathf.Lerp(currentAlpha, 0.1f, elapsed / updateSpeed);
+            targetCanvasGroup.alpha = Mathf.Lerp(currentAlpha, targetFade, elapsed / updateSpeed);
             yield return null;
         }
         appear = StartCoroutine(SmoothAppear());

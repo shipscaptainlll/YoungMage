@@ -127,6 +127,7 @@ public class CameraController : MonoBehaviour
             transform.localRotation = Quaternion.Euler(yRotation, 0, 0f);
 
             characterBody.Rotate(Vector3.up * xRot * 3);
+            //Debug.Log("are we being rotated& ");
         } else
         {
             yRotation += xRot * 0.25f;

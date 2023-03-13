@@ -5,6 +5,7 @@ using UnityEngine;
 public class Portal2 : MonoBehaviour
 {
     [SerializeField] ContactManager contactManager;
+    [SerializeField] PortalOpener portalOpener;
     [Header("Main Settings")]
     public Portal2 linkedPortal;
     public string portalType;
@@ -28,11 +29,20 @@ public class Portal2 : MonoBehaviour
 
     private void Awake()
     {
-        playerCam = Camera.main;
-        portalCam = GetComponentInChildren<Camera>();
-        portalCam.enabled = false;
-        trackedTravellers = new List<PortalTraveller>();
+        if (portalType != "main") {
+            playerCam = Camera.main;
+            portalCam = GetComponentInChildren<Camera>();
+            portalCam.enabled = false;
 
+        }
+        if (portalType == "main")
+        {
+            linkedCamera = linkedPortal.transform.Find("Camera");
+
+        }
+        
+        trackedTravellers = new List<PortalTraveller>();
+        
         Debug.Log(transform);
         screenMeshFilter = screen.GetComponent<MeshFilter>();
         contactManager.TeleporterDetected += ActivateSearch;
@@ -47,7 +57,8 @@ public class Portal2 : MonoBehaviour
 
     private void LateUpdate()
     {
-        Render();
+        if (portalOpener.PortalOpened && portalType != "main") { Render(); }
+        
     }
 
     
@@ -87,7 +98,7 @@ public class Portal2 : MonoBehaviour
     {
         if (usedPortal == transform && portalType == "main")
         {
-            linkedCamera = linkedPortal.transform.Find("Camera");
+            
             SearchSurroundings();
         }
     }

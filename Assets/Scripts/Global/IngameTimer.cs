@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +9,7 @@ public class IngameTimer : MonoBehaviour
     int timeIngame;
 
     public int TimeIngame { get { return timeIngame; } set { timeIngame = value; } }
-
+    public event Action playedWishlistTime = delegate { };
     private void Start()
     {
         StartCoroutine(CountTimeIngame());
@@ -19,6 +20,7 @@ public class IngameTimer : MonoBehaviour
         {
             yield return new WaitForSecondsRealtime(1f);
             timeIngame++;
+            if (timeIngame == 5400) { if (playedWishlistTime != null) playedWishlistTime(); }
             //Debug.Log("time in game " + timeIngame);
         }
     }

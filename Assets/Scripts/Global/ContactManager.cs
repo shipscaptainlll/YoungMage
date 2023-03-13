@@ -14,6 +14,7 @@ public class ContactManager : MonoBehaviour
     [SerializeField] AttachObjectSkeleton attachObjectSkeleton;
     [SerializeField] DeattachObjectSkeleton deattachObjectSkeleton;
     [SerializeField] BookSpellsActivator bookSpellsActivator;
+    [SerializeField] PanelsManager panelsManager;
 
     PersonMovement characterScript;
     Transform contactedSkeleton;
@@ -47,6 +48,10 @@ public class ContactManager : MonoBehaviour
     {
         if (!cursorManager.SomethingOpened)
         {
+            if (panelsManager.TutorialMode)
+            {
+                return;
+            }
             Transform contactedObject = CameraController.ObservedObject.transform;
             Debug.Log("ContactManager: contacted object " + contactedObject);
             //Debug.Log(contactedObject.parent);

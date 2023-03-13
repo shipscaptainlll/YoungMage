@@ -9,6 +9,7 @@ public class ProductPortalOpener : MonoBehaviour
     [SerializeField] Transform VFXContainer;
     [SerializeField] PotentialProductAppearance potentialProductAppearance;
     Transform housePortal;
+    Transform houseVFX;
     bool cycleRunning = false;
 
     public event Action PortalClosed = delegate { };
@@ -17,6 +18,7 @@ public class ProductPortalOpener : MonoBehaviour
     {
         
         housePortal = transform.Find("Simple Portal").Find("Visualisation");
+        houseVFX = transform.Find("Simple Portal").Find("Visualisation").Find("ShockWave (1)");
         if (housePortal.localScale.x > 0.5f)
         {
             return;
@@ -27,6 +29,7 @@ public class ProductPortalOpener : MonoBehaviour
     public void InitiatePortalOpening()
     {
         housePortal = transform.Find("Simple Portal").Find("Visualisation");
+        houseVFX = transform.Find("Simple Portal").Find("Visualisation").Find("ShockWave (1)");
         if (!cycleRunning)
         {
             cycleRunning = true;
@@ -40,6 +43,7 @@ public class ProductPortalOpener : MonoBehaviour
     {
         StopAllCoroutines();
         housePortal = transform.Find("Simple Portal").Find("Visualisation");
+        houseVFX = transform.Find("Simple Portal").Find("Visualisation").Find("ShockWave (1)");
         cycleRunning = true;
         EnablePortals();
         StartVFX();
@@ -63,6 +67,7 @@ public class ProductPortalOpener : MonoBehaviour
     IEnumerator OpenPortal()
     {
         housePortal = transform.Find("Simple Portal").Find("Visualisation");
+        houseVFX = transform.Find("Simple Portal").Find("Visualisation").Find("ShockWave (1)");
         housePortal.GetComponent<MeshRenderer>().enabled = true;
         housePortal.localScale = new Vector3(0.001f, 0.001f, housePortal.localScale.z);
         
@@ -71,29 +76,31 @@ public class ProductPortalOpener : MonoBehaviour
         float updateSpeed = 0.0015f;
         float startXScale = housePortal.localScale.x;
         float currentXScale;
-        float targetXScale = 1000.6137492f;
+        float targetXScale = 1.146875f;
         float startYScale = housePortal.localScale.y;
         float currentYScale;
-        float targetYScale = 1000.865296f;
+        float targetYScale = 1.146875f;
         while (elapsed < updateSpeed)
         {
             elapsed += Time.deltaTime;
             currentXScale = Mathf.Lerp(startXScale, targetXScale, elapsed / updateSpeed);
             currentYScale = Mathf.Lerp(startYScale, targetYScale, elapsed / updateSpeed);
             housePortal.localScale = new Vector3(currentXScale, currentYScale, housePortal.localScale.z);
+            houseVFX.localScale = new Vector3(currentYScale, currentXScale, houseVFX.localScale.z);
             yield return null;
         }
-        housePortal.localScale = new Vector3(0.6137492f, 0.865296f, housePortal.localScale.z);
+        housePortal.localScale = new Vector3(0.897f, 0.897f, housePortal.localScale.z);
+        housePortal.localScale = new Vector3(1.146875f, 1.146875f, housePortal.localScale.z);
     }
 
     IEnumerator ClosePortal()
     {
         float elapsed = 0;
         float updateSpeed = 0.15f;
-        float startXScale = housePortal.localScale.x;
+        float startXScale = 1.146875f;
         float currentXScale;
         float targetXScale = 0.01f;
-        float startYScale = housePortal.localScale.y;
+        float startYScale = 1.146875f;
         float currentYScale;
         float targetYScale = 0.01f;
         while (elapsed < updateSpeed)
@@ -101,6 +108,7 @@ public class ProductPortalOpener : MonoBehaviour
             elapsed += Time.deltaTime;
             currentXScale = Mathf.Lerp(startXScale, targetXScale, elapsed / updateSpeed);
             currentYScale = Mathf.Lerp(startYScale, targetYScale, elapsed / updateSpeed);
+            houseVFX.localScale = new Vector3(currentYScale, currentXScale, currentXScale);
             housePortal.localScale = new Vector3(currentXScale, currentYScale, housePortal.localScale.z);
             yield return null;
         }

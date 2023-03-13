@@ -10,6 +10,7 @@ public class DefractorPortalOpener : MonoBehaviour
     [SerializeField] AppearanceTransmutationCircle appearanceTransmutationCircle;
     [SerializeField] Transform VFXContainer;
     Transform housePortal;
+    Transform houseVFX;
     bool cycleRunning = false;
     float portalElapsed;
 
@@ -32,14 +33,8 @@ public class DefractorPortalOpener : MonoBehaviour
     {
         
         housePortal = transform.Find("Simple Portal").Find("Visualisation");
-        
+        houseVFX = transform.Find("Simple Portal").Find("Visualisation").Find("ShockWave (1)");
         //housePortal.localScale = new Vector3(0.1f, 0.1f, housePortal.localScale.z);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void InstantiateSouds()
@@ -57,6 +52,7 @@ public class DefractorPortalOpener : MonoBehaviour
     public void InitiatePortalOpening()
     {
         housePortal = transform.Find("Simple Portal").Find("Visualisation");
+        houseVFX = transform.Find("Simple Portal").Find("Visualisation").Find("ShockWave (1)");
         if (!cycleRunning)
         {
 
@@ -86,6 +82,7 @@ public class DefractorPortalOpener : MonoBehaviour
     {
         //EndCrystalsSound();
         housePortal = transform.Find("Simple Portal").Find("Visualisation");
+        houseVFX = transform.Find("Simple Portal").Find("Visualisation").Find("ShockWave (1)");
         EnablePortals();
         cycleRunning = false;
         StartCoroutine(ClosePortal(uploadedElapsed));
@@ -94,6 +91,7 @@ public class DefractorPortalOpener : MonoBehaviour
     public void UploadedPortalOpening(float uploadedElapsed)
     {
         housePortal = transform.Find("Simple Portal").Find("Visualisation");
+        houseVFX = transform.Find("Simple Portal").Find("Visualisation").Find("ShockWave (1)");
         cycleRunning = true;
         EnablePortals();
         StartCrystalsSound();
@@ -107,9 +105,10 @@ public class DefractorPortalOpener : MonoBehaviour
         {
             EndCrystalsSound();
             cycleRunning = false;
+            //StopAllCoroutines();
             StartCoroutine(ClosePortal());
             //StartCoroutine(CloseVFX());
-            PortalClosed();
+            
             //housePortal.gameObject.SetActive(false);
             appearanceTransmutationCircle.CircleDisappearance();
             //VFXContainer.gameObject.SetActive(false);
@@ -119,27 +118,31 @@ public class DefractorPortalOpener : MonoBehaviour
     {
         openPortalSound.Play();
         housePortal = transform.Find("Simple Portal").Find("Visualisation");
+        houseVFX = transform.Find("Simple Portal").Find("Visualisation").Find("ShockWave (1)");
         housePortal.GetComponent<MeshRenderer>().enabled = true;
         housePortal.localScale = new Vector3(0.001f, 0.001f, housePortal.localScale.z);
 
 
         portalElapsed = 0;
-        float updateSpeed = 0.0015f;
+        float updateSpeed = 1.0015f;
         float startXScale = housePortal.localScale.x;
         float currentXScale;
-        float targetXScale = 1000.6137492f;
+        float targetXScale = 1.146875f;
         float startYScale = housePortal.localScale.y;
         float currentYScale;
-        float targetYScale = 1000.865296f;
+        float targetYScale = 1.146875f;
         while (portalElapsed < updateSpeed)
         {
             portalElapsed += Time.deltaTime;
             currentXScale = Mathf.Lerp(startXScale, targetXScale, portalElapsed / updateSpeed);
             currentYScale = Mathf.Lerp(startYScale, targetYScale, portalElapsed / updateSpeed);
             housePortal.localScale = new Vector3(currentXScale, currentYScale, housePortal.localScale.z);
+            houseVFX.localScale = new Vector3(currentYScale, currentXScale, houseVFX.localScale.z);
+            Debug.Log("currentXScale: " + currentXScale + " currentYScale: " + currentYScale);
             yield return null;
         }
-        housePortal.localScale = new Vector3(1.146875f, 1.090437f, housePortal.localScale.z);
+        housePortal.localScale = new Vector3(1.146875f, 1.146875f, housePortal.localScale.z);
+        houseVFX.localScale = new Vector3(0.897f, 0.897f, 0.897f);
         //portalElapsed = 0;
     }
 
@@ -147,27 +150,29 @@ public class DefractorPortalOpener : MonoBehaviour
     {
         openPortalSound.Play();
         housePortal = transform.Find("Simple Portal").Find("Visualisation");
+        houseVFX = transform.Find("Simple Portal").Find("Visualisation").Find("ShockWave (1)");
         housePortal.GetComponent<MeshRenderer>().enabled = true;
         housePortal.localScale = new Vector3(0.001f, 0.001f, housePortal.localScale.z);
 
 
         portalElapsed = uploadedElapsed;
-        float updateSpeed = 0.0015f;
+        float updateSpeed = 1.0015f;
         float startXScale = housePortal.localScale.x;
         float currentXScale;
-        float targetXScale = 1000.6137492f;
+        float targetXScale = 1.146875f;
         float startYScale = housePortal.localScale.y;
         float currentYScale;
-        float targetYScale = 1000.865296f;
+        float targetYScale = 1.146875f;
         while (portalElapsed < updateSpeed)
         {
             portalElapsed += Time.deltaTime;
             currentXScale = Mathf.Lerp(startXScale, targetXScale, portalElapsed / updateSpeed);
             currentYScale = Mathf.Lerp(startYScale, targetYScale, portalElapsed / updateSpeed);
-            housePortal.localScale = new Vector3(currentXScale, currentYScale, housePortal.localScale.z);
+            houseVFX.localScale = new Vector3(currentYScale, currentXScale, currentXScale);
+            housePortal.localScale = new Vector3(currentXScale, currentYScale, currentXScale);
             yield return null;
         }
-        housePortal.localScale = new Vector3(1.146875f, 1.090437f, housePortal.localScale.z);
+        housePortal.localScale = new Vector3(1.146875f, 1.146875f, housePortal.localScale.z);
         //portalElapsed = 0;
     }
 
@@ -176,10 +181,10 @@ public class DefractorPortalOpener : MonoBehaviour
         closePortalSound.Play();
         portalElapsed = 0;
         float updateSpeed = 1.15f;
-        float startXScale = housePortal.localScale.x;
+        float startXScale = 1.146875f;
         float currentXScale;
         float targetXScale = 0.01f;
-        float startYScale = housePortal.localScale.y;
+        float startYScale = 1.146875f;
         float currentYScale;
         float targetYScale = 0.01f;
         while (portalElapsed < updateSpeed)
@@ -187,6 +192,8 @@ public class DefractorPortalOpener : MonoBehaviour
             portalElapsed += Time.deltaTime;
             currentXScale = Mathf.Lerp(startXScale, targetXScale, portalElapsed / updateSpeed);
             currentYScale = Mathf.Lerp(startYScale, targetYScale, portalElapsed / updateSpeed);
+            Debug.Log("currentXScale: " + currentXScale + " currentYScale: " + currentYScale + " portal elapsed: " + portalElapsed);
+            houseVFX.localScale = new Vector3(currentYScale, currentXScale, currentXScale);
             housePortal.localScale = new Vector3(currentXScale, currentYScale, housePortal.localScale.z);
             yield return null;
         }
@@ -201,10 +208,10 @@ public class DefractorPortalOpener : MonoBehaviour
         if (closePortalSound != null) { closePortalSound.Play(); }
         portalElapsed = uploadedElapsed;
         float updateSpeed = 1.15f;
-        float startXScale = housePortal.localScale.x;
+        float startXScale = 1.146875f;
         float currentXScale;
         float targetXScale = 0.01f;
-        float startYScale = housePortal.localScale.y;
+        float startYScale = 1.146875f;
         float currentYScale;
         float targetYScale = 0.01f;
         while (portalElapsed < updateSpeed)
@@ -212,6 +219,7 @@ public class DefractorPortalOpener : MonoBehaviour
             portalElapsed += Time.deltaTime;
             currentXScale = Mathf.Lerp(startXScale, targetXScale, portalElapsed / updateSpeed);
             currentYScale = Mathf.Lerp(startYScale, targetYScale, portalElapsed / updateSpeed);
+            houseVFX.localScale = new Vector3(currentYScale, currentXScale, currentXScale);
             housePortal.localScale = new Vector3(currentXScale, currentYScale, housePortal.localScale.z);
             yield return null;
         }

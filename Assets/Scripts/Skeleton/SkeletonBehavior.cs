@@ -48,6 +48,7 @@ public class SkeletonBehavior : MonoBehaviour
     [SerializeField] bool homeVersion;
     [SerializeField] Transform doorsHolder;
     [SerializeField] Transform fracturedSkeletonsHolder;
+    [SerializeField] Transform castleGates;
     Transform attachedCopycat;
     Transform occupiedArenaPosition;
     Transform fracturedSkeleton;
@@ -145,6 +146,7 @@ public class SkeletonBehavior : MonoBehaviour
     bool reachedPosition;
     Coroutine changeColorCounter;
     Coroutine changeScaleCounter;
+    Coroutine turningToCastleCoroutine;
 
     int connectedObjects;
     bool isConnectedHands;
@@ -415,6 +417,7 @@ public class SkeletonBehavior : MonoBehaviour
         }
         if (PotentialpositionsNavroutActive)
         {
+            
             if (navMeshAgent.velocity.magnitude < 0.15f)
             {
                 //Debug.Log("Reached Position");
@@ -422,9 +425,10 @@ public class SkeletonBehavior : MonoBehaviour
                 skeletonsStack.SaveSkeletonArena(transform);
                 reachedPosition = true;
                 PotentialpositionsNavroutActive = false;
+                
             } 
         }
-
+        
         CheckIfStopped();
         if (isConjured) { CheckIfUnused(); }
 
@@ -546,6 +550,16 @@ public class SkeletonBehavior : MonoBehaviour
         
         if (navMeshAgent.velocity.magnitude < 0.15f && isMoving)
         {
+            if (hittingCastle)
+            {
+                isMoving = false;
+                localAnimator.Play("ShootSkeleton");
+                turningToCastleCoroutine = StartCoroutine(TurningToCastleIE());
+                Debug.Log("Transitioned heere");
+                return;
+            }
+            
+
             //Debug.Log(navigationTarget.name);
             //Debug.Log(navigationTarget.parent.name == "SkeletonPositions");
             if (navigationTarget != null && navigationTarget.GetComponent<IOre>() == null && navigationTarget.parent.name != "SkeletonPositions")
@@ -942,7 +956,8 @@ public class SkeletonBehavior : MonoBehaviour
 
     void StayNearCastle()
     {
-        localAnimator.Play("SkelShakeHand");
+        if (!localAnimator.GetCurrentAnimatorStateInfo(0).IsName("ShootSkeleton")) { localAnimator.Play("ShootSkeleton"); }
+        
     }
 
     public void StopActivities()
@@ -1311,6 +1326,19 @@ public class SkeletonBehavior : MonoBehaviour
             if (currentDistance < 5) { portalActivated = true; }
             if (currentDistance < 4.5f && portalActivated && !goingPortalPlayed) { ThroughPortalSound(); }
             //Debug.Log(currentDistance);
+            yield return null;
+        }
+        
+    }
+
+    IEnumerator TurningToCastleIE()
+    {
+        float expired = 0;
+        float targetTime = 3;
+        while (expired < targetTime)
+        {
+            expired += Time.deltaTime;
+            TurnAroundTo(castleGates);
             yield return null;
         }
         

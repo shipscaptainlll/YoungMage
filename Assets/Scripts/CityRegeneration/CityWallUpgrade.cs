@@ -35,7 +35,7 @@ public class CityWallUpgrade : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        healthCost = 2.5f;
+        healthCost = 0.025f;
         wallMaximumHealth = castleHealthDecreaser.MaximumHealth;
         castleHealthDecreaser.CastleHealthChanged += AnalyzeCurrentHealth;
         //goldCoinsCounter.AmmountEnded += AnalyzeGold;
@@ -56,7 +56,7 @@ public class CityWallUpgrade : MonoBehaviour
         ShowUpgradePS();
         float healthRegenerate = wallRegenerationButton.ButtonDownTime;
         int goldNeeded = Mathf.RoundToInt(wallRegenerationButton.ButtonDownTime * healthCost);
-        if (goldCoinsCounter.Count <= goldNeeded)
+        if (goldCoinsCounter.Count >= goldNeeded)
         {
             suiNotificator.Notify("-" + goldNeeded);
             goldCoinsCounter.AddResource(-(int)goldNeeded);

@@ -21,6 +21,13 @@ public class TurnOffVisualiser : MonoBehaviour
         showingCoroutine = StartCoroutine(DelayedShowing());
     }
 
+    public void JustShow(int delay)
+    {
+        fadeEffects.StartEffects();
+        if (showingCoroutine != null) { StopCoroutine(showingCoroutine); }
+        showingCoroutine = StartCoroutine(DelayedShowing(delay));
+    }
+
     public void JustHide()
     {
         fadeEffects.ResetEffects();
@@ -29,7 +36,14 @@ public class TurnOffVisualiser : MonoBehaviour
 
     IEnumerator DelayedShowing()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(5f);
+        JustHide();
+        yield return null;
+    }
+
+    IEnumerator DelayedShowing(int delay)
+    {
+        yield return new WaitForSeconds(delay);
         JustHide();
         yield return null;
     }

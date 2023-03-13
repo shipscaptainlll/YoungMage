@@ -19,9 +19,9 @@ public class CollectGoldCoinsTrigger : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.layer == 11)
+        if (other.gameObject.layer == 11 && cameraController.ObservedObject.transform != null)
         {
-            Debug.Log(cameraController.ObservedObject.collider.gameObject);
+            //Debug.Log(cameraController.ObservedObject.collider.gameObject);
             if (!isActive && cameraController.ObservedObject.collider.GetComponent<AdditionalCoinsCatcher>() != null)
             {
                 isActive = true;

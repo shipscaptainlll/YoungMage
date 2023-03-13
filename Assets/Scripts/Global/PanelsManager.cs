@@ -44,6 +44,7 @@ public class PanelsManager : MonoBehaviour
     bool tutorialMode;
     bool escapeMenuBlocked;
 
+    public bool TutorialMode { get { return tutorialMode; } }
     public bool IntroMode { get { return introMode; } set { introMode = value; } }
     public Transform CurrentlyOpened
     {

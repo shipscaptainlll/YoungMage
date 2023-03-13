@@ -16,7 +16,7 @@ public class CastleDamageCalculator : MonoBehaviour
 
         skeletonsNumber = 3;
         CalculateDPS();
-        decreaseCoroutine = StartCoroutine(DecreaseHealth());
+        //decreaseCoroutine = StartCoroutine(DecreaseHealth());
     }
 
     // Update is called once per frame

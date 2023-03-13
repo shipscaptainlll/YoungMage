@@ -49,12 +49,6 @@ public class PortalOpener : MonoBehaviour
         closePortalSound = soundManager.LocateAudioSource("PortalClosing", housePortalContainer);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void InitiatePortalOpening()
     {
         if (!portalOpened && skeletonPortalActivator.InsidePortal)
@@ -94,7 +88,7 @@ public class PortalOpener : MonoBehaviour
                 StartCoroutine(OpenPortal());
                 //Debug.Log("OpeningPortal9");
             }
-        } else { portalOpened = false;
+        } else { 
             //Debug.Log("ClosingPortal");
             if (cycleRunning)
             {
@@ -107,7 +101,7 @@ public class PortalOpener : MonoBehaviour
                 //Debug.Log("ClosingPortal4");
             }
         }
-        
+
     }
 
     public void InitiatePortalClosing()
@@ -249,7 +243,7 @@ public class PortalOpener : MonoBehaviour
 
         for (int i = 0; i < skeletons.Length; i++)
         {
-            int skeletonID = random.Next(0, skeletonsStack.SkeletonsArena.Count);
+            int skeletonID = random.Next(0, skeletonsStack.SkeletonStack.Count);
 
             for (int j = 0; j < skeletons.Length; j++)
             {
