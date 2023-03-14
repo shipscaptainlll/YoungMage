@@ -153,6 +153,11 @@ public class SkeletonsStack : MonoBehaviour
         Destroy(deletedSkeleton.gameObject);
     }
 
+    public void DeleteArenaSkeleton(Transform deletedSkeleton)
+    {
+        skeletonsArena.Remove(deletedSkeleton);
+    }
+
     void SaveHouseSkeleton(Transform newSkeleton)
     {
         skeletonsHouseStack.Add(newSkeleton);

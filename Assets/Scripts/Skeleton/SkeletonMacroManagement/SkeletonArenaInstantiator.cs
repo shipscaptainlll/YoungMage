@@ -20,19 +20,15 @@ public class SkeletonArenaInstantiator : MonoBehaviour
     System.Random random;
     
     public int SkeletonsMaxCount { get { return skeletonsMaxCount; } set { skeletonsMaxCount = value; } }
-    public int SkeletonsCount { get { return skeletonsCount; } set { skeletonsCount = value; } }
+    public int SkeletonsCount { get { return skeletonsCount; } set { skeletonsCount = value;
+        if (skeletonsCount < 0) { skeletonsCount = 0; }
+        } }
     public event Action<Transform> SkeletonInstantiated = delegate { };
     // Start is called before the first frame update
     void Start()
     {
         random = new System.Random();
         StartCoroutine(DelayInstantiator());
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     IEnumerator DelayInstantiator()
@@ -50,7 +46,7 @@ public class SkeletonArenaInstantiator : MonoBehaviour
         if (skeletonsCount < skeletonsMaxCount)
         {
             skeletonsCount++;
-            //Debug.Log("instantiated new one4");
+            Debug.Log("instantiated new one4");
             //Debug.Log("skeletons count" + skeletonsCount);
             //Debug.Log("skeletons max count" + skeletonsMaxCount);
             //Debug.Log(skeletonsCount < skeletonsMaxCount);
@@ -111,7 +107,7 @@ public class SkeletonArenaInstantiator : MonoBehaviour
 
     public void InstantiateIntroSkeletons(Vector3 introPosition)
     {
-
+        skeletonsCount++;
         float xPositionOffset = (float)random.Next(-10, 10);
         float zPositionOffset = (float)random.Next(-10, 10);
         Transform newSkeleton = Instantiate(skeletonModel, introPosition + new Vector3(xPositionOffset, 0, zPositionOffset), skeletonModel.rotation);
@@ -136,7 +132,7 @@ public class SkeletonArenaInstantiator : MonoBehaviour
 
     public void InstantiateIntroSkeletons(Vector3 introPosition, int castleNavroutIndex)
     {
-
+        skeletonsCount++;
         float xPositionOffset = (float)random.Next(-10, 10);
         float zPositionOffset = (float)random.Next(-10, 10);
         Transform newSkeleton = Instantiate(skeletonModel, introPosition + new Vector3(xPositionOffset, 0, zPositionOffset), skeletonModel.rotation);

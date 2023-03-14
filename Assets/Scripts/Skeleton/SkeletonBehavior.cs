@@ -144,6 +144,7 @@ public class SkeletonBehavior : MonoBehaviour
     Transform connectedCatapult;
 
     bool reachedPosition;
+    Coroutine movingVFXCoroutine;
     Coroutine changeColorCounter;
     Coroutine changeScaleCounter;
     Coroutine turningToCastleCoroutine;
@@ -211,8 +212,8 @@ public class SkeletonBehavior : MonoBehaviour
         if (transform.Find("VFX") != null) {
             //Debug.Log(transform.Find("VFX") + " " + transform);
             //Debug.Log(transform.Find("VFX").Find("vfxgraph_StylizedSmoke"));
-            movementVFX = transform.Find("VFX").Find("vfxgraph_StylizedSmoke").GetComponent<VisualEffect>(); 
-            StartCoroutine(MovingDustSpawner()); }
+            movementVFX = transform.Find("VFX").Find("vfxgraph_StylizedSmoke").GetComponent<VisualEffect>();
+            movingVFXCoroutine = StartCoroutine(MovingDustSpawner()); }
         
         localAnimator = transform.GetComponent<Animator>();
         upperPartMaterial = transform.Find("MiddlePart.002").GetComponent<SkinnedMeshRenderer>().material;
@@ -420,7 +421,7 @@ public class SkeletonBehavior : MonoBehaviour
             
             if (navMeshAgent.velocity.magnitude < 0.15f)
             {
-                //Debug.Log("Reached Position");
+                Debug.Log("Reached Position");
                 if (ReachedCastle != null) { ReachedCastle(); }
                 skeletonsStack.SaveSkeletonArena(transform);
                 reachedPosition = true;
@@ -804,7 +805,7 @@ public class SkeletonBehavior : MonoBehaviour
     IEnumerator DestroySkeleton()
     {
 
-        
+        if (hittingCastle) { Debug.Log("5 hitti"); }
         destructionParticleSystem.SetActive(true);
         destructionParticleSystem.GetComponent<ParticleSystem>().Play();
         //Debug.Log("DestroyedSkeleton");
@@ -814,7 +815,11 @@ public class SkeletonBehavior : MonoBehaviour
         bodySkinnedrenderer.gameObject.SetActive(false);
         GameObject instantiatedDestroyedSkeleton = Instantiate(destroyedSkeleton, transform.position, transform.rotation);
         fracturedSkeleton = instantiatedDestroyedSkeleton.transform;
+        fracturedSkeleton.gameObject.AddComponent<AutoDestroyObject>();
+        fracturedSkeleton.gameObject.GetComponent<AutoDestroyObject>().TimeDestroy = 3f;
+        fracturedSkeleton.gameObject.GetComponent<AutoDestroyObject>().InitiateDestruction();
         fracturedSkeleton.parent = fracturedSkeletonsHolder;
+        StopCoroutine(movingVFXCoroutine);
         destroySkeletonSound = soundManager.LocateAudioSource("SkeletonBlast", instantiatedDestroyedSkeleton.transform);
         destroySkeletonSound.Play();
         unusedCounter.gameObject.GetComponent<CanvasGroup>().alpha = 0;
@@ -842,7 +847,7 @@ public class SkeletonBehavior : MonoBehaviour
             destroyedSkeletonsCounter.CountDestroyedSkeleton(this.transform);
         }
         
-        Destroy(instantiatedDestroyedSkeleton);
+        //DestroyImmediate(instantiatedDestroyedSkeleton);
         Destroy(gameObject);
         yield return null;
     }

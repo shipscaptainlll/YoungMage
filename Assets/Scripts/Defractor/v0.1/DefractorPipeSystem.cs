@@ -37,11 +37,13 @@ public class DefractorPipeSystem : MonoBehaviour
 
     void StartTransferring(int customID)
     {
+        if (GetProductId(customID) == 0) { return; }
         StartCoroutine(TransferringThroughPipes(customID));
     }
 
     public void TransferUploadedObjects(int customID, Vector3 position, Quaternion rotation)
     {
+        if (GetProductId(customID) == 0) { return; }
         GameObject productInstance = Instantiate(GetObjectModel(GetProductId(customID)), position, rotation);
         productInstance.transform.parent = defractoringLine;
         transportationSound = soundManager.LocateAudioSource("DefractorFlyingObject", productInstance.transform);
@@ -85,7 +87,7 @@ public class DefractorPipeSystem : MonoBehaviour
         if (ProductLeftPipes != null) { ProductLeftPipes(); }
     }
 
-    int GetProductId(int customID)
+    public int GetProductId(int customID)
     {
         return defractorProductsList.TakeCounter(customID);
     }

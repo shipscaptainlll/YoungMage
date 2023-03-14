@@ -13,7 +13,9 @@ public class OreCounter : MonoBehaviour
     int oreCount;
     bool counterOn;
 
-    
+    bool catchedByTornado;
+
+    public bool CatchedByTornado { get { return catchedByTornado; } set { catchedByTornado = value; } }
     public bool CounterOn { get { return counterOn; } }
     public int OreCount { get { return oreCount; } set { oreCount = value; UpdateCounter(); } }
     void Start()

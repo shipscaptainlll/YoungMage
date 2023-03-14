@@ -75,6 +75,8 @@ public class PortalOpener : MonoBehaviour
                     StartCoroutine(ClosePortal());
                     //Debug.Log("ClosingPortal3");
                     StartCoroutine(CloseVFX());
+
+                    return;
                 }
                 //Debug.Log("OpeningPortal4");
                 ChangePortalPosition();
@@ -237,12 +239,17 @@ public class PortalOpener : MonoBehaviour
     void ChooseSkeletonInstance()
     {
         //Debug.Log(skeletonsStack.SkeletonStack.Count);
+        choosenSkeleton = null;
         
-        
-        var skeletons = skeletonsStack.SkeletonStack.ToArray();
-
+        var skeletons = skeletonsStack.SkeletonsArena.ToArray();
+        Debug.Log(skeletons.Length + " count");
         for (int i = 0; i < skeletons.Length; i++)
         {
+            int skeletonID = random.Next(0, skeletonsStack.SkeletonsArena.Count);
+            Debug.Log(skeletonID + " skeleto ID");
+            choosenSkeleton = skeletons[skeletonID];
+
+            /*
             int skeletonID = random.Next(0, skeletonsStack.SkeletonStack.Count);
 
             for (int j = 0; j < skeletons.Length; j++)
@@ -254,6 +261,7 @@ public class PortalOpener : MonoBehaviour
                     return;
                 }
             }
+            */
         }
 
 

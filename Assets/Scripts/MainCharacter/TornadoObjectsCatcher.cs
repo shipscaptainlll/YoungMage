@@ -23,21 +23,22 @@ public class TornadoObjectsCatcher : MonoBehaviour
         transformBoxcollider = transform.GetComponent<BoxCollider>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerStay(Collider other)
     {
         
         //Debug.Log("Found some " + other.transform);
         
-        if (other.GetComponent<GlobalResource>() != null ||
-            other.transform.parent != null && other.transform.parent.GetComponent<GlobalResource>() != null)
+        if (other.GetComponent<GlobalResource>() != null 
+            || other.transform.parent != null 
+            && other.transform.parent.GetComponent<GlobalResource>() != null
+            )
         {
-            if (other.transform.GetComponent<ConnectableResource>() != null && other.transform.GetComponent<ConnectableResource>().OreLevitator.LevitationActivated) { other.transform.GetComponent<ConnectableResource>().OreLevitator.DeactivateLevitation(); Debug.Log("Ore levitation stopped"); }
+            
+            
+            if (other.transform.GetComponent<ConnectableResource>() != null && other.transform.GetComponent<ConnectableResource>().OreLevitator.LevitationActivated) 
+            { 
+                other.transform.GetComponent<ConnectableResource>().OreLevitator.DeactivateLevitation(); Debug.Log("Ore levitation stopped"); 
+            }
             if (Mathf.Abs(other.transform.position.x - transform.TransformPoint(transformBoxcollider.center).x) <= 0.5f
                 && Mathf.Abs(other.transform.position.y - transform.TransformPoint(transformBoxcollider.center).y) <= 0.5f)
             {
@@ -98,11 +99,17 @@ public class TornadoObjectsCatcher : MonoBehaviour
 
     void CatchResource(Transform resource)
     {
-        AddToCounter(resource.GetComponent<GlobalResource>().ID);
-        HoldResource(resource);
-        StartCoroutine(DestroyObject(resource));
-        acquiringObject.Play();
-        //InstantiateCatchParticles(resource);
+        if (!resource.GetComponent<OreCounter>().CatchedByTornado)
+        {
+            resource.GetComponent<OreCounter>().CatchedByTornado = true;
+            Debug.Log("catching this ");
+            AddToCounter(resource.GetComponent<GlobalResource>().ID, resource.GetComponent<OreCounter>().OreCount);
+            HoldResource(resource);
+            StartCoroutine(DestroyObject(resource));
+            acquiringObject.Play();
+            //InstantiateCatchParticles(resource);
+        }
+
     }
 
     void HoldResource(Transform resource)
@@ -116,7 +123,7 @@ public class TornadoObjectsCatcher : MonoBehaviour
         Destroy(resource.gameObject);
     }
 
-    void AddToCounter(int customerID)
+    void AddToCounter(int customerID, int count)
     {
         foreach (Transform holder in countersHolder)
         {
@@ -124,7 +131,9 @@ public class TornadoObjectsCatcher : MonoBehaviour
             {
                 if (counter.GetComponent<ICounter>().ID == customerID)
                 {
-                    counter.GetComponent<ICounter>().AddResource(1);
+                    
+                    counter.GetComponent<ICounter>().AddResource(count);
+                    Debug.Log("Just added count " + count);
                     return;
                 }
             }

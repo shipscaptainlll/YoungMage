@@ -15,24 +15,16 @@ public class DefractorResource : MonoBehaviour
 
     public DestroyableObjects DestroyableObjects { set { destroyableObjects = value; } }
     public int ID { get { return id; } set { id = value; } }
-    // Start is called before the first frame update
-    void Start()
-    { 
-        
-    }
+
 
     public event Action<Transform> objectContactedDefractor = delegate { };
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("hello by " + other);
         if (other.GetComponent<RotatingCones>() != null)
         {
-            //Debug.Log("triggered");
+            Debug.Log("triggered by " + transform);
             InstantiateDestroyableVersion();
             if (objectContactedDefractor != null) { objectContactedDefractor(transform); }
             

@@ -30,18 +30,7 @@ public class GlobalResource : MonoBehaviour
     public SoundManager GlobalSoundManager { set { globalSoundManager = value; InitializeSounds(); } }
 
     public event Action CountChanged = delegate { };
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    
     private void OnTriggerEnter(Collider other)
     {
         

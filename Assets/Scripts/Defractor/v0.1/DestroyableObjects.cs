@@ -31,10 +31,7 @@ public class DestroyableObjects : MonoBehaviour
     [SerializeField] GameObject windStoneDust;
 
 
-    void Start()
-    {
 
-    }
 
     public GameObject TakeObject(int customeID)
     {

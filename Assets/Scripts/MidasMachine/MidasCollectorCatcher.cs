@@ -37,7 +37,7 @@ public class MidasCollectorCatcher : MonoBehaviour
             if (ResourceEnteredCollector != null) { ResourceEnteredCollector(resourceID); }
             other.GetComponent<ConnectableResource>().DissolvingDestruction();
             other.GetComponent<MidasResource>().DissolvingDestruction();
-            other.transform.Find("LevitationPS").gameObject.SetActive(false);
+            if (other.transform.Find("LevitationPS").gameObject != null) { other.transform.Find("LevitationPS").gameObject.SetActive(false); }
             other.transform.parent = incomeObjectsPool;
             StartCoroutine(DematerializeProduct(other.transform, 4));
             Debug.Log(other);

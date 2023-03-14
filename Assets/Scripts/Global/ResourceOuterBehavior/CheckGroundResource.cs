@@ -12,7 +12,7 @@ public class CheckGroundResource : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("just contacted " + other + " with layer mask " + other.gameObject.layer);
+        //Debug.Log("just contacted " + other + " with layer mask " + other.gameObject.layer);
         if (!checkGroundActivated && 
             (other.gameObject.layer == 6 || other.gameObject.layer == 24))
         {

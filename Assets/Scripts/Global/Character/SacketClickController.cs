@@ -23,6 +23,7 @@ public class SacketClickController : MonoBehaviour
     [SerializeField] BookSpellsActivator bookSpellsActivator;
     [SerializeField] ObjectsConnector objectsConnector;
     [SerializeField] Transform contactableObjectsPool;
+    [SerializeField] DefractorPipeSystem defractorPipeSystem;
 
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
@@ -85,6 +86,10 @@ public class SacketClickController : MonoBehaviour
                 //newObject.GetChild(0).gameObject.AddComponent<SphereCollider>();
                 //newObject.GetChild(0).gameObject.GetComponent<SphereCollider>().isTrigger = true;
                 //newObject.GetChild(0).gameObject.GetComponent<SphereCollider>().radius = 0.005f;
+                newObject.name = objectReference.name;
+                if (newObject.name == "PlateArmor") { newObject.localScale = new Vector3(1.3f, 1.3f, 1.3f); }
+                if (newObject.name == "Helm") { newObject.localScale = new Vector3(1.25f, 1.25f, 1.25f); }
+                
                 newObject.gameObject.AddComponent<DefractorResource>();
                 newObject.gameObject.GetComponent<DefractorResource>().ID = quickAccessHandController.CurrentCustomID;
                 newObject.gameObject.GetComponent<DefractorResource>().DestroyableObjects = destroyableObjects;
@@ -108,7 +113,11 @@ public class SacketClickController : MonoBehaviour
                 //newObject.Find("SameResourceMagnetism(Clone)").gameObject.GetComponent<ResourcesSameMagnetism>().sameMagnetismProduct = sameMagnetismProduct;
                 //newObject.gameObject.AddComponent<MidasResource>();
                 //newObject.gameObject.GetComponent<MidasResource>().InstantiateAfterCreation();
+                Debug.Log("rotation was " + newObject.rotation);
+                Debug.Log("force was " + transform.forward * (Mathf.Cos(Mathf.Abs(((-cameraController.YRotation) * Mathf.PI) / 180)) + xAngleOffset) * xForcePower);
+
                 newObject.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * (Mathf.Cos(Mathf.Abs(((-cameraController.YRotation) * Mathf.PI) / 180)) + xAngleOffset) * xForcePower);
+                
                 newObject.gameObject.GetComponent<Rigidbody>().angularDrag = 0.75f;
                 newObject.gameObject.GetComponent<Rigidbody>().drag = 0.4f;
                 newObject.gameObject.GetComponent<Rigidbody>().AddTorque(100 * xTorque, 100 * yTorque, 100 * zTorque);
@@ -116,7 +125,9 @@ public class SacketClickController : MonoBehaviour
                 {
                     newObject.gameObject.GetComponent<Rigidbody>().AddForce(transform.up * Mathf.Sin(Mathf.Abs(((-cameraController.YRotation) * Mathf.PI) / 180)) * yForcePower);
                 }
-                else { newObject.gameObject.GetComponent<Rigidbody>().AddForce(transform.up * Mathf.Sin(Mathf.Abs(((-cameraController.YRotation) * Mathf.PI) / 180)) * -yForcePower); }
+                else { 
+                    newObject.gameObject.GetComponent<Rigidbody>().AddForce(transform.up * Mathf.Sin(Mathf.Abs(((-cameraController.YRotation) * Mathf.PI) / 180)) * -yForcePower);
+                }
 
                 //newObject.GetComponent<Rigidbody>().useGravity = enabled;
                 KickedOutItems.Add(newObject);
@@ -172,7 +183,9 @@ public class SacketClickController : MonoBehaviour
             {
                 newObject.gameObject.GetComponent<Rigidbody>().AddForce(transform.up * Mathf.Sin(Mathf.Abs(((-cameraController.YRotation) * Mathf.PI) / 180)) * yForcePower);
             }
-            else { newObject.gameObject.GetComponent<Rigidbody>().AddForce(transform.up * Mathf.Sin(Mathf.Abs(((-cameraController.YRotation) * Mathf.PI) / 180)) * -yForcePower); }
+            else { 
+                newObject.gameObject.GetComponent<Rigidbody>().AddForce(transform.up * Mathf.Sin(Mathf.Abs(((-cameraController.YRotation) * Mathf.PI) / 180)) * -yForcePower);
+            }
 
             KickedOutItems.Add(newObject);
             newObject.GetComponent<OreCounter>().OreCount = count;
@@ -210,8 +223,11 @@ public class SacketClickController : MonoBehaviour
             {
                 objectTransform.gameObject.GetComponent<DefractorResource>().objectContactedDefractor -= DestroyObject;
                 KickedOutItems.Remove(element);
-                var particles = Instantiate(destroyParticles, element.position, element.rotation);
-                particles.gameObject.SetActive(true);
+                if (defractorPipeSystem.GetProductId(objectTransform.gameObject.GetComponent<DefractorResource>().ID) != 0) {
+                    var particles = Instantiate(destroyParticles, element.position, element.rotation);
+                    particles.gameObject.SetActive(true);
+                }
+                
                 
                 Destroy(element.gameObject);
                 //Debug.Log("was destroyed");
@@ -227,6 +243,7 @@ public class SacketClickController : MonoBehaviour
         {
             return;
         }
+        Debug.Log("current counter " + quickAccessHandController.CurrentCounter + " ore ");
         quickAccessHandController.CurrentCounter.GetComponent<ICounter>().GetResource(1);
     }
 }

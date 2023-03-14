@@ -15,6 +15,8 @@ public class QuickAccessHandController : MonoBehaviour
     [SerializeField] Transform hand;
     [SerializeField] ObjectManager objectManager;
     [SerializeField] Transform countersHolder;
+    [SerializeField] Transform skeletonItemsHolder;
+    [SerializeField] Transform oreProductsHolder;
 
     [Header("Sounds  Manager")]
     [SerializeField] SoundManager soundManager;
@@ -98,11 +100,15 @@ public class QuickAccessHandController : MonoBehaviour
             objectInHand = Instantiate(objectToTake, hand.position, hand.rotation);
             objectInHand.transform.gameObject.AddComponent<HandResource>();
             SetLayerRecursively(objectInHand.transform, 11);
-            objectInHand.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            DestroyImmediate(objectInHand.transform.GetComponent<SphereCollider>());
+            Destroy(objectInHand.transform.GetComponent<ConnectableResource>());
+            if (objectInHand.transform.GetComponent<SphereCollider>() != null) { objectInHand.transform.GetComponent<SphereCollider>().isTrigger = true; }
+            
             MaterializeEffect(objectInHand.transform, 0.65f);
             SetObjectMovement(objectInHand);
             //sacketEnter.Play("GetSacketAnimation");
             objectInHand.transform.parent = hand;
+            objectInHand.transform.localScale = new Vector3(objectToTake.transform.localScale.x, objectToTake.transform.localScale.y, objectToTake.transform.localScale.z);
             if (targetCustomID == 10)
             {
                 objectInHand.transform.parent = hand.parent;
@@ -192,6 +198,23 @@ public class QuickAccessHandController : MonoBehaviour
             if (element.GetComponent<ICounter>().ID == currentCustomID)
             {
                 currentCounter = element;
+                return;
+            }
+        }
+        foreach (Transform element in skeletonItemsHolder)
+        {
+            if (element.GetComponent<ICounter>().ID == currentCustomID)
+            {
+                currentCounter = element;
+                return;
+            }
+        }
+        foreach (Transform element in oreProductsHolder)
+        {
+            if (element.GetComponent<ICounter>().ID == currentCustomID)
+            {
+                currentCounter = element;
+                return;
             }
         }
     }

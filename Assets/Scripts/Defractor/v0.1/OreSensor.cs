@@ -21,6 +21,7 @@ public class OreSensor : MonoBehaviour
     {
         if (other.GetComponent<DefractorResource>() != null)
         {
+            Debug.Log("contacted " + other.transform);
             if (OreContacted != null) { OreContacted(other.GetComponent<DefractorResource>().ID); }
         }
     }

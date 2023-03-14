@@ -126,9 +126,9 @@ public class SkeletonHouseInstantiator : MonoBehaviour
         //Debug.Log("4");
         foreach (Transform skeleton in skeletonsStack.SkeletonsArena)
         {
-            if (skeleton == teleportedSkeleton) { 
-                skeletonsStack.SkeletonsArena.Remove(teleportedSkeleton);
-                //Debug.Log("5");
+            if (skeleton == teleportedSkeleton.GetComponent<Copycat>().ConnectedInstance) { 
+                skeletonsStack.SkeletonsArena.Remove(teleportedSkeleton.GetComponent<Copycat>().ConnectedInstance);
+                Debug.Log("42 catched and destroyed " + skeletonsStack.SkeletonsArena.Count);
                 return; }
         }
         //Debug.Log("6");
@@ -163,7 +163,8 @@ public class SkeletonHouseInstantiator : MonoBehaviour
             if (skeleton == teleportedSkeleton.transform)
             {
                 skeletonsStack.SkeletonsArena.Remove(teleportedSkeleton.transform);
-                //Debug.Log("5");
+                Debug.Log("42 well hello there " + skeletonsStack.SkeletonsArena.Count);
+                Debug.Log(skeletonsStack.SkeletonsArena.Count);
                 return;
             }
         }
