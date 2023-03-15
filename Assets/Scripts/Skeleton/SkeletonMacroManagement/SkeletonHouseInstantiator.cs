@@ -163,8 +163,8 @@ public class SkeletonHouseInstantiator : MonoBehaviour
             if (skeleton == teleportedSkeleton.transform)
             {
                 skeletonsStack.SkeletonsArena.Remove(teleportedSkeleton.transform);
-                Debug.Log("42 well hello there " + skeletonsStack.SkeletonsArena.Count);
-                Debug.Log(skeletonsStack.SkeletonsArena.Count);
+                //Debug.Log("42 well hello there " + skeletonsStack.SkeletonsArena.Count);
+                //Debug.Log(skeletonsStack.SkeletonsArena.Count);
                 return;
             }
         }

@@ -10,6 +10,7 @@ public class TornadoObjectsCatcher : MonoBehaviour
     [SerializeField] SacketMagnetism sacketMagnetism;
     [SerializeField] Transform catchParticles;
     [SerializeField] ItemsCounterQuests itemsCounterQuests;
+    [SerializeField] ParticleSystem particleSystem;
 
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
@@ -119,7 +120,14 @@ public class TornadoObjectsCatcher : MonoBehaviour
 
     IEnumerator DestroyObject(Transform resource)
     {
-        yield return new WaitForSeconds(1);
+        ParticleSystem destructionParticleSystem = Instantiate(particleSystem, resource.position, resource.rotation);
+        destructionParticleSystem.gameObject.SetActive(true);
+        destructionParticleSystem.transform.position = resource.position;
+        resource.gameObject.SetActive(false);
+        Debug.Log("we have just catched " + resource);
+        yield return new WaitForSeconds(2);
+        
+        Destroy(destructionParticleSystem.gameObject);
         Destroy(resource.gameObject);
     }
 

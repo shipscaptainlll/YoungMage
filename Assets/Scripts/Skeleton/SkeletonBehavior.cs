@@ -389,7 +389,9 @@ public class SkeletonBehavior : MonoBehaviour
                 ShakePlayerCamera();
             }
         }
-        
+
+        //Debug.Log(localAnimator.GetCurrentAnimatorStateInfo(0).IsName("ShootSkeleton"));
+
         if (navigationTarget != null) { navMeshAgent.destination = navigationTarget.position; }
         if (castleNavroutActive)
         {
@@ -421,7 +423,7 @@ public class SkeletonBehavior : MonoBehaviour
             
             if (navMeshAgent.velocity.magnitude < 0.15f)
             {
-                Debug.Log("Reached Position");
+                //Debug.Log("Reached Position");
                 if (ReachedCastle != null) { ReachedCastle(); }
                 skeletonsStack.SaveSkeletonArena(transform);
                 reachedPosition = true;
@@ -516,11 +518,11 @@ public class SkeletonBehavior : MonoBehaviour
 
     public void UploadCastleRouteNumber(int narvoutNumber)
     {
-        Debug.Log("hello2");
+        //Debug.Log("hello2");
         CastleNavrout = new List<Transform>();
         if (CastleNavroutHolder != null)
         {
-            Debug.Log("hello3");
+            //Debug.Log("hello3");
             foreach (Transform point in CastleNavroutHolder)
             {
                 CastleNavrout.Add(point);
@@ -532,7 +534,7 @@ public class SkeletonBehavior : MonoBehaviour
                 castleNavpointNumber = 0;
             }
             navigationTarget = CastleNavrout[castleNavpointNumber];
-            Debug.Log("current uploaded navpoitn " + castleNavpointNumber);
+            //Debug.Log("current uploaded navpoitn " + castleNavpointNumber);
         }
     }
 
@@ -556,7 +558,7 @@ public class SkeletonBehavior : MonoBehaviour
                 isMoving = false;
                 localAnimator.Play("ShootSkeleton");
                 turningToCastleCoroutine = StartCoroutine(TurningToCastleIE());
-                Debug.Log("Transitioned heere");
+                //Debug.Log("Transitioned heere");
                 return;
             }
             
@@ -805,7 +807,9 @@ public class SkeletonBehavior : MonoBehaviour
     IEnumerator DestroySkeleton()
     {
 
-        if (hittingCastle) { Debug.Log("5 hitti"); }
+        if (hittingCastle) { 
+            //Debug.Log("5 hitti");
+        }
         destructionParticleSystem.SetActive(true);
         destructionParticleSystem.GetComponent<ParticleSystem>().Play();
         //Debug.Log("DestroyedSkeleton");

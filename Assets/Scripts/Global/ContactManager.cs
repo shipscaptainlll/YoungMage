@@ -137,7 +137,7 @@ public class ContactManager : MonoBehaviour
                     }
                     //Debug.Log("ready1");
                 }
-                else if (contactedObject.parent.GetComponent<Skeleton>() != null
+                else if (contactedObject.GetComponent<Skeleton>() != null
                     && (quickAccessHandController.CurrentCustomID == 11
                     || quickAccessHandController.CurrentCustomID == 12
                     || quickAccessHandController.CurrentCustomID == 13
@@ -146,13 +146,13 @@ public class ContactManager : MonoBehaviour
                     || quickAccessHandController.CurrentCustomID == 16
                     || quickAccessHandController.CurrentCustomID == 17))
                 {
-                    Debug.Log("Hello");
-                    attachObjectSkeleton.AttachObject(contactedObject.parent.GetComponent<SkeletonBehavior>(), quickAccessHandController.CurrentCustomID);
+                    Debug.Log("Hello at");
+                    attachObjectSkeleton.AttachObject(contactedObject.GetComponent<SkeletonBehavior>(), quickAccessHandController.CurrentCustomID);
                     bookSpellsActivator.CastApplyObject();
                 }
                 else if (contactedObject.GetComponent<SkeletonItem>() != null)
                 {
-                    deattachObjectSkeleton.DeattachObject(contactedObject.GetComponent<SkeletonItem>().SkeletonScript, contactedObject.GetComponent<SkeletonItem>().ItemID);
+                    //deattachObjectSkeleton.DeattachObject(contactedObject.GetComponent<SkeletonItem>().SkeletonScript, contactedObject.GetComponent<SkeletonItem>().ItemID);
                 }
                 else if (contactedObject.parent.GetComponent<Defractor>() != null)
                 {

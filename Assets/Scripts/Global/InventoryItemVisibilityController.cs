@@ -70,6 +70,9 @@ public class InventoryItemVisibilityController : MonoBehaviour
 
     void CreateVisibleItem(int customId, Transform attachedCounter)
     {
+        if (customId == 1) { 
+            return;
+        }
         Transform foundEmptySlot = SearchEmptySlot();
         if (foundEmptySlot != null)
         {

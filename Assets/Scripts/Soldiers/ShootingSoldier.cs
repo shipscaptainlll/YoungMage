@@ -88,6 +88,7 @@ public class ShootingSoldier : MonoBehaviour
 
     public void FireArrow()
     {
+        if (nextTarget == null) { return; }
         if (ShootedTarget != null) { ShootedTarget(); }
         Vector2 calculatedVelocities = CalculateVelocities();
         ShootAmmo(calculatedVelocities.x, calculatedVelocities.y);

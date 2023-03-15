@@ -18,6 +18,7 @@ public class HoverInventoryManager : MonoBehaviour
     Coroutine waitOnImage;                          
     Vector2 descriptionSizes;
     Transform foundObject;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,32 +45,28 @@ public class HoverInventoryManager : MonoBehaviour
         //ResizeContent();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Process(Transform element)
     {
-        if (foundObject != null && waitedEnough)
-        {
-            
-        }
-    }
-
-    void Process(Transform element)
-    {
-        //Debug.Log("Started process");
+        //Debug.Log("Hovering opening " + element);
         
+        if (foundObject != null)
+        {
+            Unprocess(foundObject);
+        }
+
         if (foundObject == null)
         {
             foundObject = element;
-            //Debug.Log(element);
+            //Debug.Log("Started process1 on " + transform);
 
             descriptionText.text = element.Find("Borders").Find("Element").GetComponent<Image>().sprite.name;
-            descriptionText.text = ManageParagraphs(descriptionText.text, 12);
+            //descriptionText.text = ManageParagraphs(descriptionText.text, 12);
             descriptionCanvas.GetComponent<CanvasGroup>().alpha = 1;
             descriptionCanvas.GetComponent<CanvasGroup>().alpha = 0;
             //Debug.Log(descriptionText);
             ResizeContent();
             descriptionCanvas.parent = UIMainHolder;
-            
+            //Debug.Log("here we go " + descriptionText.text);
             //descriptionSizes = new Vector2(descriptionTransform.GetComponent<RectTransform>().rect.width, descriptionTransform.GetComponent<RectTransform>().rect.height);
             descriptionCanvas.SetAsLastSibling();
 
@@ -78,11 +75,13 @@ public class HoverInventoryManager : MonoBehaviour
         }
     }
 
-    void Unprocess()
+    public void Unprocess(Transform toClose)
     {
-        if (foundObject != null)
+        //Debug.Log("Hovering closing " + foundObject);
+
+        if (foundObject != null && foundObject == toClose)
         {
-            //Debug.Log("Started process2");
+            //Debug.Log("Started process2 on " + transform);
             descriptionCanvas.parent = SUIMainHolder;
             descriptionCanvas.GetComponent<CanvasGroup>().alpha = 0;
             descriptionTransform.position = new Vector2(0, 0);

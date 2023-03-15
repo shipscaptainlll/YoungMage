@@ -8,6 +8,7 @@ public class GoldCoinsCounter : MonoBehaviour, ICounter
 {
     [SerializeField] ItemsList itemsList;
     [SerializeField] int id;
+    [SerializeField] OreCounter oreCounter;
     int count;
     bool itemOpened;
 
@@ -53,6 +54,7 @@ public class GoldCoinsCounter : MonoBehaviour, ICounter
         count += ammount;
         if (AddedAmmount != null) { AddedAmmount(id, ammount); }
         NotifyAmountChanged(count);
+        oreCounter.OreCount = count;
         controlInventoryVisibility();
     }
 

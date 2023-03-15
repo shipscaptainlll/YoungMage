@@ -15,12 +15,20 @@ public class SkeletonData
     public int[] indexerOreSaved;
     public int[] connectedDoorIndex;
     public string[] skeletonType;
+    public bool[] equippedStoneHands;
+    public bool[] equippedLeggings;
+    public bool[] equippedPlateArmor;
+    public bool[] equippedShoes;
+    public bool[] equippedHelm;
+    public bool[] equippedGloves;
+    public bool[] equippedBracers;
 
     public SkeletonData(Transform skeletonsHolder, Transform oresHolder)
     {
         GetPositions(skeletonsHolder);
         GetRotations(skeletonsHolder);
         GetState(skeletonsHolder, oresHolder);
+        GetSkeletonsEquipment(skeletonsHolder);
     }
 
     void GetPositions(Transform skeletonsHolder)
@@ -135,6 +143,33 @@ public class SkeletonData
         } else
         {
             return "";
+        }
+    }
+
+    void GetSkeletonsEquipment(Transform skeletonsHolder)
+    {
+        equippedStoneHands = new bool[skeletonsHolder.childCount];
+        equippedLeggings = new bool[skeletonsHolder.childCount];
+        equippedPlateArmor = new bool[skeletonsHolder.childCount];
+        equippedShoes = new bool[skeletonsHolder.childCount];
+        equippedHelm = new bool[skeletonsHolder.childCount];
+        equippedGloves = new bool[skeletonsHolder.childCount];
+        equippedBracers = new bool[skeletonsHolder.childCount];
+        int indexer = 0;
+        foreach (Transform skeleton in skeletonsHolder)
+        {
+            AttachedItemsManager attachedItemsManager = skeleton.GetComponent<AttachedItemsManager>();
+            equippedStoneHands[indexer] = attachedItemsManager.StoneHandsEquiped;
+            equippedLeggings[indexer] = attachedItemsManager.LeggingsEquiped;
+            equippedPlateArmor[indexer] = attachedItemsManager.ChainMailEquiped;
+            equippedShoes[indexer] = attachedItemsManager.BootsEquiped;
+            equippedHelm[indexer] = attachedItemsManager.HelmEquiped;
+            equippedGloves[indexer] = attachedItemsManager.GlovesEquiped;
+            equippedBracers[indexer] = attachedItemsManager.VambraceEquiped;
+
+            indexer++;
+
+            Debug.Log("saved one skeleton equipment");
         }
     }
 

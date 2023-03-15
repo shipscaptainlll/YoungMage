@@ -57,7 +57,7 @@ public class ConnectableResource : MonoBehaviour
     IEnumerator Destruction(float time)
     {
         yield return new WaitForSeconds(time);
-        Debug.Log("Being destroyed ");
+        //Debug.Log("Being destroyed ");
         Transform destructionParticleSystem = Instantiate(destructionPS.transform, transform.position, transform.rotation);
         //destructionParticleSystem.parent = transform;
         

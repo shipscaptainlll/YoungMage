@@ -17,15 +17,6 @@ public class SmallSkeletonFire : MonoBehaviour
         catapultAnimator = transform.GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            Fire();
-        }
-    }
-
     public void Fire()
     {
         Vector2 calculatedVelocities = CalculateVelocities();

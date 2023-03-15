@@ -54,9 +54,21 @@ public static class SkeletonsDataApplier
         int indexer = 0;
         //Debug.Log("applied one skeleton state");
         //Debug.Log("skeletons in holder " + skeletonsHolder.childCount);
-        
+
+
         foreach (Transform skeleton in skeletonsHolder)
         {
+            AttachedItemsManager attachedItemsManager = skeleton.GetComponent<AttachedItemsManager>();
+            if (skeletonDataLoaded.equippedStoneHands[indexer]) { attachedItemsManager.EquipStoneHands(); }
+            if (skeletonDataLoaded.equippedLeggings[indexer]) { attachedItemsManager.EquipLeggings(); }
+            if (skeletonDataLoaded.equippedPlateArmor[indexer]) { attachedItemsManager.EquipChainMail(); }
+            if (skeletonDataLoaded.equippedShoes[indexer]) { attachedItemsManager.EquipBoots(); }
+            if (skeletonDataLoaded.equippedHelm[indexer]) { attachedItemsManager.EquipHelm(); }
+            if (skeletonDataLoaded.equippedGloves[indexer]) { attachedItemsManager.EquipGloves(); }
+            if (skeletonDataLoaded.equippedBracers[indexer]) { attachedItemsManager.EquipVambrace(); }
+
+            Debug.Log("applied one skeleton equipment");
+
             //Debug.Log("weel hello there0 + indexer " + indexer);
             if (skeletonDataLoaded.isIdle[indexer])
             {

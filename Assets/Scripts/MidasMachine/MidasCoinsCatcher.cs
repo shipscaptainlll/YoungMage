@@ -9,6 +9,7 @@ public class MidasCoinsCatcher : MonoBehaviour
     [SerializeField] Transform coinsAccumulationPosition;
     [SerializeField] Transform coinsAccumulationHolder;
     [SerializeField] GoldCoinsCounter goldCoinsCounter;
+    [SerializeField] OreCounter oreCounter;
     GameObject currentAccumulationForm = null;
     int coinsCount = 0;
 
@@ -34,12 +35,6 @@ public class MidasCoinsCatcher : MonoBehaviour
         rand = new System.Random();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<GlobalResource>() != null && other.GetComponent<GlobalResource>().ID == 1)
@@ -54,12 +49,14 @@ public class MidasCoinsCatcher : MonoBehaviour
     {
         goldCoinsCounter.AddResource(coinsCount);
         coinsCount = 0;
+        oreCounter.OreCount = coinsCount;
         CountCoins();
     }
 
     public void AddToCount()
     {
         coinsCount += 1;
+        oreCounter.OreCount++;
     }
 
     public void CountCoins()
@@ -85,6 +82,7 @@ public class MidasCoinsCatcher : MonoBehaviour
         {
             UpdateAccumulationState(potentialAccumulationForm);
         }
+        
     }
 
     void ResetModel()

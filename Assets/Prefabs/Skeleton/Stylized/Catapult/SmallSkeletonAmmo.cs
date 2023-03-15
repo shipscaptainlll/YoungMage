@@ -40,7 +40,7 @@ public class SmallSkeletonAmmo : MonoBehaviour
             castleHealthDecreaser.DealDamage(damage);
             StopCoroutine(movingCoroutine);
             instantiatedBlowEffect = Instantiate(blowEffect, transform.position, transform.rotation);
-            Debug.Log("hit castle ");
+            //Debug.Log("hit castle ");
             instantiatedBlowEffect.Play();
             transform.GetComponent<MeshRenderer>().enabled = false;
             //transform.gameObject.SetActive(false);
@@ -66,7 +66,7 @@ public class SmallSkeletonAmmo : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         StopCoroutine(movingCoroutine);
-        Debug.Log("destroyed " + transform + " " + instantiatedBlowEffect.gameObject);
+        //Debug.Log("destroyed " + transform + " " + instantiatedBlowEffect.gameObject);
         Destroy(instantiatedBlowEffect.gameObject);
         Destroy(gameObject);
     }

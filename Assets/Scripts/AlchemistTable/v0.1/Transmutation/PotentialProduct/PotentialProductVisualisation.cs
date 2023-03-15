@@ -99,7 +99,7 @@ public class PotentialProductVisualisation : MonoBehaviour
             if (element.GetComponent<AlchemistPotentialProduct>().ID == currentProductID)
             {
                 element.GetComponent<MeshRenderer>().enabled = false;
-                element.GetComponent<CapsuleCollider>().enabled = false;
+                element.GetComponent<BoxCollider>().enabled = false;
                 potentialProductUnvisualised();
             }
         }
@@ -131,7 +131,7 @@ public class PotentialProductVisualisation : MonoBehaviour
                     visualisationSound.Play();
                     mageThinking.Play();
                     element.GetComponent<MeshRenderer>().enabled = true;
-                    element.GetComponent<CapsuleCollider>().enabled = true;
+                    element.GetComponent<BoxCollider>().enabled = true;
                     potentialProductVisualised();
                     break;
                 }
@@ -151,7 +151,7 @@ public class PotentialProductVisualisation : MonoBehaviour
             if (element.GetComponent<AlchemistPotentialProduct>().ID == currentProductID)
             {
                 element.GetComponent<MeshRenderer>().enabled = false;
-                element.GetComponent<CapsuleCollider>().enabled = false;
+                element.GetComponent<BoxCollider>().enabled = false;
                 break;
             }
         }
@@ -165,7 +165,7 @@ public class PotentialProductVisualisation : MonoBehaviour
             if (element.GetComponent<AlchemistPotentialProduct>().ID == currentProductID)
             {
                 element.GetComponent<MeshRenderer>().enabled = true;
-                element.GetComponent<CapsuleCollider>().enabled = true;
+                element.GetComponent<BoxCollider>().enabled = true;
                 break;
             }
         }
