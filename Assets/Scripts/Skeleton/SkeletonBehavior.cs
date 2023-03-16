@@ -556,7 +556,7 @@ public class SkeletonBehavior : MonoBehaviour
             if (hittingCastle)
             {
                 isMoving = false;
-                localAnimator.CrossFade("ShootSkeleton", 0.1f);
+                localAnimator.Play("ShootSkeleton");
                 turningToCastleCoroutine = StartCoroutine(TurningToCastleIE());
                 //Debug.Log("Transitioned heere");
                 return;
@@ -568,12 +568,12 @@ public class SkeletonBehavior : MonoBehaviour
             if (navigationTarget != null && navigationTarget.GetComponent<IOre>() == null && navigationTarget.parent.name != "SkeletonPositions")
             {
                 isMoving = false;
-                localAnimator.CrossFade("SkelIdle", 0.1f);
+                localAnimator.Play("SkelIdle");
             } else if ((navigationTarget != null && navigationTarget.GetComponent<IOre>() != null) ||
                 (navigationTarget != null && navigationTarget.parent.name == "SkeletonPositions"))
             {
                 isMoving = false;
-                localAnimator.CrossFade("SkelMine", 0.1f);
+                localAnimator.Play("SkelMine");
             }
             TurnOffSounds();
 
@@ -581,8 +581,8 @@ public class SkeletonBehavior : MonoBehaviour
         } else if (navMeshAgent.velocity.magnitude > 0.15f && !isMoving)
         {
             isMoving = true;
-            if (isCrouching) { localAnimator.CrossFade("CrouchSmallSkeleton", 0.1f); }
-            else { localAnimator.CrossFade("SkelMove", 0.1f);
+            if (isCrouching) { localAnimator.Play("CrouchSmallSkeleton"); }
+            else { localAnimator.Play("SkelMove");
 
             }
             
@@ -599,16 +599,16 @@ public class SkeletonBehavior : MonoBehaviour
         //Debug.Log(navigationTarget);
         if (navigationTarget != null && navigationTarget.GetComponent<IOre>() == null && navigationTarget.parent.name != "SkeletonPositions")
         {
-            localAnimator.CrossFade("SkelIdle", 0.1f);
+            localAnimator.Play("SkelIdle");
         }
         else if ((navigationTarget != null && navigationTarget.GetComponent<IOre>() != null) ||
           (navigationTarget != null && navigationTarget.parent.name == "SkeletonPositions"))
         {
-            localAnimator.CrossFade("SkelMine", 0.1f);
+            localAnimator.Play("SkelMine");
         }
         if (navigationTarget == null)
         {
-            localAnimator.CrossFade("SkelIdle", 0.1f);
+            localAnimator.Play("SkelIdle");
         }
     }
 
@@ -960,12 +960,12 @@ public class SkeletonBehavior : MonoBehaviour
 
     void StayStill()
     {
-        localAnimator.CrossFade("SkelIdle", 0.1f);
+        localAnimator.Play("SkelIdle");
     }
 
     void StayNearCastle()
     {
-        if (!localAnimator.GetCurrentAnimatorStateInfo(0).IsName("ShootSkeleton")) { localAnimator.CrossFade("ShootSkeleton", 0.1f); }
+        if (!localAnimator.GetCurrentAnimatorStateInfo(0).IsName("ShootSkeleton")) { localAnimator.Play("ShootSkeleton"); }
         
     }
 
@@ -1141,7 +1141,7 @@ public class SkeletonBehavior : MonoBehaviour
     void MineOre()
     {
         TurnAroundTo(targetOre);
-        localAnimator.CrossFade("SkelMine", 0.1f);
+        localAnimator.Play("SkelMine");
     }
 
     void TurnAroundTo(Transform target)
@@ -1184,7 +1184,7 @@ public class SkeletonBehavior : MonoBehaviour
             velocity.x = distance.x;
             velocity.z = distance.z;
             characterController.Move(velocity * Time.deltaTime * speed);
-            localAnimator.CrossFade("SkelMove", 0.1f);
+            localAnimator.Play("SkelMove");
         }
         else { ResetVelocity();
             StayStill(); 

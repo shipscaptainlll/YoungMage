@@ -11,9 +11,6 @@ public class IntroFlowManager : MonoBehaviour
     [SerializeField] CharactersEmotionsShower charactersEmotionsShower;
     [SerializeField] PanelsManager panelsManager;
     [SerializeField] ClickManager clickManager;
-    [SerializeField] Transform soldierModel;
-    [SerializeField] Transform oldMageParticleSystem;
-    [SerializeField] Animator oldMageAnimator;
 
     bool introFinished;
 
@@ -61,11 +58,6 @@ public class IntroFlowManager : MonoBehaviour
         clickManager.EnterClicked -= UpdateIntroFlow;
         clickManager.RMBClicked -= UpdateIntroFlow;
         clickManager.SpaceClicked -= UpdateIntroFlow;
-
-        oldMageParticleSystem.gameObject.SetActive(true);
-        oldMageAnimator.Play("IdleSleeping");
-
-        soldierModel.gameObject.SetActive(false);
 
         panelsManager.CloseIntroPanel();
         messagesInstantiator.HideMessages();

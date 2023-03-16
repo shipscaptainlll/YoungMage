@@ -78,12 +78,12 @@ public class ShootingSoldier : MonoBehaviour
 
     public void SoldierShootAnimation()
     {
-        soldierAnimator.CrossFade("SoldierFiringBow", 0.1f);
+        soldierAnimator.Play("SoldierFiringBow");
     }
 
     public void ShootBow()
     {
-        bowAnimator.CrossFade("BowFire", 0.1f);
+        bowAnimator.Play("BowFire");
     }
 
     public void FireArrow()

@@ -26,7 +26,6 @@ public class PersonMovement : MonoBehaviour
     CameraController cameraController;
     bool isAutoRunning;
     bool tutorialModeActivated;
-    bool portalOpeningModeActivated;
 
     [Header("Warp Base Settings")]
     [SerializeField] MiscPanel miscPanel;
@@ -106,7 +105,6 @@ public class PersonMovement : MonoBehaviour
     float timeShiftPressed;
 
     public bool TutorialModeActivated { get { return tutorialModeActivated; } set { tutorialModeActivated = value; } }
-    public bool PortalOpeningModeActivated { get { return portalOpeningModeActivated; } set { portalOpeningModeActivated = value; } }
     public float Speed { get { return speed; } }
     public bool IsAutoRunning { get { return isAutoRunning; } set { isAutoRunning = value; } }
     public int ProgressParameter { get { return steps; } }
@@ -177,7 +175,7 @@ public class PersonMovement : MonoBehaviour
             
         }
         //Debug.Log("is walking " + isWalking + " and is running " + isRunning + " running with speed " + characterController.velocity + " and magnitude " + characterController.velocity.magnitude);
-        if (!occupied && !tutorialModeActivated && !portalOpeningModeActivated)
+        if (!occupied && !tutorialModeActivated)
             MoveCharacter();
         if (isWalking && !onStone && !onStairs && !onOtherGround && isGrounded) { RandomWoodcreakInitiator(); if (!walkingSound.isPlaying) { walkingSound.Play(); } } else { if (walkingSound.isPlaying) { walkingSound.Stop(); } }
         if (isWalking && onStairs) { if (!walkingStairsSound.isPlaying) { walkingStairsSound.Play(); } } else { if (walkingStairsSound.isPlaying) { walkingStairsSound.Stop(); } }

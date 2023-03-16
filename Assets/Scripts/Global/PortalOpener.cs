@@ -16,7 +16,6 @@ public class PortalOpener : MonoBehaviour
     [SerializeField] AppearanceTransmutationCircle appearanceTransmutationCircle;
     [SerializeField] AppearanceTransmutationCircle secondTransmutationCircle;
     [SerializeField] SkeletonPortalActivator skeletonPortalActivator;
-    [SerializeField] PersonMovement personMovement;
 
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
@@ -70,16 +69,15 @@ public class PortalOpener : MonoBehaviour
                 if (choosenSkeleton == null)
                 {
                     portalOpened = false;
-                    personMovement.PortalOpeningModeActivated = false;
+
                     cycleRunning = false;
                     //Debug.Log("ClosingPortal2");
                     StartCoroutine(ClosePortal());
                     //Debug.Log("ClosingPortal3");
                     StartCoroutine(CloseVFX());
-                    
+
                     return;
                 }
-                personMovement.PortalOpeningModeActivated = true;
                 //Debug.Log("OpeningPortal4");
                 ChangePortalPosition();
                 //Debug.Log("OpeningPortal5");
@@ -98,7 +96,6 @@ public class PortalOpener : MonoBehaviour
             {
                 //Debug.Log("ClosingPortal1");
                 cycleRunning = false;
-                personMovement.PortalOpeningModeActivated = false;
                 //Debug.Log("ClosingPortal2");
                 StartCoroutine(ClosePortal());
                 //Debug.Log("ClosingPortal3");
@@ -123,7 +120,7 @@ public class PortalOpener : MonoBehaviour
     {
         if (cycleRunning)
         {
-            personMovement.PortalOpeningModeActivated = false;
+            
             cycleRunning = false;
             StartCoroutine(ClosePortal());
             StartCoroutine(CloseVFX());

@@ -4,56 +4,38 @@ using UnityEngine;
 
 public class CharactersEmotionsShower : MonoBehaviour
 {
-    [SerializeField] Animator soldierAnimator;
-    [SerializeField] Animator oldMageAnimator;
+    [SerializeField] Animator animator;
 
     public void ShowIdle()
     {
-        soldierAnimator.Play("Idle");
-        oldMageAnimator.Play("IdleSitting");
+        animator.Play("Idle");
     }
 
     public void ShowAnEmotion(int currentMessageIndex)
     {
         //animator.Play("SpeakingExplaining");
-        if (currentMessageIndex == 1) { ShowSoldierSpeakingExplaining(); ShowMageSpeakingExplaining(); }
-        if (currentMessageIndex == 2) { ShowSoldierSpeakingExplaining(); ShowMageSpeakingExplaining(); }
-        if (currentMessageIndex == 3) { ShowSoldierSpeakingReject(); ShowMageNodding(); }
-        if (currentMessageIndex == 8) { ShowSoldierSpeakingExplaining(); ShowMageSpeakingExplaining(); }
-        if (currentMessageIndex == 9) { ShowSoldierSpeakingExplaining(); ShowMageSpeakingExplaining(); }
-        if (currentMessageIndex == 10) { ShowSoldierSpeakingExplaining(); ShowMageSpeakingExplaining(); }
-        if (currentMessageIndex == 11) { ShowSoldierSpeakingItalian(); ShowMageShowing(); }
-        if (currentMessageIndex == 12) { ShowSoldierSpeakingReject(); ShowMageNodding(); }
+        if (currentMessageIndex == 1) { ShowSpeakingExplaining(); }
+        if (currentMessageIndex == 2) { ShowSpeakingExplaining(); }
+        if (currentMessageIndex == 3) { ShowSpeakingReject(); }
+        if (currentMessageIndex == 8) { ShowSpeakingExplaining(); }
+        if (currentMessageIndex == 9) { ShowSpeakingExplaining(); }
+        if (currentMessageIndex == 10) { ShowSpeakingExplaining(); }
+        if (currentMessageIndex == 11) { ShowSpeakingItalian(); }
+        if (currentMessageIndex == 12) { ShowSpeakingReject(); }
     }
 
-    public void ShowSoldierSpeakingExplaining()
+    public void ShowSpeakingExplaining()
     {
-        soldierAnimator.CrossFade("SpeakingExplaining", 0.1f);
+        animator.Play("SpeakingExplaining");
     }
 
-    public void ShowSoldierSpeakingItalian()
+    public void ShowSpeakingItalian()
     {
-        soldierAnimator.CrossFade("SpeakingItalian", 0.1f);
+        animator.Play("SpeakingItalian");
     }
 
-    public void ShowSoldierSpeakingReject()
+    public void ShowSpeakingReject()
     {
-        soldierAnimator.CrossFade("SpeakingReject", 0.1f);
-    }
-
-    public void ShowMageSpeakingExplaining()
-    {
-        oldMageAnimator.CrossFade("SpeakingSitting", 0.1f);
-    }
-
-    public void ShowMageShowing()
-    {
-        oldMageAnimator.CrossFade("SittingShowing", 0.1f);
-    }
-
-    public void ShowMageNodding()
-    {
-        oldMageAnimator.CrossFade("Nodding", 0.1f);
-        //oldMageAnimator.Play("Nodding");
+        animator.Play("SpeakingReject");
     }
 }
