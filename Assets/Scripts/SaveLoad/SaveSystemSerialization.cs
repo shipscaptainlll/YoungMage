@@ -41,6 +41,7 @@ public class SaveSystemSerialization : MonoBehaviour
     [SerializeField] TransmutationTableStateMachine transmutationTableStateMachine;
     [SerializeField] TutorialsInstantiator tutorialsInstantiator;
     [SerializeField] PanelsManager panelsManager;
+    [SerializeField] OreCounter oreCounter;
     int saveDirectoryPath;
     string gameDataPath;
     string playerPath;
@@ -200,7 +201,7 @@ public class SaveSystemSerialization : MonoBehaviour
     {
         yield return new WaitForSeconds(0.05f);
 
-        ItemsCounterDataApplier.ApplyCountersData(countersHolder, ItemsCounterDataSaver.LoadItemsData(countersPath));
+        ItemsCounterDataApplier.ApplyCountersData(countersHolder, ItemsCounterDataSaver.LoadItemsData(countersPath), oreCounter);
 
         InventoryDataApplier.ApplyInventoryData(mainInventoryHolder, innerQuickaccessHolder, outerQuickaccessHolder, quickAccessHandController, InventoryDataSaver.LoadInventoryData(inventoryPath));
 

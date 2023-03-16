@@ -59,9 +59,11 @@ public class SkeletonBehavior : MonoBehaviour
     [SerializeField] bool isSmallSkeleton;
     [SerializeField] bool isBigSkeleton;
     [SerializeField] bool isLizardSkeleton;
+    [SerializeField] int skeletonDamage;
     bool isCrouching;
     bool isConnectedToMage;
 
+    public int SkeletonDamage { get { return skeletonDamage; } set { skeletonDamage = value; } }
     public float Speed { get { return speed; } set { speed = value;
             navMeshAgent.speed = speed; } }
     public bool IsCrouching { get { return isCrouching; } set { isCrouching = value; isMoving = false; } }
@@ -197,7 +199,7 @@ public class SkeletonBehavior : MonoBehaviour
     [SerializeField] Transform targetMage1;
     public Transform CastlePosition { set { castlePosition = value; } }
     public event Action<Transform> OriginRotated = delegate { };
-    public event Action OreHitted = delegate { };
+    public event Action<int> OreHitted = delegate { };
     public event Action ObjectConnected = delegate { };
     public event Action ReachedCastle = delegate { };
 
@@ -556,7 +558,7 @@ public class SkeletonBehavior : MonoBehaviour
             if (hittingCastle)
             {
                 isMoving = false;
-                localAnimator.Play("ShootSkeleton");
+                localAnimator.CrossFade("ShootSkeleton", 0.1f);
                 turningToCastleCoroutine = StartCoroutine(TurningToCastleIE());
                 //Debug.Log("Transitioned heere");
                 return;
@@ -568,12 +570,12 @@ public class SkeletonBehavior : MonoBehaviour
             if (navigationTarget != null && navigationTarget.GetComponent<IOre>() == null && navigationTarget.parent.name != "SkeletonPositions")
             {
                 isMoving = false;
-                localAnimator.Play("SkelIdle");
+                localAnimator.CrossFade("SkelIdle", 0.1f);
             } else if ((navigationTarget != null && navigationTarget.GetComponent<IOre>() != null) ||
                 (navigationTarget != null && navigationTarget.parent.name == "SkeletonPositions"))
             {
                 isMoving = false;
-                localAnimator.Play("SkelMine");
+                localAnimator.CrossFade("SkelMine", 0.1f);
             }
             TurnOffSounds();
 
@@ -599,16 +601,16 @@ public class SkeletonBehavior : MonoBehaviour
         //Debug.Log(navigationTarget);
         if (navigationTarget != null && navigationTarget.GetComponent<IOre>() == null && navigationTarget.parent.name != "SkeletonPositions")
         {
-            localAnimator.Play("SkelIdle");
+            localAnimator.CrossFade("SkelIdle", 0.1f);
         }
         else if ((navigationTarget != null && navigationTarget.GetComponent<IOre>() != null) ||
           (navigationTarget != null && navigationTarget.parent.name == "SkeletonPositions"))
         {
-            localAnimator.Play("SkelMine");
+            localAnimator.CrossFade("SkelMine", 0.1f);
         }
         if (navigationTarget == null)
         {
-            localAnimator.Play("SkelIdle");
+            localAnimator.CrossFade("SkelIdle", 0.1f);
         }
     }
 
@@ -616,7 +618,7 @@ public class SkeletonBehavior : MonoBehaviour
     {
         if (navigationTarget == null && !beingUnconjured)
         {
-            Debug.Log("StartingUnconjuration");
+            //Debug.Log("StartingUnconjuration");
             unconjuration = StartCoroutine(Unconjure());
             electricityOverload = StartCoroutine(OverloadBeforeDestruction());
             skeletonNecklessBehavior.ActivateDestructionMode();
@@ -960,12 +962,12 @@ public class SkeletonBehavior : MonoBehaviour
 
     void StayStill()
     {
-        localAnimator.Play("SkelIdle");
+        localAnimator.CrossFade("SkelIdle", 0.1f);
     }
 
     void StayNearCastle()
     {
-        if (!localAnimator.GetCurrentAnimatorStateInfo(0).IsName("ShootSkeleton")) { localAnimator.Play("ShootSkeleton"); }
+        if (!localAnimator.GetCurrentAnimatorStateInfo(0).IsName("ShootSkeleton")) { localAnimator.CrossFade("ShootSkeleton", 0.1f); }
         
     }
 
@@ -1141,7 +1143,7 @@ public class SkeletonBehavior : MonoBehaviour
     void MineOre()
     {
         TurnAroundTo(targetOre);
-        localAnimator.Play("SkelMine");
+        localAnimator.CrossFade("SkelMine", 0.1f);
     }
 
     void TurnAroundTo(Transform target)
@@ -1184,7 +1186,7 @@ public class SkeletonBehavior : MonoBehaviour
             velocity.x = distance.x;
             velocity.z = distance.z;
             characterController.Move(velocity * Time.deltaTime * speed);
-            localAnimator.Play("SkelMove");
+            localAnimator.CrossFade("SkelMove", 0.1f);
         }
         else { ResetVelocity();
             StayStill(); 
@@ -1253,7 +1255,7 @@ public class SkeletonBehavior : MonoBehaviour
     {
         if (OreHitted != null)
         {
-            OreHitted();
+            OreHitted(SkeletonDamage);
         }
     }
 

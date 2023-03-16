@@ -393,9 +393,9 @@ public class PersonMovement : MonoBehaviour
             }
         }
 
-        if (isGrounded && velocity.y < -10)
+        if (isGrounded && velocity.y < -9.8f)
         {
-            velocity.y = 0f;
+            velocity.y = -9.8f;
             
             if (onStone)
             {

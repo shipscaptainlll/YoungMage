@@ -57,11 +57,11 @@ public class DoorTacklingManager : MonoBehaviour
         DisconnectScriptsInterraction(connectedSkeleton);
     }
 
-    void DecreaseOreHealth()
+    void DecreaseOreHealth(int skeletonDamage)
     {
         //Debug.Log("Hitted");
         PlayMiningSound();
-        doorHealthDecreaser.DealDamage(100);
+        doorHealthDecreaser.DealDamage(skeletonDamage);
     }
 
     void PlayMiningSound()
@@ -99,7 +99,7 @@ public class DoorTacklingManager : MonoBehaviour
         connectedSkeleton.OreHitted -= DecreaseOreHealth;
     }
 
-    void InitiateTacklingAnimation()
+    void InitiateTacklingAnimation(int cache)
     {
         leftDoorOpener.TryOpenDoor();
         rightDoorOpener.TryOpenDoor();

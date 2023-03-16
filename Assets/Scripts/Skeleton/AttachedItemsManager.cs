@@ -14,6 +14,7 @@ public class AttachedItemsManager : MonoBehaviour
     [SerializeField] Transform gloves;
     [SerializeField] Transform shoulders;
     [SerializeField] Transform vambrace;
+    [SerializeField] SkeletonDamageManager skeletonDamageManager;
     bool stoneHandsEquiped;
     bool leggingsEquiped;
     bool chainMailEquiped;
@@ -34,13 +35,16 @@ public class AttachedItemsManager : MonoBehaviour
     public void EquipStoneHands()
     {
         stoneHandsEquiped = true;
+        skeletonDamageManager.UpdateCurrentDamage(1);
         stoneHands.gameObject.SetActive(true);
+        Debug.Log("applied stone hands");
         //StartCoroutine(MaterializeItem(stoneHands, 2f));
     }
 
     public void DeequipStoneHands()
     {
         stoneHandsEquiped = false;
+        skeletonDamageManager.UpdateCurrentDamage(-1);
         stoneHands.gameObject.SetActive(false);
 
     }
@@ -48,28 +52,34 @@ public class AttachedItemsManager : MonoBehaviour
     public void EquipLeggings()
     {
         leggingsEquiped = true;
+        skeletonDamageManager.UpdateCurrentDamage(1);
         leggings.gameObject.SetActive(true);
+        Debug.Log("applied leggings");
         //StartCoroutine(MaterializeItem(leggings, 2f));
     }
 
     public void DeequipLeggings()
     {
         leggingsEquiped = false;
+        skeletonDamageManager.UpdateCurrentDamage(-1);
         leggings.gameObject.SetActive(false);
     }
 
     public void EquipChainMail()
     {
         chainMailEquiped = true;
+        skeletonDamageManager.UpdateCurrentDamage(1);
         chainMail.gameObject.SetActive(true);
         chainMailDecor.gameObject.SetActive(true);
         chainMailDesign.gameObject.SetActive(true);
+        Debug.Log("applied chain mail");
         //StartCoroutine(MaterializeItem(chainMail, 2f));
     }
 
     public void DeequipChainMail()
     {
         chainMailEquiped = false;
+        skeletonDamageManager.UpdateCurrentDamage(-1);
         chainMail.gameObject.SetActive(false);
         chainMailDecor.gameObject.SetActive(false);
         chainMailDesign.gameObject.SetActive(false);
@@ -78,26 +88,32 @@ public class AttachedItemsManager : MonoBehaviour
     public void EquipBoots()
     {
         bootsEquiped = true;
+        skeletonDamageManager.UpdateCurrentDamage(1);
         boots.gameObject.SetActive(true);
+        Debug.Log("applied boots");
         //StartCoroutine(MaterializeItem(boots, 2f));
     }
 
     public void DeequipBoots()
     {
         bootsEquiped = false;
+        skeletonDamageManager.UpdateCurrentDamage(-1);
         boots.gameObject.SetActive(false);
     }
 
     public void EquipHelm()
     {
         helmEquiped = true;
+        skeletonDamageManager.UpdateCurrentDamage(1);
         helm.gameObject.SetActive(true);
+        Debug.Log("applied helm");
         //StartCoroutine(MaterializeItem(helm, 2f));
     }
 
     public void DeequipHelm()
     {
         helmEquiped = false;
+        skeletonDamageManager.UpdateCurrentDamage(-1);
         helm.gameObject.SetActive(false);
     }
 
@@ -116,14 +132,17 @@ public class AttachedItemsManager : MonoBehaviour
     public void EquipVambrace()
     {
         vambraceEquiped = true;
+        skeletonDamageManager.UpdateCurrentDamage(1);
         vambrace.gameObject.SetActive(true);
         shoulders.gameObject.SetActive(true);
+        Debug.Log("applied vambrace");
         //StartCoroutine(MaterializeItem(vambrace, 2f));
     }
 
     public void DeequipVambrace()
     {
         vambraceEquiped = false;
+        skeletonDamageManager.UpdateCurrentDamage(-1);
         vambrace.gameObject.SetActive(false);
         shoulders.gameObject.SetActive(false);
     }

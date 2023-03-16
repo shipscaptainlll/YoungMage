@@ -12,6 +12,8 @@ public class DoorHealthDecreaser : MonoBehaviour
     [SerializeField] Transform instantiationPoint;
     [SerializeField] Transform PSInstantiationPoint;
     [SerializeField] float healthRegeneration;
+    [SerializeField] float maximumWidth;
+    [SerializeField] float currentHealth;
 
     [Header("Audio Connection")]
     [SerializeField] SoundManager soundManager;
@@ -19,11 +21,8 @@ public class DoorHealthDecreaser : MonoBehaviour
     
 
     float minimalWidth = 0;
-    float maximumWidth = 1000;
-    float maximumHealth = 1000;
-    float currentHealth = 1000;
+    
 
-    int currentDamage;
     RectTransform healthTransform;
     Coroutine healthDecreasingCoroutine;
     Coroutine healthRegenerationCoroutine;
@@ -33,14 +32,12 @@ public class DoorHealthDecreaser : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentDamage = 50;
         healthTransform = transform.Find("Borders").Find("Foreground").GetComponent<RectTransform>();
-        
     }
 
     public void CalculateDamage(SkeletonBehavior skeleton)
     {
-        currentDamage = 100;
+        //currentDamage = skeleton.SkeletonDamage;
     }
 
     IEnumerator RegenerateHealth()
@@ -56,7 +53,7 @@ public class DoorHealthDecreaser : MonoBehaviour
             }
             healthDecreasingCoroutine = StartCoroutine(SmoothHealthDecrease(updatedWidth));
 
-            Debug.Log("health is being regenerated " + currentHealth);
+            //Debug.Log("health is being regenerated " + currentHealth);
             if (currentHealth >= 1000) {
                 currentHealth = 1000;
                 StopRegeneration();
@@ -80,8 +77,9 @@ public class DoorHealthDecreaser : MonoBehaviour
 
     public void DealDamage(float damage)
     {
-        currentHealth -= currentDamage;
-        
+        //Debug.Log("health before dealing damage is " + currentHealth);
+        currentHealth -= damage;
+        //Debug.Log("dealt damage " + damage + " current health is " + currentHealth);
         int updatedWidth = CalculateTargetWidth(damage);
         if (healthDecreasingCoroutine != null)
         {
@@ -92,7 +90,7 @@ public class DoorHealthDecreaser : MonoBehaviour
 
         if (healthRegenerationCoroutine == null)
         {
-            Debug.Log("instantiated new one");
+            //Debug.Log("instantiated new one");
             healthRegenerationCoroutine = StartCoroutine(RegenerateHealth());
         }
     }

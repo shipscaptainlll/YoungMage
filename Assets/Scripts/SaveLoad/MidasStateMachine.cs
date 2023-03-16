@@ -20,6 +20,11 @@ public class MidasStateMachine : MonoBehaviour
     public Transform MaterialsPool { get { return materialsPool; } }
     public Transform CoinsPool { get { return coinsPool; } }
 
+    public void UploadCoinsPile(MidasData midasData)
+    {
+        midasCoinsCatcher.UpdateCoinsPile(midasData.coinsAmmount);
+    }
+
     public void ApplyInletObjects(MidasData midasData)
     {
         int indexer = 0;
@@ -145,10 +150,7 @@ public class MidasStateMachine : MonoBehaviour
 
     public void ApplyCoinsCount(MidasData midasData)
     {
-        midasCoinsCatcher.CoinsCount = 0;
-        midasCoinsCatcher.CountCoins();
-        midasCoinsCatcher.CoinsCount = midasData.coinsAmmount;
-        midasCoinsCatcher.CountCoins();
+        midasCoinsCatcher.UpdateCoinsPile(midasData.coinsAmmount);
     }
 
 }

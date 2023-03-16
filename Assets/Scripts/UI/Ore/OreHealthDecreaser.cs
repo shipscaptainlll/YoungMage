@@ -19,13 +19,8 @@ public class OreHealthDecreaser : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        currentDamage = 50;
+        //currentDamage = 50;
         healthTransform = transform.Find("Borders").Find("Foreground").GetComponent<RectTransform>();
-    }
-
-    private void Update()
-    {
-        
     }
 
     public void CalculateDamage(SkeletonBehavior skeleton)
@@ -64,7 +59,7 @@ public class OreHealthDecreaser : MonoBehaviour
     public void DealDamage(float damage)
     {
         //Debug.Log(currentDamage);
-        currentHealth -= currentDamage;
+        currentHealth -= damage;
         float leftHealthPercent = ((currentHealth - damage) / maximumWidth) * 100;
         //Debug.Log("hello there");
         leftHealthPercent = Mathf.Clamp(leftHealthPercent, 0, 100);

@@ -11,6 +11,8 @@ public class IntroFlowManager : MonoBehaviour
     [SerializeField] CharactersEmotionsShower charactersEmotionsShower;
     [SerializeField] PanelsManager panelsManager;
     [SerializeField] ClickManager clickManager;
+    [SerializeField] Transform soldierModel;
+    [SerializeField] Transform mageSleepingParticles;
 
     bool introFinished;
 
@@ -58,6 +60,9 @@ public class IntroFlowManager : MonoBehaviour
         clickManager.EnterClicked -= UpdateIntroFlow;
         clickManager.RMBClicked -= UpdateIntroFlow;
         clickManager.SpaceClicked -= UpdateIntroFlow;
+        mageSleepingParticles.gameObject.SetActive(true);
+        charactersEmotionsShower.ShowMageSleeping();
+        soldierModel.gameObject.SetActive(false);
 
         panelsManager.CloseIntroPanel();
         messagesInstantiator.HideMessages();

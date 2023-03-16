@@ -7,11 +7,11 @@ public static class ItemsCounterDataApplier
     static Transform countersHolderLoaded;
     static ItemsCounterData itemsDataLoaded;
 
-    public static void ApplyCountersData(Transform countersHolder, ItemsCounterData itemsCounterData)
+    public static void ApplyCountersData(Transform countersHolder, ItemsCounterData itemsCounterData, OreCounter goldenCoinsUICounter)
     {
         UpdateData(countersHolder, itemsCounterData);
         ApplyOresCount(countersHolderLoaded);
-        ApplyOthersCount(countersHolderLoaded);
+        ApplyOthersCount(countersHolderLoaded, goldenCoinsUICounter);
         ApplySkeletonItemsCount(countersHolderLoaded);
         ApplyOreProductsCount(countersHolderLoaded);
         DisconnectData();
@@ -40,7 +40,7 @@ public static class ItemsCounterDataApplier
         }
     }
 
-    static void ApplyOthersCount(Transform countersHolder)
+    static void ApplyOthersCount(Transform countersHolder, OreCounter goldenCoinsUICounter)
     {
         Transform subtypeHolder = countersHolder.GetChild(1);
         for (int i = 0; i < subtypeHolder.childCount; i++)
@@ -49,6 +49,8 @@ public static class ItemsCounterDataApplier
             subtypeHolder.GetChild(i).GetComponent<ICounter>().ItemOpened = itemsDataLoaded.otherOpened[i];
             //Debug.Log("if " + i + " count " + itemsDataLoaded.otherCount[i]);
         }
+
+        goldenCoinsUICounter.OreCount = (int)itemsDataLoaded.otherCount[0];
     }
 
     static void ApplySkeletonItemsCount(Transform countersHolder)

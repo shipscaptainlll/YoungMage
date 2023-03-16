@@ -96,12 +96,12 @@ public class OreMiningManager : MonoBehaviour
         DisconnectScriptsInterraction(connectedSkeleton);
     }
 
-    void DecreaseOreHealth()
+    void DecreaseOreHealth(int damage)
     {
         //Debug.Log("Hitted");
         particlesPS.Play();
         PlayMiningSound();
-        oreHealthDecreaser.DealDamage(100);
+        oreHealthDecreaser.DealDamage(damage);
     }
 
     void PlayMiningSound()

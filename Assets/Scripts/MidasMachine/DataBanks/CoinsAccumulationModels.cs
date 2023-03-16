@@ -15,18 +15,6 @@ public class CoinsAccumulationModels : MonoBehaviour
     [SerializeField] GameObject bigBigAmmountCoins;
     [SerializeField] GameObject sacketAmmountCoins;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public GameObject TakeModel(int count)
     {
         switch (count)
@@ -55,5 +43,35 @@ public class CoinsAccumulationModels : MonoBehaviour
                 return sacketAmmountCoins;
         }
         return null;
+    }
+
+    public int TakeAccumulationLevel(int count)
+    {
+        switch (count)
+        {
+            case 0:
+                return 0;
+            case 1:
+                return 1;
+            case int n when (n >= 2 && n < 5):
+                return 2;
+            case int n when (n >= 5 && n < 10):
+                return 3;
+            case int n when (n >= 10 && n < 25):
+                return 4;
+            case int n when (n >= 25 && n < 100):
+                return 5;
+            case int n when (n >= 100 && n < 125):
+                return 6;
+            case int n when (n >= 125 && n < 250):
+                return 7;
+            case int n when (n >= 250 && n < 1000):
+                return 8;
+            case int n when (n >= 1000 && n < 2500):
+                return 9;
+            case int n when (n >= 2500):
+                return 10;
+        }
+        return 0;
     }
 }

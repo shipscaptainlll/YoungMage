@@ -55,7 +55,7 @@ public class CityWallUpgrade : MonoBehaviour
         {
             suiNotificator.Notify("-" + goldNeeded);
             goldCoinsCounter.AddResource(-(int)goldNeeded);
-            castleHealthDecreaser.RegenerateHealth(healthRegenerate);
+            castleHealthDecreaser.RegenerateHealth(goldNeeded / healthCost);
         } else
         {
             suiNotificator.Notify("not enough gold");

@@ -13,7 +13,9 @@ public class MidasCoinsCatcher : MonoBehaviour
     GameObject currentAccumulationForm = null;
     int coinsCount = 0;
 
+    int currentAccumulationLevel;
     public int CoinsCount { get { return coinsCount; } set { coinsCount = value; } }
+    public int CurrentAccumulationLevel { get { return currentAccumulationLevel; } set { currentAccumulationLevel = value; } }
 
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
@@ -70,19 +72,31 @@ public class MidasCoinsCatcher : MonoBehaviour
             else if (randomInt == 2) { pileCoinsSoundSecond.Play(); }
             else if (randomInt > 2) { pileCoinsSoundThird.Play(); }
         }
+        if (coinsAccumulationModels.TakeAccumulationLevel(coinsCount) == currentAccumulationLevel)
+        {
+            return;
+        }
+        currentAccumulationLevel = coinsAccumulationModels.TakeAccumulationLevel(coinsCount);
+        //Debug.Log("new accumulation level will be " + currentAccumulationLevel);
         GameObject potentialAccumulationForm = coinsAccumulationModels.TakeModel(coinsCount);
-        Debug.Log("here we gooo " + coinsCount);
-        Debug.Log(currentAccumulationForm == null);
-        Debug.Log(potentialAccumulationForm != null);
+
         if (currentAccumulationForm != potentialAccumulationForm && potentialAccumulationForm != null)
         {
-            Debug.Log(potentialAccumulationForm);
             UpdateAccumulationState(potentialAccumulationForm);
         } else if (currentAccumulationForm == null && potentialAccumulationForm != null)
         {
             UpdateAccumulationState(potentialAccumulationForm);
         }
         
+    }
+
+    public void UpdateCoinsPile(int uploadedCoinsCount)
+    {
+        currentAccumulationForm = null;
+        currentAccumulationLevel = 0;
+        coinsCount = uploadedCoinsCount;
+        CountCoins();
+        oreCounter.OreCount = coinsCount;
     }
 
     void ResetModel()
@@ -102,7 +116,7 @@ public class MidasCoinsCatcher : MonoBehaviour
         }
 
 
-        Debug.Log("here we go ");
+        Debug.Log("here we go instantiated new one");
         if (coinsCount < 2500)
         {
             currentAccumulationForm = Instantiate(finalAccumulationForm, coinsAccumulationPosition.position, Quaternion.Euler(new Vector3(90, 0, 0)));
