@@ -63,7 +63,14 @@ public class CityRegenerationMouse : MonoBehaviour
             lastEncounteredElement = foundObject.GetComponent<RegenerationElementOutline>();
             lastEncounteredType = foundObject.GetComponent<RegenerationElementOutline>().ElementType;
             lastEncounteredElement.StartShowingOutline();
-            lastEncounteredElement.transform.GetComponent<IRegenerationSUI>().Activate();
+            if (lastEncounteredElement.transform.parent != null
+                && lastEncounteredElement.transform.parent.GetComponent<IRegenerationSUI>() != null)
+            {
+                lastEncounteredElement.transform.parent.GetComponent<IRegenerationSUI>().Activate();
+            } else if (lastEncounteredElement.transform.GetComponent<IRegenerationSUI>() != null)
+            {
+                lastEncounteredElement.transform.GetComponent<IRegenerationSUI>().Activate();
+            }
         }
         else
         {
@@ -71,11 +78,25 @@ public class CityRegenerationMouse : MonoBehaviour
             {
                 //Debug.Log("hello2");
                 lastEncounteredElement.StopShowingOutline();
-                lastEncounteredElement.transform.GetComponent<IRegenerationSUI>().Deactivate();
+                if (lastEncounteredElement.transform.parent != null
+                    && lastEncounteredElement.transform.parent.GetComponent<IRegenerationSUI>() != null)
+                {
+                    lastEncounteredElement.transform.parent.GetComponent<IRegenerationSUI>().Deactivate();
+                } else if (lastEncounteredElement.transform.GetComponent<IRegenerationSUI>() != null)
+                {
+                    lastEncounteredElement.transform.GetComponent<IRegenerationSUI>().Deactivate();
+                }
                 lastEncounteredType = foundObject.GetComponent<RegenerationElementOutline>().ElementType;
                 lastEncounteredElement = foundObject.GetComponent<RegenerationElementOutline>();
                 lastEncounteredElement.StartShowingOutline();
-                lastEncounteredElement.transform.GetComponent<IRegenerationSUI>().Activate();
+                if (lastEncounteredElement.transform.parent != null
+                    && lastEncounteredElement.transform.parent.GetComponent<IRegenerationSUI>() != null)
+                {
+                    lastEncounteredElement.transform.parent.GetComponent<IRegenerationSUI>().Activate();
+                } else if (lastEncounteredElement.transform.GetComponent<IRegenerationSUI>() != null)
+                {
+                    lastEncounteredElement.transform.GetComponent<IRegenerationSUI>().Activate();
+                }
             }
         }
 
@@ -88,7 +109,14 @@ public class CityRegenerationMouse : MonoBehaviour
         if (lastEncounteredElement != null)
         {
             lastEncounteredElement.StopShowingOutline();
-            lastEncounteredElement.transform.GetComponent<IRegenerationSUI>().Deactivate();
+            if (lastEncounteredElement.transform.parent != null
+                && lastEncounteredElement.transform.parent.GetComponent<IRegenerationSUI>() != null)
+            {
+                lastEncounteredElement.transform.parent.GetComponent<IRegenerationSUI>().Deactivate();
+            } else if (lastEncounteredElement.transform.GetComponent<IRegenerationSUI>() != null)
+            {
+                lastEncounteredElement.transform.GetComponent<IRegenerationSUI>().Deactivate();
+            }
         }
         lastEncounteredType = null;
         lastEncounteredElement = null;

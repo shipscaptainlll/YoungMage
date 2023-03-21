@@ -50,7 +50,7 @@ public class RegenerationElementOutline : MonoBehaviour
         }
         else if (elementType == RegenerationElementType.wall)
         {
-            wallMaterial = gameObject.GetComponent<MeshRenderer>().sharedMaterial;
+            wallMaterial = gameObject.transform.parent.GetComponent<MeshRenderer>().sharedMaterial;
             wallColor = new Color(0.3773585f, 0.22f, 0);
             wallMaterial.SetFloat("_Multiplier", 0);
         }

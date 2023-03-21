@@ -28,14 +28,8 @@ public class GoldCoinsCounter : MonoBehaviour, ICounter
 
     public bool ItemOpened
     {
-        get
-        {
-            return itemOpened;
-        }
-        set
-        {
-            itemOpened = value;
-        }
+        get => itemOpened;
+        set => itemOpened = value;
     }
 
     public event Action<int> AmountChanged = delegate { };
@@ -52,7 +46,7 @@ public class GoldCoinsCounter : MonoBehaviour, ICounter
     {
         if (ammount < 0) { coinsPaySound.Play(); }
         count += ammount;
-        if (AddedAmmount != null) { AddedAmmount(id, ammount); }
+        if (AddedAmmount != null) { AddedAmmount(id, ammount); }                                                       
         NotifyAmountChanged(count);
         oreCounter.OreCount = count;
         controlInventoryVisibility();
@@ -79,7 +73,10 @@ public class GoldCoinsCounter : MonoBehaviour, ICounter
             if (itemOpened)
             {
                 itemOpened = false;
-                if (AmmountEnded != null) { AmmountEnded((int)ItemsList.Items.goldCoins); }
+                if (AmmountEnded != null)
+                {
+                    AmmountEnded((int)ItemsList.Items.goldCoins);
+                }
             }
         }
     }
@@ -88,6 +85,7 @@ public class GoldCoinsCounter : MonoBehaviour, ICounter
     {
         if (AmountChanged != null)
         {
+            Debug.Log("hello there");
             AmountChanged(count);
         }
     }
