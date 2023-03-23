@@ -17,6 +17,7 @@ public class QuickAccessHandController : MonoBehaviour
     [SerializeField] Transform countersHolder;
     [SerializeField] Transform skeletonItemsHolder;
     [SerializeField] Transform oreProductsHolder;
+    [SerializeField] Transform otherCountersHolder;
 
     [Header("Sounds  Manager")]
     [SerializeField] SoundManager soundManager;
@@ -211,6 +212,14 @@ public class QuickAccessHandController : MonoBehaviour
             }
         }
         foreach (Transform element in oreProductsHolder)
+        {
+            if (element.GetComponent<ICounter>().ID == currentCustomID)
+            {
+                currentCounter = element;
+                return;
+            }
+        }
+        foreach (Transform element in otherCountersHolder)
         {
             if (element.GetComponent<ICounter>().ID == currentCustomID)
             {

@@ -52,6 +52,7 @@ public class Element : MonoBehaviour
             attachedCounter.GetComponent<ICounter>().AmmountEnded -= ResetCounter;
         }
         attachedCounter = counterManager.TakeCounter(customID);
+        
         if (attachedCounter != null)
         {
             attachedCounter.GetComponent<ICounter>().AmountChanged += UpdateCounter;

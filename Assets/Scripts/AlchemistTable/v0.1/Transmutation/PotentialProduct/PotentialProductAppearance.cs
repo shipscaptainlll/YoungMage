@@ -23,6 +23,7 @@ public class PotentialProductAppearance : MonoBehaviour
 
     [SerializeField] EClickVariations eClickVariations;
     [SerializeField] Transform instantiatedProductHolder;
+    [SerializeField] private FireElementalBehavior m_fireElementalBehavior;
     Transform createdObject;
     bool isCreated = false;
 
@@ -78,6 +79,7 @@ public class PotentialProductAppearance : MonoBehaviour
                     createdObject.GetComponent<MeshRenderer>().enabled = true;
                     createdObject.parent = instantiatedProductHolder;
                     //createdObject.GetComponent<Rigidbody>().useGravity = true;
+                    m_fireElementalBehavior.ShowConjuringAnimation();
                     StartCoroutine(MaterializeProduct(createdObject, 1f));
                     break;
                 }

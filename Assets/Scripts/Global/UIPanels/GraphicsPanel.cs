@@ -14,10 +14,17 @@ public class GraphicsPanel : MonoBehaviour
     [SerializeField] Dropdown dropdown;
     [SerializeField] bool activePointLightShadows;
     [SerializeField] Toggle toggle;
+    [SerializeField] private bool m_activatedFPSshower;
+    [SerializeField] private Toggle m_toggleFPSshower;
+    [SerializeField] private FPSshower m_FPSshower;
+    
 
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
 
+    [Header("Other")] 
+    [SerializeField] private PanelsManager m_panelsManager;
+    
     AudioSource chooseSound;
 
 
@@ -27,15 +34,9 @@ public class GraphicsPanel : MonoBehaviour
     {
         chooseSound = soundManager.FindSound("SettingElement");
         UploadPlayerPrefs();
+        m_panelsManager.ManageSettingsPanel("graphicsPanel");
     }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    
     public void SetPointLightShadows(Slider slider)
     {
         pointLightShadows = (int) slider.value;
@@ -59,6 +60,15 @@ public class GraphicsPanel : MonoBehaviour
         if (SettingChanged != null) { SettingChanged(1); }
         chooseSound.Play();
         Debug.Log("Point light shadows are active " + activePointLightShadows);
+    }
+    
+    public void SetActiveFPSshower(Toggle toggle)
+    {
+        m_activatedFPSshower = toggle.isOn;
+        m_FPSshower.EnabledFPS = m_activatedFPSshower;
+        if (SettingChanged != null) { SettingChanged(1); }
+        chooseSound.Play();
+        Debug.Log("FPS shower is activated in setting: " + m_activatedFPSshower);
     }
 
     public void SaveSettings()

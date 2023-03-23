@@ -29,6 +29,7 @@ public class DestroyableObjects : MonoBehaviour
     [SerializeField] GameObject magicStoneDust;
     [SerializeField] GameObject waterStoneDust;
     [SerializeField] GameObject windStoneDust;
+    [SerializeField] GameObject skeletonCounter;
 
 
 
@@ -89,6 +90,8 @@ public class DestroyableObjects : MonoBehaviour
                 return waterStoneDust;
             case 25:
                 return windStoneDust;
+            case 27:
+                return skeletonCounter;
         }
         return null;
     }

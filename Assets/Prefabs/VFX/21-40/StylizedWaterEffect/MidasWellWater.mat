@@ -49,7 +49,7 @@ Material:
     m_Floats:
     - Vector1_0065cc489f1c45d99b231f6f66120689: 4.37
     - Vector1_696049eb21e14c26a3a1610bda7acb5a: 5.49
-    - Vector1_9e8ee1bc7c1c4aaf815caf52c4bbf9cd: 0.1
+    - Vector1_9e8ee1bc7c1c4aaf815caf52c4bbf9cd: 0.05
     - Vector1_d3b5b883b672479bb35f5032430d9ce0: 8.93
     - _FoamAmmount: 0.3
     - _FoamCutoff: 1
@@ -61,9 +61,11 @@ Material:
     - _RefractionSpeed: 0.05
     - _RefractionStrength: 1
     - _WaterDepth: 1.04
+    - _WaveStrength: 1
     m_Colors:
     - Color_9a3b1fb91cd04a478431062ca1b66b6a: {r: 1.6167643, g: 5.420915, b: 9.082411, a: 0}
     - _DeepWater: {r: 1, g: 0, b: 0.115766525, a: 0.29803923}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
     - _ShallowWater: {r: 4.7191815, g: 5.278032, b: 0, a: 0.27058825}
+    - _WaveTiling: {r: 0.1, g: 0.1, b: 0, a: 0}
   m_BuildTextureStacks: []

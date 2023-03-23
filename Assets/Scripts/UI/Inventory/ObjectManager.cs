@@ -29,7 +29,7 @@ public class ObjectManager : MonoBehaviour
     [SerializeField] GameObject magicStoneDust;
     [SerializeField] GameObject waterStoneDust;
     [SerializeField] GameObject windStoneDust;
-
+    [SerializeField] GameObject skeletonScaner;
 
     void Start()
     {
@@ -92,6 +92,8 @@ public class ObjectManager : MonoBehaviour
                 return waterStoneDust;
             case 25:
                 return windStoneDust;
+            case 27:
+                return skeletonScaner;
         }
         return null;
     }

@@ -24,6 +24,7 @@ public class IntroEntering : MonoBehaviour
     [SerializeField] BookSpellsCaster bookSpellsCaster;
     [SerializeField] IntroMessagesInstantiator introMessagesInstantiator;
     [SerializeField] UIBlocker uIBlocker;
+    [SerializeField] private Animator m_oldmageAnimator;
 
 
     [Header("Cache - delete safely")]
@@ -82,7 +83,7 @@ public class IntroEntering : MonoBehaviour
             uIBlocker.UnblockSavingLoading();
             camera.CityRegenerationMode = false;
             personMovement.enabled = true;
-            
+            m_oldmageAnimator.Play("IdleSleeping");
         }
     }
 

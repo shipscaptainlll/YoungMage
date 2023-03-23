@@ -21,16 +21,17 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Wooden_plank_1
-  m_Shader: {fileID: 4800000, guid: 0f4122b9a743b744abe2fb6a0a88868b, type: 3}
-  m_ValidKeywords: []
-  m_InvalidKeywords:
+  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_ValidKeywords:
   - _RECEIVE_SHADOWS_OFF
   - _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap: {}
+  stringTagMap:
+    RenderType: Opaque
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
@@ -144,7 +145,7 @@ Material:
     - Vector2_cfbc0e18b5a1484ca19b2f9b05132973: {r: 1, g: 1, b: 0, a: 0}
     - Vector2_ff355d8d20a442e1ae39e3a8936abef4: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 0.6698113, g: 0.47177914, b: 0.3001513, a: 1}
-    - _Color: {r: 0.6603774, g: 0.44348326, b: 0.12148453, a: 1}
+    - _Color: {r: 0.6698113, g: 0.47177914, b: 0.3001513, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HueVariation: {r: 1, g: 0.5, b: 0, a: 0.1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}

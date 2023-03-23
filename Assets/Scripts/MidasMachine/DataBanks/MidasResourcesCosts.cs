@@ -72,6 +72,8 @@ public class MidasResourcesCosts : MonoBehaviour
                 return 8;
             case 25:
                 return 8;
+            case 27:
+                return 1;
         }
         return 0;
     }

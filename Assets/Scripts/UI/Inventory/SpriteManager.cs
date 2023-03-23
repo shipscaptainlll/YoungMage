@@ -30,6 +30,7 @@ public class SpriteManager : MonoBehaviour
     [SerializeField] Sprite magicStoneDust;
     [SerializeField] Sprite waterStoneDust;
     [SerializeField] Sprite windStoneDust;
+    [SerializeField] Sprite skeletonScanner;
 
     public static Dictionary<int, Sprite> SpriteDictionary = new Dictionary<int, Sprite>();
     void Start()
@@ -99,6 +100,8 @@ public class SpriteManager : MonoBehaviour
                 return waterStoneDust;
             case 25:
                 return windStoneDust;
+            case 27:
+                return skeletonScanner;
             default:
                 return null;
 
@@ -134,5 +137,6 @@ public class SpriteManager : MonoBehaviour
         SpriteDictionary.Add(24, waterStoneDust);
         SpriteDictionary.Add(25, windStoneDust);
         SpriteDictionary.Add(26, null);
+        SpriteDictionary.Add(27, skeletonScanner);
     }
 }

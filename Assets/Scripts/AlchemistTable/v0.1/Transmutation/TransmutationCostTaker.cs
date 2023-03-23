@@ -9,6 +9,7 @@ public class TransmutationCostTaker : MonoBehaviour
     [SerializeField] Transform oreProductsCounters;
     [SerializeField] Transform oreMaterialsCounters;
     [SerializeField] Transform objectsCounters;
+    [SerializeField] Transform skeletonScanerCounter;
     [SerializeField] PotentialProductLibrary potentialProductLibrary;
     List<int> operations = new List<int>();
     int iterationNumber = 1;
@@ -48,6 +49,8 @@ public class TransmutationCostTaker : MonoBehaviour
             counter.GetComponent<ICounter>().AddResource(5);
             //Debug.Log(counter);
         }
+
+        skeletonScanerCounter.GetComponent<ICounter>().AddResource(5);
     }
 
     void AddOreCounters()

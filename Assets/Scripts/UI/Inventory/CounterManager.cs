@@ -29,6 +29,7 @@ public class CounterManager : MonoBehaviour
     [SerializeField] Transform magicStoneDust;
     [SerializeField] Transform waterStoneDust;
     [SerializeField] Transform windStoneDust;
+    [SerializeField] Transform skeletonCounter;
 
 
     void Start()
@@ -92,6 +93,8 @@ public class CounterManager : MonoBehaviour
                 return waterStoneDust;
             case 25:
                 return windStoneDust;
+            case 27:
+                return skeletonCounter;
         }
         return null;
     }

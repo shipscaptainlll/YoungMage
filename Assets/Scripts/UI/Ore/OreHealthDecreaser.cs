@@ -7,9 +7,9 @@ public class OreHealthDecreaser : MonoBehaviour
 {
 
     float minimalWidth = 0;
-    float maximumWidth = 1000;
-    float maximumHealth = 1000;
-    float currentHealth = 1000;
+    [SerializeField] float maximumWidth;
+    [SerializeField] float maximumHealth;
+    [SerializeField] float currentHealth;
 
     int currentDamage;
     RectTransform healthTransform;
@@ -60,7 +60,7 @@ public class OreHealthDecreaser : MonoBehaviour
     {
         //Debug.Log(currentDamage);
         currentHealth -= damage;
-        float leftHealthPercent = ((currentHealth - damage) / maximumWidth) * 100;
+        float leftHealthPercent = ((currentHealth - damage) / maximumHealth) * 100;
         //Debug.Log("hello there");
         leftHealthPercent = Mathf.Clamp(leftHealthPercent, 0, 100);
         int updatedWidth = (int)(leftHealthPercent * maximumWidth / 100);
@@ -116,7 +116,7 @@ public class OreHealthDecreaser : MonoBehaviour
 
     public void UpdateOreHealth()
     {
-        float leftHealthPercent = ((currentHealth) / maximumWidth) * 100;
+        float leftHealthPercent = ((currentHealth) / maximumHealth) * 100;
         //Debug.Log(currentHealth);
         //Debug.Log(leftHealthPercent);
         leftHealthPercent = Mathf.Clamp(leftHealthPercent, 0, 100);

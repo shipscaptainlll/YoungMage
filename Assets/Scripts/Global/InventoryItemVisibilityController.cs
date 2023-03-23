@@ -30,6 +30,7 @@ public class InventoryItemVisibilityController : MonoBehaviour
     [SerializeField] MagicstoneDustCounter magicstoneDustCounter;
     [SerializeField] WaterstoneDustCounter waterstoneDustCounter;
     [SerializeField] WindstoneDustCounter windstoneDustCounter;
+    [SerializeField] SkeletonScanersCounter skeletonScannerCounter;
 
 
 
@@ -62,6 +63,7 @@ public class InventoryItemVisibilityController : MonoBehaviour
         magicstoneDustCounter.ItemCreated += CreateVisibleItem;
         waterstoneDustCounter.ItemCreated += CreateVisibleItem;
         windstoneDustCounter.ItemCreated += CreateVisibleItem;
+        skeletonScannerCounter.ItemCreated += CreateVisibleItem;
         SearchEmptySlot();
         StartCoroutine(Hello());
         //goldCoinsCounter.AddResource(1);

@@ -39,6 +39,7 @@ public class ItemsList : MonoBehaviour
         magicStoneDust = 23,
         waterStoneDust = 24,
         windStoneDust = 25,
-        transmutationAmulet = 26
+        transmutationAmulet = 26,
+        skeletonsScanner = 27
     }
 }
