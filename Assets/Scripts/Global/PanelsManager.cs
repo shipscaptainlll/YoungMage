@@ -29,6 +29,7 @@ public class PanelsManager : MonoBehaviour
     [SerializeField] Transform quickaccessinvisiblePosition;
     [SerializeField] Transform quickaccessdefaultPosition;
     [SerializeField] PortalOpener portalOpener;
+    [SerializeField] private CursorManager m_cursorManager;
 
     [Header("Sound Manager")]
     [SerializeField] SoundManager soundManager;
@@ -147,6 +148,7 @@ public class PanelsManager : MonoBehaviour
         {
             closeCurrentPanel();
             nextToOpen = null;
+            m_cursorManager.CheckSomethingOpened();
             CameraVolumeController.UnBlurScreen();
         } else
         {

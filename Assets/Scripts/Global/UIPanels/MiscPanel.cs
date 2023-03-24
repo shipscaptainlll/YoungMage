@@ -25,12 +25,6 @@ public class MiscPanel : MonoBehaviour
         UploadPlayerPrefs();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void ResetTutorial()
     {
         if (TutorialResetRequested != null) { TutorialResetRequested(); }
@@ -56,6 +50,18 @@ public class MiscPanel : MonoBehaviour
         if (SettingChanged != null) { SettingChanged(1); }
         chooseSound.Play();
         //Debug.Log("AutosaveTimeSet on " + newAutosaveDelay + " mins");
+    }
+    
+    public void SetGameLanguage(Slider slider)
+    {
+        int newLocalizationId = (int) slider.value;
+        Text sliderValueRepresentation = slider.gameObject.transform.Find("Text").GetComponent<Text>();
+        sliderValueRepresentation.text = LocalizationChanger.GetLocalizationName(newLocalizationId);
+        LocalizationChanger.ApplyLocalization(newLocalizationId);
+        //if (AutosaveTimeChangeRequested != null) { AutosaveTimeChangeRequested(newAutosaveDelay); }
+        if (SettingChanged != null) { SettingChanged(1); }
+        chooseSound.Play();
+        //Debug.Log("Localization changed on is now " + sliderValueRepresentation.text);
     }
 
     public void SaveSettings()

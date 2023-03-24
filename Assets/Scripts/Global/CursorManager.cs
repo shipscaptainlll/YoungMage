@@ -34,7 +34,7 @@ public class CursorManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    void CheckSomethingOpened()
+    public void CheckSomethingOpened()
     {
         if (panelsManager.CurrentlyOpened != null)
         {

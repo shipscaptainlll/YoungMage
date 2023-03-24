@@ -1,0 +1,231 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Settings_cs
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: cs
+  m_SharedData: {fileID: 11400000, guid: 5d75b6ff1a3e1744f9a38c953bc01d92, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 10677997568
+    m_Localized: "NASTAVEN\xCD"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70551687168
+    m_Localized: "ULO\u017DIT HRU"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 79854653440
+    m_Localized: "NA\u010C\xCDST HRU"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 89841291264
+    m_Localized: "HLAVN\xCD MENU"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 101665034240
+    m_Localized: "UKON\u010CIT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 111257407488
+    m_Localized: "POKRA\u010COVAT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18953895497728
+    m_Localized: Grafika
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18964041519104
+    m_Localized: "Ovl\xE1d\xE1n\xED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18975215144960
+    m_Localized: "R\u016Fzn\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18958114967552
+    m_Localized: Zvuk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21330140680192
+    m_Localized: Hlasitost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21339338788864
+    m_Localized: "Hlasitost efekt\u016F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21343684087808
+    m_Localized: Hlasitost postav
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21345311477760
+    m_Localized: Hlasitost hudby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21395710234624
+    m_Localized: Vypnout zvuky hry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21527444934656
+    m_Localized: "Ulo\u017Eit"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29593540317184
+    m_Localized: Jazyk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29650557685760
+    m_Localized: "Frekvence automatick\xE9ho ukl\xE1d\xE1n\xED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29687018770432
+    m_Localized: "Obnovit tutori\xE1l"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29722791989248
+    m_Localized: Stuck
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34568475594752
+    m_Localized: "Teleportovat na z\xE1kladnu"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39247821492224
+    m_Localized: "Citlivost my\u0161i"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39332181528576
+    m_Localized: "P\u0159evr\xE1tit my\u0161"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39364817408000
+    m_Localized: "Automatick\xFD b\u011Bh"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39392403345408
+    m_Localized: "V\xFDchoz\xED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39486351560704
+    m_Localized: Seslat kouzlo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39530974760960
+    m_Localized: Interakce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39565032509440
+    m_Localized: "Sko\u010Dit"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39591813140480
+    m_Localized: "B\u011B\u017Eet"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39620888055808
+    m_Localized: "Kouzlo rychl\xE9ho pohybu"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39661883183104
+    m_Localized: "Pohyb vp\u0159ed"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39733849051136
+    m_Localized: Pohyb dozadu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39770222055424
+    m_Localized: Pohyb vlevo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39805601009664
+    m_Localized: Pohyb vpravo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39840468258816
+    m_Localized: "Invent\xE1\u0159"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39875717189632
+    m_Localized: "\xDAnik"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40088963993600
+    m_Localized: Celkem
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40139794763776
+    m_Localized: "Vzd\xE1lenost zobrazen\xED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40186015993856
+    m_Localized: Anti-aliasing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40252265025536
+    m_Localized: Post processing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40285425192960
+    m_Localized: "Kvalita st\xEDn\u016F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40312029663232
+    m_Localized: Textury
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40341662420992
+    m_Localized: Efekty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40373966950400
+    m_Localized: "Rozli\u0161en\xED monitoru"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40403931058176
+    m_Localized: "Re\u017Eim okna hry"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40519681265664
+    m_Localized: "Maxim\xE1ln\xED FPS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40885260996608
+    m_Localized: Gama
+    m_Metadata:
+      m_Items: []
+  - m_Id: 66326696906752
+    m_Localized: Zobrazit FPS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40908006707200
+    m_Localized: "Zorn\xE9 pole"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40991469162496
+    m_Localized: "N\xEDzk\xFD"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41015863234560
+    m_Localized: "St\u0159edn\xED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 66271717969920
+    m_Localized: "Vysok\xFD"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
