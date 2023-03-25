@@ -53,6 +53,7 @@ public class BookSpellsNotifier : MonoBehaviour
             //Debug.Log(currentObject + "skeleton1");
             if (BookInHands()) { CastContactSkeleton(); }
             else if (ItemInHands()) { CastApplyObject(); }
+            else if (ScannerInHands()) { CastContactMachinery(); }
             else if (ObjectInHands()) { CastThrowObject(); } else { CastIdle(); }
         }
         else if (currentObject.parent != null && currentObject.parent.GetComponent<Skeleton>() != null)
@@ -60,6 +61,7 @@ public class BookSpellsNotifier : MonoBehaviour
             //Debug.Log(currentObject + "skeleton");
             if (BookInHands()) { CastContactSkeleton(); }
             else if (ItemInHands()) { CastApplyObject(); }
+            else if (ScannerInHands()) { CastContactMachinery(); }
             else if (ObjectInHands()) { CastThrowObject(); } else { CastIdle(); }
         }
         else if (currentObject.GetComponent<SkeletonItem>() != null)
@@ -171,6 +173,11 @@ public class BookSpellsNotifier : MonoBehaviour
             || quickAccessHandController.CurrentCustomID == 23
             || quickAccessHandController.CurrentCustomID == 24 
             || quickAccessHandController.CurrentCustomID == 25);
+    }
+
+    bool ScannerInHands()
+    {
+        return (quickAccessHandController.CurrentCustomID == 27);
     }
 
     bool SkeletonConnected()

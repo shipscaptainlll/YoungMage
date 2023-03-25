@@ -18,12 +18,6 @@ public class CursorCircleAnimation : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void StartCircleAnimation()
     {
         transform.GetComponent<CanvasGroup>().alpha = 1;

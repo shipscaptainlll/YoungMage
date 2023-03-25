@@ -87,7 +87,8 @@ public class CameraSUIInformer : MonoBehaviour
                 }
             } else { 
                 //Debug.Log("WROKING"); 
-                cursorCircleAnimation.StartCircleAnimation(); }
+                //cursorCircleAnimation.StartCircleAnimation();
+                }
             
             
             if (mainCameraController.ObservedObject.transform.gameObject != lastObservedObject 

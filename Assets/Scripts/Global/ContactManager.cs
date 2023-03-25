@@ -15,6 +15,7 @@ public class ContactManager : MonoBehaviour
     [SerializeField] DeattachObjectSkeleton deattachObjectSkeleton;
     [SerializeField] BookSpellsActivator bookSpellsActivator;
     [SerializeField] PanelsManager panelsManager;
+    [SerializeField] private SUISkeleton m_suiSkeleton;
 
     PersonMovement characterScript;
     Transform contactedSkeleton;
@@ -149,6 +150,15 @@ public class ContactManager : MonoBehaviour
                     Debug.Log("Hello at");
                     attachObjectSkeleton.AttachObject(contactedObject.GetComponent<SkeletonBehavior>(), quickAccessHandController.CurrentCustomID);
                     bookSpellsActivator.CastApplyObject();
+                }
+                else if (contactedObject.GetComponent<Skeleton>() != null
+                         && quickAccessHandController.CurrentCustomID == 27)
+                {
+                    Debug.Log("Hello at jhere ");
+                    
+                    m_suiSkeleton.ShowNewObject(contactedObject.GetComponent<AttachedItemsManager>(), contactedObject.GetComponent<SkeletonBehavior>(), 
+                        quickAccessHandController.ObjectInHand.GetComponent<SkeletonsScanner>());
+                    bookSpellsActivator.CastContactMachinery();
                 }
                 else if (contactedObject.GetComponent<SkeletonItem>() != null)
                 {

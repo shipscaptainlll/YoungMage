@@ -52,11 +52,6 @@ public class BookSpellsCaster : MonoBehaviour
 
     }
 
-    void Update()
-    {
-        
-    }
-
     public void CastSpell(string spellNameSearched)
     {
         if (!AlreadyCasted(spellNameSearched) && !bookIsHidden) {

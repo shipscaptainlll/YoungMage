@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Tutorials Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Tutorials
+  m_TableCollectionNameGuidString: e970ba251237d27469f00de31f49ced7
+  m_Entries:
+  - m_Id: 10103377920
+    m_Key: KEY_IntroIntro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31230087168
+    m_Key: KEY_IntroSkeletons
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33872498688
+    m_Key: KEY_IntroDefractor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38842748928
+    m_Key: KEY_IntroTransmutation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42118500352
+    m_Key: KEY_IntroEnchantment
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45452972032
+    m_Key: KEY_IntroMidas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49345286144
+    m_Key: KEY_IntroCastle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52583288832
+    m_Key: KEY_IntroMines
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56324608000
+    m_Key: KEY_IntroDoors
+    m_Metadata:
+      m_Items: []
+  - m_Id: 481631227904
+    m_Key: KEY_IntroHeader
+    m_Metadata:
+      m_Items: []
+  - m_Id: 486123327488
+    m_Key: KEY_SkeletonsHeader
+    m_Metadata:
+      m_Items: []
+  - m_Id: 488837042176
+    m_Key: KEY_DefractorHeader
+    m_Metadata:
+      m_Items: []
+  - m_Id: 490208579584
+    m_Key: KEY_TransmutationHeader
+    m_Metadata:
+      m_Items: []
+  - m_Id: 491039051776
+    m_Key: KEY_EnchantmentHeader
+    m_Metadata:
+      m_Items: []
+  - m_Id: 491794026496
+    m_Key: KEY_MidasHeader
+    m_Metadata:
+      m_Items: []
+  - m_Id: 492565778432
+    m_Key: KEY_CastleHeader
+    m_Metadata:
+      m_Items: []
+  - m_Id: 494386106368
+    m_Key: KEY_MinesHeader
+    m_Metadata:
+      m_Items: []
+  - m_Id: 495770226688
+    m_Key: KEY_DoorsHeader
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 9022838169835143181
+  references:
+    version: 2
+    RefIds:
+    - rid: 9022838169835143181
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1679695524861

@@ -97,7 +97,7 @@ public class GraphicsPanel : MonoBehaviour
         graphicsQuality = PlayerPrefs.GetInt("graphicsQuality", 1);
         dropdown.value = graphicsQuality;
         int cacheActivePointLightShadows = PlayerPrefs.GetInt("activePointLightShadows", 0);
-        activePointLightShadows = cacheActivePointLightShadows == 1 ? true : false;
-        toggle.isOn = activePointLightShadows;
+        activePointLightShadows = cacheActivePointLightShadows == 1 ? true : false; 
+        //toggle.isOn = activePointLightShadows;
     }
 }

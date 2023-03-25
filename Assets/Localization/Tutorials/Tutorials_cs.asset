@@ -1,0 +1,147 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Tutorials_cs
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: cs
+  m_SharedData: {fileID: 11400000, guid: e970ba251237d27469f00de31f49ced7, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 10103377920
+    m_Localized: "M\u011Bli byste naj\xEDt zp\u016Fsob, jak ochr\xE1nit nedalek\xFD
+      hrad p\u0159ed invaz\xED kostry. HP hradu je naho\u0159e a pomalu kles\xE1.
+      Kdy\u017E je hrad zni\u010Den, je to nevratn\xE9. \n\nM\xEDstnost je pln\xE1
+      kouzeln\xFDch v\u011Bc\xED, nejprve najd\u011Bte miniaturu hradu, abyste ji
+      mohli opravit na d\xE1lku. \n\nPod\xEDvejte se kolem, ale neztr\xE1cejte moc
+      \u010Dasu, dobrodru\u017Estv\xED ne\u010Dek\xE1!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 481631227904
+    m_Localized: "Dobrodru\u017Estv\xED za\u010D\xEDn\xE1 zde"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 486123327488
+    m_Localized: "Port\xE1l"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 488837042176
+    m_Localized: "Velk\xFD ml\xFDnek"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 490208579584
+    m_Localized: Tabulka transmutace
+    m_Metadata:
+      m_Items: []
+  - m_Id: 491039051776
+    m_Localized: "V\xFDzkum kouzel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 491794026496
+    m_Localized: "Midas\u016Fv stroj"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 492565778432
+    m_Localized: "Spr\xE1va hradu"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 494386106368
+    m_Localized: "Vstup do dol\u016F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 495770226688
+    m_Localized: "Tunely zablokov\xE1ny"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31230087168
+    m_Localized: "Spr\xE1va port\xE1lu je ozna\u010Dena kruhem konjura\u010Dn\xEDho
+      kouzla, stiskn\u011Bte E, abyste jej otev\u0159eli a chytili kostru, kter\xE1
+      \xFAto\u010D\xED na hrad.\n\nPort\xE1l lze otev\u0159\xEDt pouze tehdy, kdy\u017E
+      jsou n\u011Bkter\xE9 kostry ji\u017E pobl\xED\u017E hradn\xEDch bran. M\u016F\u017Eete
+      se na n\u011B pod\xEDvat skrz okno ve sv\xE9m pokoji.\n\nStiskn\u011Bte E uvnit\u0159
+      kruhu konjura\u010Dn\xEDho kouzla, abyste otev\u0159eli port\xE1l, a klikn\u011Bte
+      na kostru, kdy\u017E ji vid\xEDte skrz port\xE1l. Chycen\xE9 kostry mohou b\xFDt
+      p\u0159id\u011Bleny k pr\xE1ci v podzemn\xEDch dolech."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33872498688
+    m_Localized: "Drol\xED v\u011Bci, rozb\xEDj\xED je, ml\xE1t\xED na prach. Velmi
+      u\u017Eite\u010Dn\xE9 p\u0159i p\u0159em\u011Bn\u011B tvrd\xE9 rudy na z\xE1kladn\xED
+      slo\u017Eky.\n\nAutomaticky sestavuje v\xFDrobek na slitky a prach, tak\u017Ee
+      sta\u010D\xED hodit dovnit\u0159 v\u0161e, co chcete.\n\nVyberte polo\u017Eku,
+      kterou chcete v rychl\xE9m p\u0159\xEDstupu k invent\xE1\u0159i rozeml\xEDt,
+      a stiskn\u011Bte TAB, abyste ji vhodili do ml\xFDnku."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38842748928
+    m_Localized: "Transmuta\u010Dn\xED st\u016Fl slou\u017E\xED k vytv\xE1\u0159en\xED
+      r\u016Fzn\xFDch v\u011Bc\xED. K transmutaci budete pot\u0159ebovat z\xE1kladn\xED
+      materi\xE1ly z\xEDskan\xE9 ze ml\xFDnku.\n\nJe t\u0159eba vybrat materi\xE1ly,
+      kter\xE9 budou um\xEDst\u011Bny do pr\xE1zdn\xFDch slot\u016F. Zkuste pou\u017E\xEDt
+      r\u016Fzn\xE9 kombinace, abyste vytvo\u0159ili p\u0159edm\u011Bty, kter\xE9
+      by mohly va\u0161im kostlivc\u016Fm pomoci p\u0159i t\u011B\u017Eb\u011B.\n\nNezapome\u0148te
+      nevy\u010Derpat z\xE1kladn\xED slo\u017Eky, m\u016F\u017Eete je pot\u0159ebovat
+      k p\u0159em\u011Bn\u011B na zlato a udr\u017Een\xED oprav hradu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42118500352
+    m_Localized: "(VAROV\xC1N\xCD: dostupn\xE9 a\u017E v pozd\u011Bj\u0161\xED f\xE1zi
+      hry)\r\n\r\nUm\xEDst\u011Bte p\u0159edm\u011Bt na podstavec a vyslovte runy
+      ve specifick\xE9m po\u0159ad\xED sv\xFDm hlasem.\n\nPro ka\u017Ed\xFD pokus
+      budete pot\u0159ebovat nov\xFD p\u0159edm\u011Bt, tak\u017Ee ne\u017E za\u010Dnete,
+      ujist\u011Bte se, \u017Ee jich m\xE1te DOST!\n\nR\u016Fzn\xE9 kouzla maj\xED
+      r\u016Fzn\xE9 efekty. \xDAsp\u011B\u0161n\xE9 kouzlo p\u0159edm\u011Btu dod\xE1
+      konkr\xE9tn\xED efekt."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45452972032
+    m_Localized: "Vyr\xE1b\xED zlato ze v\u0161eho, co bylo vhodeno do n\xE1doby
+      s zlatav\u011B \u017Elutou sm\u011Bs\xED.\n\nVyberte polo\u017Eku, kterou chcete
+      p\u0159em\u011Bnit na zlato ve sv\xE9m rychl\xE9m p\u0159\xEDstupu, a stiskn\u011Bte
+      TAB, abyste ji hodili do \u017Elut\xE9 sm\u011Bsi.\n\nR\u016Fzn\xE9 polo\u017Eky
+      vytvo\u0159\xED r\u016Fzn\xE9 mno\u017Estv\xED zlat\xFDch minc\xED, tak\u017Ee
+      se p\u0159\xEDli\u0161 nep\u0159ipoutejte k h\xE1zen\xED pouze b\u011B\u017En\xFDch
+      zdroj\u016F..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49345286144
+    m_Localized: "Toto je mal\xFD model napaden\xE9ho m\u011Bsta, zde m\u016F\u017Eete
+      utratit sv\xE9 zlat\xE9 mince na opravu hradn\xEDch bran.\n\nMince jsou p\u0159ed\xE1ny
+      vesni\u010Dan\u016Fm a ti odvedou t\u011B\u017Ekou pr\xE1ci sami.\n\nObranu
+      hradu m\u016F\u017Eete vylep\u0161it v kov\xE1rn\u011B a koupit si n\u011Bjak\xE9
+      jednor\xE1zov\xE9 obrann\xE9 krystaly.\n\nJen si pamatujte, \u017Ee pokud se
+      obrana hradu stane siln\u011Bj\u0161\xED, p\u0159il\xE1k\xE1 siln\u011Bj\u0161\xED
+      kostry."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52583288832
+    m_Localized: "Gratulujeme! Dorazili jste k vchodu do dol\u016F, zde mohou b\xFDt
+      kostry p\u0159i\u0159azeny k t\u011B\u017Eb\u011B rudy, vyt\u011B\u017Een\xE1
+      ruda vypadne a z\u016Fstane na podlaze.\n\nVa\u0161\xEDm kone\u010Dn\xFDm c\xEDlem
+      je dostat se do hlub\u0161\xEDch dol\u016F, kter\xE9 v\xE1s p\u0159ivedou k
+      z\xE1chran\u011B hradu.\n\nPokud se vyd\xE1te hloub\u011Bji do dol\u016F, najdete
+      lep\u0161\xED rudu, ale pamatujte, \u017Ee ne v\u0161echny kostry jsou p\u0159ipraveny
+      t\u011B\u017Eit n\u011Bco tvrd\u0161\xEDho ne\u017E kamenn\xE9 bloky a budou
+      pot\u0159ebovat n\u011Bjak\xE9 vylep\u0161en\xED..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56324608000
+    m_Localized: "Br\xE1ny do hlub\u0161\xEDch dol\u016F jsou zablokov\xE1ny. Kostlivci
+      v\xE1m mohou pomoci je zni\u010Dit, ale m\u011Bli byste je n\u011Bjak pos\xEDlit
+      a zrychlit.\n\nPamatujte, \u010D\xEDm v\u011Bt\u0161\xED dve\u0159e, t\xEDm
+      t\u011B\u017E\u0161\xED bude je otev\u0159\xEDt."
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

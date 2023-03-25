@@ -5,9 +5,13 @@ using UnityEngine.UI;
 
 public class SUISkeleton : MonoBehaviour
 {
+    [SerializeField] private ClickManager m_clickManager;
     [SerializeField] CameraSUIInformer cameraSUIInformer;
-    [SerializeField] Text objectName;
-    [SerializeField] Image objectImage;
+    [SerializeField] private Sprite m_smallSkeletonSprite;
+    [SerializeField] private Sprite m_bigSkeletonSprite;
+    [SerializeField] private Sprite m_lizardSkeletonSprite;
+    [SerializeField] private Text m_skeltonName;
+    [SerializeField] private Image m_skeletonImage;
     [SerializeField] Text objectPower;
     [SerializeField] Text objectInventoryPower;
     [SerializeField] Text objectSpeed;
@@ -16,119 +20,77 @@ public class SUISkeleton : MonoBehaviour
     [SerializeField] Text objectOccupation;
     [SerializeField] Text appliedObjects;
     [SerializeField] Transform borderedCanvas;
-
-    GameObject objectReference;
-    bool isActivated;
-    // Start is called before the first frame update
-    void Start()
+    private SkeletonsScanner m_lastSkeletonsScanner;
+    
+    public void ShowNewObject(AttachedItemsManager attachedItemsManager, SkeletonBehavior skeletonBehavior, SkeletonsScanner skeletonsScanner)
     {
-        cameraSUIInformer.SeeingNewObject += ShowNewObject;
-        cameraSUIInformer.DistanceChanged += UpdateElementSize;
-        cameraSUIInformer.StoppedSeeingAnything += HideElement;
+        m_clickManager.LMBUped += HideElement;
+        transform.localScale = new Vector3(1, 1, 1);
+        transform.GetComponent<CanvasGroup>().alpha = 1;
+        m_lastSkeletonsScanner = skeletonsScanner;
+        skeletonsScanner.ActivateScanner();
+        CountSkeletonItems(attachedItemsManager);
+        UpdateSkeletonImage(skeletonBehavior);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void HideElement()
     {
-        
+        m_clickManager.LMBUped -= HideElement;
+        Debug.Log("Sui was hidded");
+        if (m_lastSkeletonsScanner != null) { m_lastSkeletonsScanner.DeactivateScanner(); }
+        transform.GetComponent<CanvasGroup>().alpha = 0;
     }
 
-    void ShowNewObject(GameObject newGameObject)
+    void UpdateSkeletonImage(SkeletonBehavior skeletonBehavior)
     {
-        if (cameraSUIInformer.ObservedType == "Skeleton" && !isActivated)
+        if (skeletonBehavior.IsSmallSkeleton)
         {
-            Skeleton skeletonBasicInfo = newGameObject.transform.parent.GetComponent<Skeleton>();
-            isActivated = true;
-            transform.localScale = new Vector3(1, 1, 1);
-            transform.GetComponent<CanvasGroup>().alpha = 1;
-            objectName.text = skeletonBasicInfo.ObjectType;
-            objectImage.sprite = skeletonBasicInfo.SkeletonImage;
-            objectPower.text = skeletonBasicInfo.Power.ToString();
-            objectInventoryPower.text = "(+" + skeletonBasicInfo.InventoryPower.ToString() + ")";
-            objectSpeed.text = skeletonBasicInfo.Speed.ToString();
-            objectInventorySpeed.text = "(+" + skeletonBasicInfo.InventorySpeed.ToString() + ")";
-            objectReference = newGameObject.transform.parent.Find("Point").gameObject;
-
-            CountSkeletonItems(newGameObject.transform.parent.GetComponent<SkeletonBehavior>());
-            string appliedInventoryItems = "";
-            if (newGameObject.transform.parent.GetComponent<Skeleton>().AppliedInventory != null)
-            {
-                foreach (var item in newGameObject.transform.parent.GetComponent<Skeleton>().AppliedInventory)
-                {
-                    appliedInventoryItems += (item.name + "\n").ToString();
-                }
-            }
-            //objectAppliedInventory.text = appliedInventoryItems;
-            objectOccupation.text = newGameObject.transform.parent.GetComponent<Skeleton>().Occupation.ToString();
-        }
+            m_skeletonImage.sprite = m_smallSkeletonSprite;
+            m_skeltonName.text = "small skeleton";
+        } else if (skeletonBehavior.IsBigSkeleton)
+        {
+            m_skeletonImage.sprite = m_bigSkeletonSprite;
+            m_skeltonName.text = "big skeleton";
+        } else if (skeletonBehavior.IsLizardSkeleton)
+        {
+            m_skeletonImage.sprite = m_lizardSkeletonSprite;
+            m_skeltonName.text = "lizard skeleton";
+        } 
     }
-
-    void CountSkeletonItems(SkeletonBehavior skeletonInfo)
+    
+    void CountSkeletonItems(AttachedItemsManager attachedItemsManager)
     {
         string itemsString = "";
-        if (skeletonInfo.IsConnectedHands)
+        if (attachedItemsManager.StoneHandsEquiped)
         {
             itemsString += "\nhands";
         }
-        if (skeletonInfo.IsConnectedLeggings)
+        if (attachedItemsManager.LeggingsEquiped)
         {
             itemsString += "\nleggings";
         }
-        if (skeletonInfo.IsConnectedArmor)
+        if (attachedItemsManager.ChainMailEquiped)
         {
             itemsString += "\narmor";
         }
-        if (skeletonInfo.IsConnectedShoes)
+        if (attachedItemsManager.BootsEquiped)
         {
             itemsString += "\nshoes";
         }
-        if (skeletonInfo.IsConnectedHelm)
+        if (attachedItemsManager.HelmEquiped)
         {
             itemsString += "\nhelm";
         }
-        if (skeletonInfo.IsConnectedGloves)
+        if (attachedItemsManager.GlovesEquiped)
         {
             itemsString += "\ngloves";
         }
-        if (skeletonInfo.IsConnectedBracers)
+        if (attachedItemsManager.VambraceEquiped)
         {
             itemsString += "\nbracers";
         }
         //Debug.Log(appliedObjects.text);
         appliedObjects.text = itemsString;
         //Debug.Log(appliedObjects.text);
-    }
-
-    void UpdateElementSize(float currentDistance)
-    {
-        if (cameraSUIInformer.ObservedType == "Skeleton")
-        {
-            //Debug.Log(currentDistance);
-            float koefficient = 2 / currentDistance;
-            //Debug.Log(koefficient);
-            koefficient = Mathf.Clamp(koefficient, 0.3f, 1);
-            //Debug.Log(koefficient);
-            transform.localScale = new Vector3(koefficient * 1, koefficient * 1, koefficient * 1);
-        }
-        UpdateElementPosition();
-    }
-
-    void UpdateElementPosition()
-    {
-        if (cameraSUIInformer.ObservedType == "Skeleton")
-        {
-            Vector3 objectPosition = Camera.main.WorldToScreenPoint(objectReference.transform.position);
-            borderedCanvas.transform.position = objectPosition;
-        }
-        
-    }
-
-    void HideElement()
-    {
-        if (isActivated)
-        {
-            transform.GetComponent<CanvasGroup>().alpha = 0;
-            isActivated = false;
-        }
     }
 }

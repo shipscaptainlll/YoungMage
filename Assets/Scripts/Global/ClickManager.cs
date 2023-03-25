@@ -6,6 +6,7 @@ using UnityEngine;
 public class ClickManager : MonoBehaviour
 {
     public event Action LMBClicked = delegate { };
+    public event Action LMBUped = delegate { };
     public event Action RMBClicked = delegate { };
     public event Action VClicked = delegate { };
     public event Action IClicked = delegate { };
@@ -41,7 +42,15 @@ public class ClickManager : MonoBehaviour
             {
                 LMBClicked();
             }
-        } else if (Input.GetMouseButtonDown(1))
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            if (LMBClicked != null)
+            {
+                LMBUped();
+            }
+        }
+        else if (Input.GetMouseButtonDown(1))
         {
             if (RMBClicked != null)
             {
