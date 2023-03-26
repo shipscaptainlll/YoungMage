@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Localization.Plugins.XLIFF.V20;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,24 +13,26 @@ public class SUISkeleton : MonoBehaviour
     [SerializeField] private Sprite m_lizardSkeletonSprite;
     [SerializeField] private Text m_skeltonName;
     [SerializeField] private Image m_skeletonImage;
-    [SerializeField] Text objectPower;
-    [SerializeField] Text objectInventoryPower;
-    [SerializeField] Text objectSpeed;
-    [SerializeField] Text objectInventorySpeed;
+    [SerializeField] private Text m_skeletonPower;
+    [SerializeField] private Text m_skeletonInventoryPower;
+    [SerializeField] private Text m_skeletonSpeed;
+    [SerializeField] private Text m_skeletonInventorySpeed;
     [SerializeField] Text objectAppliedInventory;
-    [SerializeField] Text objectOccupation;
+    [SerializeField] private Text m_skeletonOccupation;
     [SerializeField] Text appliedObjects;
     [SerializeField] Transform borderedCanvas;
     private SkeletonsScanner m_lastSkeletonsScanner;
     
-    public void ShowNewObject(AttachedItemsManager attachedItemsManager, SkeletonBehavior skeletonBehavior, SkeletonsScanner skeletonsScanner)
+    public void ShowNewObject(AttachedItemsManager attachedItemsManager, SkeletonBehavior skeletonBehavior, SkeletonsScanner skeletonsScanner, Skeleton skeleton)
     {
         m_clickManager.LMBUped += HideElement;
         transform.localScale = new Vector3(1, 1, 1);
         transform.GetComponent<CanvasGroup>().alpha = 1;
         m_lastSkeletonsScanner = skeletonsScanner;
         skeletonsScanner.ActivateScanner();
+        UpdateSkeletonOccupation(skeletonBehavior);
         CountSkeletonItems(attachedItemsManager);
+        UpdateSkeletonPowers(skeleton, attachedItemsManager);
         UpdateSkeletonImage(skeletonBehavior);
     }
 
@@ -39,6 +42,22 @@ public class SUISkeleton : MonoBehaviour
         Debug.Log("Sui was hidded");
         if (m_lastSkeletonsScanner != null) { m_lastSkeletonsScanner.DeactivateScanner(); }
         transform.GetComponent<CanvasGroup>().alpha = 0;
+    }
+
+    void UpdateSkeletonPowers(Skeleton skeleton, AttachedItemsManager attachedItemsManager)
+    {
+        m_skeletonPower.text = skeleton.Power.ToString();
+        m_skeletonSpeed.text = skeleton.Speed.ToString();
+        m_skeletonInventoryPower.text = attachedItemsManager.ItemsCummulativePower.ToString();
+        m_skeletonInventorySpeed.text = attachedItemsManager.ItemsCummulativeSpeed.ToString();
+    }
+    
+    void UpdateSkeletonOccupation(SkeletonBehavior skeletonBehavior)
+    {
+        if (skeletonBehavior.Mining) { m_skeletonOccupation.text = "Mining ore"; }
+        else if (skeletonBehavior.TacklingDoor) { m_skeletonOccupation.text = "Attacking doors"; }
+        else if (skeletonBehavior.BeingUnconjured) { m_skeletonOccupation.text = "Destruction"; }
+        else { m_skeletonOccupation.text = "Idle"; }
     }
 
     void UpdateSkeletonImage(SkeletonBehavior skeletonBehavior)

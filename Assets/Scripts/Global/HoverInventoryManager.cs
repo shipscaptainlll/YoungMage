@@ -59,7 +59,7 @@ public class HoverInventoryManager : MonoBehaviour
             foundObject = element;
             //Debug.Log("Started process1 on " + transform);
 
-            descriptionText.text = element.Find("Borders").Find("Element").GetComponent<Image>().sprite.name;
+            descriptionText.text = ItemsNames.GetName(element.Find("Borders").Find("Element").GetComponent<Element>().CustomID);
             //descriptionText.text = ManageParagraphs(descriptionText.text, 12);
             descriptionCanvas.GetComponent<CanvasGroup>().alpha = 1;
             descriptionCanvas.GetComponent<CanvasGroup>().alpha = 0;

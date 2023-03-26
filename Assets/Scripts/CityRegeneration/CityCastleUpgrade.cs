@@ -24,6 +24,8 @@ public class CityCastleUpgrade : MonoBehaviour
     [SerializeField] Text fillGoldText;
     [SerializeField] Text fillText;
     [SerializeField] Transform SUINotificator;
+    [SerializeField] public string m_notenoughStringLocalized;
+    [SerializeField] public string m_maxStringLocalized;
 
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
@@ -63,6 +65,8 @@ public class CityCastleUpgrade : MonoBehaviour
     public int CountShardsQuests { get { return countShardsQuests; } }
     public int SphereUpgradeCurrentCount { get { return sphereUpgradeCurrentCount; } }
     public int CountUpgradeCurrentCount { get { return countUpgradeCurrentCount; } }
+    public string NotenoughStringLozalized { get {return m_notenoughStringLocalized; } set { m_notenoughStringLocalized = value; } }
+    public string MaxStringLozalized { get {return m_maxStringLocalized; } set { m_maxStringLocalized = value; } }
     public event Action<int> CastleUpgradedQuests = delegate { };
     public event Action<int> ShardsUpgradedQuests = delegate { };
     // Start is called before the first frame update
@@ -112,11 +116,11 @@ public class CityCastleUpgrade : MonoBehaviour
                 UpdateCostText(sphereGoldText, sphereUpgradeCost, sphereUpgradeCurrentCount, sphereUpgradesMaxCount);
             } else
             {
-                suiNotificator.Notify("not enough gold");
+                suiNotificator.Notify(m_notenoughStringLocalized);
             }
         } else
         {
-            suiNotificator.Notify("alreaady maxed");
+            suiNotificator.Notify(m_maxStringLocalized);
         }
     }
 
@@ -166,11 +170,11 @@ public class CityCastleUpgrade : MonoBehaviour
                 UpdateCostText(countGoldText, countUpgradeCost, countUpgradeCurrentCount, countUpgradesMaxCount);
             } else
             {
-                suiNotificator.Notify("not enough gold");
+                suiNotificator.Notify(m_notenoughStringLocalized);
             }
         } else
         {
-            suiNotificator.Notify("alreaady maxed");
+            suiNotificator.Notify(m_maxStringLocalized);
         }
     }
 

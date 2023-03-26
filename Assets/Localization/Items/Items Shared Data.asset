@@ -1,0 +1,136 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Items Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Items
+  m_TableCollectionNameGuidString: 0a6e0cf00d109dd4a9305d106a8dc2ef
+  m_Entries:
+  - m_Id: 8442433536
+    m_Key: KEY_Nothing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11755933696
+    m_Key: KEY_GoldCoins
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14742278144
+    m_Key: KEY_StoneOre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20253593600
+    m_Key: KEY_MetalOre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26532466688
+    m_Key: KEY_CursedOre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29699166208
+    m_Key: KEY_EarthStoneOre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33939607552
+    m_Key: KEY_LavaStoneOre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38238769152
+    m_Key: KEY_MagicStoneOre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41879425024
+    m_Key: KEY_WaterStoneOre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45113233408
+    m_Key: KEY_WindStoneOre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46627377152
+    m_Key: KEY_MagicBook
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48082800640
+    m_Key: KEY_StoneHands
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48791638016
+    m_Key: KEY_Leggings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49592750080
+    m_Key: KEY_PlateArmor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50284810240
+    m_Key: KEY_Shoes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51098505216
+    m_Key: KEY_Helm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52587483136
+    m_Key: KEY_Gloves
+    m_Metadata:
+      m_Items: []
+  - m_Id: 54625914880
+    m_Key: KEY_Bracers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56869867520
+    m_Key: KEY_StoneBrick
+    m_Metadata:
+      m_Items: []
+  - m_Id: 588669865984
+    m_Key: KEY_MetalIngot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 591157088256
+    m_Key: KEY_CursedIngot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 591949811712
+    m_Key: KEY_EarthStoneDust
+    m_Metadata:
+      m_Items: []
+  - m_Id: 592654454784
+    m_Key: KEY_LavaStoneDust
+    m_Metadata:
+      m_Items: []
+  - m_Id: 593380069376
+    m_Key: KEY_MagicStoneDust
+    m_Metadata:
+      m_Items: []
+  - m_Id: 594051158016
+    m_Key: KEY_WaterStoneDust
+    m_Metadata:
+      m_Items: []
+  - m_Id: 594839687168
+    m_Key: KEY_WindStoneDust
+    m_Metadata:
+      m_Items: []
+  - m_Id: 595653382144
+    m_Key: KEY_SkeletonScanner
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 9022838191673573379
+  references:
+    version: 2
+    RefIds:
+    - rid: 9022838191673573379
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1679793807580

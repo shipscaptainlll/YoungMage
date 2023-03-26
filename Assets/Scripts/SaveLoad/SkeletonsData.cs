@@ -5,6 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class SkeletonData
 {
+    public int[] skeletonPower;
+    public float[] skeletonSpeed;
     public float[][] positions;
     public float[][] rotations;
     public bool[] connectedToOre;
@@ -65,6 +67,8 @@ public class SkeletonData
     {
         
         int indexer = 0;
+        skeletonPower = new int[skeletonsHolder.childCount];
+        skeletonSpeed = new float[skeletonsHolder.childCount];
         connectedToOre = new bool[skeletonsHolder.childCount];
         connectedToPerson = new bool[skeletonsHolder.childCount];
         isIdle = new bool[skeletonsHolder.childCount];
@@ -76,7 +80,10 @@ public class SkeletonData
         foreach (Transform skeleton in skeletonsHolder)
         {
             SkeletonBehavior loadedSkeletonBehavior = skeleton.GetComponent<SkeletonBehavior>();
+            Skeleton skeletonScript = skeleton.GetComponent<Skeleton>();
 
+            skeletonPower[indexer] = skeletonScript.Power;
+            skeletonSpeed[indexer] = skeletonScript.Speed;
             connectedToOre[indexer] = false;
             connectedToPerson[indexer] = false;
             isIdle[indexer] = false;

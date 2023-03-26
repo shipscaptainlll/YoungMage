@@ -44,7 +44,7 @@ public class PanelsManager : MonoBehaviour
     bool introMode;
     bool tutorialMode;
     bool escapeMenuBlocked;
-
+    
     public bool TutorialMode { get { return tutorialMode; } }
     public bool IntroMode { get { return introMode; } set { introMode = value; } }
     public Transform CurrentlyOpened
@@ -79,12 +79,7 @@ public class PanelsManager : MonoBehaviour
         inventoryOpenSound = soundManager.FindSound("InventoryOpening");
         settingsSubpanelSound = soundManager.FindSound("SettingMainChange");
     }
-
-    void Update()
-    {
-        //Debug.Log(currentlyOpened);
-    }
-
+    
     void decideNextState()
     {
         if (currentlyOpened == tutorialPanel || currentlyOpened == introPanel)
@@ -121,7 +116,6 @@ public class PanelsManager : MonoBehaviour
 
     void considerQuickAccessPanel()
     {
-        
         if (currentlyOpened == null)
         {
             StartCoroutine(openQuickAccess(quickAccessPanel));
@@ -140,7 +134,7 @@ public class PanelsManager : MonoBehaviour
 
     void ChooseEscapeActions()
     {
-        if (tutorialMode)
+        if (tutorialMode || introMode)
         {
             return;
         }
@@ -232,6 +226,7 @@ public class PanelsManager : MonoBehaviour
         {
             return;
         }
+        
         if (!escapeMenuBlocked)
         {
             CameraVolumeController.BlurScreen();

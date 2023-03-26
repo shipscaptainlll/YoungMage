@@ -11,6 +11,7 @@ public class PotentialProductLibrary : MonoBehaviour
     [SerializeField] GameObject helm;
     [SerializeField] GameObject glove;
     [SerializeField] GameObject bracers;
+    [SerializeField] GameObject skeletonScanner;
 
     Dictionary<int, List<int>> potentialProducts = new Dictionary<int, List<int>>();
 
@@ -28,6 +29,7 @@ public class PotentialProductLibrary : MonoBehaviour
         potentialProducts.Add(15, new List<int> { 19, 19 }); //helm
         potentialProducts.Add(16, new List<int> { 18, 21, 22, 23, 24, 25 }); //rightGlove
         potentialProducts.Add(17, new List<int> { 20, 20 }); //bracers
-        potentialProducts.Add(26, new List<int> { 18 }); //transmutation amulet
+        potentialProducts.Add(26, new List<int> { 18, 18, 18, 18, 18 }); //transmutation amulet
+        potentialProducts.Add(27, new List<int> { 18, 18 }); //skeleton scanner 
     }
 }

@@ -63,6 +63,9 @@ public class SkeletonBehavior : MonoBehaviour
     bool isCrouching;
     bool isConnectedToMage;
 
+    private bool mining;
+    private bool tacklingDoor;
+
     public int SkeletonDamage { get { return skeletonDamage; } set { skeletonDamage = value; } }
     public float Speed { get { return speed; } set { speed = value;
             navMeshAgent.speed = speed; } }
@@ -72,7 +75,9 @@ public class SkeletonBehavior : MonoBehaviour
     public bool IsSmallSkeleton { get { return isSmallSkeleton; } }
     public bool IsBigSkeleton { get { return isBigSkeleton; } }
     public bool IsLizardSkeleton { get { return isLizardSkeleton; } }
-
+    public bool Mining { get { return mining;} }
+    public bool TacklingDoor { get { return tacklingDoor;} }
+    
     [Header("VFX conjuration")]
     [SerializeField] ParticleSystem conjurationVFX;
     [SerializeField] ParticleSystem hitEffectVFX;
@@ -317,21 +322,25 @@ public class SkeletonBehavior : MonoBehaviour
             {
                 //Debug.Log("Connected to the ore");
                 value.GetComponent<OreMiningManager>().ConnectedSkeleton = this;
+                mining = true;
             } else if (value != null && value.parent.name == "SkeletonPositions")
             {
                 //Debug.Log("Connected to the main door");
                 value.parent.parent.GetComponent<DoorTacklingManager>().ConnectedSkeleton = this;
+                tacklingDoor = true;
             }
             if (navigationTarget != null && navigationTarget.GetComponent<IOre>() != null && value.GetComponent<IOre>() == null)
             {
                 //Debug.Log("Disconnected from the ore");
                 navigationTarget.GetComponent<OreMiningManager>().ConnectedSkeleton = null;
+                mining = false;
             } else if (navigationTarget != null && navigationTarget.parent.name == "SkeletonPositions" && value != null && value.parent.name != "SkeletonPositions")
             {
                 //Debug.Log("Disconnected from the ore");
                 
                 navigationTarget.parent.parent.GetComponent<DoorConnectionManager>().ReturnPosition(navigationTarget);
                 navigationTarget.parent.parent.GetComponent<DoorTacklingManager>().ConnectedSkeleton = null;
+                tacklingDoor = false;
             } 
             
             if (navigationTarget == null && value != null && value.GetComponent<PersonMovement>() != null)
@@ -829,6 +838,8 @@ public class SkeletonBehavior : MonoBehaviour
         destroySkeletonSound = soundManager.LocateAudioSource("SkeletonBlast", instantiatedDestroyedSkeleton.transform);
         destroySkeletonSound.Play();
         unusedCounter.gameObject.GetComponent<CanvasGroup>().alpha = 0;
+        Transform appliedItems = transform.Find("SkeletonItems");
+        if (appliedItems != null) { appliedItems.gameObject.SetActive(false); }
         Destroy(walkingGroundSound);
         Destroy(walkingStoneSound);
         Destroy(walkingStairsSound);

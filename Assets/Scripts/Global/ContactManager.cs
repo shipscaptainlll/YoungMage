@@ -157,7 +157,8 @@ public class ContactManager : MonoBehaviour
                     Debug.Log("Hello at jhere ");
                     
                     m_suiSkeleton.ShowNewObject(contactedObject.GetComponent<AttachedItemsManager>(), contactedObject.GetComponent<SkeletonBehavior>(), 
-                        quickAccessHandController.ObjectInHand.GetComponent<SkeletonsScanner>());
+                        quickAccessHandController.ObjectInHand.GetComponent<SkeletonsScanner>(),
+                        contactedObject.GetComponent<Skeleton>());
                     bookSpellsActivator.CastContactMachinery();
                 }
                 else if (contactedObject.GetComponent<SkeletonItem>() != null)

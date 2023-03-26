@@ -48,6 +48,7 @@ public class IntroEntering : MonoBehaviour
         if (!isActive)
         {
             HideSpellsBook();
+            panelsManager.IntroMode = true;
             camera.IntroMode = true;
             camera.enabled = false;
             isActive = true;
@@ -71,6 +72,7 @@ public class IntroEntering : MonoBehaviour
         {
             ShowSpellsBook();
             isEscaping = true;
+            panelsManager.IntroMode = false;
             camera.IntroMode = false;
             
 

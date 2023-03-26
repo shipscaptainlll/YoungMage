@@ -12,6 +12,8 @@ public class CityBlacksmithUpgrade : MonoBehaviour
     [SerializeField] ParticleSystem upgradePS;
     [SerializeField] AppearanceTransmutationCircle appearanceTransmutationCircle;
     [SerializeField] Transform circleSoundSource;
+    [SerializeField] public string m_notenoughStringLocalized;
+    [SerializeField] public string m_maxStringLocalized;
     Coroutine upgradPSCoroutine;
 
     [Header("Roates to inner elements")]
@@ -37,6 +39,8 @@ public class CityBlacksmithUpgrade : MonoBehaviour
     int countUpgradesQuests;
     public int UpgradeCurrentCount { get { return upgradeCurrentCount; } }
     public int CountUpgradesQuests { get { return countUpgradesQuests; } }
+    public string NotenoughStringLozalized { get {return m_notenoughStringLocalized; } set { m_notenoughStringLocalized = value; } }
+    public string MaxStringLozalized { get {return m_maxStringLocalized; } set { m_maxStringLocalized = value; } }
     public event Action<int> BlacksmithUpgradedQuests = delegate { };
     // Start is called before the first frame update
     void Start()
@@ -68,11 +72,11 @@ public class CityBlacksmithUpgrade : MonoBehaviour
                 UpdateCostText();
             } else
             {
-                suiNotificator.Notify("not enough gold");
+                suiNotificator.Notify(m_notenoughStringLocalized);
             }
         } else
         {
-            suiNotificator.Notify("already maxed level");
+            suiNotificator.Notify(m_maxStringLocalized);
         }
     }
 
@@ -108,7 +112,7 @@ public class CityBlacksmithUpgrade : MonoBehaviour
     void UpdateCostText()
     {
         goldText.text = upgradeCost.ToString();
-        if (upgradeCurrentCount == upgradesMaxCount) { goldText.text = "MAX"; }
+        if (upgradeCurrentCount == upgradesMaxCount) { goldText.text = m_maxStringLocalized; }
     }
 
     void InitiateScrolling()

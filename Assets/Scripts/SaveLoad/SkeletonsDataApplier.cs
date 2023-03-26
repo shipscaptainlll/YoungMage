@@ -69,6 +69,9 @@ public static class SkeletonsDataApplier
 
             Debug.Log("applied one skeleton equipment");
 
+            skeleton.GetComponent<Skeleton>().Power = skeletonDataLoaded.skeletonPower[indexer];
+            skeleton.GetComponent<Skeleton>().Speed = skeletonDataLoaded.skeletonSpeed[indexer];
+            
             //Debug.Log("weel hello there0 + indexer " + indexer);
             if (skeletonDataLoaded.isIdle[indexer])
             {

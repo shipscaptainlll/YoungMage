@@ -80,7 +80,7 @@ public class ResourcesPopupBlock : MonoBehaviour
 
     void UpdateBlockName()
     {
-        blockName = ResourcesNamesDatabase.GetResourceName(blockID);
+        blockName = ItemsNames.GetName(blockID);
         blockNameText.text = blockName;
     }
 

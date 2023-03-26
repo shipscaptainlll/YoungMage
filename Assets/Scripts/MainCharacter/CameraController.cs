@@ -172,7 +172,7 @@ public class CameraController : MonoBehaviour
             //Debug.Log("working");
             if (Physics.SphereCast(transform.position, 0.1f, transform.TransformDirection(Vector3.forward * contactingRayDistance), out hitThird, contactingRayDistance, clickableLayerMask))
             {
-                Debug.Log(hitThird.transform.gameObject);
+                //Debug.Log(hitThird.transform.gameObject);
                 if (hitThird.transform.gameObject.layer == 12)
                 {
                     //Debug.Log(hitThird.transform + "here there");

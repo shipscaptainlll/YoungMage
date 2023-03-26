@@ -9,7 +9,8 @@ public class Regeneration2DSUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
     [SerializeField] Transform SUIElement;
     [SerializeField] string description;
     [SerializeField] Vector3 offset;
-
+    
+    public string Description { get { return description; } set { description = value; } }
     bool isActive;
     public void OnPointerEnter(PointerEventData eventData)
     {
