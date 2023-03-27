@@ -19,13 +19,8 @@ public class CameraVolumeController : MonoBehaviour
             
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    
+    
     public static void  BlurScreen()
     {
         depthOfField.focusDistance.Override(0.1f);

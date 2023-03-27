@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -9,6 +10,7 @@ public class Regeneration2DSUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
     [SerializeField] Transform SUIElement;
     [SerializeField] string description;
     [SerializeField] Vector3 offset;
+
     
     public string Description { get { return description; } set { description = value; } }
     bool isActive;
@@ -31,7 +33,12 @@ public class Regeneration2DSUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
     // Start is called before the first frame update
     void Start()
     {
-        
+        //Debug.Log("current width " + Screen.currentResolution.width);
+        //Debug.Log("current height " + Screen.currentResolution.height);
+        int xUpdatedOffest = (int) (offset.x * Screen.currentResolution.width / 1920) + 1;
+        int yUpdatedOffset = (int) (offset.y * Screen.currentResolution.height / 1080) + 1;
+        offset.x = xUpdatedOffest;
+        offset.y = yUpdatedOffset;
     }
 
     // Update is called once per frame

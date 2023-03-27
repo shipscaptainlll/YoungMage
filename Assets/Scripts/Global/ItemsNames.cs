@@ -31,6 +31,7 @@ public class ItemsNames : MonoBehaviour
     public string waterStoneDust;
     public string windStoneDust;
     public string skeletonScanner;
+    private Coroutine DictionaryUpdate;
     
     public string Nothing { get => nothing; set => nothing = value; }
     public string GoldCoins { get => goldCoins; set => goldCoins = value; }
@@ -71,16 +72,26 @@ public class ItemsNames : MonoBehaviour
         return NamesDictionary[customeID];
     }
 
-    public void UpdateDictionary()
+    IEnumerator UpdateDictionaryCoroutine()
     {
+        yield return new WaitForSeconds(0.1f);
         NamesDictionary = new Dictionary<int, string>();
         FillDictionary();
         int indxer = 1;
         while (indxer <= NamesDictionary.Count)
         {
-            Debug.Log("indxer " + indxer + " " + NamesDictionary[indxer]);
+            //Debug.Log("indxer " + indxer + " " + NamesDictionary[indxer]);
             indxer++;
-        } 
+        }
+
+        yield return null;
+        DictionaryUpdate = null;
+    }
+
+    public void UpdateDictionary()
+    {
+        if (DictionaryUpdate != null) { StopCoroutine(DictionaryUpdate); }
+        DictionaryUpdate = StartCoroutine(UpdateDictionaryCoroutine());
     }
 
     void FillDictionary()

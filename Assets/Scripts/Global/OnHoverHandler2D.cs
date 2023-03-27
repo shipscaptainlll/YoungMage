@@ -123,7 +123,11 @@ public class OnHoverHandler2D : MonoBehaviour, IPointerEnterHandler, IPointerExi
             foreach (RaycastResult element in hitObjects)
             {
                 //Debug.Log(element);
-                if (element.gameObject.GetComponent<OnHoverHandler2D>() != null && element.gameObject.transform.GetChild(0).GetChild(1).GetComponent<Element>().CustomID != 0)
+                if (element.gameObject.GetComponent<OnHoverHandler2D>() != null && 
+                    element.gameObject.transform.GetChild(0) != null &&
+                    element.gameObject.transform.GetChild(0).GetChild(1) != null &&
+                    element.gameObject.transform.GetChild(0).GetChild(1).GetComponent<Element>() != null &&
+                    element.gameObject.transform.GetChild(0).GetChild(1).GetComponent<Element>().CustomID != 0)
                 {
                     return element.gameObject;
                 }

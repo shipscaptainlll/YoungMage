@@ -14,6 +14,7 @@ public class CityWallUpgrade : MonoBehaviour
     [SerializeField] AppearanceTransmutationCircle appearanceTransmutationCircle;
     [SerializeField] Transform circleSoundSource;
     [SerializeField] Transform regenerationSoundSource;
+    [SerializeField] public string m_notenoughStringLocalized;
 
     [Header("Roates to inner elements")]
     [SerializeField] Text healthText;
@@ -30,6 +31,7 @@ public class CityWallUpgrade : MonoBehaviour
 
     int hpRegeneratedQuests;
 
+    public string NotenoughStringLozalized { get {return m_notenoughStringLocalized; } set { m_notenoughStringLocalized = value; } }
     public int CountReneratedQuests { get { return hpRegeneratedQuests; } }
     public event Action<int> HealthRegeneratedQuests = delegate { };
     // Start is called before the first frame update
@@ -58,7 +60,7 @@ public class CityWallUpgrade : MonoBehaviour
             castleHealthDecreaser.RegenerateHealth(goldNeeded / healthCost);
         } else
         {
-            suiNotificator.Notify("not enough gold");
+            suiNotificator.Notify(m_notenoughStringLocalized);
         }
         
     }

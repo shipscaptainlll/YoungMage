@@ -90,12 +90,12 @@ public class SavePanel : MonoBehaviour
         
         
         takeScreenShot.MakeScreenShot(newSavedGame.gameObject, loadMenuCopy.gameObject, (int) currentSavesCount, -1);
-        newSavedGame.Find("Content").Find("TimePlayed").Find("Text").GetComponent<Text>().text = "Time played " + ingameTimer.GetTimeIngame();
-        loadMenuCopy.Find("Content").Find("TimePlayed").Find("Text").GetComponent<Text>().text = "Time played " + ingameTimer.GetTimeIngame();
+        newSavedGame.Find("Content").Find("TimePlayed").Find("Text").GetComponent<Text>().text = " " + ingameTimer.GetTimeIngame();
+        loadMenuCopy.Find("Content").Find("TimePlayed").Find("Text").GetComponent<Text>().text = " " + ingameTimer.GetTimeIngame();
         saveSystemSerialization.SaveProgress(false);
 
-        newSavedGame.Find("Content").Find("SaveNumber").Find("Text").GetComponent<Text>().text = "Save #" + currentSavesCount;
-        loadMenuCopy.Find("Content").Find("SaveNumber").Find("Text").GetComponent<Text>().text = "Save #" + currentSavesCount;
+        newSavedGame.Find("Content").Find("SaveNumber").Find("Text").GetComponent<Text>().text = " " + currentSavesCount;
+        loadMenuCopy.Find("Content").Find("SaveNumber").Find("Text").GetComponent<Text>().text = " " + currentSavesCount;
         newSavedGame.name = "Save" + currentSavesCount;
         loadMenuCopy.name = "Load" + currentSavesCount;
 
@@ -128,7 +128,7 @@ public class SavePanel : MonoBehaviour
         {
             if (GetPanelIndex(element) == requiredIndex)
             {
-                element.Find("Content").Find("TimePlayed").Find("Text").GetComponent<Text>().text = "Time played " + ingameTimer.GetTimeIngame();
+                element.Find("Content").Find("TimePlayed").Find("Text").GetComponent<Text>().text = " " + ingameTimer.GetTimeIngame();
                 element.SetAsFirstSibling();
                 savePanel = element;
                 break;
@@ -139,7 +139,7 @@ public class SavePanel : MonoBehaviour
         {
             if (GetPanelIndex(element) == requiredIndex)
             {
-                element.Find("Content").Find("TimePlayed").Find("Text").GetComponent<Text>().text = "Time played " + ingameTimer.GetTimeIngame();
+                element.Find("Content").Find("TimePlayed").Find("Text").GetComponent<Text>().text = " " + ingameTimer.GetTimeIngame();
                 element.SetAsFirstSibling();
                 loadPanel = element;
                 break;
@@ -251,8 +251,8 @@ public class SavePanel : MonoBehaviour
             loadMenuCopy.GetComponent<CanvasGroup>().alpha = 1;
 
             currentSavesCount++;
-            newSavedGame.Find("Content").Find("SaveNumber").Find("Text").GetComponent<Text>().text = "Save #" + element.Name;
-            loadMenuCopy.Find("Content").Find("SaveNumber").Find("Text").GetComponent<Text>().text = "Save #" + element.Name;
+            newSavedGame.Find("Content").Find("SaveNumber").Find("Text").GetComponent<Text>().text = " " + element.Name;
+            loadMenuCopy.Find("Content").Find("SaveNumber").Find("Text").GetComponent<Text>().text = " " + element.Name;
             newSavedGame.name = "Save" + element.Name;
             loadMenuCopy.name = "Load" + element.Name;
             byte[] data = File.ReadAllBytes(Application.persistentDataPath + "/Saves/" + element.Name + "/ScreenShot.png");
@@ -270,8 +270,8 @@ public class SavePanel : MonoBehaviour
 
             GameSaveData gameSaveData = formatter.Deserialize(stream) as GameSaveData;
             
-            newSavedGame.Find("Content").Find("TimePlayed").Find("Text").GetComponent<Text>().text = "Time played " + gameSaveData.timeInGame;
-            loadMenuCopy.Find("Content").Find("TimePlayed").Find("Text").GetComponent<Text>().text = "Time played " + gameSaveData.timeInGame;
+            newSavedGame.Find("Content").Find("TimePlayed").Find("Text").GetComponent<Text>().text = " " + gameSaveData.timeInGame;
+            loadMenuCopy.Find("Content").Find("TimePlayed").Find("Text").GetComponent<Text>().text = " " + gameSaveData.timeInGame;
             //Debug.Log(gameSaveData.timeInGame + " we were in game");
             stream.Close();
         }
