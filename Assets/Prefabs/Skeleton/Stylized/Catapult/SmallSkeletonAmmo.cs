@@ -67,7 +67,11 @@ public class SmallSkeletonAmmo : MonoBehaviour
         yield return new WaitForSeconds(delay);
         StopCoroutine(movingCoroutine);
         //Debug.Log("destroyed " + transform + " " + instantiatedBlowEffect.gameObject);
-        Destroy(instantiatedBlowEffect.gameObject);
+        if (instantiatedBlowEffect != null)
+        {
+            Destroy(instantiatedBlowEffect.gameObject);
+        }
+        
         Destroy(gameObject);
     }
 }

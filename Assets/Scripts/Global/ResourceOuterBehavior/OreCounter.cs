@@ -70,9 +70,9 @@ public class OreCounter : MonoBehaviour
             
             elapsed += Time.deltaTime;
             currentScale = Mathf.Lerp(settingStartScale, settingFinalScale, animationCurve.Evaluate(elapsed/maxDuration));
-            Debug.Log(currentScale);
+            //Debug.Log(currentScale);
             oreCounter.localScale = new Vector3(currentScale, currentScale, 1);
-            Debug.Log(oreCounter.localScale);
+            //Debug.Log(oreCounter.localScale);
             yield return null;
         }
         currentScale = settingStartScale;

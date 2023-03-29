@@ -27084,6 +27084,7 @@ MonoBehaviour:
   charactersSpeechVolumeSlider: {fileID: 1736818197}
   musicVolumeSlider: {fileID: 1600600264}
   soundsTurnedOffToggle: {fileID: 1101152734}
+  m_inGameRadio: {fileID: 0}
   soundManager: {fileID: 606254229}
 --- !u!225 &445471348
 CanvasGroup:
@@ -36630,13 +36631,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b0bef5088f586d41919726341c380e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointLightShadows: 100
-  slider: {fileID: 463196757}
-  graphicsQuality: 0
-  dropdown: {fileID: 1686770743}
-  activePointLightShadows: 1
-  toggle: {fileID: 885177532}
+  m_mainCamera: {fileID: 0}
+  m_secondCamera: {fileID: 0}
+  m_thirdCamera: {fileID: 0}
+  m_volume: {fileID: 0}
+  m_totalQuality: 0
+  m_totalSlider: {fileID: 0}
+  m_totalComments: {fileID: 0}
+  m_viewDistanceQuality: 0
+  m_viewDistanceSlider: {fileID: 0}
+  m_viewDistanceComments: {fileID: 0}
+  m_antiAliasingQuality: 0
+  m_antiAliasingSlider: {fileID: 0}
+  m_antiAliasingComments: {fileID: 0}
+  m_postProcessingQuality: 0
+  m_postProcessingSlider: {fileID: 0}
+  m_postProcessingComments: {fileID: 0}
+  m_shadowsQuality: 0
+  m_shadowsSlider: {fileID: 0}
+  m_shadowsComments: {fileID: 0}
+  m_texturesQuality: 0
+  m_texturesSlider: {fileID: 0}
+  m_texturesComments: {fileID: 0}
+  m_effectsQuality: 0
+  m_effectsSlider: {fileID: 0}
+  m_effectsComments: {fileID: 0}
+  m_monitorResolutionLevel: 0
+  m_monitorResolutionDropdown: {fileID: 0}
+  m_maxFramerateLevel: 0
+  m_maxFramerateDropdown: {fileID: 0}
+  m_windowMode: 0
+  m_windowModeToggle: {fileID: 0}
+  m_activatedVSync: 0
+  m_activatedVSyncToggle: {fileID: 0}
+  m_activatedFPSshower: 0
+  m_toggleFPSshower: {fileID: 0}
+  m_FPSshower: {fileID: 0}
+  m_gammaLevel: 0
+  m_gammaSlider: {fileID: 0}
+  m_gammaComments: {fileID: 0}
+  m_FOVLevel: 0
+  m_FOVSlider: {fileID: 0}
+  m_FOVComments: {fileID: 0}
   soundManager: {fileID: 606254229}
+  m_panelsManager: {fileID: 0}
 --- !u!225 &586467928
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -77780,7 +77818,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1215010475}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.00010369251}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3.1168828, y: 3.116883, z: 3.1168833}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -77790,7 +77828,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00015234947, y: -38.00027}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 651.4, y: 398.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &1215010477
@@ -77818,15 +77856,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: b66e4cff4d2ef094c9c19a635d5dedbe, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4

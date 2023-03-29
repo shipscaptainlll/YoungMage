@@ -24,7 +24,7 @@ public class WallRegenerationButton : MonoBehaviour, IPointerDownHandler, IPoint
     {
         while (true)
         {
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.01f);
             Debug.Log("coroutine is working");
             if (ButtonDown != null) { ButtonDown(); }
         }
@@ -34,7 +34,7 @@ public class WallRegenerationButton : MonoBehaviour, IPointerDownHandler, IPoint
     {
         m_countingHealthCoroutine = StartCoroutine(CountingHealth());
         
-        buttonDownTime = 10;
+        buttonDownTime = 1;
         isHolded = true;
     }
 
@@ -48,7 +48,7 @@ public class WallRegenerationButton : MonoBehaviour, IPointerDownHandler, IPoint
         
         
         isHolded = false;
-        buttonDownTime = 10;
+        buttonDownTime = 1;
         if (ButtonUp != null) { ButtonUp(); }
     }
 

@@ -46,10 +46,17 @@ public class CityWallUpgrade : MonoBehaviour
         wallRegenerationButton.ButtonUp += HideUpgradePS;
         conjurationAppearSound = soundManager.LocateAudioSource("ConjurationCircleAppear", circleSoundSource);
         regenerationSound = soundManager.LocateAudioSource("RegenerationwallRegeneration", regenerationSoundSource);
+
+        healthText.text = castleHealthDecreaser.CurrentHealth.ToString();
     }
 
     public void TransformMoneyHealth()
     {
+        if (castleHealthDecreaser.CurrentHealth == castleHealthDecreaser.MaximumHealth)
+        {
+            return;
+        }
+        
         ShowUpgradePS();
         float healthRegenerate = wallRegenerationButton.ButtonDownTime;
         float goldNeeded = Mathf.RoundToInt(wallRegenerationButton.ButtonDownTime * healthCost);

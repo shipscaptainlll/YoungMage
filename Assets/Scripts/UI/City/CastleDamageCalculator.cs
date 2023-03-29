@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CastleDamageCalculator : MonoBehaviour
 {
+    [SerializeField] private RectTransform m_firstRectTransform;
+    [SerializeField] private RectTransform m_secondRectTransform;
     [SerializeField] CastleHealthDecreaser castleHealthDecreaser;
     Coroutine decreaseCoroutine;
     int skeletonsNumber;
@@ -50,7 +52,6 @@ public class CastleDamageCalculator : MonoBehaviour
         float currentRectWidth = castleHealthDecreaser.CurrentWidth;
         int currentHealthWidth = (int)(currentRectWidth * maximumWidth / 100);
         int finalHealthWidth = (int)(finalRectWidth * maximumWidth / 100);
-        RectTransform healthBorders = transform.Find("Borders").Find("Foreground").GetComponent<RectTransform>();
         float elapsed = 0;
         float regenerationTimeOffset = 1.15f;
 
@@ -58,10 +59,12 @@ public class CastleDamageCalculator : MonoBehaviour
         {
             elapsed += Time.deltaTime;
             float lerpedHealthWidth = Mathf.Lerp(currentHealthWidth, finalHealthWidth, elapsed / regenerationTimeOffset);
-            healthBorders.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, lerpedHealthWidth);
+            m_firstRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, lerpedHealthWidth);
+            m_secondRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, finalHealthWidth);
             yield return null;
         }
-        healthBorders.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, finalHealthWidth);
+        m_secondRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, finalHealthWidth);
+        m_firstRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, finalHealthWidth);
         //RestartHealthDecrease();
         yield return null;
     }

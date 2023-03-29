@@ -48,7 +48,7 @@ public class AttachedItemsManager : MonoBehaviour
     public void DeequipStoneHands()
     {
         stoneHandsEquiped = false;
-        m_itemsCummulativePower -= 1;
+        m_itemsCummulativePower -= 10;
         skeletonDamageManager.UpdateCurrentDamage(-10);
         stoneHands.gameObject.SetActive(false);
 
@@ -57,7 +57,7 @@ public class AttachedItemsManager : MonoBehaviour
     public void EquipLeggings()
     {
         leggingsEquiped = true;
-        m_itemsCummulativePower += 1;
+        m_itemsCummulativePower += 7;
         skeletonDamageManager.UpdateCurrentDamage(7);
         leggings.gameObject.SetActive(true);
         Debug.Log("applied leggings");
@@ -67,7 +67,7 @@ public class AttachedItemsManager : MonoBehaviour
     public void DeequipLeggings()
     {
         leggingsEquiped = false;
-        m_itemsCummulativePower -= 1;
+        m_itemsCummulativePower -= 7;
         skeletonDamageManager.UpdateCurrentDamage(-7);
         leggings.gameObject.SetActive(false);
         
@@ -76,7 +76,7 @@ public class AttachedItemsManager : MonoBehaviour
     public void EquipChainMail()
     {
         chainMailEquiped = true;
-        m_itemsCummulativePower += 1;
+        m_itemsCummulativePower += 15;
         skeletonDamageManager.UpdateCurrentDamage(15);
         chainMail.gameObject.SetActive(true);
         chainMailDecor.gameObject.SetActive(true);
@@ -88,7 +88,7 @@ public class AttachedItemsManager : MonoBehaviour
     public void DeequipChainMail()
     {
         chainMailEquiped = false;
-        m_itemsCummulativePower -= 1;
+        m_itemsCummulativePower -= 15;
         skeletonDamageManager.UpdateCurrentDamage(-15);
         chainMail.gameObject.SetActive(false);
         chainMailDecor.gameObject.SetActive(false);
@@ -98,7 +98,7 @@ public class AttachedItemsManager : MonoBehaviour
     public void EquipBoots()
     {
         bootsEquiped = true;
-        m_itemsCummulativePower += 1;
+        m_itemsCummulativePower += 5;
         skeletonDamageManager.UpdateCurrentDamage(5);
         boots.gameObject.SetActive(true);
         Debug.Log("applied boots");
@@ -108,7 +108,7 @@ public class AttachedItemsManager : MonoBehaviour
     public void DeequipBoots()
     {
         bootsEquiped = false;
-        m_itemsCummulativePower -= 1;
+        m_itemsCummulativePower -= 5;
         skeletonDamageManager.UpdateCurrentDamage(-5);
         boots.gameObject.SetActive(false);
     }
@@ -116,7 +116,7 @@ public class AttachedItemsManager : MonoBehaviour
     public void EquipHelm()
     {
         helmEquiped = true;
-        m_itemsCummulativePower += 1;
+        m_itemsCummulativePower += 10;
         skeletonDamageManager.UpdateCurrentDamage(10);
         helm.gameObject.SetActive(true);
         Debug.Log("applied helm");
@@ -126,7 +126,7 @@ public class AttachedItemsManager : MonoBehaviour
     public void DeequipHelm()
     {
         helmEquiped = false;
-        m_itemsCummulativePower -= 1;
+        m_itemsCummulativePower -= 10;
         skeletonDamageManager.UpdateCurrentDamage(-10);
         helm.gameObject.SetActive(false);
     }
@@ -146,7 +146,7 @@ public class AttachedItemsManager : MonoBehaviour
     public void EquipVambrace()
     {
         vambraceEquiped = true;
-        m_itemsCummulativePower += 1;
+        m_itemsCummulativePower += 3;
         skeletonDamageManager.UpdateCurrentDamage(3);
         vambrace.gameObject.SetActive(true);
         shoulders.gameObject.SetActive(true);
@@ -157,7 +157,7 @@ public class AttachedItemsManager : MonoBehaviour
     public void DeequipVambrace()
     {
         vambraceEquiped = false;
-        m_itemsCummulativePower -= 1;
+        m_itemsCummulativePower -= 3;
         skeletonDamageManager.UpdateCurrentDamage(-3);
         vambrace.gameObject.SetActive(false);
         shoulders.gameObject.SetActive(false);

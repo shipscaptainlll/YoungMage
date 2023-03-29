@@ -14,6 +14,17 @@ public class CityBlacksmithUpgrade : MonoBehaviour
     [SerializeField] Transform circleSoundSource;
     [SerializeField] public string m_notenoughStringLocalized;
     [SerializeField] public string m_maxStringLocalized;
+    [SerializeField] private RectTransform healthTransform;
+    [SerializeField] private int maxLevels;
+    [SerializeField] private Text levelCounter;
+    [SerializeField] private Image upgradeImage;
+    [SerializeField] private Text m_wallDefence;
+    [SerializeField] float settingFinalScale;
+    [SerializeField] float settingStartScale;
+    [SerializeField] AnimationCurve animationCurve;
+    [SerializeField] private Button m_defenceUpgradeButton;
+    [SerializeField] private Color m_upgradeFinishColor;
+    [SerializeField] private Image m_defenceUpgradeImage;
     Coroutine upgradPSCoroutine;
 
     [Header("Roates to inner elements")]
@@ -27,16 +38,17 @@ public class CityBlacksmithUpgrade : MonoBehaviour
 
     int upgradesMaxCount;
     int upgradeCurrentCount;
-    float offsetUpgrade;
-
-    int upgradeCost;
-    int defaultUpgradeCost;
-    float costModifier;
+    private float fillAmmount;
+    private int m_upgradeCost;
+    private int m_currentDefence;
 
     bool coroutineIsRunning;
-    Coroutine scrollingCoroutine;
+    Coroutine fillingCoroutine;
+
+    private Coroutine m_popUpCoroutine;
 
     int countUpgradesQuests;
+    public int CurrentDefence { get { return m_currentDefence; } }
     public int UpgradeCurrentCount { get { return upgradeCurrentCount; } }
     public int CountUpgradesQuests { get { return countUpgradesQuests; } }
     public string NotenoughStringLozalized { get {return m_notenoughStringLocalized; } set { m_notenoughStringLocalized = value; } }
@@ -46,13 +58,11 @@ public class CityBlacksmithUpgrade : MonoBehaviour
     void Start()
     {
         upgradeCurrentCount = 1;
-        offsetUpgrade = 0.075f;
-        upgradeCost = 100;
-        defaultUpgradeCost = upgradeCost;
-        costModifier = 2.5f;
-        upgradesMaxCount = contentHolder.childCount - 4;
-        upgradesBar.value = ((float)(upgradeCurrentCount) / (float)(upgradesMaxCount+2.5f)) + offsetUpgrade;
+        
+        upgradesMaxCount = maxLevels;
+        //upgradesBar.value = ((float)(upgradeCurrentCount) / (float)(upgradesMaxCount+2.5f)) + offsetUpgrade;
         conjurationAppearSound = soundManager.LocateAudioSource("ConjurationCircleAppear", circleSoundSource);
+        UploadBlacksmithLevel(upgradeCurrentCount);
         //Debug.Log(upgradesBar.value);
     }
 
@@ -64,9 +74,13 @@ public class CityBlacksmithUpgrade : MonoBehaviour
             if (TakeUpgradeMoney())
             {
                 ShowUpgradePS();
-                suiNotificator.Notify("-" + upgradeCost);
+                suiNotificator.Notify("-" + m_upgradeCost);
                 upgradeCurrentCount++;
-                InitiateScrolling();
+                InitiateFilling();
+                UpdatelevelCounter();
+                UpdateUpgradeImage();
+                UpgradeDefenceShower();
+                PopUpShield();
                 
                 UpgradeCost();
                 UpdateCostText();
@@ -76,6 +90,7 @@ public class CityBlacksmithUpgrade : MonoBehaviour
             }
         } else
         {
+            
             suiNotificator.Notify(m_maxStringLocalized);
         }
     }
@@ -83,17 +98,46 @@ public class CityBlacksmithUpgrade : MonoBehaviour
     public void UploadBlacksmithLevel(int uploadedLevel)
     {
         upgradeCurrentCount = uploadedLevel;
-        InitiateScrolling();
-
+        InitiateFilling();
+        UpdatelevelCounter();
+        UpdateUpgradeImage();
+        UpgradeDefenceShower();
+        
         UpgradeCost();
         UpdateCostText();
     }
 
+    void UpdateUpgradeImage()
+    {
+        if (upgradeCurrentCount < 3)
+        {
+            upgradeImage.sprite = BlacksmithSpritesManager.GetSprite(1);
+        } else if (upgradeCurrentCount < 5)
+        {
+            upgradeImage.sprite = BlacksmithSpritesManager.GetSprite(2);
+        }
+        else
+        {
+            upgradeImage.sprite = BlacksmithSpritesManager.GetSprite(3);
+        }
+    }
+
+    void UpdatelevelCounter()
+    {
+        levelCounter.text = upgradeCurrentCount.ToString();
+    }
+
+    void UpgradeDefenceShower()
+    {
+        m_currentDefence = BlacksmithParametersManager.GetWallDefence(upgradeCurrentCount);
+        m_wallDefence.text = "+" + m_currentDefence.ToString();
+    }
+
     bool TakeUpgradeMoney()
     { 
-        if (goldCoinsCounter.Count <= upgradeCost)
+        if (goldCoinsCounter.Count >= m_upgradeCost)
         {
-            goldCoinsCounter.AddResource(-(int)upgradeCost);
+            goldCoinsCounter.AddResource(-(int)m_upgradeCost);
             return true;
         }
         return false;
@@ -101,42 +145,61 @@ public class CityBlacksmithUpgrade : MonoBehaviour
 
     void UpgradeCost()
     {
-        float cacheUpgradeCost = defaultUpgradeCost;
-        for (int i = 1; i < upgradeCurrentCount; i++)
+        if (upgradeCurrentCount == maxLevels)
         {
-            cacheUpgradeCost *= costModifier;
+            return;
         }
-        upgradeCost = (int) (cacheUpgradeCost);
+        m_upgradeCost = BlacksmithParametersManager.GetUpgradeCost(upgradeCurrentCount);
     }
 
     void UpdateCostText()
     {
-        goldText.text = upgradeCost.ToString();
-        if (upgradeCurrentCount == upgradesMaxCount) { goldText.text = m_maxStringLocalized; }
+        goldText.text = m_upgradeCost.ToString();
+        if (upgradeCurrentCount == maxLevels)
+        {
+            goldText.text = m_maxStringLocalized;
+            m_defenceUpgradeButton.gameObject.SetActive(false);
+            m_defenceUpgradeImage.color = m_upgradeFinishColor;
+        }
+
+        
     }
 
-    void InitiateScrolling()
+    void InitiateFilling()
     {
+        fillAmmount = upgradeCurrentCount * (100 / upgradesMaxCount);
+        float leftHealthPercent = ((fillAmmount) / 100) * 100;
+        //Debug.Log("hello there");
+        leftHealthPercent = Mathf.Clamp(leftHealthPercent, 0, 100);
+        int updatedWidth = (int)(leftHealthPercent * 1000 / 100);
+        
         if (coroutineIsRunning)
         {
-            StopCoroutine(scrollingCoroutine);
+            StopCoroutine(fillingCoroutine);
         }
-        float destinationValue = ((float)(upgradeCurrentCount) / (float)(upgradesMaxCount + 2.5f)) + offsetUpgrade;
-        scrollingCoroutine = StartCoroutine(Scroll(upgradesBar.value, destinationValue, 0.6f));
-    }
 
-    IEnumerator Scroll(float startScroll, float endScroll, float delay)
-    {
-        coroutineIsRunning = true;
-        float elapsed = 0;
-        while (elapsed < delay)
+        if (upgradeCurrentCount == maxLevels)
         {
-            elapsed += Time.deltaTime;
-            upgradesBar.value = Mathf.Lerp(startScroll, endScroll, elapsed / delay);
+            updatedWidth = 1000;
+        }
+        fillingCoroutine = StartCoroutine(SmoothFillIncrease(updatedWidth));
+    }
+    
+    IEnumerator SmoothFillIncrease(float updatedWidth)
+    {
+        float counter = 0;
+        float smoothingDuration = 0.15f;
+        float initialWidth = healthTransform.rect.width;
+        float currentWidth = initialWidth;
+        while (counter < smoothingDuration)
+        {
+            counter += Time.deltaTime;
+            currentWidth = Mathf.Lerp(initialWidth, updatedWidth, counter / smoothingDuration);
+            //Debug.Log(currentWidth);
+            healthTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, currentWidth);
             yield return null;
         }
-        upgradesBar.value = endScroll;
-        coroutineIsRunning = false;
+        healthTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, updatedWidth);
         yield return null;
     }
 
@@ -168,5 +231,31 @@ public class CityBlacksmithUpgrade : MonoBehaviour
         appearanceTransmutationCircle.CircleDisappearance();
         //upgradePS.Stop();
         //upgradePS.gameObject.SetActive(false);
+    }
+    
+    void PopUpShield()
+    {
+        if (m_popUpCoroutine != null) { StopCoroutine(m_popUpCoroutine); }
+        m_popUpCoroutine = StartCoroutine(ShieldPopingUp());
+    }
+
+    IEnumerator ShieldPopingUp()
+    {
+        
+        float elapsed = 0;
+        float maxDuration = 0.5f;
+        float currentScale = settingStartScale;
+        while (elapsed < maxDuration)
+        {
+            
+            elapsed += Time.deltaTime;
+            currentScale = Mathf.Lerp(settingStartScale, settingFinalScale, animationCurve.Evaluate(elapsed/maxDuration));
+            upgradeImage.transform.localScale = new Vector3(currentScale, currentScale, 1);
+            yield return null;
+        }
+        currentScale = settingStartScale;
+        upgradeImage.transform.localScale = new Vector3(currentScale, currentScale, 1);
+        m_popUpCoroutine = null;
+        yield return null;
     }
 }

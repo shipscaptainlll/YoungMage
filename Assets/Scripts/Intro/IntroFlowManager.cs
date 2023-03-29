@@ -13,7 +13,8 @@ public class IntroFlowManager : MonoBehaviour
     [SerializeField] ClickManager clickManager;
     [SerializeField] Transform soldierModel;
     [SerializeField] Transform mageSleepingParticles;
-
+    [SerializeField] private AudioSource m_snoringMage;
+    private float m_cacheVolumeMage;
     bool introFinished;
 
     public bool IntroFinished { get { return introFinished; } }
@@ -33,7 +34,8 @@ public class IntroFlowManager : MonoBehaviour
         clickManager.EnterClicked += UpdateIntroFlow;
         clickManager.RMBClicked += UpdateIntroFlow;
         clickManager.SpaceClicked += UpdateIntroFlow;
-
+        m_cacheVolumeMage = m_snoringMage.volume;
+        m_snoringMage.volume = 0;
         UpdateIntroFlow();
         
     }
@@ -63,7 +65,7 @@ public class IntroFlowManager : MonoBehaviour
         mageSleepingParticles.gameObject.SetActive(true);
         charactersEmotionsShower.ShowMageSleeping();
         soldierModel.gameObject.SetActive(false);
-
+        m_snoringMage.volume = m_cacheVolumeMage;
         panelsManager.CloseIntroPanel();
         messagesInstantiator.HideMessages();
         introEntering.ExitIntro();

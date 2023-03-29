@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class CastleHealthDecreaser : MonoBehaviour
 {
-
+    [SerializeField] private Text m_healthCounter;
+    
     float minimalWidth = 0;
     float maximumWidth = 10000;
     private float maximumHealth = 250;
@@ -56,7 +57,12 @@ public class CastleHealthDecreaser : MonoBehaviour
     }
     public event Action<float> CastleRegenerationStarted = delegate { };
     public event Action<int> CastleHealthChanged = delegate { };
-    
+
+    private void Start()
+    {
+        m_healthCounter.text = ((int)currentHealth).ToString();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -73,7 +79,7 @@ public class CastleHealthDecreaser : MonoBehaviour
         {
             currentHealth -= damage;
         }
-        
+        m_healthCounter.text = ((int)currentHealth).ToString();
         float leftHealthPercent = ((currentHealth - damage) / maximumHealth) * 100;
         //Debug.Log(leftHealthPercent);
         leftHealthPercent = Mathf.Clamp(leftHealthPercent, 0, 100);
@@ -84,7 +90,9 @@ public class CastleHealthDecreaser : MonoBehaviour
     void UpdateCastleHealth(float healthPercent)
     {
         int updatedWidth = (int) (healthPercent * maximumWidth / 100);
-        transform.Find("Borders").Find("Foreground").GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, updatedWidth);
+        
+        transform.Find("Borders").Find("Background").Find("Foreground").GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, updatedWidth);
+        
     }
 
     public void RegenerateHealth(float health)
@@ -97,7 +105,8 @@ public class CastleHealthDecreaser : MonoBehaviour
         {
             currentHealth = maximumHealth;
         }
-        
+
+        m_healthCounter.text = ((int)currentHealth).ToString();
         
         float leftHealthPercent = ((currentHealth) / maximumHealth) * 100;
         leftHealthPercent = Mathf.Clamp(leftHealthPercent, 0, 100);
