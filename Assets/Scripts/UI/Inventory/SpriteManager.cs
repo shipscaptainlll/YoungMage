@@ -33,7 +33,7 @@ public class SpriteManager : MonoBehaviour
     [SerializeField] Sprite skeletonScanner;
 
     public static Dictionary<int, Sprite> SpriteDictionary = new Dictionary<int, Sprite>();
-    void Start()
+    void Awake()
     {
         FillDictionary();
     }

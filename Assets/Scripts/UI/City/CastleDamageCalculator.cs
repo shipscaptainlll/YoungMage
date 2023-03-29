@@ -62,7 +62,7 @@ public class CastleDamageCalculator : MonoBehaviour
             yield return null;
         }
         healthBorders.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, finalHealthWidth);
-        RestartHealthDecrease();
+        //RestartHealthDecrease();
         yield return null;
     }
 
@@ -74,7 +74,7 @@ public class CastleDamageCalculator : MonoBehaviour
 
     public void RestartHealthDecrease()
     {
-        StopAllCoroutines();
-        decreaseCoroutine = StartCoroutine(DecreaseHealth());
+        //StopAllCoroutines();
+        //decreaseCoroutine = StartCoroutine(DecreaseHealth());
     }
 }

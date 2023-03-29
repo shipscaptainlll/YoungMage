@@ -39,6 +39,7 @@ public class CityWallUpgrade : MonoBehaviour
     {
         healthCost = 1f;
         wallMaximumHealth = castleHealthDecreaser.MaximumHealth;
+        Debug.Log("maximum is " + wallMaximumHealth);
         castleHealthDecreaser.CastleHealthChanged += AnalyzeCurrentHealth;
         //goldCoinsCounter.AmmountEnded += AnalyzeGold;
         wallRegenerationButton.ButtonDown += TransformMoneyHealth;

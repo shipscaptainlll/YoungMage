@@ -30,7 +30,7 @@ public class SkeletonHealthDecreaser : MonoBehaviour
 
     public void DecreaseHealth()
     {
-        health -= 7;
+        health -= 1;
         //Debug.Log(transform + " current health " + health);
         if (health < 0 && isDestroyable)
         {

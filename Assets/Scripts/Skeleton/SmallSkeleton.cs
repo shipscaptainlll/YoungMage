@@ -34,11 +34,5 @@ public class SmallSkeleton : MonoBehaviour, ISkeleton
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     
 }

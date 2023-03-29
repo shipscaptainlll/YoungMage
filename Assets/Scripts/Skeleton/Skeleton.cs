@@ -51,8 +51,8 @@ public class Skeleton : MonoBehaviour, ISkeleton
 
     void GeneratePowers()
     {
-        int randomPower = random.Next(1, 100);
-        int randomSpeed = random.Next(1, 100);
+        int randomPower = random.Next(1, 101);
+        int randomSpeed = random.Next(1, 101);
         if (skeletonType == "Small Skeleton")
         {
             if (randomPower <= 50) { m_power = 1; }

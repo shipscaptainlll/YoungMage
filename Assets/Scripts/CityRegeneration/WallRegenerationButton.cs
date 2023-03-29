@@ -8,6 +8,7 @@ public class WallRegenerationButton : MonoBehaviour, IPointerDownHandler, IPoint
 {
     bool isHolded;
     float buttonDownTime;
+    private Coroutine m_countingHealthCoroutine;
 
     public float ButtonDownTime { get { return buttonDownTime; } }
 
@@ -16,27 +17,36 @@ public class WallRegenerationButton : MonoBehaviour, IPointerDownHandler, IPoint
     // Start is called before the first frame update
     void Start()
     {
-        buttonDownTime = 10;
+        buttonDownTime = 1;
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator CountingHealth()
     {
-        if (isHolded)
+        while (true)
         {
-            buttonDownTime += Time.deltaTime * 10;
+            yield return new WaitForSeconds(0.1f);
+            Debug.Log("coroutine is working");
             if (ButtonDown != null) { ButtonDown(); }
         }
     }
 
     public void OnPointerDown(PointerEventData pointerEventData)
     {
+        m_countingHealthCoroutine = StartCoroutine(CountingHealth());
+        
         buttonDownTime = 10;
         isHolded = true;
     }
 
     public void OnPointerUp(PointerEventData pointerEventData)
     {
+        if (m_countingHealthCoroutine != null)
+        {
+            StopCoroutine(m_countingHealthCoroutine);
+            m_countingHealthCoroutine = null;
+        }
+        
+        
         isHolded = false;
         buttonDownTime = 10;
         if (ButtonUp != null) { ButtonUp(); }

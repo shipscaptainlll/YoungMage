@@ -16,6 +16,7 @@ public class AudioPanel : MonoBehaviour
     [SerializeField] Slider musicVolumeSlider;
     bool soundsTurnedOff;
     [SerializeField] Toggle soundsTurnedOffToggle;
+    [SerializeField] private InGameRadio m_inGameRadio;
 
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
@@ -64,6 +65,7 @@ public class AudioPanel : MonoBehaviour
     public void MusicVolumeChange(Slider slider)
     {
         musicVolume = slider.value;
+        m_inGameRadio.SetVolumeOn((int) musicVolume);
         if (SettingChanged != null) { SettingChanged(1); }
         chooseSound.Play();
         //Debug.Log("Music volume now is " + musicVolume);

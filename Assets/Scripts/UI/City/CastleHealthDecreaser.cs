@@ -9,18 +9,23 @@ public class CastleHealthDecreaser : MonoBehaviour
 
     float minimalWidth = 0;
     float maximumWidth = 10000;
-    float currentHealth = 10000;
+    private float maximumHealth = 250;
+    float currentHealth = 250;
     float calibrationHealth;
 
     public float MaximumWidth
     {
-        get { return maximumWidth; }
+        get
+        {
+            return maximumWidth;
+            
+        }
     }
 
     public float CurrentWidth
     {
         get {
-            float leftHealthPercent = ((calibrationHealth) / maximumWidth) * 100;
+            float leftHealthPercent = ((calibrationHealth) / maximumHealth) * 100;
             float currentWidth = Mathf.Clamp(leftHealthPercent, 0, 100);
             return currentWidth; }
     }
@@ -39,7 +44,7 @@ public class CastleHealthDecreaser : MonoBehaviour
 
     public int MaximumHealth
     {
-        get { return (int) maximumWidth; }
+        get { return (int) maximumHealth; }
     }
 
     public float CalibrationHealth
@@ -51,12 +56,7 @@ public class CastleHealthDecreaser : MonoBehaviour
     }
     public event Action<float> CastleRegenerationStarted = delegate { };
     public event Action<int> CastleHealthChanged = delegate { };
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -74,7 +74,7 @@ public class CastleHealthDecreaser : MonoBehaviour
             currentHealth -= damage;
         }
         
-        float leftHealthPercent = ((currentHealth - damage) / maximumWidth) * 100;
+        float leftHealthPercent = ((currentHealth - damage) / maximumHealth) * 100;
         //Debug.Log(leftHealthPercent);
         leftHealthPercent = Mathf.Clamp(leftHealthPercent, 0, 100);
         UpdateCastleHealth(leftHealthPercent);
@@ -90,16 +90,16 @@ public class CastleHealthDecreaser : MonoBehaviour
     public void RegenerateHealth(float health)
     {
         calibrationHealth = currentHealth;
-        if (currentHealth + health <= maximumWidth)
+        if (currentHealth + health <= maximumHealth)
         {
             currentHealth += health;
         } else
         {
-            currentHealth = maximumWidth;
+            currentHealth = maximumHealth;
         }
         
         
-        float leftHealthPercent = ((currentHealth) / maximumWidth) * 100;
+        float leftHealthPercent = ((currentHealth) / maximumHealth) * 100;
         leftHealthPercent = Mathf.Clamp(leftHealthPercent, 0, 100);
         if (CastleRegenerationStarted != null) { CastleRegenerationStarted(leftHealthPercent); }
         CastleHealthChanged((int)currentHealth);

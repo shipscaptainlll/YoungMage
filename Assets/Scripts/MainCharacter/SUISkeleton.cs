@@ -19,6 +19,7 @@ public class SUISkeleton : MonoBehaviour
     [SerializeField] Text objectAppliedInventory;
     [SerializeField] private Text m_skeletonOccupation;
     [SerializeField] Text appliedObjects;
+    [SerializeField] Text appliedObjectsPower;
     [SerializeField] Transform borderedCanvas;
     private SkeletonsScanner m_lastSkeletonsScanner;
     
@@ -47,8 +48,8 @@ public class SUISkeleton : MonoBehaviour
     {
         m_skeletonPower.text = skeleton.Power.ToString();
         m_skeletonSpeed.text = skeleton.Speed.ToString();
-        m_skeletonInventoryPower.text = attachedItemsManager.ItemsCummulativePower.ToString();
-        m_skeletonInventorySpeed.text = attachedItemsManager.ItemsCummulativeSpeed.ToString();
+        m_skeletonInventoryPower.text = "(+" + attachedItemsManager.ItemsCummulativePower.ToString() + ")";
+        m_skeletonInventorySpeed.text = "(+" + attachedItemsManager.ItemsCummulativeSpeed.ToString() + ")";
     }
     
     void UpdateSkeletonOccupation(SkeletonBehavior skeletonBehavior)
@@ -79,36 +80,45 @@ public class SUISkeleton : MonoBehaviour
     void CountSkeletonItems(AttachedItemsManager attachedItemsManager)
     {
         string itemsString = "";
+        string powersString = "";
         if (attachedItemsManager.StoneHandsEquiped)
         {
             itemsString += "\nhands";
+            powersString += "\n+10";
         }
         if (attachedItemsManager.LeggingsEquiped)
         {
             itemsString += "\nleggings";
+            powersString += "\n+7";
         }
         if (attachedItemsManager.ChainMailEquiped)
         {
             itemsString += "\narmor";
+            powersString += "\n+15";
         }
         if (attachedItemsManager.BootsEquiped)
         {
             itemsString += "\nshoes";
+            powersString += "\n+5";
         }
         if (attachedItemsManager.HelmEquiped)
         {
             itemsString += "\nhelm";
+            powersString += "\n+10";
         }
         if (attachedItemsManager.GlovesEquiped)
         {
             itemsString += "\ngloves";
+            powersString += "\n+5";
         }
         if (attachedItemsManager.VambraceEquiped)
         {
             itemsString += "\nbracers";
+            powersString += "\n+3";
         }
         //Debug.Log(appliedObjects.text);
         appliedObjects.text = itemsString;
+        appliedObjectsPower.text = powersString;
         //Debug.Log(appliedObjects.text);
     }
 }

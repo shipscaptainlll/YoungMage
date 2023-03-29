@@ -23,7 +23,7 @@ public class SoldierBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rand = new System.Random();
+        rand = new System.Random(transform.GetHashCode() + System.DateTime.Now.Millisecond);
         soldierState = SoldierState.waiting;
         shootingSoldier.ShootedTarget += ContinueShooting;
         skeletonsStack.SkeletonArenaAdded += StartShooting;
@@ -39,7 +39,7 @@ public class SoldierBehavior : MonoBehaviour
     IEnumerator ShootSkeleton()
     {
         
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(rand.Next(2 ,5));
         shootingSoldier.Shoot();
         currentCoroutine = null;
     }

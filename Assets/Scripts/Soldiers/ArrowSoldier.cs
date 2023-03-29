@@ -14,13 +14,7 @@ public class ArrowSoldier : MonoBehaviour
     {
         destroyObject = StartCoroutine(DestroyObject());
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == 16)

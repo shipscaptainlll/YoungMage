@@ -38,10 +38,11 @@ public class GoldCoinsCounter : MonoBehaviour, ICounter
     public event Action<int, Transform> ItemCreated = delegate { };
     void Start()
     {
-        count = 0;
+        AddResource(250);
+        
         coinsPaySound = soundManager.FindSound("CoinPay");
     }
-
+    
     public void AddResource(int ammount)
     {
         if (ammount < 0) { coinsPaySound.Play(); }
