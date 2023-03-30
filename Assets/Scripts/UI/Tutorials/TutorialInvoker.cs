@@ -9,6 +9,9 @@ public class TutorialInvoker : MonoBehaviour
     [SerializeField] CameraController cameraController;
     [SerializeField] Transform turnedOnPosition;
     [SerializeField] Transform turnedOffPosition;
+
+    [SerializeField] private LearningCityRegeneration m_learningCityRegeneration;
+    [SerializeField] private LearningModeFlow m_learningModeFlow;
     bool isCompleted;
 
     public bool IsCompleted { get { return isCompleted; } set { isCompleted = value; } }
@@ -19,9 +22,23 @@ public class TutorialInvoker : MonoBehaviour
     {
         if (!isCompleted && other.gameObject.layer == 11 && cameraController.SeeingTutorial)
         {
+            
             if(cameraController.HitThird.transform.GetComponent<TutorialInvoker>().InvokedTutorialId == invokedTutorialId)
             {
-                InvokeTutorial();
+                if (invokedTutorialId == 7)
+                {
+                    
+                    if (m_learningModeFlow.NextTutorialID == 2)
+                    {
+                        m_learningCityRegeneration.ShowNextStep();
+                    }
+                    InvokeTutorial();
+                }
+                else
+                {
+                    
+                }
+                
             }
         }
     }

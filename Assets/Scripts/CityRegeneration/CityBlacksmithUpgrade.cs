@@ -23,6 +23,7 @@ public class CityBlacksmithUpgrade : MonoBehaviour
     [SerializeField] float settingStartScale;
     [SerializeField] AnimationCurve animationCurve;
     [SerializeField] private Button m_defenceUpgradeButton;
+    [SerializeField] private Color m_upgradeStartColor;
     [SerializeField] private Color m_upgradeFinishColor;
     [SerializeField] private Image m_defenceUpgradeImage;
     Coroutine upgradPSCoroutine;
@@ -97,6 +98,8 @@ public class CityBlacksmithUpgrade : MonoBehaviour
 
     public void UploadBlacksmithLevel(int uploadedLevel)
     {
+        m_defenceUpgradeButton.gameObject.SetActive(true);
+        m_defenceUpgradeImage.color = m_upgradeStartColor;
         upgradeCurrentCount = uploadedLevel;
         InitiateFilling();
         UpdatelevelCounter();

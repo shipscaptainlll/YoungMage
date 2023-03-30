@@ -73,6 +73,7 @@ public class CityRegenerationEnter : MonoBehaviour
         Debug.Log("Here2");
         if (!isActive)
         {
+            
             //personMovement.transform.LookAt(lookAtTransform);
             
             Debug.Log("Here1");

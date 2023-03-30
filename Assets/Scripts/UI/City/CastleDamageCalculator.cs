@@ -12,19 +12,13 @@ public class CastleDamageCalculator : MonoBehaviour
     float dps;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         castleHealthDecreaser.CastleRegenerationStarted += StartCityRegeneration;
 
         skeletonsNumber = 3;
         CalculateDPS();
         //decreaseCoroutine = StartCoroutine(DecreaseHealth());
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     void CalculateDPS()

@@ -6,12 +6,14 @@ using UnityEngine.UI;
 
 public class CastleHealthDecreaser : MonoBehaviour
 {
+    [SerializeField] private CastleDamageCalculator m_castleDamageCalculator;
+    [SerializeField] private CityCastleUpgrade m_cityCastleUpgrade;
     [SerializeField] private Text m_healthCounter;
     
     float minimalWidth = 0;
     float maximumWidth = 10000;
     private float maximumHealth = 250;
-    float currentHealth = 250;
+    float currentHealth = 100;
     float calibrationHealth;
 
     public float MaximumWidth
@@ -61,6 +63,7 @@ public class CastleHealthDecreaser : MonoBehaviour
     private void Start()
     {
         m_healthCounter.text = ((int)currentHealth).ToString();
+        RegenerateHealth(0);
     }
 
     // Update is called once per frame
@@ -68,17 +71,23 @@ public class CastleHealthDecreaser : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
-            RegenerateHealth(1500);
+            DealDamage(10);
         }
     }
 
 
     public void DealDamage(float damage)
     {
-        if (currentHealth - damage >= 0)
+        if (currentHealth - damage > 0)
         {
             currentHealth -= damage;
         }
+        else
+        {
+            RegeneratoToMaximum();
+            return;
+        }
+        
         m_healthCounter.text = ((int)currentHealth).ToString();
         float leftHealthPercent = ((currentHealth - damage) / maximumHealth) * 100;
         //Debug.Log(leftHealthPercent);
@@ -93,6 +102,15 @@ public class CastleHealthDecreaser : MonoBehaviour
         
         transform.Find("Borders").Find("Background").Find("Foreground").GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, updatedWidth);
         
+    }
+
+    public void RegeneratoToMaximum()
+    {
+        currentHealth = m_cityCastleUpgrade.RegenerationLevel * maximumHealth / 100;
+        m_healthCounter.text = ((int)currentHealth).ToString();
+        Debug.Log("has been updated to " + m_cityCastleUpgrade.RegenerationLevel);
+        m_castleDamageCalculator.StartCityRegeneration(m_cityCastleUpgrade.RegenerationLevel);
+        m_cityCastleUpgrade.DestroyOneSpehere();
     }
 
     public void RegenerateHealth(float health)

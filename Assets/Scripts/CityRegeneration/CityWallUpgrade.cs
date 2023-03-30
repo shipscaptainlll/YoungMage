@@ -15,6 +15,10 @@ public class CityWallUpgrade : MonoBehaviour
     [SerializeField] Transform circleSoundSource;
     [SerializeField] Transform regenerationSoundSource;
     [SerializeField] public string m_notenoughStringLocalized;
+    
+    [SerializeField] private LearningModeFlow m_learningModeFlow;
+    [SerializeField] private LearningCityRegeneration m_learningCityRegeneration;
+    
 
     [Header("Roates to inner elements")]
     [SerializeField] Text healthText;
@@ -48,6 +52,7 @@ public class CityWallUpgrade : MonoBehaviour
         regenerationSound = soundManager.LocateAudioSource("RegenerationwallRegeneration", regenerationSoundSource);
 
         healthText.text = castleHealthDecreaser.CurrentHealth.ToString();
+        UpdateGoldShower(0);
     }
 
     public void TransformMoneyHealth()
@@ -108,6 +113,14 @@ public class CityWallUpgrade : MonoBehaviour
 
     void HideUpgradePS()
     {
+        
+        if (castleHealthDecreaser.CurrentHealth / castleHealthDecreaser.MaximumHealth >= 0.9f)
+        {
+            if (m_learningCityRegeneration.NextStep == 3)
+            {
+                m_learningCityRegeneration.ShowNextStep();
+            }
+        }
         appearanceTransmutationCircle.CircleDisappearance();
         //upgradeParticleSystem.Stop();
         regenerationSound.Stop();

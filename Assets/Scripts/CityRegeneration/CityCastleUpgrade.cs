@@ -12,108 +12,96 @@ public class CityCastleUpgrade : MonoBehaviour
     [SerializeField] ParticleSystem upgradePS;
     [SerializeField] AppearanceTransmutationCircle appearanceTransmutationCircle;
     [SerializeField] Transform circleSoundSource;
+    [SerializeField] private ShatterAnimationSphere m_shatterAnimationSphere;
     Coroutine upgradPSCoroutine;
 
     [Header("Roates to inner elements")]
-    [SerializeField] Scrollbar upgradesBar;
-    [SerializeField] Transform contentHolder;
-    [SerializeField] Transform countButtonsHolder;
-    [SerializeField] Transform fillShardsHolder;
-    [SerializeField] Text sphereGoldText;
-    [SerializeField] Text countGoldText;
-    [SerializeField] Text fillGoldText;
-    [SerializeField] Text fillText;
-    [SerializeField] Transform SUINotificator;
     [SerializeField] public string m_notenoughStringLocalized;
     [SerializeField] public string m_maxStringLocalized;
 
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
     AudioSource conjurationAppearSound;
-
-    [Header("Loading")]
-    [SerializeField] Color firstButtonColor;
-    [SerializeField] Color defaultButtonColor;
-
-    int sphereUpgradesMaxCount;
+    
+    [SerializeField] private int sphereUpgradesMaxCount;
     int sphereUpgradeCurrentCount;
     float offsetUpgrade;
 
-    int countUpgradesMaxCount;
+    [SerializeField] private int countUpgradesMaxCount;
     int countUpgradeCurrentCount;
 
     int sphereUpgradeCost;
-    int sphereUpgradeDefaultCost;
-    float sphereCostModifier;
 
     int countUpgradeCost;
-    int countUpgradeDefaultCost;
-    float countcostModifier;
 
     int fillCost;
     int fillAmmount;
 
-    List<Transform> availableButtons = new List<Transform>();
+    
     List<Transform> availableShards;
     Transform currentShard;
-    bool coroutineIsRunning;
-    Coroutine scrollingCoroutine;
+    private bool coroutineIsRunning;
+    Coroutine fillingCoroutine;
+    [SerializeField] private Transform availableButtons;
+    [SerializeField] private RectTransform healthTransform;
+    [SerializeField] private Text magicPotencyUpgradeText;
+    [SerializeField] private Text magicPotencyLevelText;
+    [SerializeField] private Text magicPotencyParameterText;
+    [SerializeField] private Text sphereBuyText;
+    [SerializeField] private Text sphereCountText;
+    [SerializeField] private Color m_upgradeStartColor;
+    [SerializeField] private Color m_upgradeFinishColor;
+    [SerializeField] private Image m_magicPotencyFillImage;
+    [SerializeField] private Text m_sphereCountUpper;
+
 
     int countUpgradesQuests;
     int countShardsQuests;
+    private int m_regenerationLevel;
     public int CountUpgradesQuests { get { return countUpgradesQuests; } }
     public int CountShardsQuests { get { return countShardsQuests; } }
     public int SphereUpgradeCurrentCount { get { return sphereUpgradeCurrentCount; } }
     public int CountUpgradeCurrentCount { get { return countUpgradeCurrentCount; } }
     public string NotenoughStringLozalized { get {return m_notenoughStringLocalized; } set { m_notenoughStringLocalized = value; } }
     public string MaxStringLozalized { get {return m_maxStringLocalized; } set { m_maxStringLocalized = value; } }
+    public int RegenerationLevel { get {return m_regenerationLevel; } }
     public event Action<int> CastleUpgradedQuests = delegate { };
     public event Action<int> ShardsUpgradedQuests = delegate { };
     // Start is called before the first frame update
     void Start()
     {
         sphereUpgradeCurrentCount = 1;
-        //Debug.Log(sphereUpgradeCurrentCount);
-        //Debug.Log(sphereUpgradesMaxCount);
         countUpgradeCurrentCount = 1;
-        offsetUpgrade = 0.075f;
-        sphereUpgradeCost = 100;
-        sphereUpgradeDefaultCost = sphereUpgradeCost;
-        sphereCostModifier = 2.5f;
-        countUpgradeCost = 1000;
-        countUpgradeDefaultCost = countUpgradeCost;
-        countcostModifier = 2f;
-        sphereUpgradesMaxCount = contentHolder.childCount - 4;
-        countUpgradesMaxCount = 5;
-        foreach (Transform button in countButtonsHolder)
-        {
-            availableButtons.Add(button);
-        }
-        upgradesBar.value = ((float)(sphereUpgradeCurrentCount) / (float)(sphereUpgradesMaxCount + 2.5f)) + offsetUpgrade;
+        
+        InitiateFilling();
+
+        UpgradePotencyCost();
+        UpdatePotencyCostText();
+        m_regenerationLevel = CityCastleParametersManager.GetRegenerationAmmount(sphereUpgradeCurrentCount);
+        ResetButtons();
+        ShowButtons();
+        
+        UpgradeSphereCost();
+        UpdateSphereCostText();
+        //upgradesBar.value = ((float)(sphereUpgradeCurrentCount) / (float)(sphereUpgradesMaxCount + 2.5f)) + offsetUpgrade;
         conjurationAppearSound = soundManager.LocateAudioSource("ConjurationCircleAppear", circleSoundSource);
-        //Debug.Log(sphereUpgradeCurrentCount);
-        //Debug.Log(sphereUpgradesMaxCount);
     }
 
 
     public void UpgradeSpheresEnergy()
     {
-        //Debug.Log(sphereUpgradeCurrentCount);
-        //Debug.Log(sphereUpgradesMaxCount);
         if (sphereUpgradeCurrentCount < sphereUpgradesMaxCount)
         {
-            
-            //Debug.Log("there hello if");
             if (TakeUpgradeMoney(sphereUpgradeCost))
             {
                 ShowUpgradePS();
                 suiNotificator.Notify("-" + sphereUpgradeCost);
-                Debug.Log("there hello if1");
                 sphereUpgradeCurrentCount++;
-                InitiateScrolling();
+                m_regenerationLevel = CityCastleParametersManager.GetRegenerationAmmount(sphereUpgradeCurrentCount);
+                InitiateFilling();
 
-                UpgradeCost(ref sphereUpgradeCost, sphereCostModifier);
-                UpdateCostText(sphereGoldText, sphereUpgradeCost, sphereUpgradeCurrentCount, sphereUpgradesMaxCount);
+                UpgradePotencyCost();
+                UpdatePotencyCostText();
             } else
             {
                 suiNotificator.Notify(m_notenoughStringLocalized);
@@ -123,51 +111,100 @@ public class CityCastleUpgrade : MonoBehaviour
             suiNotificator.Notify(m_maxStringLocalized);
         }
     }
+    
+    void InitiateFilling()
+    {
+        fillAmmount = sphereUpgradeCurrentCount * (100 / sphereUpgradesMaxCount);
+        float leftHealthPercent = fillAmmount;
+        
+        leftHealthPercent = Mathf.Clamp(leftHealthPercent, 0, 100);
+        int updatedWidth = (int)(leftHealthPercent * 1000 / 100);
+        
+        if (coroutineIsRunning)
+        {
+            StopCoroutine(fillingCoroutine);
+        }
+
+        if (sphereUpgradeCurrentCount == sphereUpgradesMaxCount)
+        {
+            updatedWidth = 1000;
+        }
+        fillingCoroutine = StartCoroutine(SmoothFillIncrease(updatedWidth));
+    }
+    
+    IEnumerator SmoothFillIncrease(float updatedWidth)
+    {
+        float counter = 0;
+        float smoothingDuration = 0.15f;
+        float initialWidth = healthTransform.rect.width;
+        float currentWidth = initialWidth;
+        while (counter < smoothingDuration)
+        {
+            counter += Time.deltaTime;
+            currentWidth = Mathf.Lerp(initialWidth, updatedWidth, counter / smoothingDuration);
+            //Debug.Log(currentWidth);
+            healthTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, currentWidth);
+            yield return null;
+        }
+        healthTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, updatedWidth);
+        yield return null;
+    }
 
     public void UploadCastleData(int uploadedSphereLevel, int uploadedCountLevel)
     {
+        magicPotencyUpgradeText.gameObject.SetActive(true);
+        m_magicPotencyFillImage.color = m_upgradeStartColor;
         sphereUpgradeCurrentCount = uploadedCountLevel;
-        InitiateScrolling();
+        InitiateFilling();
 
-        UpgradeSphereCost(ref sphereUpgradeCost, sphereCostModifier);
-        UpdateCostText(sphereGoldText, sphereUpgradeCost, sphereUpgradeCurrentCount, sphereUpgradesMaxCount);
+        UpgradePotencyCost();
+        UpdatePotencyCostText();
 
         countUpgradeCurrentCount = uploadedCountLevel;
 
         ResetButtons();
-        if (countUpgradeCurrentCount > 1)
-        {
-            ShowButtons();
-        }
+        ShowButtons();
         
-        UpgradeCountCost(ref countUpgradeCost, countcostModifier);
-        UpdateCostText(countGoldText, countUpgradeCost, countUpgradeCurrentCount, countUpgradesMaxCount);
+        UpgradeSphereCost();
+        UpdateSphereCostText();
+    }
+
+    public void DestroyOneSpehere()
+    {
+        countUpgradeCurrentCount--;
+        if (countUpgradeCurrentCount < 0)
+        {
+            countUpgradeCurrentCount = 0;
+            
+        }
+        m_shatterAnimationSphere.ActivateAnimation();
+        ResetButtons();
+        ShowButtons();
+        
+        UpgradeSphereCost();
+        UpdateSphereCostText();
     }
 
     public void UpdateSphereEnergy(int uploadedLevel, int uploadedCost)
     {
         sphereUpgradeCurrentCount = uploadedLevel;
-        InitiateScrolling();
+        InitiateFilling();
         sphereUpgradeCost = uploadedCost;
-        UpdateCostText(sphereGoldText, sphereUpgradeCost, sphereUpgradeCurrentCount, sphereUpgradesMaxCount);
+        UpgradeSphereCost();
     }
 
     public void UpgradeSpheresCount()
     {
         if (countUpgradeCurrentCount < countUpgradesMaxCount)
         {
-            Debug.Log("there hello if22");
             if (TakeUpgradeMoney(countUpgradeCost))
             {
                 ShowUpgradePS();
                 suiNotificator.Notify("-" + countUpgradeCost);
                 countUpgradeCurrentCount++;
-                //availableShards[countUpgradeCurrentCount - 1].GetComponent<CanvasGroup>().alpha = 1;
-                ShowNextButton();
-                Debug.Log("there hello if2");
-                //ShowNextShard();
-                UpgradeCost(ref countUpgradeCost, countcostModifier);
-                UpdateCostText(countGoldText, countUpgradeCost, countUpgradeCurrentCount, countUpgradesMaxCount);
+                ShowButtons();
+                UpgradeSphereCost();
+                UpdateSphereCostText();
             } else
             {
                 suiNotificator.Notify(m_notenoughStringLocalized);
@@ -180,8 +217,7 @@ public class CityCastleUpgrade : MonoBehaviour
 
     bool TakeUpgradeMoney(int upgradeCost)
     {
-        Debug.Log(goldCoinsCounter.Count);
-        if (goldCoinsCounter.Count <= upgradeCost)
+        if (goldCoinsCounter.Count >= upgradeCost)
         {
             
             goldCoinsCounter.AddResource(-(int)upgradeCost);
@@ -190,109 +226,55 @@ public class CityCastleUpgrade : MonoBehaviour
         return false;
     }
 
-    void UpgradeSphereCost(ref int upgradeCost, float costModifier)
+    void UpgradePotencyCost()
     {
-        float cacheUpgradeCost = sphereUpgradeDefaultCost;
-        for (int i = 1; i < sphereUpgradeCurrentCount; i++)
+        sphereUpgradeCost = CityCastleParametersManager.GetMagicUpgradeCost(sphereUpgradeCurrentCount);
+    }
+    
+    void UpgradeSphereCost()
+    {
+        countUpgradeCost = CityCastleParametersManager.GetSphereCost(countUpgradeCurrentCount);
+    }
+
+    void UpdatePotencyCostText()
+    {
+        magicPotencyUpgradeText.text = sphereUpgradeCost.ToString();
+        magicPotencyLevelText.text = sphereUpgradeCurrentCount.ToString();
+        magicPotencyParameterText.text = "%" + m_regenerationLevel.ToString();
+
+        if (sphereUpgradeCurrentCount == sphereUpgradesMaxCount)
         {
-            cacheUpgradeCost *= costModifier;
+            magicPotencyUpgradeText.text = "MAX";
+            magicPotencyUpgradeText.gameObject.SetActive(false);
+            m_magicPotencyFillImage.color = m_upgradeFinishColor;
         }
-        sphereUpgradeCost = (int)(cacheUpgradeCost);
     }
-
-    void UpgradeCountCost(ref int upgradeCost, float costModifier)
+    
+    void UpdateSphereCostText()
     {
-        float cacheUpgradeCost = countUpgradeDefaultCost;
-        for (int i = 1; i < countUpgradeCurrentCount; i++)
-        {
-            cacheUpgradeCost *= costModifier;
-        }
-        countUpgradeCost = (int)(cacheUpgradeCost);
+        sphereBuyText.text = countUpgradeCost.ToString();
+        sphereCountText.text = countUpgradeCurrentCount.ToString();
+        m_sphereCountUpper.text = countUpgradeCurrentCount.ToString();
+        
+        if (countUpgradeCurrentCount == countUpgradesMaxCount) { sphereBuyText.text = "MAX"; }
     }
 
-    void UpgradeCost(ref int upgradeCost, float costModifier)
-    {
-
-        upgradeCost = (int)(upgradeCost * costModifier);
-    }
-
-    void UpdateCostText(Text costTextHolder, float upgradeCost, float currentLevel, float maxLevel)
-    {
-        costTextHolder.text = upgradeCost.ToString();
-        if (currentLevel == maxLevel) { costTextHolder.text = "MAX"; }
-    }
-
-    void InitiateScrolling()
-    {
-        if (coroutineIsRunning)
-        {
-            StopCoroutine(scrollingCoroutine);
-        }
-        float destinationValue = ((float)(sphereUpgradeCurrentCount) / (float)(sphereUpgradesMaxCount + 2.5f)) + offsetUpgrade;
-        scrollingCoroutine = StartCoroutine(Scroll(upgradesBar.value, destinationValue, 0.6f));
-    }
-
-    IEnumerator Scroll(float startScroll, float endScroll, float delay)
-    {
-        coroutineIsRunning = true;
-        float elapsed = 0;
-        while (elapsed < delay)
-        {
-            elapsed += Time.deltaTime;
-            upgradesBar.value = Mathf.Lerp(startScroll, endScroll, elapsed / delay);
-            yield return null;
-        }
-        upgradesBar.value = endScroll;
-        coroutineIsRunning = false;
-        yield return null;
-    }
+    
 
     void ResetButtons()
     {
-        availableButtons[0].GetComponent<Image>().color = firstButtonColor;
-        availableButtons[0].GetComponent<Button>().enabled = enabled;
-        for (int i = 1; i < availableButtons.Count; i++)
+        for (int i = 0; i < availableButtons.childCount; i++)
         {
-            availableButtons[i].GetComponent<Image>().color = defaultButtonColor;
-            availableButtons[i].GetComponent<Button>().enabled = false;
+            availableButtons.GetChild(i).GetComponent<CanvasGroup>().alpha = 0;
         }
     }
 
     void ShowButtons()
     {
-        
-        for (int i = 0; i < countUpgradeCurrentCount - 1; i++)
+        for (int i = 0; i < countUpgradeCurrentCount; i++)
         {
-            var color = defaultButtonColor;
-            color.a = 1f;
-            availableButtons[i].GetComponent<Image>().color = color;
-            availableButtons[i].GetComponent<Button>().enabled = false;
+            availableButtons.GetChild(i).GetComponent<CanvasGroup>().alpha = 1;
         }
-        availableButtons[countUpgradeCurrentCount - 1].GetComponent<Image>().color = firstButtonColor;
-        availableButtons[countUpgradeCurrentCount - 1].GetComponent<Button>().enabled = true;
-    }
-
-
-    void ShowNextButton()
-    {
-        var color = availableButtons[countUpgradeCurrentCount-2].GetComponent<Image>().color;
-        color.a = 1f;
-        availableButtons[countUpgradeCurrentCount-2].GetComponent<Image>().color = color;
-        availableButtons[countUpgradeCurrentCount - 2].GetComponent<Button>().enabled = false;
-        if (countUpgradeCurrentCount != countUpgradesMaxCount)
-        {
-            color = availableButtons[countUpgradeCurrentCount-1].GetComponent<Image>().color;
-            color.a = 0.25f;
-            availableButtons[countUpgradeCurrentCount-1].GetComponent<Image>().color = color;
-            
-            availableButtons[countUpgradeCurrentCount-1].GetComponent<Button>().enabled = true;
-            availableButtons[countUpgradeCurrentCount - 1].GetComponent<Regeneration2DSUI>().enabled = true;
-        }
-    }
-
-    void ShowNextShard()
-    {
-        availableShards[countUpgradeCurrentCount - 1].GetComponent<CanvasGroup>().alpha = 1;
     }
 
     void ShowUpgradePS()
@@ -305,8 +287,6 @@ public class CityCastleUpgrade : MonoBehaviour
         if (!upgradePS.isPlaying)
         {
             appearanceTransmutationCircle.CircleAppearance();
-            //upgradePS.gameObject.SetActive(true);
-            //upgradePS.Play();
             conjurationAppearSound.Play();
         }
     }
@@ -321,7 +301,5 @@ public class CityCastleUpgrade : MonoBehaviour
     void HideUpgradePS()
     {
         appearanceTransmutationCircle.CircleDisappearance();
-        //upgradePS.Stop();
-        //upgradePS.gameObject.SetActive(false);
     }
 }
