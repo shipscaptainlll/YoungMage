@@ -9,9 +9,11 @@ public class TutorialInvoker : MonoBehaviour
     [SerializeField] CameraController cameraController;
     [SerializeField] Transform turnedOnPosition;
     [SerializeField] Transform turnedOffPosition;
-
-    [SerializeField] private LearningCityRegeneration m_learningCityRegeneration;
-    [SerializeField] private LearningModeFlow m_learningModeFlow;
+    [SerializeField] private LearningSkeletonsCatching m_learningSkeletonsCatching;
+    [SerializeField] private LearningMakeMoney m_learningMakeMoney;
+    [SerializeField] private LearningBreakingOre m_learningBreakingOre;
+    [SerializeField] private LearningCreatingObjects m_learningCreatingObjects;
+    
     bool isCompleted;
 
     public bool IsCompleted { get { return isCompleted; } set { isCompleted = value; } }
@@ -22,21 +24,36 @@ public class TutorialInvoker : MonoBehaviour
     {
         if (!isCompleted && other.gameObject.layer == 11 && cameraController.SeeingTutorial)
         {
-            
-            if(cameraController.HitThird.transform.GetComponent<TutorialInvoker>().InvokedTutorialId == invokedTutorialId)
+            Debug.Log("invoked tutorial " + invokedTutorialId + " " + cameraController.HitThird.transform);
+            if(cameraController.HitThird.transform != null && cameraController.HitThird.transform.GetComponent<TutorialInvoker>().InvokedTutorialId == invokedTutorialId)
             {
-                if (invokedTutorialId == 7)
+                if (invokedTutorialId == 2)
                 {
-                    
-                    if (m_learningModeFlow.NextTutorialID == 2)
+                    if (m_learningSkeletonsCatching.NextStep == 1)
                     {
-                        m_learningCityRegeneration.ShowNextStep();
+                        //m_learningSkeletonsCatching.ShowNextStep();
                     }
-                    InvokeTutorial();
-                }
-                else
+                } else if (invokedTutorialId == 3)
                 {
-                    
+                    if (m_learningBreakingOre.NextStep == 1)
+                    {
+                        m_learningBreakingOre.ShowNextStep();
+                    }
+                } else if (invokedTutorialId == 4)
+                {
+                    if (m_learningCreatingObjects.NextStep == 1)
+                    {
+                        m_learningCreatingObjects.ShowNextStep();
+                    }
+                } else if (invokedTutorialId == 6)
+                {
+                    if (m_learningMakeMoney.NextStep == 1)
+                    {
+                        m_learningMakeMoney.ShowNextStep();
+                    }
+                } else if (invokedTutorialId == 7)
+                {
+                    InvokeTutorial();
                 }
                 
             }

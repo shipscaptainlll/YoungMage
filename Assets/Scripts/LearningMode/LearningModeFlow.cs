@@ -7,6 +7,7 @@ public class LearningModeFlow : MonoBehaviour
 {
     [SerializeField] private bool m_activateLearningMode;
     [SerializeField] private Transform m_learningQuestsHolder;
+    [SerializeField] private CastleLookCatcher m_castleLookCatcher;
     static List<ILearningQuest> m_learningQuests = new List<ILearningQuest>();
     private static int m_nextTutorialID;
     
@@ -18,6 +19,11 @@ public class LearningModeFlow : MonoBehaviour
         foreach (Transform element in m_learningQuestsHolder)
         {
             m_learningQuests.Add(element.GetComponent<ILearningQuest>());
+        }
+
+        if (!m_activateLearningMode)
+        {
+            Destroy(m_castleLookCatcher.gameObject);
         }
         
         if (m_activateLearningMode)

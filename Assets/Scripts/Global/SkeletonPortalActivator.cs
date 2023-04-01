@@ -5,6 +5,9 @@ using UnityEngine;
 public class SkeletonPortalActivator : MonoBehaviour
 {
     [SerializeField] ParticleSystem particleSystem;
+    [SerializeField] private LearningSkeletonsCatching m_learningSkeletonsCatching;
+    [SerializeField] private CameraController m_cameraController;
+    [SerializeField] private CastleLookCatcher m_castleLookCatcher;
     bool insidePortal;
 
     public bool InsidePortal { get { return insidePortal; } }
@@ -20,7 +23,11 @@ public class SkeletonPortalActivator : MonoBehaviour
         if (other.gameObject.layer == 11)
         {
             insidePortal = true;
-            particleSystem.Play();
+            if (m_learningSkeletonsCatching.NextStep == 1)
+            {
+                m_learningSkeletonsCatching.ShowNextStep();
+            }
+            //particleSystem.Play();
             //Debug.Log("character entered");
         }
     }
@@ -30,6 +37,11 @@ public class SkeletonPortalActivator : MonoBehaviour
         if (other.gameObject.layer == 11)
         {
             insidePortal = true;
+            if (m_learningSkeletonsCatching.NextStep == 2  && m_cameraController.ObservedObject.transform != null && m_cameraController.ObservedObject.transform.GetComponent<CastleLookCatcher>() != null)
+            {
+                m_learningSkeletonsCatching.ShowNextStep();
+                Destroy(m_castleLookCatcher.gameObject);
+            }
             //Debug.Log("character stays");
         }
     }
@@ -39,7 +51,7 @@ public class SkeletonPortalActivator : MonoBehaviour
         if (other.gameObject.layer == 11)
         {
             insidePortal = false;
-            particleSystem.Stop();
+            //particleSystem.Stop();
             //Debug.Log("character got out");
         }
     }

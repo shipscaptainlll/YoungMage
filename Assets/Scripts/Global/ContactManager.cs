@@ -20,6 +20,9 @@ public class ContactManager : MonoBehaviour
     PersonMovement characterScript;
     Transform contactedSkeleton;
     public event Action<Transform> TeleporterDetected = delegate { };
+    public event Action OreDetectedLearningTutorial = delegate { };
+    public event Action SkeletonScannerActivated = delegate { };
+    public event Action ObjectAttachedSkeleton = delegate { };
     public event Action<Transform> OreDetected = delegate { };
     public event Action<Transform, Transform> SkeletonDetected = delegate { };
     public event Action DefractorDetected = delegate { };
@@ -33,6 +36,7 @@ public class ContactManager : MonoBehaviour
 
     float count;
     public Transform ContactedSkeleton { get { return contactedSkeleton; } set { contactedSkeleton = value; } }
+    
     private void Start()
     {
         ClickManager.LMBClicked += ContactObject;
@@ -72,11 +76,17 @@ public class ContactManager : MonoBehaviour
                         if (OreDetected != null)
                         {
                             if (potentialPositioner.IsActive) { PotentialPositionerDeactivated(); }
-                            
 
+                            
                             
                             OreDetected(contactedObject);
                         }
+                        
+                        if (OreDetectedLearningTutorial != null)
+                        {
+                            OreDetectedLearningTutorial();
+                        }
+                        
                     } else
                     {
                         if (ObjectOverloaded != null)
@@ -93,7 +103,13 @@ public class ContactManager : MonoBehaviour
                         if (OreDetected != null)
                         {
                             if (potentialPositioner.IsActive) { PotentialPositionerDeactivated(); }
+                            
                             OreDetected(contactedObject.parent);
+                        }
+                        
+                        if (OreDetectedLearningTutorial != null)
+                        {
+                            OreDetectedLearningTutorial();
                         }
                     } else
                     {
@@ -148,6 +164,10 @@ public class ContactManager : MonoBehaviour
                     || quickAccessHandController.CurrentCustomID == 17))
                 {
                     Debug.Log("Hello at");
+                    if (ObjectAttachedSkeleton != null)
+                    {
+                        ObjectAttachedSkeleton();
+                    }
                     attachObjectSkeleton.AttachObject(contactedObject.GetComponent<SkeletonBehavior>(), quickAccessHandController.CurrentCustomID);
                     bookSpellsActivator.CastApplyObject();
                 }
@@ -155,7 +175,10 @@ public class ContactManager : MonoBehaviour
                          && quickAccessHandController.CurrentCustomID == 27)
                 {
                     Debug.Log("Hello at jhere ");
-                    
+                    if (SkeletonScannerActivated != null)
+                    {
+                        SkeletonScannerActivated();
+                    }
                     m_suiSkeleton.ShowNewObject(contactedObject.GetComponent<AttachedItemsManager>(), contactedObject.GetComponent<SkeletonBehavior>(), 
                         quickAccessHandController.ObjectInHand.GetComponent<SkeletonsScanner>(),
                         contactedObject.GetComponent<Skeleton>());

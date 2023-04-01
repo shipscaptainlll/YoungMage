@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,11 +7,17 @@ public class DoorOpeningInitiator : MonoBehaviour
 {
     [SerializeField] DoorOpener door;
 
+    public event Action DoorWasFound = delegate { };
+
     private void OnTriggerEnter(Collider collider)
     {
         //Debug.Log(collider.transform);
         if (collider.transform.GetComponent<PersonMovement>() != null)
         {
+            if (DoorWasFound != null)
+            {
+                DoorWasFound();
+            }
             door.OpenTheDoor();
             //Debug.Log("player entered initiator");
         }

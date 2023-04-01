@@ -5,8 +5,13 @@ using UnityEngine;
 public class LearningCityRegeneration : MonoBehaviour, ILearningQuest
 {
     [SerializeField] private int m_questId;
+    [SerializeField] private ParticleSystem m_particleSystem;
+    [SerializeField] private LearningPopupsInstantiator m_learningPopupsInstantiator;
 
     [SerializeField] private Transform  m_questsHolder;
+    [SerializeField] private TutorialsInstantiator m_tutorialsInstantiator;
+
+    [SerializeField] private Transform m_checkboxesHolder;
     
     private int m_nextStep;
 
@@ -24,7 +29,7 @@ public class LearningCityRegeneration : MonoBehaviour, ILearningQuest
 
     public void DeactivateQuestSequence()
     {
-        LearningModeFlow.TryInitiateNextTutorial();
+        //LearningModeFlow.TryInitiateNextTutorial();
     }
 
     public void ShowNextStep()
@@ -34,15 +39,17 @@ public class LearningCityRegeneration : MonoBehaviour, ILearningQuest
             m_questsHolder.GetChild(0).GetComponent<Animator>().Play("PanelAppear");
         } else if (m_nextStep == 1)
         {
-            m_questsHolder.GetChild(0).GetComponent<Animator>().Play("PanelDisappear");
-            m_questsHolder.GetChild(1).GetComponent<Animator>().Play("PanelAppear");
+            m_checkboxesHolder.GetChild(0).GetComponent<LearningCheckboxBehavior>().MarkCheckboxFinished();
         } else if (m_nextStep == 2)
         {
-            m_questsHolder.GetChild(1).GetComponent<Animator>().Play("PanelDisappear");
-            m_questsHolder.GetChild(2).GetComponent<Animator>().Play("PanelAppear");
+            m_checkboxesHolder.GetChild(1).GetComponent<LearningCheckboxBehavior>().MarkCheckboxFinished();
         } else if (m_nextStep == 3)
         {
-            m_questsHolder.GetChild(2).GetComponent<Animator>().Play("PanelDisappear");
+            m_checkboxesHolder.GetChild(2).GetComponent<LearningCheckboxBehavior>().MarkCheckboxFinished();
+            m_questsHolder.GetChild(0).GetComponent<Animator>().Play("PanelDisappear");
+            m_particleSystem.Play();
+            m_learningPopupsInstantiator.ActivatePopup("woooow");
+            m_tutorialsInstantiator.ActivateTutorial(10);
             DeactivateQuestSequence();
         } 
 

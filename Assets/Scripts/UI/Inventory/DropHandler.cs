@@ -15,6 +15,8 @@ public class DropHandler : MonoBehaviour, IDropHandler
     [SerializeField] SoundManager soundManager;
     AudioSource changeElementSound;
 
+    
+    public event Action QuickAccessElementFilled = delegate { };
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +36,10 @@ public class DropHandler : MonoBehaviour, IDropHandler
                     SwapProperties(eventData);
                 } else if (CheckElementType() == "quickAccessSlot")
                 {
+                    if (QuickAccessElementFilled != null)
+                    {
+                        QuickAccessElementFilled();
+                    }
                     TransferProperties(eventData);
                 }
             }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,7 +35,8 @@ public class AttachedItemsManager : MonoBehaviour
     public bool VambraceEquiped { get { return vambraceEquiped; } }
     public int ItemsCummulativePower { get { return m_itemsCummulativePower; } }
     public float ItemsCummulativeSpeed { get { return m_itemsCummulativeSpeed; } }
-
+    
+    
     public void EquipStoneHands()
     {
         stoneHandsEquiped = true;

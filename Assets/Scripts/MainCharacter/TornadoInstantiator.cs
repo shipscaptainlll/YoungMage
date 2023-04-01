@@ -23,6 +23,7 @@ public class TornadoInstantiator : MonoBehaviour
     Coroutine turnOffCoroutine;
     int tornadoCountQuests;
     public int TornadoCountQuests { get { return tornadoCountQuests; } }
+    public event Action TornadoInstantiatedLearning = delegate { };
     public event Action<int> TornadoInstantiatedQuests = delegate { };
 // Start is called before the first frame update
 void Start()
@@ -44,7 +45,10 @@ void Start()
             windParticles.Play();
             dustParticles.Play();
             //bookSpellsActivator.CastTornadoSpell();
-
+            if (TornadoInstantiatedLearning != null)
+            {
+                TornadoInstantiatedLearning();
+            }
             Debug.Log("hello there");
             tornadoCountQuests++;
             if (TornadoInstantiatedQuests != null) { TornadoInstantiatedQuests(TornadoCountQuests); }

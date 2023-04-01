@@ -8,6 +8,11 @@ public class TutorialsInstantiator : MonoBehaviour
     [SerializeField] Transform tutorialsHolder;
     [SerializeField] Transform tutorialInvokersHolder;
     [SerializeField] TutorialModeActivator tutorialModeActivator;
+    [SerializeField] private LearningCityRegeneration m_learningCityRegeneration;
+    [SerializeField] private LearningModeFlow m_learningModeFlow;
+    [SerializeField] private Transform m_tutorialShowedPosition;
+    [SerializeField] private Transform m_tutorialFinishedPosition;
+    [SerializeField] private CityRegenerationEnter m_cityRegenerationEnter;
     List<TutorialElement> tutorialElements = new List<TutorialElement>();
     TutorialElement currentTutorial;
     int currentlyOpenedTutorialId;
@@ -26,13 +31,53 @@ public class TutorialsInstantiator : MonoBehaviour
         TutorialElement tutorial = FindTutorial(id);
         SaveData(id, tutorial);
         ShowTutorialPanel(tutorial);
-        tutorialModeActivator.ApplyTutorialReadingMode();
+        tutorialModeActivator.ApplyTutorialReadingMode(id);
     }
 
     public void FinishTutorial()
     {
+        Debug.Log("tutorials: we are here 3 " + transform);
         if (currentTutorial != null && currentlyOpenedTutorialId != 0)
         {
+            
+            tutorialModeActivator.DisengageTutorialReadingMode();
+            CloseTutorialPanel();
+            currentTutorial.IsFinished = true;
+            ReleaseData();
+        }
+    }
+    
+    public void FinishTutorial(int tutorialID)
+    {
+        Debug.Log("tutorials: we are here ");
+        if (currentTutorial != null && currentlyOpenedTutorialId != 0)
+        {
+            if (tutorialID == 1)
+            {
+                Debug.Log("tutorials: we are here 2");
+                LearningModeFlow.TryInitiateNextTutorial();
+            }
+            else if (tutorialID == 2)
+            {
+                Debug.Log("tutorials: we are here 4");
+                m_learningCityRegeneration.ShowNextStep();
+            } else if (tutorialID == 3)
+            {
+                Debug.Log("tutorials: we are here 4");
+                LearningModeFlow.TryInitiateNextTutorial();
+            } else if (tutorialID == 4)
+            {
+                Debug.Log("tutorials: we are here 4");
+                LearningModeFlow.TryInitiateNextTutorial();
+            } else if (tutorialID == 9)
+            {
+                Debug.Log("tutorials: we are here 4");
+                LearningModeFlow.TryInitiateNextTutorial();
+            } else if (tutorialID == 10)
+            {
+                m_cityRegenerationEnter.ExitCityRegeneration();
+                LearningModeFlow.TryInitiateNextTutorial();
+            }
             tutorialModeActivator.DisengageTutorialReadingMode();
             CloseTutorialPanel();
             currentTutorial.IsFinished = true;
@@ -54,6 +99,7 @@ public class TutorialsInstantiator : MonoBehaviour
 
     void ShowTutorialPanel(TutorialElement tutorial)
     {
+        tutorial.transform.position = m_tutorialShowedPosition.position;
         tutorial.Panel.GetComponent<CanvasGroup>().alpha = 1;
         panelsManager.OpenTutorialPanel();
     }
@@ -62,6 +108,7 @@ public class TutorialsInstantiator : MonoBehaviour
 
     void CloseTutorialPanel()
     {
+        currentTutorial.transform.position = m_tutorialFinishedPosition.position;
         currentTutorial.Panel.GetComponent<CanvasGroup>().alpha = 0;
         panelsManager.CloseTutorialPanel();
     }

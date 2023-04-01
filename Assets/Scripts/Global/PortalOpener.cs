@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,6 +35,9 @@ public class PortalOpener : MonoBehaviour
     public bool CircleVisible { get { return circleVisible; } }
     public bool PortalOpened { get { return portalOpened; } }
     public Transform ChoosenSkeleton { get { return choosenSkeleton; } }
+
+    public event Action PortalJustOpened = delegate { };
+
     // Start is called before the first frame update
     void Start()
     {
@@ -60,6 +64,12 @@ public class PortalOpener : MonoBehaviour
             {
                 cycleRunning = true;
                 //Debug.Log("OpeningPortal1");
+
+                if (PortalJustOpened != null)
+                {
+                    PortalJustOpened();
+                }
+                
                 EnablePortals();
                 //Debug.Log("OpeningPortal2");
                 ActivateParticleSystem();

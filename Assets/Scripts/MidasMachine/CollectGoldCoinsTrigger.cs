@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,8 @@ public class CollectGoldCoinsTrigger : MonoBehaviour
     bool isActive;
 
     public bool IsActive { get { return isActive; } }
+
+    public event Action GoldCollected = delegate { };
 
     void Start()
     {
@@ -40,6 +43,10 @@ public class CollectGoldCoinsTrigger : MonoBehaviour
     {
         if (isActive)
         {
+            if (GoldCollected != null)
+            {
+                GoldCollected();
+            }
             midasCoinsCatcher.CollectAccumulatedGold();
         }
     }

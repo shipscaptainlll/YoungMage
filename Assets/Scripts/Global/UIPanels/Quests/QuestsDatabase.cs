@@ -38,8 +38,8 @@ public class QuestsDatabase : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        InstantiatePotentialQuests();
-        StartCoroutine(InstantiateStartQuests());
+        //InstantiatePotentialQuests();
+        //StartCoroutine(InstantiateStartQuests());
     }
 
     void Start()

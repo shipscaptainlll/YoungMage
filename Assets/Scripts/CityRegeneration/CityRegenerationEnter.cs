@@ -152,7 +152,7 @@ public class CityRegenerationEnter : MonoBehaviour
         yield return null;
     }
 
-    void ExitCityRegeneration()
+    public void ExitCityRegeneration()
     {
         if (isActive && !isEntering)
         {

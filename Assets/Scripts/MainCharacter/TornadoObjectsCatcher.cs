@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,8 @@ public class TornadoObjectsCatcher : MonoBehaviour
     AudioSource acquiringObject;
 
     BoxCollider transformBoxcollider;
+
+    public event Action ObjectCatched = delegate { };
     // Start is called before the first frame update
     void Start()
     {
@@ -102,6 +105,7 @@ public class TornadoObjectsCatcher : MonoBehaviour
     {
         if (!resource.GetComponent<OreCounter>().CatchedByTornado)
         {
+            if (ObjectCatched != null) { ObjectCatched(); }
             resource.GetComponent<OreCounter>().CatchedByTornado = true;
             Debug.Log("catching this ");
             AddToCounter(resource.GetComponent<GlobalResource>().ID, resource.GetComponent<OreCounter>().OreCount);

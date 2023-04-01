@@ -38,10 +38,10 @@ public class LearningScreen : MonoBehaviour, ILearningQuest
     {
         EnableInterfacesElements();
         m_clickManager.LMBClicked -= ShowNextStep;
-        LearningModeFlow.TryInitiateNextTutorial();
+        
     }
 
-    void ShowNextStep()
+    public void ShowNextStep()
     {
         if (m_nextStep == 0) {
             m_LearningCursor.gameObject.SetActive(true);
@@ -63,11 +63,13 @@ public class LearningScreen : MonoBehaviour, ILearningQuest
         {
             m_LearningTextsHolder.GetChild(3).GetComponent<CanvasGroup>().alpha = 0;
             m_LearningTextsHolder.GetChild(4).GetComponent<CanvasGroup>().alpha = 1;
+            
             m_LearningCursorAnimator.Play("GoldArrow");
         } else if (m_nextStep == 4)
         {
             m_LearningTextsHolder.GetChild(4).GetComponent<CanvasGroup>().alpha = 0;
             m_LearningCursor.gameObject.SetActive(false);
+            
             StartCoroutine(HideGraduallyTransform());
             m_LearningCursor.GetComponent<CanvasGroup>().alpha = 0;
             DeactivateQuestSequence();

@@ -10,11 +10,15 @@ public class TutorialModeActivator : MonoBehaviour
 
     public bool ModeActive { get { return modeActive; } }
 
-    public void ApplyTutorialReadingMode()
+    public void ApplyTutorialReadingMode(int tutorialID)
     {
         modeActive = true;
         personMovement.TutorialModeActivated = true;
-        cameraController.TutorialModeActivated = true;
+        if (tutorialID != 10)
+        {
+            cameraController.TutorialModeActivated = true;
+        }
+        
         CursorManager.ForceCursorEnabled();
     }
 

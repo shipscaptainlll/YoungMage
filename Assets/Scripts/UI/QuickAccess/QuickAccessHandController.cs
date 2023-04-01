@@ -45,7 +45,7 @@ public class QuickAccessHandController : MonoBehaviour
         set 
         {
             currentCustomID = value;
-            if(ObjectHandsChanged != null) { ObjectHandsChanged(); } 
+            if(ObjectHandsChanged != null) { ObjectHandsChanged(); }
         }
     }
 

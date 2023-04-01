@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,6 +27,8 @@ public class Portal2 : MonoBehaviour
     List<PortalTraveller> trackedTravellers;
     MeshFilter screenMeshFilter;
     bool searchStarted = false;
+
+    public event Action SkeletonWasFound = delegate { };
 
     private void Awake()
     {
@@ -115,6 +118,10 @@ public class Portal2 : MonoBehaviour
                 {
                     Debug.Log(hit[i].transform.parent);
                     hit[i].transform.parent.GetComponent<SkeletonBehavior>().StartChazingPortal(linkedCamera);
+                    if (SkeletonWasFound != null)
+                    {
+                        SkeletonWasFound();
+                    }
                 }
             }
             

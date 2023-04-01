@@ -13,6 +13,7 @@ public class MidasCollectorCatcher : MonoBehaviour
     AudioSource waterFallinSound;
 
     System.Random rand;
+    public event Action ResourceEnteredCollectorLearningTutorial = delegate { };
     public event Action<int> ResourceEnteredCollector = delegate { };
     // Start is called before the first frame update
     void Start()
@@ -34,6 +35,7 @@ public class MidasCollectorCatcher : MonoBehaviour
             other.GetComponent<MidasResource>().BeingDissolved = true;
             ApplySounds(other.transform);
             int resourceID = other.GetComponent<GlobalResource>().ID;
+            if (ResourceEnteredCollectorLearningTutorial != null) { ResourceEnteredCollectorLearningTutorial(); }
             if (ResourceEnteredCollector != null) { ResourceEnteredCollector(resourceID); }
             other.GetComponent<ConnectableResource>().DissolvingDestruction();
             other.GetComponent<MidasResource>().DissolvingDestruction();
