@@ -36,10 +36,7 @@ public class DropHandler : MonoBehaviour, IDropHandler
                     SwapProperties(eventData);
                 } else if (CheckElementType() == "quickAccessSlot")
                 {
-                    if (QuickAccessElementFilled != null)
-                    {
-                        QuickAccessElementFilled();
-                    }
+                    
                     TransferProperties(eventData);
                 }
             }
@@ -85,6 +82,10 @@ public class DropHandler : MonoBehaviour, IDropHandler
 
     void CopyIDToQuickAccess(PointerEventData eventData, int slotNumber)
     {
+        if (QuickAccessElementFilled != null && eventData.pointerDrag.transform.GetComponent<Element>().CustomID == 2)
+        {
+            QuickAccessElementFilled();
+        }
         quickAccessPanel.GetChild(slotNumber).Find("Borders").Find("Element").GetComponent<QuickAccessElement>().CustomID = eventData.pointerDrag.transform.GetComponent<Element>().CustomID;
     }
 

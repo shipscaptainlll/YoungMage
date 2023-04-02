@@ -39,11 +39,17 @@ public class TutorialsInstantiator : MonoBehaviour
         Debug.Log("tutorials: we are here 3 " + transform);
         if (currentTutorial != null && currentlyOpenedTutorialId != 0)
         {
-            
+            int currentID = currentTutorial.GetComponent<TutorialElement>().ID;
             tutorialModeActivator.DisengageTutorialReadingMode();
             CloseTutorialPanel();
             currentTutorial.IsFinished = true;
             ReleaseData();
+            if (currentID == 11
+                || currentID == 12
+                || currentID == 13)
+            {
+                Cursor.lockState = CursorLockMode.Confined;
+            }
         }
     }
     

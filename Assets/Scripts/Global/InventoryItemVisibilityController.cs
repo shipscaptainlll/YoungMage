@@ -31,6 +31,8 @@ public class InventoryItemVisibilityController : MonoBehaviour
     [SerializeField] WaterstoneDustCounter waterstoneDustCounter;
     [SerializeField] WindstoneDustCounter windstoneDustCounter;
     [SerializeField] SkeletonScanersCounter skeletonScannerCounter;
+    [SerializeField] private Element m_quickAccessElementFirst;
+    [SerializeField] private QuickAccessElement m_quickAccessElementMainFirst;
 
 
 
@@ -129,6 +131,12 @@ public class InventoryItemVisibilityController : MonoBehaviour
     IEnumerator Hello()
     {
         yield return new WaitForSeconds(1);
-        magicWandCounter.AddResource(1);
+        if (magicWandCounter.Count == 0)
+        {
+            magicWandCounter.AddResource(1);
+            m_quickAccessElementFirst.CustomID = 10;
+            m_quickAccessElementMainFirst.CustomID = 10;
+        }
+        
     }
 }

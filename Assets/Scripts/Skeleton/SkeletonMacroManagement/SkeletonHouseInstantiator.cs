@@ -17,6 +17,8 @@ public class SkeletonHouseInstantiator : MonoBehaviour
     [SerializeField] Transform smallskeletonModel;
     [SerializeField] Transform bigskeletonModel;
     [SerializeField] Transform lizardskeletonModel;
+    [SerializeField] private Transform m_mainCharacterBody;
+    [SerializeField] private ContactManager m_contactManager;
 
 
     public event Action<Transform> SkeletonDestroyed = delegate { };
@@ -60,10 +62,14 @@ public class SkeletonHouseInstantiator : MonoBehaviour
 
         Transform newSkeleton = Instantiate(skeletonToInstantiate, teleportedSkeleton.position, teleportedSkeleton.rotation);
         newSkeleton.gameObject.SetActive(true);
+        
+        
         newSkeleton.GetComponent<SkeletonBehavior>().SubscribeAfterInstantiation();
         //newSkeleton.GetComponent<SkeletonBehavior>().InstantiateSounds();
         newSkeleton.GetComponent<SkeletonBehavior>().Activity = "Idle";
         newSkeleton.parent = homeSkeletonsHolder;
+        newSkeleton.GetComponent<SkeletonBehavior>().NavigationTarget = m_mainCharacterBody;
+        m_contactManager.ContactedSkeleton = newSkeleton;
         if (HouseSkeletonCreated != null) { HouseSkeletonCreated(newSkeleton); }
     }
 

@@ -6,11 +6,13 @@ public class LearningInspectingObjects : MonoBehaviour, ILearningQuest
 {
     [SerializeField] private int m_questId;
     [SerializeField] private LearningPopupsInstantiator m_learningPopupsInstantiator;
+    [SerializeField] private string m_popUpText;
 
     [SerializeField] private Transform  m_questsHolder;
     [SerializeField] private TutorialsInstantiator m_tutorialsInstantiator;
 
     [SerializeField] private Transform m_checkboxesHolder;
+    [SerializeField] private SoundManager m_soundManager;
     
     [Header("Steps invokers")]
     [SerializeField] private ContactManager m_contactManager;
@@ -43,8 +45,10 @@ public class LearningInspectingObjects : MonoBehaviour, ILearningQuest
             m_questsHolder.GetChild(0).GetComponent<Animator>().Play("PanelAppear");
         } else if (m_nextStep == 1)
         {
+            m_quickAccessHandController.ObjectHandsChanged -= CheckScannnerEqquiped;
             m_contactManager.SkeletonScannerActivated += ShowNextStep;
             m_checkboxesHolder.GetChild(0).GetComponent<LearningCheckboxBehavior>().MarkCheckboxFinished();
+            m_soundManager.Play("QuestUIAppear");
         } else if (m_nextStep == 2)
         {
             m_contactManager.SkeletonScannerActivated -= ShowNextStep;
@@ -52,12 +56,14 @@ public class LearningInspectingObjects : MonoBehaviour, ILearningQuest
             m_checkboxesHolder.GetChild(1).GetComponent<LearningCheckboxBehavior>().MarkCheckboxFinished();
             m_checkboxesHolder.GetChild(2).GetComponent<LearningCheckboxBehavior>().MarkCheckboxFinished();
             m_checkboxesHolder.GetChild(3).GetComponent<LearningCheckboxBehavior>().MarkCheckboxFinished();
+            m_soundManager.Play("QuestUIAppear");
         } else if (m_nextStep == 3)
         {
             m_contactManager.ObjectAttachedSkeleton -= ShowNextStep;
             m_checkboxesHolder.GetChild(4).GetComponent<LearningCheckboxBehavior>().MarkCheckboxFinished();
+            m_soundManager.Play("QuestUICompleted");
             m_questsHolder.GetChild(0).GetComponent<Animator>().Play("PanelDisappear");
-            m_learningPopupsInstantiator.ActivatePopup("woooow6");
+            m_learningPopupsInstantiator.ActivatePopup(m_popUpText);
             m_tutorialsInstantiator.ActivateTutorial(9);
             DeactivateQuestSequence();
         } 

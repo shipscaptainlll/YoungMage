@@ -6,18 +6,21 @@ public class LearningBreakingOre : MonoBehaviour, ILearningQuest
 {
     [SerializeField] private int m_questId;
     [SerializeField] private LearningPopupsInstantiator m_learningPopupsInstantiator;
+    [SerializeField] private string m_popUpText;
 
     [SerializeField] private Transform  m_questsHolder;
     [SerializeField] private TutorialsInstantiator m_tutorialsInstantiator;
 
     [SerializeField] private Transform m_checkboxesHolder;
     
+    
     [Header("Steps invokers")]
     [SerializeField] private MidasCollectorCatcher m_midasCollectorCatcher;
     [SerializeField] private CollectGoldCoinsTrigger m_collectGoldCoinsTrigger;
-    [SerializeField] private DropHandler m_dropHandler;
-    [SerializeField] private QuickAccessHandController m_quickAccessHandController;
+    
     [SerializeField] private OreSensor m_oreSensor;
+    
+    [SerializeField] private SoundManager m_soundManager;
     
     private int m_nextStep;
 
@@ -45,37 +48,22 @@ public class LearningBreakingOre : MonoBehaviour, ILearningQuest
             m_questsHolder.GetChild(0).GetComponent<Animator>().Play("PanelAppear");
         } else if (m_nextStep == 1)
         {
-            m_dropHandler.QuickAccessElementFilled += ShowNextStep;
+            
+            m_oreSensor.OreContactedLearningTutorial += ShowNextStep;
             m_checkboxesHolder.GetChild(0).GetComponent<LearningCheckboxBehavior>().MarkCheckboxFinished();
+            m_soundManager.Play("QuestUIAppear");
         } else if (m_nextStep == 2)
         {
-            m_dropHandler.QuickAccessElementFilled -= ShowNextStep;
-            m_quickAccessHandController.ObjectHandsChanged += CheckStoneOreEquipped;
-            m_checkboxesHolder.GetChild(1).GetComponent<LearningCheckboxBehavior>().MarkCheckboxFinished();
-        } else if (m_nextStep == 3)
-        {
-            m_quickAccessHandController.ObjectHandsChanged -= CheckStoneOreEquipped;
-            m_oreSensor.OreContactedLearningTutorial += ShowNextStep;
-            m_checkboxesHolder.GetChild(2).GetComponent<LearningCheckboxBehavior>().MarkCheckboxFinished();
-        } else if (m_nextStep == 4)
-        {
             m_oreSensor.OreContactedLearningTutorial -= ShowNextStep;
-            m_checkboxesHolder.GetChild(3).GetComponent<LearningCheckboxBehavior>().MarkCheckboxFinished();
+            m_checkboxesHolder.GetChild(1).GetComponent<LearningCheckboxBehavior>().MarkCheckboxFinished();
+            m_soundManager.Play("QuestUICompleted");
             m_questsHolder.GetChild(0).GetComponent<Animator>().Play("PanelDisappear");
-            m_learningPopupsInstantiator.ActivatePopup("woooow4");
+            m_learningPopupsInstantiator.ActivatePopup(m_popUpText);
             m_tutorialsInstantiator.ActivateTutorial(3);
             DeactivateQuestSequence();
         } 
 
         m_nextStep++;
-    }
-
-    public void CheckStoneOreEquipped()
-    {
-        if (m_quickAccessHandController.CurrentCustomID == 2)
-        {
-            ShowNextStep();
-        }
     }
     
     IEnumerator ShowGraduallyTransform(Transform targetTransform, float delay)

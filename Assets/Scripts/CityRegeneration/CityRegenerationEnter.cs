@@ -7,6 +7,7 @@ public class CityRegenerationEnter : MonoBehaviour
     [Header("Needed upper scripts")]
     [SerializeField] ContactManager contactManager;
     [SerializeField] ClickManager clickManager;
+    [SerializeField] private QuickAccessHandController m_quickAccessHandController;
 
     [Header("Camera")]
     [SerializeField] Transform cameraDestination;
@@ -71,7 +72,7 @@ public class CityRegenerationEnter : MonoBehaviour
     void EnterCityRegeneration()
     {
         Debug.Log("Here2");
-        if (!isActive)
+        if (!isActive && m_quickAccessHandController.CurrentCustomID == 10)
         {
             
             //personMovement.transform.LookAt(lookAtTransform);

@@ -25,7 +25,9 @@ public class TutorialInvoker : MonoBehaviour
         if (!isCompleted && other.gameObject.layer == 11 && cameraController.SeeingTutorial)
         {
             Debug.Log("invoked tutorial " + invokedTutorialId + " " + cameraController.HitThird.transform);
-            if(cameraController.HitThird.transform != null && cameraController.HitThird.transform.GetComponent<TutorialInvoker>().InvokedTutorialId == invokedTutorialId)
+            if(cameraController.HitThird.transform != null 
+               && cameraController.HitThird.transform.GetComponent<TutorialInvoker>() != null 
+               && cameraController.HitThird.transform.GetComponent<TutorialInvoker>().InvokedTutorialId == invokedTutorialId)
             {
                 if (invokedTutorialId == 2)
                 {
@@ -62,8 +64,12 @@ public class TutorialInvoker : MonoBehaviour
 
     public void InvokeTutorial()
     {
-        tutorialsInstantiator.ActivateTutorial(invokedTutorialId);
-        TurnOffInvoker();
+        if (!isCompleted)
+        {
+            tutorialsInstantiator.ActivateTutorial(invokedTutorialId);
+            TurnOffInvoker();
+        }
+        
     }
 
     public void TurnOffInvoker()

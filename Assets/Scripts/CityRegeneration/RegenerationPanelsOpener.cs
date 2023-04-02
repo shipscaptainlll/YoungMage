@@ -13,26 +13,21 @@ public class RegenerationPanelsOpener : MonoBehaviour
     [SerializeField] Transform m_showPositionWallPanel;
     [SerializeField] Transform m_showPositionCastlePanel;
     [SerializeField] Transform m_showPositionBlacksmithPanel;
+    [SerializeField] private TutorialInvoker m_wallsTutorialsInvoker;
+    [SerializeField] private TutorialInvoker m_blacksmithTutorialsInvoker;
+    [SerializeField] private TutorialInvoker m_cityTutorialsInvoker;
+    [SerializeField] private TutorialsInstantiator m_tutorialsInstantiator;
 
     [SerializeField] private LearningModeFlow m_learningModeFlow;
     [SerializeField] private LearningCityRegeneration m_learningCityRegeneration;
     Transform activeTransform;
     RegenerationElementOutline.RegenerationElementType activeType;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
+    
 
     public void AnalyseClickedElement(Transform clickedObject)
     {
-        if (clickedObject != null)
+        if (clickedObject != null && m_tutorialsInstantiator.CurrentlyOpenedTutorial == 0)
         {
             RegenerationElementOutline.RegenerationElementType encounteredType = clickedObject.GetComponent<RegenerationElementOutline>().ElementType;
 
@@ -74,16 +69,27 @@ public class RegenerationPanelsOpener : MonoBehaviour
         panel.GetComponent<CanvasGroup>().alpha = 0;
     }
 
+    public void HideActiveObject()
+    {
+        if (activeTransform != null)
+        {
+            HideObject(activeTransform);
+        }
+    }
+
     void ShowObject(Transform panel)
     {
         if (panel == regenerationWallPanel)
         {
+            m_wallsTutorialsInvoker.InvokeTutorial();
             panel.localPosition = new Vector3(750, 100, 0);
         } else if (panel == regenerationCastlePanel)
         {
+            m_blacksmithTutorialsInvoker.InvokeTutorial();
             panel.localPosition = new Vector3(900, 50, 0);
         } else if (panel == regenerationBlacksmithPanel)
         {
+            m_cityTutorialsInvoker.InvokeTutorial();
             panel.localPosition = new Vector3(750, 100, 0);
         }
         

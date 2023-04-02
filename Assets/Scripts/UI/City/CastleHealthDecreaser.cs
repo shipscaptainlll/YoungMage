@@ -9,6 +9,7 @@ public class CastleHealthDecreaser : MonoBehaviour
     [SerializeField] private CastleDamageCalculator m_castleDamageCalculator;
     [SerializeField] private CityCastleUpgrade m_cityCastleUpgrade;
     [SerializeField] private Text m_healthCounter;
+    [SerializeField] private CityWallUpgrade m_cityWallUpgrade;
     
     float minimalWidth = 0;
     float maximumWidth = 10000;
@@ -64,6 +65,10 @@ public class CastleHealthDecreaser : MonoBehaviour
     {
         m_healthCounter.text = ((int)currentHealth).ToString();
         RegenerateHealth(0);
+        if (CastleHealthChanged != null)
+        {
+            CastleHealthChanged((int)currentHealth);
+        }
     }
 
     // Update is called once per frame

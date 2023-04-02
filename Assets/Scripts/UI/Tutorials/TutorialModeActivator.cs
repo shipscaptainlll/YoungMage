@@ -14,7 +14,10 @@ public class TutorialModeActivator : MonoBehaviour
     {
         modeActive = true;
         personMovement.TutorialModeActivated = true;
-        if (tutorialID != 10)
+        if (tutorialID != 10
+            && tutorialID != 11
+            && tutorialID != 12
+            && tutorialID != 13)
         {
             cameraController.TutorialModeActivated = true;
         }

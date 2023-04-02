@@ -16,6 +16,7 @@ public class ContactManager : MonoBehaviour
     [SerializeField] BookSpellsActivator bookSpellsActivator;
     [SerializeField] PanelsManager panelsManager;
     [SerializeField] private SUISkeleton m_suiSkeleton;
+    [SerializeField] private LearningInspectingObjects m_inspectingObjects;
 
     PersonMovement characterScript;
     Transform contactedSkeleton;
@@ -96,7 +97,7 @@ public class ContactManager : MonoBehaviour
                     }
                     
                 }
-                if (contactedObject.parent.GetComponent<IOre>() != null && quickAccessHandController.CurrentCustomID == 10)
+                if (contactedObject.parent != null && contactedObject.parent.GetComponent<IOre>() != null && quickAccessHandController.CurrentCustomID == 10)
                 {
                     if (contactedObject.GetComponent<OreMiningManager>().ConnectedSkeleton == null)
                     {
@@ -166,6 +167,7 @@ public class ContactManager : MonoBehaviour
                     Debug.Log("Hello at");
                     if (ObjectAttachedSkeleton != null)
                     {
+                        Debug.Log("ready 2 ");
                         ObjectAttachedSkeleton();
                     }
                     attachObjectSkeleton.AttachObject(contactedObject.GetComponent<SkeletonBehavior>(), quickAccessHandController.CurrentCustomID);
@@ -175,8 +177,9 @@ public class ContactManager : MonoBehaviour
                          && quickAccessHandController.CurrentCustomID == 27)
                 {
                     Debug.Log("Hello at jhere ");
-                    if (SkeletonScannerActivated != null)
+                    if (SkeletonScannerActivated != null && m_inspectingObjects.NextStep == 2)
                     {
+                        Debug.Log("ready 3 ");
                         SkeletonScannerActivated();
                     }
                     m_suiSkeleton.ShowNewObject(contactedObject.GetComponent<AttachedItemsManager>(), contactedObject.GetComponent<SkeletonBehavior>(), 

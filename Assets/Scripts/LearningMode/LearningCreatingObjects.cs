@@ -6,11 +6,13 @@ public class LearningCreatingObjects : MonoBehaviour, ILearningQuest
 {
     [SerializeField] private int m_questId;
     [SerializeField] private LearningPopupsInstantiator m_learningPopupsInstantiator;
+    [SerializeField] private string m_popUpText;
 
     [SerializeField] private Transform  m_questsHolder;
     [SerializeField] private TutorialsInstantiator m_tutorialsInstantiator;
 
     [SerializeField] private Transform m_checkboxesHolder;
+    [SerializeField] private SoundManager m_soundManager;
     
     [Header("Steps invokers")]
     [SerializeField] private ClickManager m_clickManager;
@@ -43,6 +45,7 @@ public class LearningCreatingObjects : MonoBehaviour, ILearningQuest
         {
             m_clickManager.EClicked += ShowNextStep;
             m_checkboxesHolder.GetChild(0).GetComponent<LearningCheckboxBehavior>().MarkCheckboxFinished();
+            m_soundManager.Play("QuestUIAppear");
         } else if (m_nextStep == 2)
         {
             m_clickManager.EClicked -= ShowNextStep;
@@ -50,8 +53,9 @@ public class LearningCreatingObjects : MonoBehaviour, ILearningQuest
             m_checkboxesHolder.GetChild(2).GetComponent<LearningCheckboxBehavior>().MarkCheckboxFinished();
             m_checkboxesHolder.GetChild(3).GetComponent<LearningCheckboxBehavior>().MarkCheckboxFinished();
             m_checkboxesHolder.GetChild(4).GetComponent<LearningCheckboxBehavior>().MarkCheckboxFinished();
+            m_soundManager.Play("QuestUICompleted");
             m_questsHolder.GetChild(0).GetComponent<Animator>().Play("PanelDisappear");
-            m_learningPopupsInstantiator.ActivatePopup("woooow5");
+            m_learningPopupsInstantiator.ActivatePopup(m_popUpText);
             m_tutorialsInstantiator.ActivateTutorial(4);
             DeactivateQuestSequence();
         } 

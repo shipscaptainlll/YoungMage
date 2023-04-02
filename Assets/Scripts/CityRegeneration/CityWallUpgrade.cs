@@ -39,12 +39,20 @@ public class CityWallUpgrade : MonoBehaviour
     public int CountReneratedQuests { get { return hpRegeneratedQuests; } }
     public event Action<int> HealthRegeneratedQuests = delegate { };
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         healthCost = 1f;
         wallMaximumHealth = castleHealthDecreaser.MaximumHealth;
-        Debug.Log("maximum is " + wallMaximumHealth);
         castleHealthDecreaser.CastleHealthChanged += AnalyzeCurrentHealth;
+        
+    }
+
+    void Start()
+    {
+        
+        
+        Debug.Log("maximum is " + wallMaximumHealth);
+        
         //goldCoinsCounter.AmmountEnded += AnalyzeGold;
         wallRegenerationButton.ButtonDown += TransformMoneyHealth;
         wallRegenerationButton.ButtonUp += HideUpgradePS;
@@ -52,7 +60,7 @@ public class CityWallUpgrade : MonoBehaviour
         regenerationSound = soundManager.LocateAudioSource("RegenerationwallRegeneration", regenerationSoundSource);
 
         healthText.text = castleHealthDecreaser.CurrentHealth.ToString();
-        UpdateGoldShower(0);
+        //UpdateGoldShower(0);
     }
 
     public void TransformMoneyHealth()
@@ -78,8 +86,9 @@ public class CityWallUpgrade : MonoBehaviour
         
     }
 
-    void AnalyzeCurrentHealth(int currentHealth)
+    public void AnalyzeCurrentHealth(int currentHealth)
     {
+        Debug.Log("current he " + currentHealth + " " + CalculateRequiredGold(currentHealth));
         UpdateHealthShower(currentHealth);
         UpdateGoldShower(CalculateRequiredGold(currentHealth));
     }

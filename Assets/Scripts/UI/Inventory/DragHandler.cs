@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -15,6 +17,8 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     bool doubleClicked;
 
     List<RaycastResult> hitObjects = new List<RaycastResult>();
+    
+    public event Action QuickAccessElementFilled = delegate { };
     public void OnBeginDrag(PointerEventData eventData)
     {
         typeSiblingIndex = transform.parent.parent.parent.parent.GetSiblingIndex();
@@ -63,6 +67,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
                     if (element.GetChild(0).Find("Element").GetComponent<Element>().CustomID == 0)
                     {
                         CopyCustomID(eventData, element.GetChild(0).Find("Element"));
+                        
                         return;
                     }
                 }
@@ -73,6 +78,10 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     void CopyCustomID(PointerEventData eventData, Transform freeQuickElement)
     {
         GameObject targetObject = GetObjectUnderMouse();
+        if (QuickAccessElementFilled != null && targetObject.GetComponent<Element>().CustomID == 2)
+        {
+            QuickAccessElementFilled();
+        }
         freeQuickElement.GetComponent<Element>().CustomID = targetObject.GetComponent<Element>().CustomID;
         int slotNumber = freeQuickElement.transform.parent.parent.GetSiblingIndex();
 
