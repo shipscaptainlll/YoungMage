@@ -26,6 +26,8 @@ public class PersonMovement : MonoBehaviour
     CameraController cameraController;
     bool isAutoRunning;
     bool tutorialModeActivated;
+    private bool m_isTransmutationMode;
+    
 
     [Header("Warp Base Settings")]
     [SerializeField] MiscPanel miscPanel;
@@ -115,7 +117,7 @@ public class PersonMovement : MonoBehaviour
     
     public bool SkeletonAttached { get { return skeletonAttached; } set { skeletonAttached = value; } }
     public bool IsCrouching { get { return isCrouching; } set { isCrouching = value; StopRunning(); } }
-
+    public bool IsTransmutationMode { get { return m_isTransmutationMode; } set { m_isTransmutationMode = value; } }
     public float BasicSpeed { get { return basicSpeed; } set { basicSpeed = value; } }
     public Transform MainCamera { get { return mainCamera; } }
     
@@ -175,7 +177,7 @@ public class PersonMovement : MonoBehaviour
             
         }
         //Debug.Log("is walking " + isWalking + " and is running " + isRunning + " running with speed " + characterController.velocity + " and magnitude " + characterController.velocity.magnitude);
-        if (!occupied && !tutorialModeActivated)
+        if (!occupied && !tutorialModeActivated && !m_isTransmutationMode)
             MoveCharacter();
         if (isWalking && !onStone && !onStairs && !onOtherGround && isGrounded) { RandomWoodcreakInitiator(); if (!walkingSound.isPlaying) { walkingSound.Play(); } } else { if (walkingSound.isPlaying) { walkingSound.Stop(); } }
         if (isWalking && onStairs) { if (!walkingStairsSound.isPlaying) { walkingStairsSound.Play(); } } else { if (walkingStairsSound.isPlaying) { walkingStairsSound.Stop(); } }

@@ -30,6 +30,8 @@ public class CameraController : MonoBehaviour
     bool cityRegenerationMode;
     bool introMode;
     bool seeingTutorial;
+    private bool m_isTransmutationMode;
+    public bool IsTransmutationMode { get { return m_isTransmutationMode; } set { m_isTransmutationMode = value; } }
     
     public bool IntroMode { get { return introMode; } set { introMode = value; } }
     public bool TutorialModeActivated { get { return tutorialModeActivated; } set { tutorialModeActivated = value; } }
@@ -67,7 +69,7 @@ public class CameraController : MonoBehaviour
     {
         //Debug.Log("tutorialModeActivated " + tutorialModeActivated);
         //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward * 3), Color.red);
-        if (!cursorManager.SomethingOpened && !tutorialModeActivated)
+        if (!cursorManager.SomethingOpened && !tutorialModeActivated && !m_isTransmutationMode)
         {
             RotateHead();
             DetectObject();

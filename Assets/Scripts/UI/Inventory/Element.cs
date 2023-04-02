@@ -10,6 +10,7 @@ public class Element : MonoBehaviour
     [SerializeField] SpriteManager spriteManager;
     [SerializeField] ElementTypeEnum elementTypeEnum;
     [SerializeField] AnimationCurve animationCurve;
+    [SerializeField] private int m_transmutationSlotID;
     Transform attachedCounter;
     Text textBox;
     Vector2 elementSize;
@@ -29,7 +30,11 @@ public class Element : MonoBehaviour
         {
             customID = value;
             StopAllCoroutines();
-            UpdateAttachedCounter();
+            if (elementTypeEnum != ElementTypeEnum.transmutationSlotSlot)
+            {
+                UpdateAttachedCounter();
+            }
+            
             UpdateElement();
             if (!coroutineActive)
             {
@@ -43,7 +48,9 @@ public class Element : MonoBehaviour
             //Debug.Log("chages in " + transform + " with id " + customID);
         }
     }
-
+    
+    public int TransmutationSlotID { get {return m_transmutationSlotID;} }
+    
     void UpdateAttachedCounter()
     {
         if (attachedCounter != null)
@@ -76,7 +83,7 @@ public class Element : MonoBehaviour
         }
     }
 
-    public enum ElementTypeEnum { inventorySlot, quickAccessSlot };
+    public enum ElementTypeEnum { inventorySlot, quickAccessSlot, transmutationSlotSlot, transmutationInventorySlot };
 
     public string ElementType
     {
@@ -100,7 +107,7 @@ public class Element : MonoBehaviour
     void UpdateElement()
     {
         UpdateImage();
-        if (attachedCounter != null)
+        if (attachedCounter != null && elementTypeEnum != ElementTypeEnum.transmutationSlotSlot)
         {
             UpdateCounter(attachedCounter.GetComponent<ICounter>().Count);
         }

@@ -59,16 +59,6 @@ public class CityRegenerationEnter : MonoBehaviour
         //Debug.Log("ready");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (isActive)
-        {
-            cameraTransform.LookAt(lookAtTransform);
-        }
-        
-    }
-
     void EnterCityRegeneration()
     {
         Debug.Log("Here2");

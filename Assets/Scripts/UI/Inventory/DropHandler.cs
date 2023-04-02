@@ -7,6 +7,8 @@ using UnityEngine.EventSystems;
 
 public class DropHandler : MonoBehaviour, IDropHandler
 {
+    [SerializeField] private Transform m_transmutationSlotPanel;
+    
     List<RaycastResult> hitObjects = new List<RaycastResult>();
     public event Action QuitAccessChanged = delegate { };
     [SerializeField] Transform quickAccessPanel;
@@ -17,6 +19,7 @@ public class DropHandler : MonoBehaviour, IDropHandler
 
     
     public event Action QuickAccessElementFilled = delegate { };
+    public event Action TransmutationSlotElementFilled = delegate { };
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +41,14 @@ public class DropHandler : MonoBehaviour, IDropHandler
                 {
                     
                     TransferProperties(eventData);
+                } else if (CheckElementType() == "transmutationSlotSlot")
+                {
+                    
+                    TransferProperties(eventData);
+                } else if (CheckElementType() == "transmutationInventorySlot")
+                {
+                    
+                    SwapProperties(eventData);
                 }
             }
         }
@@ -75,9 +86,17 @@ public class DropHandler : MonoBehaviour, IDropHandler
         targetObject.GetComponent<Element>().CustomID = eventData.pointerDrag.transform.GetComponent<Element>().CustomID;
         int slotNumber = targetObject.transform.parent.parent.GetSiblingIndex();
 
+        
+        changeElementSound.Play();
+        
+        if (CheckElementType() == "transmutationInventorySlot")
+        {
+            return;
+        }
+        
         CopyIDToQuickAccess(eventData, slotNumber);
 
-        changeElementSound.Play();
+        
     }
 
     void CopyIDToQuickAccess(PointerEventData eventData, int slotNumber)
@@ -91,7 +110,17 @@ public class DropHandler : MonoBehaviour, IDropHandler
 
     Transform CheckForRepeating(PointerEventData eventData)
     {
-        Transform quickAccessPanel = transform.Find("QuickAccess");
+        
+        if (transform.Find("QuickAccess") != null)
+        {
+            Transform quickAccessPanel = transform.Find("QuickAccess");
+        }
+        else
+        {
+            return null;
+            //quickAccessPanel = m_transmutationSlotPanel;
+        }
+        
         Transform targetObject = GetObjectUnderMouse().transform.parent.parent;
         foreach (Transform slot in quickAccessPanel.GetChild(0))
         {
@@ -128,6 +157,7 @@ public class DropHandler : MonoBehaviour, IDropHandler
 
         if (hitObjects.Count <= 0) return null;
         
+        Debug.Log("under mouse was " + hitObjects[2]);
         return hitObjects[2].gameObject;
     }
 

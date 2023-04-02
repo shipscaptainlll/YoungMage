@@ -8,7 +8,9 @@ using UnityEngine.EventSystems;
 public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerDownHandler
 {
     [SerializeField] Transform quickaccessElementsHolder;
+    [SerializeField] private Transform m_transmutationSlotElementsHolder;
     [SerializeField] Transform quickAccessPanel;
+    [SerializeField] private bool m_isTransmutationSlot;
     int typeSiblingIndex;
     int rowSiblingIndex;
     int slotSiblingIndex;
@@ -19,6 +21,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     List<RaycastResult> hitObjects = new List<RaycastResult>();
     
     public event Action QuickAccessElementFilled = delegate { };
+    public event Action<int> TransmutationSlotElementFilled = delegate { };
     public void OnBeginDrag(PointerEventData eventData)
     {
         typeSiblingIndex = transform.parent.parent.parent.parent.GetSiblingIndex();
@@ -51,6 +54,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         ManageDoubleClicks();
         if (Input.GetKey(KeyCode.LeftControl) || doubleClicked)
         {
+            
             if (GetObjectUnderMouse().GetComponent<Element>().ElementType == Element.ElementTypeEnum.inventorySlot.ToString() && GetObjectUnderMouse().GetComponent<Element>().CustomID != 0)
             {
                 foreach (Transform element in quickaccessElementsHolder)
@@ -73,19 +77,44 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
                 }
             }
             
+            if (GetObjectUnderMouse().GetComponent<Element>().ElementType == Element.ElementTypeEnum.transmutationInventorySlot.ToString() && GetObjectUnderMouse().GetComponent<Element>().CustomID != 0)
+            {
+                
+
+                foreach (Transform element in m_transmutationSlotElementsHolder)
+                {
+                    //Debug.Log(" is free2");
+                    if (element.GetChild(0).Find("Element").GetComponent<Element>().CustomID == 0)
+                    {
+                        CopyCustomID(eventData, element.GetChild(0).Find("Element"));
+                        
+                        return;
+                    }
+                }
+            }
+            
+            if (GetObjectUnderMouse().GetComponent<Element>().ElementType == Element.ElementTypeEnum.transmutationSlotSlot.ToString() && GetObjectUnderMouse().GetComponent<Element>().CustomID != 0)
+            {
+                GameObject transmutationSlot = GetObjectUnderMouse();
+                transmutationSlot.GetComponent<Element>().CustomID = 0;
+                TransmutationSlotElementFilled?.Invoke(transmutationSlot.GetComponent<Element>().TransmutationSlotID);
+            }
+            
         }
     }
     void CopyCustomID(PointerEventData eventData, Transform freeQuickElement)
     {
         GameObject targetObject = GetObjectUnderMouse();
-        if (QuickAccessElementFilled != null && targetObject.GetComponent<Element>().CustomID == 2)
-        {
-            QuickAccessElementFilled();
-        }
+        
         freeQuickElement.GetComponent<Element>().CustomID = targetObject.GetComponent<Element>().CustomID;
+        TransmutationSlotElementFilled?.Invoke(freeQuickElement.GetComponent<Element>().TransmutationSlotID);
         int slotNumber = freeQuickElement.transform.parent.parent.GetSiblingIndex();
 
-        CopyIDToQuickAccess(eventData, slotNumber, freeQuickElement);
+        if (targetObject.GetComponent<Element>().ElementType == Element.ElementTypeEnum.inventorySlot.ToString())
+        {
+            CopyIDToQuickAccess(eventData, slotNumber, freeQuickElement);
+        }
+        
     }
 
     void CopyIDToQuickAccess(PointerEventData eventData, int slotNumber, Transform freeQuickElement)

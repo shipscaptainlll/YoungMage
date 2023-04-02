@@ -31,10 +31,7 @@ public class ObjectManager : MonoBehaviour
     [SerializeField] GameObject windStoneDust;
     [SerializeField] GameObject skeletonScaner;
 
-    void Start()
-    {
-        
-    }
+    
 
     public GameObject TakeObject(int customeID)
     {

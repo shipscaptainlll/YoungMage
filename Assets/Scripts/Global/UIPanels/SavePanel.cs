@@ -40,8 +40,10 @@ public class SavePanel : MonoBehaviour
     AudioSource saveSound;
 
     bool isTutorialMode;
+    private bool m_isTransmutationMode;
 
     public bool IsTutorialMode { get { return isTutorialMode; } set { isTutorialMode = value; } }
+    public bool IsTransmutationMode { get { return m_isTransmutationMode; } set { m_isTransmutationMode = value; } }
     
 
 

@@ -9,6 +9,9 @@ public class PanelsManager : MonoBehaviour
     [SerializeField] ContactManager contactManager;
     [SerializeField] ClickManager clickManager;
     [SerializeField] Transform inventoryPanel;
+    [SerializeField] Transform m_transmutationInventoryPanel;
+    [SerializeField] Transform m_transmutationSlotsPanel;
+    [SerializeField] Transform m_transmutationRecipesPanel;
     [SerializeField] Transform escapeMenuPanel;
     [SerializeField] Transform settingsMenuPanel;
     [SerializeField] Transform graphicsSettingPanel;
@@ -68,6 +71,9 @@ public class PanelsManager : MonoBehaviour
         RelocateFarAway(upgradeTablePanel);
         RelocateFarAway(midasCauldronTablePanel);
         RelocateFarAway(defractorTablePanel);
+        RelocateFarAway(m_transmutationInventoryPanel);
+        RelocateFarAway(m_transmutationSlotsPanel);
+        RelocateFarAway(m_transmutationRecipesPanel);
         currentSettingsSubpanel = graphicsSettingPanel;
         updateSpeed = 0.1f;
         clickManager.IClicked += openInventory;
@@ -129,6 +135,11 @@ public class PanelsManager : MonoBehaviour
         if (panelToClose != null && panelToClose != tutorialPanel)
         {
             StartCoroutine(CacheClosePanel(panelToClose, false));
+            if (panelToClose == m_transmutationInventoryPanel)
+            {
+                StartCoroutine(CacheClosePanel(m_transmutationSlotsPanel, false));
+                StartCoroutine(CacheClosePanel(m_transmutationRecipesPanel, false));
+            }
         }
     }
 
@@ -301,6 +312,16 @@ public class PanelsManager : MonoBehaviour
             nextToOpen = questPanel;
             decideNextState();
         }
+    }
+
+    public void OpenTransmutationPanel()
+    {
+        nextToOpen = m_transmutationInventoryPanel;
+        RelocateDefaultPosition(m_transmutationSlotsPanel);
+        RelocateDefaultPosition(m_transmutationRecipesPanel);
+        StartCoroutine(CacheOpenPanel(m_transmutationSlotsPanel));
+        StartCoroutine(CacheOpenPanel(m_transmutationRecipesPanel));
+        decideNextState();
     }
 
     public void OpenMainmenuPanel()

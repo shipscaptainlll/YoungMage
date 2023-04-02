@@ -5,6 +5,7 @@ using UnityEngine;
 public class InventoryItemVisibilityController : MonoBehaviour
 {
     [SerializeField] Transform inventoryPanel;
+    [SerializeField] Transform transmutationInventoryPanel;
     [SerializeField] GoldCoinsCounter goldCoinsCounter;
     [SerializeField] StoneOreCounter stoneOreCounter;
     [SerializeField] MetalOreCounter metalOreCounter;
@@ -83,6 +84,13 @@ public class InventoryItemVisibilityController : MonoBehaviour
             Element emptySlotElementScript = foundEmptySlot.Find("Borders").GetChild(1).GetComponent<Element>();
             emptySlotElementScript.CustomID = customId;
         }
+
+        foundEmptySlot = SearchEmptySlotSuperPanel();
+        if (foundEmptySlot != null)
+        {
+            Element emptySlotElementScript = foundEmptySlot.Find("Borders").GetChild(1).GetComponent<Element>();
+            emptySlotElementScript.CustomID = customId;
+        }
     }
 
     void DeleteVisibleItem(int customId)
@@ -90,6 +98,10 @@ public class InventoryItemVisibilityController : MonoBehaviour
         //Debug.Log("Starting deleting process");
         Transform foundSlot = SearchForSlot(customId);
         Element slotElementScript = foundSlot.Find("Borders").GetChild(1).GetComponent<Element>();
+        slotElementScript.CustomID = 0;
+        
+        foundSlot = SearchForSuperSlot(customId);
+        Element transmutationSlotElementScript = foundSlot.Find("Borders").GetChild(1).GetComponent<Element>();
         slotElementScript.CustomID = 0;
     }
 
@@ -109,11 +121,45 @@ public class InventoryItemVisibilityController : MonoBehaviour
         //Debug.Log("Didnt find anything");
         return null;
     }
+    
+    Transform SearchForSuperSlot(int customId)
+    {
+        foreach (Transform row in transmutationInventoryPanel)
+        {
+            foreach (Transform slot in row)
+            {
+                if (customId == slot.Find("Borders").GetChild(1).GetComponent<Element>().CustomID)
+                {
+                    Debug.Log("found in " + slot);
+                    return slot;
+                }
+            }
+        }
+        //Debug.Log("Didnt find anything");
+        return null;
+    }
 
     private Transform SearchEmptySlot()
     {
         
         foreach (Transform row in inventoryPanel)
+        {
+            foreach (Transform slot in row)
+            {
+                int slotCustomID = slot.Find("Borders").GetChild(1).GetComponent<Element>().CustomID;
+                if (slotCustomID == 0)
+                {
+                    return slot;
+                }
+            }
+        }
+        return null;
+    }
+    
+    private Transform SearchEmptySlotSuperPanel()
+    {
+        
+        foreach (Transform row in transmutationInventoryPanel)
         {
             foreach (Transform slot in row)
             {

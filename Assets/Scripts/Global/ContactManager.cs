@@ -20,6 +20,7 @@ public class ContactManager : MonoBehaviour
 
     PersonMovement characterScript;
     Transform contactedSkeleton;
+    public event Action ContactedTransmutationWorkflow = delegate { };
     public event Action<Transform> TeleporterDetected = delegate { };
     public event Action OreDetectedLearningTutorial = delegate { };
     public event Action SkeletonScannerActivated = delegate { };
@@ -260,6 +261,13 @@ public class ContactManager : MonoBehaviour
                         Debug.Log("is full");
                     }
                     
+                } else if (contactedObject.GetComponent<TransmutationWorkflow>() != null && quickAccessHandController.CurrentCustomID == 10)
+                {
+                    if (ContactedTransmutationWorkflow != null)
+                    {
+                        ContactedTransmutationWorkflow();
+                    }
+                    bookSpellsActivator.CastContactMachinery();
                 } 
             }
         }
