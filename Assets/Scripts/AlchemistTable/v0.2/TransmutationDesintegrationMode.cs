@@ -8,39 +8,47 @@ public class TransmutationDesintegrationMode : MonoBehaviour
     [SerializeField] private TransmutationElementsManager m_transmutationElementsManager;
     [SerializeField] private Transform m_desintegrationPanelsHolder;
     [SerializeField] private Transform m_desintegrationPanelTemplate;
+    [SerializeField] private Transform m_desintegrationPanelPosition;
     [SerializeField] private TransmutationDesintegrationModeActivator m_transmutationDesintegrationModeActivator;
     [SerializeField] private TransmutationProcessing m_transmutationProcessing;
     private int m_leftCycles;
     private int m_cyclesCount;
     
-    // Start is called before the first frame update
-    void Start()
+    public int LeftCycles
     {
-        
+        get => m_leftCycles;
     }
 
     public void EnterDesintegration()
     {
         m_leftCycles = m_transmutationElementsManager.ElementsFilled;
+        Debug.Log("number of filled elements " + m_leftCycles);
+        foreach (TransmutationElement element in m_transmutationElementsManager.ActivatedTransmutationElements)
+        {
+            Debug.Log(element.transform.name);
+        }
+        Debug.Log(m_transmutationElementsManager.ActivatedTransmutationElements[0].transform.name);
         m_cyclesCount = 0;
-        ShowNextDesintegrationPanel();
+        Transform newDesintegrationPanel = Instantiate(m_desintegrationPanelTemplate, m_desintegrationPanelsHolder);
+        newDesintegrationPanel.gameObject.SetActive(true);
+        newDesintegrationPanel.position = m_desintegrationPanelPosition.position;
+        //ShowNextDesintegrationPanel();
     }
 
-    public void ShowNextDesintegrationPanel()
+    public void ShowNextDesintegraionElement()
     {
-        if (m_cyclesCount - 1 > 0)
+        m_leftCycles--;
+        if (m_leftCycles > 0)
         {
-            m_transmutationElementsManager.ActivatedTransmutationElements[m_cyclesCount - 1].CurrentTransmutationBaseObject.ActivateDecomposition();
+            m_transmutationElementsManager.ActivatedTransmutationElements[m_leftCycles].CurrentTransmutationBaseObject.ActivateDecomposition();
+            
         } 
         
         if (m_leftCycles == 0)
         {
-            m_transmutationElementsManager.ActivatedTransmutationElements[m_cyclesCount].CurrentTransmutationBaseObject.ActivateShining();
+            m_transmutationElementsManager.ActivatedTransmutationElements[m_leftCycles].CurrentTransmutationBaseObject.ActivateDecomposition();
+            //m_transmutationElementsManager.ActivatedTransmutationElements[m_leftCycles].CurrentTransmutationBaseObject.ActivateShining();
             ExitDesintegradion();
-        }
-        else
-        {
-            Transform newDesintegrationPanel = Instantiate(m_desintegrationPanelTemplate, m_desintegrationPanelsHolder);
         }
     }
 

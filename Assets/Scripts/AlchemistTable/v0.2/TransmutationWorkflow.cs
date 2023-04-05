@@ -14,10 +14,18 @@ public class TransmutationWorkflow : MonoBehaviour
     [SerializeField] private PersonMovement m_personMovement;
     [SerializeField] private SavePanel m_savePanel;
     [SerializeField] private PanelsManager m_panelsManager;
-    [SerializeField] private Transform m_quickAccessPanel;
+    
+    [SerializeField] private Transform m_transmutationInventoryPanel;
+    [SerializeField] private Transform m_transmutationSlotsPanel;
+    [SerializeField] private Transform m_transmutationRecipesPanel;
+    
     [SerializeField] private Transform m_cameraTransform;
     [SerializeField] private Transform m_cameraDestination;
     [SerializeField] private Transform m_cameraStartingPoint;
+    
+    [SerializeField] Transform m_lookAtTransform;
+    [SerializeField] private Transform m_playerPositionEnter;
+    [SerializeField] private Transform m_cameraTransformLookAt;
 
     private Coroutine m_cameraRepositioningCoroutine;
 
@@ -40,7 +48,11 @@ public class TransmutationWorkflow : MonoBehaviour
             m_personMovement.IsTransmutationMode = true;
             m_savePanel.IsTransmutationMode = true;
             
-            m_quickAccessPanel.GetComponent<CanvasGroup>().alpha = 0;
+            m_transmutationInventoryPanel.GetComponent<CanvasGroup>().alpha = 0;
+            m_transmutationSlotsPanel.GetComponent<CanvasGroup>().alpha = 0;
+            m_transmutationRecipesPanel.GetComponent<CanvasGroup>().alpha = 0;
+            
+            m_personMovement.transform.position = m_playerPositionEnter.position;
             
             CursorManager.ForceCursorEnabled();
             
@@ -56,18 +68,24 @@ public class TransmutationWorkflow : MonoBehaviour
 
     void ExitTransmutationMode()
     {
-        m_isTransmutationMode = false;
-        
-        m_quickAccessPanel.GetComponent<CanvasGroup>().alpha = 1;
-        
-        CursorManager.ForceCursorDisabled();
-        
-        if (m_cameraRepositioningCoroutine != null)
+        if (m_isTransmutationMode)
         {
-            StopCoroutine(m_cameraRepositioningCoroutine);
-            m_cameraRepositioningCoroutine = null;
+            m_isTransmutationMode = false;
+        
+            m_transmutationInventoryPanel.GetComponent<CanvasGroup>().alpha = 1;
+            m_transmutationSlotsPanel.GetComponent<CanvasGroup>().alpha = 1;
+            m_transmutationRecipesPanel.GetComponent<CanvasGroup>().alpha = 1;
+        
+            CursorManager.ForceCursorDisabled();
+        
+            if (m_cameraRepositioningCoroutine != null)
+            {
+                StopCoroutine(m_cameraRepositioningCoroutine);
+                m_cameraRepositioningCoroutine = null;
+            }
+            m_cameraRepositioningCoroutine = StartCoroutine(CameraToDestination(m_cameraTransform, m_cameraStartingPoint, 0.6f));
         }
-        m_cameraRepositioningCoroutine = StartCoroutine(CameraToDestination(m_cameraTransform, m_cameraStartingPoint, 0.6f));
+        
     }
     
     IEnumerator CameraToDestination(Transform startPoint, Transform endPoint, float delay)
@@ -80,7 +98,8 @@ public class TransmutationWorkflow : MonoBehaviour
         float xPosition = startPoint.position.x;
         float yPosition = startPoint.position.y;
         float zPosition = startPoint.position.z;
-
+        
+        
         while (elapsed < maxTime)
         {
             elapsed += Time.deltaTime;
@@ -88,9 +107,22 @@ public class TransmutationWorkflow : MonoBehaviour
             xPosition = Mathf.Lerp(xStartPosition, endPoint.position.x, elapsed / maxTime);
             yPosition = Mathf.Lerp(yStartPosition, endPoint.position.y, elapsed / maxTime);
             zPosition = Mathf.Lerp(zStartPosition, endPoint.position.z, elapsed / maxTime);
+            m_cameraTransformLookAt.transform.LookAt(m_lookAtTransform);
             m_cameraTransform.position = new Vector3(xPosition, yPosition, zPosition);
              
             yield return null;
+        }
+
+        if (m_isTransmutationMode)
+        {
+            
+        }
+        else
+        {
+            m_cameraTransformLookAt.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
+            m_cameraController.IsTransmutationMode = false;
+            m_personMovement.IsTransmutationMode = false;
+            m_savePanel.IsTransmutationMode = false;
         }
         m_cameraTransform.position = new Vector3(endPoint.position.x, endPoint.position.y, endPoint.position.z);
         m_cameraRepositioningCoroutine = null;

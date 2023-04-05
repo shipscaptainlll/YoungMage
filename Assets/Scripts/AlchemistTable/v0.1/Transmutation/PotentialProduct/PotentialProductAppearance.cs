@@ -46,15 +46,17 @@ public class PotentialProductAppearance : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        clickManager.EClicked += InstantiateProduct;
-        amuletsTransmutation.AutomaticTransmutationContinue += InstantiateProduct;
-        conjurationAppearSound = soundManager.LocateAudioSource("ConjurationCircleAppear", productParticleSystem.transform);
-
+        //clickManager.EClicked += InstantiateProduct;
+        //amuletsTransmutation.AutomaticTransmutationContinue += InstantiateProduct;
+        //conjurationAppearSound = soundManager.LocateAudioSource("ConjurationCircleAppear", productParticleSystem.transform);
+        
+        /*
         foreach (Transform amulet in amuletsHolder)
         {
             amulet.GetComponent<TransmutationAmulet>().AmuletChoosen += InstantiateProduct;
             amulet.GetComponent<TransmutationAmulet>().StopedAutomaticTransmutation += InstantiateProduct;
         }
+        */
     }
 
     public event Action ObjectCreated = delegate { };

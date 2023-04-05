@@ -24,33 +24,38 @@ public class TutorialInvoker : MonoBehaviour
     {
         if (!isCompleted && other.gameObject.layer == 11 && cameraController.SeeingTutorial)
         {
-            Debug.Log("invoked tutorial " + invokedTutorialId + " " + cameraController.HitThird.transform);
+            //Debug.Log("invoked tutorial " + invokedTutorialId + " " + cameraController.HitThird.transform);
             if(cameraController.HitThird.transform != null 
                && cameraController.HitThird.transform.GetComponent<TutorialInvoker>() != null 
                && cameraController.HitThird.transform.GetComponent<TutorialInvoker>().InvokedTutorialId == invokedTutorialId)
             {
+                
                 if (invokedTutorialId == 2)
                 {
                     if (m_learningSkeletonsCatching.NextStep == 1)
                     {
+                        isCompleted = true;
                         //m_learningSkeletonsCatching.ShowNextStep();
                     }
                 } else if (invokedTutorialId == 3)
                 {
                     if (m_learningBreakingOre.NextStep == 1)
                     {
+                        isCompleted = true;
                         m_learningBreakingOre.ShowNextStep();
                     }
                 } else if (invokedTutorialId == 4)
                 {
                     if (m_learningCreatingObjects.NextStep == 1)
                     {
+                        isCompleted = true;
                         m_learningCreatingObjects.ShowNextStep();
                     }
                 } else if (invokedTutorialId == 6)
                 {
                     if (m_learningMakeMoney.NextStep == 1)
                     {
+                        isCompleted = true;
                         m_learningMakeMoney.ShowNextStep();
                     }
                 } else if (invokedTutorialId == 7)

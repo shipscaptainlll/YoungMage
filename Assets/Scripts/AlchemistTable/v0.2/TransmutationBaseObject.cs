@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TransmutationBaseObject : MonoBehaviour
 {
-    private int m_baseObjectID;
+    [SerializeField] private int m_baseObjectID;
     
     public int BaseObjectID { get {return m_baseObjectID;} }
 }

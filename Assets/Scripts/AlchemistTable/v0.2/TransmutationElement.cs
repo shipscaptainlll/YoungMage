@@ -17,6 +17,7 @@ public class TransmutationElement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        m_currentBaseObjectID = -1;
         int indexer = 0;
         foreach (Transform element in m_transmutationObjectsHolder)
         {
@@ -26,9 +27,10 @@ public class TransmutationElement : MonoBehaviour
 
     public void HideVisibility()
     {
+        Debug.Log("where are we");
         if (m_currentBaseObjectID != -1)
         {
-            m_transmutationObjectsDictionary[m_currentBaseObjectID].SetActive(false);
+            m_transmutationObjectsDictionary[m_currentBaseObjectID].GetComponent<TransmutationBaseObjectsBehavior>().HideObject();
             m_currentBaseObjectID = -1;
             m_currentTransmutationBaseObjectsBehavior = null;
         }
@@ -36,9 +38,14 @@ public class TransmutationElement : MonoBehaviour
 
     public void ShowObject(int id)
     {
-        m_transmutationObjectsDictionary[id].SetActive(true);
-        m_transmutationObjectsDictionary[id].GetComponent<TransmutationBaseObjectsBehavior>().ActivateFloating();
-        m_currentBaseObjectID = id;
-        m_currentTransmutationBaseObjectsBehavior = m_transmutationObjectsDictionary[id].GetComponent<TransmutationBaseObjectsBehavior>();
+        HideVisibility();
+        if (id != 0)
+        {
+            m_transmutationObjectsDictionary[id].SetActive(true);
+            m_transmutationObjectsDictionary[id].GetComponent<TransmutationBaseObjectsBehavior>().ActivateFloating();
+            m_currentBaseObjectID = id;
+            m_currentTransmutationBaseObjectsBehavior = m_transmutationObjectsDictionary[id].GetComponent<TransmutationBaseObjectsBehavior>();
+        }
+        
     }
 }

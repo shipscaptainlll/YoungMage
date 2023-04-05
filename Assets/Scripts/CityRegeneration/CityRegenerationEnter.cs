@@ -20,6 +20,9 @@ public class CityRegenerationEnter : MonoBehaviour
 
     [Header("Other scripts")]
     [SerializeField] PersonMovement personMovement;
+
+    [SerializeField] private Transform m_playerPositionEnter;
+    [SerializeField] private Transform m_cameraTransformLookAt;
     [SerializeField] PanelsManager panelsManager;
     [SerializeField] Transform quickAccessPanel;
     [SerializeField] BookSpellsCaster bookSpellsCaster;
@@ -65,7 +68,7 @@ public class CityRegenerationEnter : MonoBehaviour
         if (!isActive && m_quickAccessHandController.CurrentCustomID == 10)
         {
             
-            //personMovement.transform.LookAt(lookAtTransform);
+            
             
             Debug.Log("Here1");
             zoomInSound.Play();
@@ -75,7 +78,7 @@ public class CityRegenerationEnter : MonoBehaviour
             cityBlacksmithUpgrade.GetComponent<CanvasGroup>().alpha = 1;
             enterPartycleSystem.gameObject.SetActive(true);
             enterPartycleSystem.Play();
-            
+            personMovement.transform.position = m_playerPositionEnter.position;
             camera.enabled = false;
             isActive = true;
             isEntering = true;
@@ -110,7 +113,7 @@ public class CityRegenerationEnter : MonoBehaviour
         float xPosition = startPoint.position.x;
         float yPosition = startPoint.position.y;
         float zPosition = startPoint.position.z;
-
+        
         while (elapsed < maxTime)
         {
             elapsed += Time.deltaTime;
@@ -119,7 +122,7 @@ public class CityRegenerationEnter : MonoBehaviour
             yPosition = Mathf.Lerp(yStartPosition, endPoint.position.y, elapsed / maxTime);
             zPosition = Mathf.Lerp(zStartPosition, endPoint.position.z, elapsed / maxTime);
             cameraTransform.position = new Vector3(xPosition, yPosition, zPosition);
-             
+            m_cameraTransformLookAt.transform.LookAt(lookAtTransform);
             yield return null;
         }
         cameraTransform.position = new Vector3(endPoint.position.x, endPoint.position.y, endPoint.position.z);
@@ -137,6 +140,7 @@ public class CityRegenerationEnter : MonoBehaviour
             panelsManager.EscapeMenuBlocked = false;
             camera.CityRegenerationMode = false;
             personMovement.enabled = true;
+            m_cameraTransformLookAt.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
             //camera.CityRegenerationMode = false;
             quickAccessPanel.GetComponent<CanvasGroup>().alpha = 1;
         }
@@ -147,6 +151,7 @@ public class CityRegenerationEnter : MonoBehaviour
     {
         if (isActive && !isEntering)
         {
+            Debug.Log("left city regeneration");
             zoomOutSound.Play();
             ShowSpellsBook();
             cityWallUpgrade.GetComponent<CanvasGroup>().alpha = 0;

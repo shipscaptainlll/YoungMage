@@ -16,10 +16,10 @@ public class DropHandler : MonoBehaviour, IDropHandler
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
     AudioSource changeElementSound;
-
+    
     
     public event Action QuickAccessElementFilled = delegate { };
-    public event Action TransmutationSlotElementFilled = delegate { };
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -28,24 +28,31 @@ public class DropHandler : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
+        Debug.Log("Dropped");
         RectTransform inventoryPanel = transform as RectTransform;
-
+        if (eventData.pointerDrag.transform.GetComponent<Element>().ElementType == "transmutationSlotSlot")
+        {
+            eventData.pointerDrag.transform.GetComponent<Element>().CustomID = 0;
+            return;
+        }
         if (RectTransformUtility.RectangleContainsScreenPoint(inventoryPanel, Input.mousePosition))
         {
-            if (GetObjectUnderMouse() != eventData.pointerDrag.transform)
+            GameObject foundObject = GetObjectUnderMouse();
+            string foundObjectType = CheckElementType(foundObject);
+            if (foundObject != eventData.pointerDrag.transform)
             {
-                if (CheckElementType() == "inventorySlot")
+                if (foundObjectType == "inventorySlot")
                 {
                     SwapProperties(eventData);
-                } else if (CheckElementType() == "quickAccessSlot")
+                } else if (foundObjectType == "quickAccessSlot")
                 {
                     
-                    TransferProperties(eventData);
-                } else if (CheckElementType() == "transmutationSlotSlot")
+                    TransferProperties(eventData, foundObjectType);
+                } else if (foundObjectType == "transmutationSlotSlot")
                 {
                     
-                    TransferProperties(eventData);
-                } else if (CheckElementType() == "transmutationInventorySlot")
+                    TransferProperties(eventData, foundObjectType);
+                } else if (foundObjectType == "transmutationInventorySlot")
                 {
                     
                     SwapProperties(eventData);
@@ -59,14 +66,14 @@ public class DropHandler : MonoBehaviour, IDropHandler
         SwapCustomID(eventData);
     }
 
-    void TransferProperties(PointerEventData eventData)
+    void TransferProperties(PointerEventData eventData, string objectType)
     {
         if (CheckForRepeating(eventData) != null)
         {
             Transform copyToErase = CheckForRepeating(eventData);
             EraseCopy(copyToErase);
         }
-        CopyCustomID(eventData);
+        CopyCustomID(eventData, objectType);
     }
 
     void SwapCustomID(PointerEventData eventData)
@@ -80,7 +87,7 @@ public class DropHandler : MonoBehaviour, IDropHandler
         changeElementSound.Play();
     }
 
-    void CopyCustomID(PointerEventData eventData)
+    void CopyCustomID(PointerEventData eventData, string objectType)
     {
         GameObject targetObject = GetObjectUnderMouse();
         targetObject.GetComponent<Element>().CustomID = eventData.pointerDrag.transform.GetComponent<Element>().CustomID;
@@ -89,7 +96,7 @@ public class DropHandler : MonoBehaviour, IDropHandler
         
         changeElementSound.Play();
         
-        if (CheckElementType() == "transmutationInventorySlot")
+        if (objectType == "transmutationInventorySlot")
         {
             return;
         }
@@ -154,19 +161,52 @@ public class DropHandler : MonoBehaviour, IDropHandler
         pointer.position = Input.mousePosition;
 
         EventSystem.current.RaycastAll(pointer, hitObjects);
-
-        if (hitObjects.Count <= 0) return null;
         
-        Debug.Log("under mouse was " + hitObjects[2]);
-        return hitObjects[2].gameObject;
+        
+        if (hitObjects.Count <= 0) return null;
+        Debug.Log("under mouse was 00" + hitObjects[0]);
+        Debug.Log("under mouse was 0" + hitObjects[1]);
+        if (hitObjects.Count > 2)
+        {
+            Debug.Log("under mouse was 1" + hitObjects[2]);
+        }
+        if (hitObjects.Count > 3)
+        {
+            Debug.Log("under mouse was 2" + hitObjects[3]);
+        }
+        if (hitObjects.Count > 4)
+        {
+            Debug.Log("under mouse was 3" + hitObjects[4]);
+        }
+        Debug.Log("under mouse was 3" + hitObjects[5]);
+        Debug.Log("under mouse was 3" + hitObjects[6]);
+        Debug.Log("under mouse was 3" + hitObjects[7]);
+        
+        if (hitObjects[2].gameObject.GetComponent<Element>() != null)
+        {
+            return hitObjects[2].gameObject;
+        }
+        else if (hitObjects[3].gameObject.GetComponent<Element>() != null)
+        {
+            return hitObjects[3].gameObject;
+        } 
+        else if (hitObjects[4].gameObject.GetComponent<Element>() != null)
+        {
+            return hitObjects[4].gameObject;
+        }
+        else
+        {
+            return hitObjects[5].gameObject;
+        }
+        
     }
 
-    string CheckElementType()
+    string CheckElementType(GameObject foundObject)
     {
-        GameObject objectUnderMouse = GetObjectUnderMouse();
-
-        string objectType = objectUnderMouse.GetComponent<Element>().ElementType;
-
+        //GameObject objectUnderMouse = GetObjectUnderMouse();
+        //Debug.Log("we are here " + objectUnderMouse.gameObject.name);
+        string objectType = foundObject.GetComponent<Element>().ElementType;
+        
         return objectType;
     }
 }

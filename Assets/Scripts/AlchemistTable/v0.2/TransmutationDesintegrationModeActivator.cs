@@ -12,11 +12,11 @@ public class TransmutationDesintegrationModeActivator : MonoBehaviour
 
     public void ActivateDesintegrationMode()
     {
-        
+        CursorManager.ForceCursorDisabled();
     }
 
     public void DeactivateDesintegrationMode()
     {
-        
+        CursorManager.ForceCursorEnabled();
     }
 }

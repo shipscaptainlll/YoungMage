@@ -84,13 +84,17 @@ public class InventoryItemVisibilityController : MonoBehaviour
             Element emptySlotElementScript = foundEmptySlot.Find("Borders").GetChild(1).GetComponent<Element>();
             emptySlotElementScript.CustomID = customId;
         }
-
-        foundEmptySlot = SearchEmptySlotSuperPanel();
-        if (foundEmptySlot != null)
+        
+        if (TransmutationableItemsDatabase.isTransmutationable(customId))
         {
-            Element emptySlotElementScript = foundEmptySlot.Find("Borders").GetChild(1).GetComponent<Element>();
-            emptySlotElementScript.CustomID = customId;
+            foundEmptySlot = SearchEmptySlotSuperPanel();
+            if (foundEmptySlot != null)
+            {
+                Element emptySlotElementScript = foundEmptySlot.Find("Borders").GetChild(1).GetComponent<Element>();
+                emptySlotElementScript.CustomID = customId;
+            }
         }
+        
     }
 
     void DeleteVisibleItem(int customId)
@@ -99,10 +103,14 @@ public class InventoryItemVisibilityController : MonoBehaviour
         Transform foundSlot = SearchForSlot(customId);
         Element slotElementScript = foundSlot.Find("Borders").GetChild(1).GetComponent<Element>();
         slotElementScript.CustomID = 0;
+
+        if (TransmutationableItemsDatabase.isTransmutationable(customId))
+        {
+            foundSlot = SearchForSuperSlot(customId);
+            Element transmutationSlotElementScript = foundSlot.Find("Borders").GetChild(1).GetComponent<Element>();
+            slotElementScript.CustomID = 0;
+        }
         
-        foundSlot = SearchForSuperSlot(customId);
-        Element transmutationSlotElementScript = foundSlot.Find("Borders").GetChild(1).GetComponent<Element>();
-        slotElementScript.CustomID = 0;
     }
 
     Transform SearchForSlot(int customId)

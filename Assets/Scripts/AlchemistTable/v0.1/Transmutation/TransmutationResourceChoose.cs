@@ -85,6 +85,7 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
 
     void SubscribeOnEvents()
     {
+        /*
         _characterOccupation.CharacterEngagedTransmutation += StartResourceChoosing;
         _characterOccupation.CharacterDisengagedTransmutation += StopResourceChoosing;
         _characterOccupation.CharacterResetedPack += ResetResourceChoosing;
@@ -94,6 +95,7 @@ public class TransmutationResourceChoose : MonoBehaviour, IShowClickable, IObjec
         _clickManager.DClicked += RotateResourcesRight;
         _resourceBottleStorage.ResourcesCountChanged += InitializeAccessibleResources;
         _resourceBottleStorage.InstanceInitialised += InitialiseInstance;
+        */
     }
 
     void InitializeAccessibleResources()

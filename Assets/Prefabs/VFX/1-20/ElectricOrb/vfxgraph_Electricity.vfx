@@ -68,10 +68,10 @@ MonoBehaviour:
   - title: SPARKLES
     position:
       serializedVersion: 2
-      x: 0
-      y: 0
-      width: 100
-      height: 100
+      x: 2760
+      y: -362
+      width: 795
+      height: 1951
     contents:
     - model: {fileID: 8926484042661614690}
       id: 0
@@ -99,9 +99,9 @@ MonoBehaviour:
   uiBounds:
     serializedVersion: 2
     x: 459
-    y: -303
-    width: 3071
-    height: 1865
+    y: -362
+    width: 3096
+    height: 1951
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1039,7 +1039,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 0.75
+      m_SerializableObject: 0.39
     m_Space: 2147483647
   m_Property:
     name: Power_
@@ -2704,7 +2704,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 0.3
+      m_SerializableObject: 0.08
     m_Space: 2147483647
   m_Property:
     name: A
@@ -2738,7 +2738,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 0.6
+      m_SerializableObject: 0.34
     m_Space: 2147483647
   m_Property:
     name: B
@@ -3326,7 +3326,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: 50
+      m_SerializableObject: 42.4
     m_Space: 2147483647
   m_Property:
     name: Rate
@@ -3817,7 +3817,7 @@ MonoBehaviour:
   m_Children:
   - {fileID: 8926484042661614782}
   - {fileID: 8926484042661614766}
-  m_UIPosition: {x: 3105, y: 524}
+  m_UIPosition: {x: 3104, y: 449}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots: []
@@ -3923,7 +3923,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"obj":{"fileID":10300,"guid":"0000000000000000f000000000000000","type":0}}'
+      m_SerializableObject: '{"obj":{"fileID":2800000,"guid":"88eedb86707e9c94192113006ed88466","type":3}}'
     m_Space: 2147483647
   m_Property:
     name: mainTexture
@@ -4137,7 +4137,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"x":0.05000000074505806,"y":0.30000001192092898,"z":1.0}'
+      m_SerializableObject: '{"x":0.05999999865889549,"y":0.03999999910593033,"z":1.0}'
     m_Space: 2147483647
   m_Property:
     name: A
@@ -4273,7 +4273,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"x":0.15000000596046449,"y":0.800000011920929,"z":1.0}'
+      m_SerializableObject: '{"x":0.5400000214576721,"y":1.2699999809265137,"z":1.0}'
     m_Space: 2147483647
   m_Property:
     name: B
@@ -5665,7 +5665,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
           PublicKeyToken=b77a5c561934e089
-      m_SerializableObject: -9
+      m_SerializableObject: -9.52
     m_Space: 2147483647
   m_Property:
     name: max

@@ -38,6 +38,11 @@ public class PanelsManager : MonoBehaviour
     [SerializeField] SoundManager soundManager;
     AudioSource settingsSubpanelSound;
 
+    [Header("Default positions")] 
+    [SerializeField] private Transform m_transmutationDefaultInventoryPosition;
+    [SerializeField] private Transform m_transmutationDefaultSlotsPosition;
+    [SerializeField] private Transform m_trasnmutationDefaultRecipesPosition;
+
     AudioSource whooshFirstSound;
     AudioSource inventoryOpenSound;
     Transform currentlyOpened;
@@ -72,7 +77,7 @@ public class PanelsManager : MonoBehaviour
         RelocateFarAway(midasCauldronTablePanel);
         RelocateFarAway(defractorTablePanel);
         RelocateFarAway(m_transmutationInventoryPanel);
-        RelocateFarAway(m_transmutationSlotsPanel);
+        
         RelocateFarAway(m_transmutationRecipesPanel);
         currentSettingsSubpanel = graphicsSettingPanel;
         updateSpeed = 0.1f;
@@ -317,8 +322,7 @@ public class PanelsManager : MonoBehaviour
     public void OpenTransmutationPanel()
     {
         nextToOpen = m_transmutationInventoryPanel;
-        RelocateDefaultPosition(m_transmutationSlotsPanel);
-        RelocateDefaultPosition(m_transmutationRecipesPanel);
+        
         StartCoroutine(CacheOpenPanel(m_transmutationSlotsPanel));
         StartCoroutine(CacheOpenPanel(m_transmutationRecipesPanel));
         decideNextState();
@@ -423,7 +427,17 @@ public class PanelsManager : MonoBehaviour
 
     void RelocateDefaultPosition(Transform panelToMove)
     {
-        panelToMove.position = defaultPosition.position;
+        if (panelToMove == m_transmutationInventoryPanel)
+        {
+            m_transmutationInventoryPanel.position = m_transmutationDefaultInventoryPosition.position;
+            m_transmutationSlotsPanel.position = m_transmutationDefaultSlotsPosition.position;
+            m_transmutationRecipesPanel.position = m_trasnmutationDefaultRecipesPosition.position;
+        }
+        else
+        {
+            
+            panelToMove.position = defaultPosition.position;
+        }
     }
 
     IEnumerator openQuickAccess(Transform panelToOpen)

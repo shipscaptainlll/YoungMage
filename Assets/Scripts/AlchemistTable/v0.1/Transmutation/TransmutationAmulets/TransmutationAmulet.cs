@@ -24,9 +24,9 @@ public class TransmutationAmulet : MonoBehaviour, IResource, IShowClickable
     // Start is called before the first frame update
     void Start()
     {
-        clickManager.EClicked += NotifyAmuletChoosen;
-        amuletsTransmutation.ParallelAmuletChoosen += ForceStopAmulet;
-        amuletsTransmutation.NoResourcesLeft += ForceStopAmulet;
+        //clickManager.EClicked += NotifyAmuletChoosen;
+        //amuletsTransmutation.ParallelAmuletChoosen += ForceStopAmulet;
+        //amuletsTransmutation.NoResourcesLeft += ForceStopAmulet;
     }
 
     // Update is called once per frame

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class Element : MonoBehaviour
     [SerializeField] ElementTypeEnum elementTypeEnum;
     [SerializeField] AnimationCurve animationCurve;
     [SerializeField] private int m_transmutationSlotID;
+    [SerializeField] private TransmutationElementsManager m_transmutationElementsManager;
     Transform attachedCounter;
     Text textBox;
     Vector2 elementSize;
@@ -18,7 +20,8 @@ public class Element : MonoBehaviour
     Coroutine showElementCoroutine;
     Coroutine resizeCoroutine;
     bool coroutineActive;
-
+    
+    public event Action<int> TransmutationSlotElementFilled = delegate { };
     public int CustomID
     {
         get
@@ -28,6 +31,14 @@ public class Element : MonoBehaviour
 
         set
         {
+            if (elementTypeEnum == ElementTypeEnum.transmutationSlotSlot)
+            {
+                m_transmutationElementsManager.RemoveActivatedObjectID(customID);
+                m_transmutationElementsManager.AddActivatedObjectID(value);
+                Debug.Log("Added value " + value);
+            }
+            
+            
             customID = value;
             StopAllCoroutines();
             if (elementTypeEnum != ElementTypeEnum.transmutationSlotSlot)
@@ -44,6 +55,11 @@ public class Element : MonoBehaviour
             {
                 StopCoroutine(resizeCoroutine);
                 showElementCoroutine = StartCoroutine(ShowElement(0.65f));
+            }
+
+            if (elementTypeEnum == ElementTypeEnum.transmutationSlotSlot)
+            {
+                TransmutationSlotElementFilled?.Invoke(m_transmutationSlotID);
             }
             //Debug.Log("chages in " + transform + " with id " + customID);
         }
@@ -110,8 +126,9 @@ public class Element : MonoBehaviour
         if (attachedCounter != null && elementTypeEnum != ElementTypeEnum.transmutationSlotSlot)
         {
             UpdateCounter(attachedCounter.GetComponent<ICounter>().Count);
+            RegulateCounterVisibility();
         }
-        RegulateCounterVisibility();
+        
         
         
     }

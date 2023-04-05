@@ -8,21 +8,21 @@ public class TransmutationProcessing : MonoBehaviour
     [SerializeField] private TransmutationErrorsNotificator m_transmutationErrorsNotificator;
     [SerializeField] private TransmutationDesintegrationModeActivator m_transmutationDesintegrationModeActivator;
     [SerializeField] private TransmutationDesintegrationMode m_transmutationDesintegrationMode;
+    [SerializeField] private TransmutationProductCreation m_transmutationProductCreation;
+    private bool m_isProcessing;
+    
+    public bool IsProcessing { get => m_isProcessing; }
     
     // Start is called before the first frame update
     void Start()
     {
         
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    
     public void ActivateProcessing()
     {
+        m_isProcessing = true;
+        Debug.Log("activated");
         if (m_transmutationElementsManager.ElementsFilled == 0)
         {
             m_transmutationErrorsNotificator.ActivatePopup();
@@ -36,13 +36,16 @@ public class TransmutationProcessing : MonoBehaviour
 
     public void DeactivateProcessing()
     {
-        m_transmutationDesintegrationModeActivator.ActivateDesintegrationMode();
+        m_isProcessing = false;
+        Debug.Log("deactivated");
+        //m_transmutationDesintegrationModeActivator.ActivateDesintegrationMode();
         m_transmutationElementsManager.ResetElementsList();
-        //m_transmutationDesintegrationMode.ExitDesintegradion();
+        m_transmutationDesintegrationModeActivator.DeactivateDesintegrationMode();
     }
 
     public void ActivateProductProduction()
     {
-        
+        //some business logic
+        m_transmutationProductCreation.StartProcessing();
     }
 }

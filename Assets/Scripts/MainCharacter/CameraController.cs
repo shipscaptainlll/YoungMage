@@ -57,6 +57,13 @@ public class CameraController : MonoBehaviour
         OnDrawGizmosSelected();
     }
 
+    IEnumerator CameraInput()
+    {
+        
+        yield return new WaitForSeconds(0.1f);
+        
+    }
+
     public void ReinitialiseAfterLoading()
     {
         //Debug.Log("was reloaded, but something is off");
@@ -83,14 +90,16 @@ public class CameraController : MonoBehaviour
 
     void RotateHead()
     {
+        float xRot = Input.GetAxis("Mouse X") * Time.deltaTime * mouseSensitivity;
+        float yRot = Input.GetAxis("Mouse Y") * Time.deltaTime * mouseSensitivity;
+        
         if (introMode)
         {
             return;
             
         }
         
-        float xRot = Input.GetAxis("Mouse X") * Time.deltaTime * mouseSensitivity;
-        float yRot = Input.GetAxis("Mouse Y") * Time.deltaTime * mouseSensitivity;
+        
 
         if (isOnStairs)
         {
@@ -134,6 +143,11 @@ public class CameraController : MonoBehaviour
         {
             yRotation += xRot * 0.25f;
             xRotation -= yRot * 0.25f;
+
+            Quaternion to = Quaternion.Euler(xRotation, yRotation, startRotation.z);
+            Quaternion from = Quaternion.Euler(xRotation, yRotation, startRotation.z);
+            
+            Quaternion.Slerp(from, to, Time.time * 1);
             //Debug.Log(startRotation);
             yRotation = Mathf.Clamp(yRotation, startRotation.y - 6.5f, startRotation.y + 6.5f);
             xRotation = Mathf.Clamp(xRotation, startRotation.x - 6.5f, startRotation.x + 6.5f);
