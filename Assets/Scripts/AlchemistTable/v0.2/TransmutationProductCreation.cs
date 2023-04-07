@@ -50,7 +50,15 @@ public class TransmutationProductCreation : MonoBehaviour
         m_productCreationVFX.gameObject.SetActive(true);
         yield return new WaitForSeconds(2.5f);
         AppearProduct();
-        yield return new WaitForSeconds(5.5f);
+        if (m_currentProductID != 0)
+        {
+            yield return new WaitForSeconds(3.5f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(1.5f);
+        }
+        
         FinishProcessing();
     }
 
@@ -70,8 +78,6 @@ public class TransmutationProductCreation : MonoBehaviour
         m_productAppearVFX.gameObject.SetActive(true);
         m_productAppearVFX.SendEvent("CharacterMoved");
         
-        Debug.Log("current id is one " + m_currentProductID);
-        Debug.Log("and transform is " + m_currentProductTransform.name);
         if (m_currentProductID != 0)
         {
             m_visualisationSound.Play();
@@ -123,13 +129,19 @@ public class TransmutationProductCreation : MonoBehaviour
 
     void FinishProcessing()
     {
-        m_currentProductTransform.GetComponent<Animator>().enabled = false;
+        if (m_currentProductTransform != null)
+        {
+            m_currentProductTransform.GetComponent<Animator>().enabled = false;
+        }
+        
         m_productAppearVFX.gameObject.SetActive(false);
         if (m_currentProductID != 0)
         {
             m_currentProductTransform.GetComponent<MeshRenderer>().enabled = false;
         }
-        
+
+        m_currentProductID = 0;
+        m_currentProductTransform = null;
         
         m_transmutationProcessing.DeactivateProcessing();
     }

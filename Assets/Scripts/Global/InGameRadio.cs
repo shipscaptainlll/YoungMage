@@ -35,7 +35,7 @@ public class InGameRadio : MonoBehaviour
             m_waitingSoundCoroutine = StartCoroutine(WaitUntilEnd(568f));
         } else if (m_nextSound == m_secondBackgroundSound)
         {
-            m_secondBackgroundSound.Play();
+            m_firstBackgroundSound.Play();
             m_nextSound = m_thirdBackgroundSound;
             if (m_waitingSoundCoroutine != null)
             {
@@ -45,7 +45,7 @@ public class InGameRadio : MonoBehaviour
             m_waitingSoundCoroutine = StartCoroutine(WaitUntilEnd(210f));
         } else if (m_nextSound == m_thirdBackgroundSound)
         {
-            m_thirdBackgroundSound.Play();
+            m_firstBackgroundSound.Play();
             m_nextSound = m_firstBackgroundSound;
             if (m_waitingSoundCoroutine != null)
             {

@@ -32,6 +32,7 @@ public class TransmutationDesintegrationMode : MonoBehaviour
         Transform newDesintegrationPanel = Instantiate(m_desintegrationPanelTemplate, m_desintegrationPanelsHolder);
         newDesintegrationPanel.gameObject.SetActive(true);
         newDesintegrationPanel.position = m_desintegrationPanelPosition.position;
+        m_transmutationElementsManager.ActivatedTransmutationElements[m_leftCycles - 1].CurrentTransmutationBaseObject.ActivateShining();
         //ShowNextDesintegrationPanel();
     }
 
@@ -40,12 +41,15 @@ public class TransmutationDesintegrationMode : MonoBehaviour
         m_leftCycles--;
         if (m_leftCycles > 0)
         {
+            m_transmutationElementsManager.ActivatedTransmutationElements[m_leftCycles].CurrentTransmutationBaseObject.DeactivateShining();
             m_transmutationElementsManager.ActivatedTransmutationElements[m_leftCycles].CurrentTransmutationBaseObject.ActivateDecomposition();
+            m_transmutationElementsManager.ActivatedTransmutationElements[m_leftCycles - 1].CurrentTransmutationBaseObject.ActivateShining();
             
         } 
         
         if (m_leftCycles == 0)
         {
+            m_transmutationElementsManager.ActivatedTransmutationElements[m_leftCycles].CurrentTransmutationBaseObject.DeactivateShining();
             m_transmutationElementsManager.ActivatedTransmutationElements[m_leftCycles].CurrentTransmutationBaseObject.ActivateDecomposition();
             //m_transmutationElementsManager.ActivatedTransmutationElements[m_leftCycles].CurrentTransmutationBaseObject.ActivateShining();
             ExitDesintegradion();

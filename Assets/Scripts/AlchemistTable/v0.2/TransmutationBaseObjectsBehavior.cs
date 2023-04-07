@@ -26,18 +26,25 @@ public class TransmutationBaseObjectsBehavior : MonoBehaviour
     
     public void ActivateFloating()
     {
-        //m_animator.enabled = true;
+        m_animator.enabled = true;
         m_meshRenderer.enabled = true;
     }
 
     public void ActivateShining()
     {
-        //m_shiningPS.Play();
+        m_shiningPS.Play();
+    }
+
+    public void DeactivateShining()
+    {
+        m_shiningPS.Stop();
+        m_shiningPS.gameObject.SetActive(false);
+        m_shiningPS.gameObject.SetActive(true);
     }
 
     public void HideObject()
     {
-        //m_animator.enabled = false;
+        m_animator.enabled = false;
         
         //m_shiningPS.gameObject.SetActive(false);
         m_destructionSparklesPS.gameObject.SetActive(false);
