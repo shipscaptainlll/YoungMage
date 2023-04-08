@@ -82,15 +82,15 @@ public class RegenerationPanelsOpener : MonoBehaviour
         if (panel == regenerationWallPanel)
         {
             m_wallsTutorialsInvoker.InvokeTutorial();
-            panel.localPosition = new Vector3(750, 100, 0);
+            panel.localPosition = new Vector3(950, 0, 0);
         } else if (panel == regenerationCastlePanel)
         {
             m_blacksmithTutorialsInvoker.InvokeTutorial();
-            panel.localPosition = new Vector3(900, 50, 0);
+            panel.localPosition = new Vector3(900, 0, 0);
         } else if (panel == regenerationBlacksmithPanel)
         {
             m_cityTutorialsInvoker.InvokeTutorial();
-            panel.localPosition = new Vector3(750, 100, 0);
+            panel.localPosition = new Vector3(950, 0, 0);
         }
         
         panel.GetComponent<CanvasGroup>().alpha = 1;

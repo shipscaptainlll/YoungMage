@@ -191,7 +191,19 @@ public class Element : MonoBehaviour
         transform.GetComponent<Image>().sprite = spriteManager.TakeSprite(customID);
         RectTransform elementRect = transform.GetComponent<RectTransform>();
         //Debug.Log("true1");
-        elementSize = new Vector2(38, 38);
+        if (elementTypeEnum == ElementTypeEnum.transmutationSlotSlot)
+        {
+            elementSize = new Vector2(25, 25);
+        }
+        else if (elementTypeEnum == ElementTypeEnum.transmutationInventorySlot)
+        {
+            elementSize = new Vector2(36, 36);
+        }
+        else
+        {
+            elementSize = new Vector2(38, 38);
+        }
+        
     }
 
     void UpdateCounter(int count)
