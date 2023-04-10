@@ -20,7 +20,7 @@ public class PotentialProductLibrary : MonoBehaviour
         get { return potentialProducts; }
     }
 
-    public void Start()
+    public void Awake()
     {
         potentialProducts.Add(11, new List<int> { 18, 18, 18 }); //leftHand
         potentialProducts.Add(14, new List<int> { 19, 19, 19 }); //shoes

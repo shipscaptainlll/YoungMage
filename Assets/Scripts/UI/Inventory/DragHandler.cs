@@ -13,9 +13,11 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     [SerializeField] private bool isTransmutationSlot;
     [SerializeField] private Transform m_slotsHolder;
     [SerializeField] private Transform m_inventoryHolder;
+    [SerializeField] private SoundManager m_soundManager;
     int typeSiblingIndex;
     int rowSiblingIndex;
     int slotSiblingIndex;
+    AudioSource changeElementSound;
 
     Coroutine clickDelayCoroutine;
     bool doubleClicked;
@@ -24,6 +26,11 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     
     public event Action QuickAccessElementFilled = delegate { };
     public event Action<int> TransmutationSlotElementFilled = delegate { };
+
+    void Start()
+    {
+        changeElementSound = m_soundManager.FindSound("NewObjectAppearingUI");
+    }
     public void OnBeginDrag(PointerEventData eventData)
     {
         typeSiblingIndex = transform.parent.parent.parent.parent.GetSiblingIndex();
@@ -93,10 +100,10 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
                 foreach (Transform element in m_transmutationSlotElementsHolder)
                 {
                     //Debug.Log(" is free2");
-                    if (element.GetChild(0).Find("Borders").Find("Element").GetComponent<Element>().CustomID == 0)
+                    if (element.Find("Borders").Find("Element").GetComponent<Element>().CustomID == 0)
                     {
                         CopyCustomID(eventData, element.GetChild(0).Find("Element"));
-                        
+                        changeElementSound.Play();
                         return;
                     }
                 }

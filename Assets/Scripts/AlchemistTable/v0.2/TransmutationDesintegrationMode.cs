@@ -11,6 +11,7 @@ public class TransmutationDesintegrationMode : MonoBehaviour
     [SerializeField] private Transform m_desintegrationPanelPosition;
     [SerializeField] private TransmutationDesintegrationModeActivator m_transmutationDesintegrationModeActivator;
     [SerializeField] private TransmutationProcessing m_transmutationProcessing;
+    [SerializeField] private TransmutationHandController m_transmutationHandController;
     private int m_leftCycles;
     private int m_cyclesCount;
     
@@ -33,11 +34,19 @@ public class TransmutationDesintegrationMode : MonoBehaviour
         newDesintegrationPanel.gameObject.SetActive(true);
         newDesintegrationPanel.position = m_desintegrationPanelPosition.position;
         m_transmutationElementsManager.ActivatedTransmutationElements[m_leftCycles - 1].CurrentTransmutationBaseObject.ActivateShining();
+        m_transmutationHandController.gameObject.SetActive(true);
+        m_transmutationHandController.ShowHandTransmutation();
         //ShowNextDesintegrationPanel();
+    }
+
+    public void ShowBadDesintegration()
+    {
+        m_transmutationHandController.ShowImpact();
     }
 
     public void ShowNextDesintegraionElement()
     {
+        m_transmutationHandController.ShowImpact();
         m_leftCycles--;
         if (m_leftCycles > 0)
         {

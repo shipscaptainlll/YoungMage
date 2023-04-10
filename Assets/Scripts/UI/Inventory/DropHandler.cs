@@ -38,6 +38,12 @@ public class DropHandler : MonoBehaviour, IDropHandler
         if (RectTransformUtility.RectangleContainsScreenPoint(inventoryPanel, Input.mousePosition))
         {
             GameObject foundObject = GetObjectUnderMouse();
+            if (foundObject == null)
+            {
+                Debug.Log("nothing here");
+                return;
+                
+            }
             string foundObjectType = CheckElementType(foundObject);
             if (foundObject != eventData.pointerDrag.transform)
             {
@@ -117,10 +123,10 @@ public class DropHandler : MonoBehaviour, IDropHandler
 
     Transform CheckForRepeating(PointerEventData eventData)
     {
-        
+        Transform m_quickAccessPanel;
         if (transform.Find("QuickAccess") != null)
         {
-            Transform quickAccessPanel = transform.Find("QuickAccess");
+            m_quickAccessPanel = transform.Find("QuickAccess");
         }
         else
         {
@@ -129,8 +135,10 @@ public class DropHandler : MonoBehaviour, IDropHandler
         }
         
         Transform targetObject = GetObjectUnderMouse().transform.parent.parent;
-        foreach (Transform slot in quickAccessPanel.GetChild(0))
+        Debug.Log("we are here " + eventData.pointerDrag.transform.GetComponent<Element>().CustomID + transform);
+        foreach (Transform slot in m_quickAccessPanel.GetChild(0))
         {
+            Debug.Log("we are here " + slot.GetChild(0).Find("Element").GetComponent<Element>().CustomID );
             if (slot.GetChild(0).Find("Element").GetComponent<Element>().CustomID == eventData.pointerDrag.transform.GetComponent<Element>().CustomID && targetObject.GetSiblingIndex() != slot.GetSiblingIndex())
             {
                 return slot;
@@ -178,9 +186,11 @@ public class DropHandler : MonoBehaviour, IDropHandler
         {
             Debug.Log("under mouse was 3" + hitObjects[4]);
         }
-        Debug.Log("under mouse was 3" + hitObjects[5]);
-        Debug.Log("under mouse was 3" + hitObjects[6]);
-        Debug.Log("under mouse was 3" + hitObjects[7]);
+        
+        if (hitObjects[0].gameObject.GetComponent<Element>() != null && hitObjects[0].gameObject.GetComponent<Element>().ElementType.ToString() == "quickAccessSlot")
+        {
+            return hitObjects[0].gameObject;
+        }
         
         if (hitObjects[2].gameObject.GetComponent<Element>() != null)
         {
@@ -203,7 +213,7 @@ public class DropHandler : MonoBehaviour, IDropHandler
 
     string CheckElementType(GameObject foundObject)
     {
-        //GameObject objectUnderMouse = GetObjectUnderMouse();
+        //meObject objectUnderMouse = GetObjectUnderMouse();
         //Debug.Log("we are here " + objectUnderMouse.gameObject.name);
         string objectType = foundObject.GetComponent<Element>().ElementType;
         

@@ -16,6 +16,8 @@ public class TransmutationProductCreation : MonoBehaviour
     [SerializeField] private PotentialProductLibrary m_potentialProductLibrary;
     [SerializeField] private SoundManager m_soundManager;
     [SerializeField] private TransmutationElementsManager m_transmutationElementsManager;
+    [SerializeField] private TransmutationHandController m_transmutationHandController;
+    [SerializeField] private TransmutationRecipesPanel m_transmutationRecipesPanel;
     private AudioSource m_visualisationSound;
     private int m_currentProductID;
     private Transform m_currentProductTransform;
@@ -45,11 +47,12 @@ public class TransmutationProductCreation : MonoBehaviour
 
     IEnumerator DelayThenFinish()
     {
-        
+        m_transmutationHandController.ShowHandProcessing();
         yield return new WaitForSeconds(1.5f);
         m_productCreationVFX.gameObject.SetActive(true);
         yield return new WaitForSeconds(2.5f);
         AppearProduct();
+        m_transmutationHandController.HideHand();
         if (m_currentProductID != 0)
         {
             yield return new WaitForSeconds(3.5f);
@@ -81,6 +84,10 @@ public class TransmutationProductCreation : MonoBehaviour
         if (m_currentProductID != 0)
         {
             m_visualisationSound.Play();
+            if (!m_transmutationRecipesPanel.ActivatedRecipesDictionary[m_currentProductID])
+            {
+                m_transmutationRecipesPanel.UpdateRecipesDictionary(m_currentProductID);
+            }
             //m_currentProductTransform.GetComponent<MeshRenderer>().enabled = true;
             m_currentProductTransform.GetComponent<Animator>().enabled = true;
             m_currentProductTransform.GetComponent<Animator>().Play("AppearProduct");

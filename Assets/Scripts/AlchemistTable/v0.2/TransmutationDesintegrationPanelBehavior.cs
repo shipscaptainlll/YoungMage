@@ -78,6 +78,7 @@ public class TransmutationDesintegrationPanelBehavior : MonoBehaviour
                         break;
                     } else if (foundElement.ElementType == DesintegrationModeElement.DesintegrationElementType.outer)
                     {
+                        m_transmutationDesintegrationMode.ShowBadDesintegration();
                         m_transmutationDesintegrationNotificator.ActivatePopup("Try again!");
                         return;
                         break;

@@ -31,6 +31,11 @@ public class TransmutationWorkflow : MonoBehaviour
 
     private bool m_isTransmutationMode;
     public bool IsTransmutationMode { get { return m_isTransmutationMode; } set { m_isTransmutationMode = value; } }
+
+    private void Update()
+    {
+        
+    }
     
     void Start()
     {
