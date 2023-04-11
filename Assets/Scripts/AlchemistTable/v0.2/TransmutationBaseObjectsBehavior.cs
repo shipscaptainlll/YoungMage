@@ -62,13 +62,17 @@ public class TransmutationBaseObjectsBehavior : MonoBehaviour
         
         m_destructionSparklesPS.Play();
         m_destructionVFX.Play();
+
+        if (m_destroyableObjects.TakeObject(objectId) != null)
+        {
+            m_destroyableObject = Instantiate(m_destroyableObjects.TakeObject(objectId), transform.position, transform.rotation);
         
-        m_destroyableObject = Instantiate(m_destroyableObjects.TakeObject(objectId), transform.position, transform.rotation);
+            m_audioSource = m_soundManager.LocateAudioSource("RockoreDestruction", m_destroyableObject.transform);
+            m_audioSource.Play();
+            m_destroyableObject.transform.position = transform.position;
+            m_destroyableObject.AddComponent<DestroyableObject>();
+        }
         
-        m_audioSource = m_soundManager.LocateAudioSource("RockoreDestruction", m_destroyableObject.transform);
-        m_audioSource.Play();
-        m_destroyableObject.transform.position = transform.position;
-        m_destroyableObject.AddComponent<DestroyableObject>();
         
         m_meshRenderer.enabled = false;
     }

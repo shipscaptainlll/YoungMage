@@ -11,6 +11,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     [SerializeField] private Transform m_transmutationSlotElementsHolder;
     [SerializeField] Transform quickAccessPanel;
     [SerializeField] private bool isTransmutationSlot;
+    [SerializeField] private bool isTransmutationInventorySlot;
     [SerializeField] private Transform m_slotsHolder;
     [SerializeField] private Transform m_inventoryHolder;
     [SerializeField] private SoundManager m_soundManager;
@@ -29,7 +30,11 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
 
     void Start()
     {
-        changeElementSound = m_soundManager.FindSound("NewObjectAppearingUI");
+        if (isTransmutationSlot || isTransmutationInventorySlot)
+        {
+            changeElementSound = m_soundManager.FindSound("NewObjectAppearingUI");
+        }
+        
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -42,7 +47,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     {
         if (isTransmutationSlot)
         {
-            m_slotsHolder.SetAsLastSibling();
+            //m_slotsHolder.SetAsLastSibling();
         }
         transform.parent.position = Input.mousePosition;
         //transform.parent.Find("AmountCounter").position = Input.mousePosition;
@@ -55,7 +60,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     {
         if (isTransmutationSlot)
         {
-            m_slotsHolder.SetAsFirstSibling();
+            //m_slotsHolder.SetAsFirstSibling();
         }
         transform.parent.localPosition = Vector3.zero;
         //transform.parent.Find("AmountCounter").position = Vector3.zero;
@@ -102,8 +107,25 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
                     //Debug.Log(" is free2");
                     if (element.Find("Borders").Find("Element").GetComponent<Element>().CustomID == 0)
                     {
+                        GameObject targetObject = GetObjectUnderMouse();
+                        if (targetObject.GetComponent<Element>().AttachedCounter != null
+                            && targetObject.GetComponent<Element>().AttachedCounter.GetComponent<ICounter>().Count <= 0)
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            
+                        }
+                        
                         CopyCustomID(eventData, element.GetChild(0).Find("Element"));
-                        changeElementSound.Play();
+                        if (changeElementSound != null)
+                        {
+                            changeElementSound.Play();
+                        }
+                        
+                        targetObject.GetComponent<Element>().AttachedCounter.GetComponent<ICounter>().AddResource(-1);
+                        
                         return;
                     }
                 }
@@ -112,6 +134,7 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             if (GetObjectUnderMouse().GetComponent<Element>().ElementType == Element.ElementTypeEnum.transmutationSlotSlot.ToString() && GetObjectUnderMouse().GetComponent<Element>().CustomID != 0)
             {
                 GameObject transmutationSlot = GetObjectUnderMouse();
+                transmutationSlot.GetComponent<Element>().AttachedCounter.GetComponent<ICounter>().AddResource(1);
                 transmutationSlot.GetComponent<Element>().CustomID = 0;
                 //TransmutationSlotElementFilled?.Invoke(transmutationSlot.GetComponent<Element>().TransmutationSlotID);
             }

@@ -21,7 +21,7 @@ public class Element : MonoBehaviour
     Coroutine resizeCoroutine;
     bool coroutineActive;
     
-    public event Action<int> TransmutationSlotElementFilled = delegate { };
+    public event Action<int, int, int> TransmutationSlotElementFilled = delegate { };
     public int CustomID
     {
         get
@@ -37,6 +37,8 @@ public class Element : MonoBehaviour
                 m_transmutationElementsManager.AddActivatedObjectID(value);
                 Debug.Log("Added value " + value);
             }
+
+            int prevCustomID = customID;
             
             
             customID = value;
@@ -45,8 +47,17 @@ public class Element : MonoBehaviour
             {
                 UpdateAttachedCounter();
             }
+            else
+            {
+                attachedCounter = counterManager.TakeCounter(customID);
+            }
             
             UpdateElement();
+            if (elementTypeEnum == ElementTypeEnum.transmutationSlotSlot)
+            {
+                TransmutationSlotElementFilled?.Invoke(prevCustomID, value, m_transmutationSlotID);
+            }
+            
             if (!coroutineActive)
             {
                 showElementCoroutine = StartCoroutine(ShowElement(0.65f));
@@ -57,10 +68,7 @@ public class Element : MonoBehaviour
                 showElementCoroutine = StartCoroutine(ShowElement(0.65f));
             }
 
-            if (elementTypeEnum == ElementTypeEnum.transmutationSlotSlot)
-            {
-                TransmutationSlotElementFilled?.Invoke(m_transmutationSlotID);
-            }
+            
             //Debug.Log("chages in " + transform + " with id " + customID);
         }
     }
@@ -85,6 +93,7 @@ public class Element : MonoBehaviour
 
     void ResetCounter(int ID)
     {
+        Debug.Log("counter was reseted");
         if (CustomID == ID)
         {
             CustomID = 0;
@@ -127,6 +136,18 @@ public class Element : MonoBehaviour
         {
             UpdateCounter(attachedCounter.GetComponent<ICounter>().Count);
             RegulateCounterVisibility();
+        } else if (elementTypeEnum == ElementTypeEnum.transmutationInventorySlot)
+        {
+            if (attachedCounter != null)
+            {
+                UpdateCounter(attachedCounter.GetComponent<ICounter>().Count);
+            }
+            if (customID == 0)
+            {
+                textBox.transform.GetComponent<CanvasGroup>().alpha = 0;
+            }
+            else if (customID != 0) {
+                textBox.transform.GetComponent<CanvasGroup>().alpha = 1; }
         }
         
         

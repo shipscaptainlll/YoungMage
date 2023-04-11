@@ -32,6 +32,7 @@ public class DropHandler : MonoBehaviour, IDropHandler
         RectTransform inventoryPanel = transform as RectTransform;
         if (eventData.pointerDrag.transform.GetComponent<Element>().ElementType == "transmutationSlotSlot")
         {
+            eventData.pointerDrag.transform.GetComponent<Element>().AttachedCounter.GetComponent<ICounter>().AddResource(1);
             eventData.pointerDrag.transform.GetComponent<Element>().CustomID = 0;
             return;
         }
@@ -44,6 +45,8 @@ public class DropHandler : MonoBehaviour, IDropHandler
                 return;
                 
             }
+            
+            Debug.Log("object under mouse was " + foundObject);
             string foundObjectType = CheckElementType(foundObject);
             if (foundObject != eventData.pointerDrag.transform)
             {
@@ -57,11 +60,20 @@ public class DropHandler : MonoBehaviour, IDropHandler
                 } else if (foundObjectType == "transmutationSlotSlot")
                 {
                     
+                    GameObject targetObject = GetObjectUnderMouse();
+                    if (targetObject.GetComponent<Element>().CustomID != 0)
+                    {
+                        targetObject.GetComponent<Element>().AttachedCounter.GetComponent<ICounter>().AddResource(1);
+                    }
                     TransferProperties(eventData, foundObjectType);
                 } else if (foundObjectType == "transmutationInventorySlot")
                 {
                     
                     SwapProperties(eventData);
+                }
+                else
+                {
+                    Debug.Log("didnt find anything ");
                 }
             }
         }
@@ -95,16 +107,35 @@ public class DropHandler : MonoBehaviour, IDropHandler
 
     void CopyCustomID(PointerEventData eventData, string objectType)
     {
+        
         GameObject targetObject = GetObjectUnderMouse();
+        
         targetObject.GetComponent<Element>().CustomID = eventData.pointerDrag.transform.GetComponent<Element>().CustomID;
         int slotNumber = targetObject.transform.parent.parent.GetSiblingIndex();
 
         
         changeElementSound.Play();
+
+        if (objectType == "transmutationSlotSlot")
+        {
+            eventData.pointerDrag.transform.GetComponent<Element>().AttachedCounter.GetComponent<ICounter>().AddResource(-1);
+        }
         
         if (objectType == "transmutationInventorySlot")
         {
+            
             return;
+        }
+        
+        Transform m_quickAccessPanel;
+        if (transform.Find("QuickAccess") != null)
+        {
+            m_quickAccessPanel = transform.Find("QuickAccess");
+        }
+        else
+        {
+            return;
+            //quickAccessPanel = m_transmutationSlotPanel;
         }
         
         CopyIDToQuickAccess(eventData, slotNumber);
@@ -191,8 +222,16 @@ public class DropHandler : MonoBehaviour, IDropHandler
         {
             return hitObjects[0].gameObject;
         }
+        if (hitObjects[0].gameObject.GetComponent<Element>() != null && hitObjects[0].gameObject.GetComponent<Element>().ElementType.ToString() == "transmutationSlotSlot")
+        {
+            return hitObjects[0].gameObject;
+        } 
         
-        if (hitObjects[2].gameObject.GetComponent<Element>() != null)
+        if (hitObjects[1].gameObject.GetComponent<Element>() != null)
+        {
+            return hitObjects[1].gameObject;
+        } 
+        else if (hitObjects[2].gameObject.GetComponent<Element>() != null)
         {
             return hitObjects[2].gameObject;
         }
@@ -215,7 +254,9 @@ public class DropHandler : MonoBehaviour, IDropHandler
     {
         //meObject objectUnderMouse = GetObjectUnderMouse();
         //Debug.Log("we are here " + objectUnderMouse.gameObject.name);
-        string objectType = foundObject.GetComponent<Element>().ElementType;
+        string objectType = "";
+        objectType = foundObject.GetComponent<Element>().ElementType;
+        
         
         return objectType;
     }

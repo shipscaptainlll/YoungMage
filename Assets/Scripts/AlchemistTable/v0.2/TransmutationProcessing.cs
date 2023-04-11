@@ -25,7 +25,7 @@ public class TransmutationProcessing : MonoBehaviour
         Debug.Log("activated");
         if (m_transmutationElementsManager.ElementsFilled == 0)
         {
-            m_transmutationErrorsNotificator.ActivatePopup();
+            m_transmutationErrorsNotificator.ActivatePopup("Nothing was chosen");
         }
         else
         {

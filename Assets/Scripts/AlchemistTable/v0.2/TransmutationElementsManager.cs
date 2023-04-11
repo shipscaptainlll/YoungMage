@@ -70,11 +70,23 @@ public class TransmutationElementsManager : MonoBehaviour
     }
     
     
-    void UpdateElementState(int transmutationSlotId)
+    void UpdateElementState(int previousValue, int newValue, int transmutationSlotId)
     {
         Debug.Log("here " + m_transmutationSlotsDictionary[transmutationSlotId]);
-        if (m_transmutationSlotsDictionary[transmutationSlotId].CustomID == 0)
+        if (previousValue == 0 && newValue != 0)
         {
+            Debug.Log("starting visualisation 1 ");
+            m_elementsFilled++;
+            m_activatedTransmutationElements.Add(m_transmutationElementsDictionary[transmutationSlotId]);
+            VisualiseElement(m_transmutationElementsDictionary[transmutationSlotId], m_transmutationSlotsDictionary[transmutationSlotId].CustomID);
+        } else if (previousValue != 0 && newValue != 0)
+        {
+            Debug.Log("starting visualisation 2 ");
+            DisableElement(m_transmutationElementsDictionary[transmutationSlotId]);
+            VisualiseElement(m_transmutationElementsDictionary[transmutationSlotId], m_transmutationSlotsDictionary[transmutationSlotId].CustomID);
+        } else if (previousValue != 0 && newValue == 0)
+        {
+            Debug.Log("starting visualisation 3 ");
             m_elementsFilled--;
             if (m_elementsFilled < 0)
             {
@@ -82,12 +94,6 @@ public class TransmutationElementsManager : MonoBehaviour
             }
             m_activatedTransmutationElements.Remove(m_transmutationElementsDictionary[transmutationSlotId]);
             DisableElement(m_transmutationElementsDictionary[transmutationSlotId]);
-        }
-        else
-        {
-            m_elementsFilled++;
-            m_activatedTransmutationElements.Add(m_transmutationElementsDictionary[transmutationSlotId]);
-            VisualiseElement(m_transmutationElementsDictionary[transmutationSlotId], m_transmutationSlotsDictionary[transmutationSlotId].CustomID);
         }
     }
 

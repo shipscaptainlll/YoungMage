@@ -10,6 +10,8 @@ public class TransmutationRecipesPanel : MonoBehaviour
     [SerializeField] private Transform m_slotsHolder;
     [SerializeField] private PotentialProductLibrary m_potentialProductLibrary;
     [SerializeField] private SoundManager m_soundManager;
+    [SerializeField] private CounterManager m_counterManager;
+    [SerializeField] private TransmutationErrorsNotificator m_transmutationErrorsNotificator;
     AudioSource changeElementSound;
     
     private Dictionary<int, bool> m_activatedRecipesDictionary = new Dictionary<int, bool>();
@@ -42,23 +44,42 @@ public class TransmutationRecipesPanel : MonoBehaviour
     {
         foreach (Transform element in m_slotsHolder)
         {
+            if (element.GetChild(0).Find("Element").GetComponent<Element>().CustomID != 0)
+            {
+                element.GetChild(0).Find("Element").GetComponent<Element>().AttachedCounter.GetComponent<ICounter>().AddResource(1);
+            }
+            
             element.GetChild(0).Find("Element").GetComponent<Element>().CustomID = 0;
         }
 
         List<int> recipeRequiredItems = m_potentialProductLibrary.PotentialProducts[itemID];
+
+        bool somethingWasMissing = false;
         
         int indexer = 0;
         
         foreach (int recipeItemID in recipeRequiredItems)
         {
+            
+            if (m_counterManager.TakeCounter(recipeItemID).GetComponent<ICounter>().Count <= 0)
+            {
+                somethingWasMissing = true;
+                continue;
+            }
             foreach (Transform element in m_slotsHolder)
             {
                 if (element.GetChild(0).Find("Element").GetComponent<Element>().CustomID == 0)
                 {
                     element.GetChild(0).Find("Element").GetComponent<Element>().CustomID = recipeRequiredItems[indexer];
+                    m_counterManager.TakeCounter(recipeItemID).GetComponent<ICounter>().AddResource(-1);
                     break;
                 }
             }
+        }
+
+        if (somethingWasMissing)
+        {
+            m_transmutationErrorsNotificator.ActivatePopup("Not enough resources!");
         }
         
         changeElementSound.Play();
@@ -67,6 +88,11 @@ public class TransmutationRecipesPanel : MonoBehaviour
     public void InstantiateNewRecipe(int itemID)
     {
         Transform m_newRecipeTemplate = FindNewTemplate(itemID);
+        if (m_newRecipeTemplate == null)
+        {
+            return;
+        }
+        m_transmutationErrorsNotificator.ActivatePopup("New recipe found: " + ItemsNames.GetName(itemID));
         Transform newRecipe = Instantiate(m_newRecipeTemplate, m_recipesHolder.position, m_recipesHolder.rotation);
         newRecipe.parent = m_recipesHolder;
         newRecipe.SetAsFirstSibling();

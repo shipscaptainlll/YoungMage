@@ -39,6 +39,7 @@ public class TransmutationElement : MonoBehaviour
     public void ShowObject(int id)
     {
         HideVisibility();
+        Debug.Log("id is " + id);
         if (id != 0)
         {
             m_transmutationObjectsDictionary[id].SetActive(true);

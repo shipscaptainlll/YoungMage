@@ -44,7 +44,8 @@ public class LearningModeFlow : MonoBehaviour
 
     public static void TryInitiateNextTutorial()
     {
-        if (m_learningQuests.Count > m_nextTutorialID)
+        //if (m_learningQuests.Count > m_nextTutorialID)
+        if (3 > m_nextTutorialID)
         {
             m_learningQuests[m_nextTutorialID].ActivateQuestSequence();
             m_nextTutorialID++;
