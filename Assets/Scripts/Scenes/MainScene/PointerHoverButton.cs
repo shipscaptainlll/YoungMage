@@ -46,7 +46,7 @@ public class PointerHoverButton : MonoBehaviour, IPointerEnterHandler, IPointerE
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (hideOutlineCoroutine != null) { StopCoroutine(hideOutlineCoroutine); }
-        showOutlineCoroutine = StartCoroutine(ShowOutline());
+        //showOutlineCoroutine = StartCoroutine(ShowOutline());
         
     }
 
@@ -54,7 +54,7 @@ public class PointerHoverButton : MonoBehaviour, IPointerEnterHandler, IPointerE
     {
         
         if (showOutlineCoroutine != null) { StopCoroutine(showOutlineCoroutine); }
-        hideOutlineCoroutine = StartCoroutine(HideOutline());
+        //hideOutlineCoroutine = StartCoroutine(HideOutline());
     }
 
     public void TurnOffMaterial()
