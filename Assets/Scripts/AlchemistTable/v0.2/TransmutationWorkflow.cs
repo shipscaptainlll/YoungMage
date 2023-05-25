@@ -50,9 +50,12 @@ public class TransmutationWorkflow : MonoBehaviour
             m_isTransmutationMode = true;
             
             m_cameraController.IsTransmutationMode = true;
-            m_personMovement.IsTransmutationMode = true;
-            m_savePanel.IsTransmutationMode = true;
             
+            m_personMovement.IsTransmutationMode = true;
+            m_personMovement.TurnOffSounds();
+            m_savePanel.IsTransmutationMode = true;
+            m_personMovement.TurnOffSounds();
+
             m_transmutationInventoryPanel.GetComponent<CanvasGroup>().alpha = 0;
             m_transmutationSlotsPanel.GetComponent<CanvasGroup>().alpha = 0;
             m_transmutationRecipesPanel.GetComponent<CanvasGroup>().alpha = 0;

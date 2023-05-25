@@ -99,9 +99,13 @@ public class Portal2 : MonoBehaviour
 
     void ActivateSearch(Transform usedPortal)
     {
-        if (usedPortal == transform && portalType == "main")
+        if (portalOpener.PortalIsClosing)
         {
-            
+            Debug.Log("sorry, portal is already closing");
+        }
+        if (usedPortal == transform && portalType == "main" && !portalOpener.PortalIsClosing)
+        {
+            Debug.Log("Search was activated ");
             SearchSurroundings();
         }
     }

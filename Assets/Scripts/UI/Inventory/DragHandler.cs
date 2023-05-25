@@ -100,8 +100,8 @@ public class DragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
             
             if (GetObjectUnderMouse().GetComponent<Element>().ElementType == Element.ElementTypeEnum.transmutationInventorySlot.ToString() && GetObjectUnderMouse().GetComponent<Element>().CustomID != 0)
             {
-                
 
+                //Debug.Log(" is free22");
                 foreach (Transform element in m_transmutationSlotElementsHolder)
                 {
                     //Debug.Log(" is free2");

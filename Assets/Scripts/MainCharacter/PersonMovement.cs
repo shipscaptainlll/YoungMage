@@ -106,6 +106,9 @@ public class PersonMovement : MonoBehaviour
 
     float timeShiftPressed;
 
+    public bool IsWalking { get { return isWalking; } set { isWalking = value; } }
+    public bool IsRunning { get { return isRunning; } set { isRunning = value; } }
+    public bool Occupied { get { return occupied; } set { occupied = value; } }
     public bool TutorialModeActivated { get { return tutorialModeActivated; } set { tutorialModeActivated = value; } }
     public float Speed { get { return speed; } }
     public bool IsAutoRunning { get { return isAutoRunning; } set { isAutoRunning = value; } }
@@ -176,6 +179,21 @@ public class PersonMovement : MonoBehaviour
         {
             
         }
+        /*
+        if (m_isTransmutationMode)
+        {
+            if (walkingSound.isPlaying) { walkingSound.Stop(); }
+            if (walkingStairsSound.isPlaying) { walkingStairsSound.Stop(); }
+            if (runningSound.isPlaying) { runningSound.Stop(); }
+            if (runningStairsSound.isPlaying) { runningStairsSound.Stop(); }
+            if (walkingStoneSound.isPlaying) { walkingStoneSound.Stop(); }
+            if (runningStoneSound.isPlaying)
+            {
+                runningStoneSound.Stop();
+            }
+        }
+        */
+
         //Debug.Log("is walking " + isWalking + " and is running " + isRunning + " running with speed " + characterController.velocity + " and magnitude " + characterController.velocity.magnitude);
         if (!occupied && !tutorialModeActivated && !m_isTransmutationMode)
             MoveCharacter();
@@ -193,6 +211,18 @@ public class PersonMovement : MonoBehaviour
 
         if (isWalking && onOtherGround && currentObjectGround == "Bed") { if (!walkingBedSound.isPlaying) { walkingBedSound.Play(); } } else { if (walkingBedSound.isPlaying) { walkingBedSound.Stop(); } }
 
+    }
+
+    public void TurnOffSounds()
+    {
+        isWalking = false;
+        isRunning = false;
+        if (walkingSound.isPlaying) { walkingSound.Stop(); }
+        if (walkingStairsSound.isPlaying) { walkingStairsSound.Stop(); }
+        if (runningSound.isPlaying) { runningSound.Stop(); }
+        if (runningStairsSound.isPlaying) { runningStairsSound.Stop(); }
+        if (walkingStoneSound.isPlaying) { walkingStoneSound.Stop(); }
+        if (runningStoneSound.isPlaying) { runningStoneSound.Stop(); }
     }
 
     void RandomWoodcreakInitiator()

@@ -14,12 +14,6 @@ public class ResourcesPopupInstantiator : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public Transform InstantiatePopupBlock(int ID, int ammountAdded)
     {
         //Debug.Log("objectInstantiated");

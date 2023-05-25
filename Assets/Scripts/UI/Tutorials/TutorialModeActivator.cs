@@ -13,7 +13,9 @@ public class TutorialModeActivator : MonoBehaviour
     public void ApplyTutorialReadingMode(int tutorialID)
     {
         modeActive = true;
+        personMovement.TurnOffSounds();
         personMovement.TutorialModeActivated = true;
+        personMovement.TurnOffSounds();
         if (tutorialID != 10
             && tutorialID != 11
             && tutorialID != 12

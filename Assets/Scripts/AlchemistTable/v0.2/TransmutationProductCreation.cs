@@ -18,6 +18,8 @@ public class TransmutationProductCreation : MonoBehaviour
     [SerializeField] private TransmutationElementsManager m_transmutationElementsManager;
     [SerializeField] private TransmutationHandController m_transmutationHandController;
     [SerializeField] private TransmutationRecipesPanel m_transmutationRecipesPanel;
+    [SerializeField] private Transform m_skeletonScannersCounterHolder;
+    [SerializeField] private Transform m_countersHolder;
     private AudioSource m_visualisationSound;
     private int m_currentProductID;
     private Transform m_currentProductTransform;
@@ -90,7 +92,7 @@ public class TransmutationProductCreation : MonoBehaviour
             }
             //m_currentProductTransform.GetComponent<MeshRenderer>().enabled = true;
             m_currentProductTransform.GetComponent<Animator>().enabled = true;
-            m_currentProductTransform.GetComponent<Animator>().Play("AppearProduct");
+            m_currentProductTransform.GetComponent<Animator>().Play("AppearProduct", 0, 0);
         }
     }
 
@@ -134,6 +136,24 @@ public class TransmutationProductCreation : MonoBehaviour
         }
     }
 
+    void AddToInventory(int productID)
+    {
+        if (m_skeletonScannersCounterHolder.GetComponent<ICounter>().ID == productID)
+        {
+            m_skeletonScannersCounterHolder.GetComponent<ICounter>().AddResource(1);
+            return;
+        }
+
+        foreach (Transform counter in m_countersHolder)
+        {
+            if (counter.GetComponent<ICounter>().ID == productID)
+            {
+                counter.GetComponent<ICounter>().AddResource(1);
+                return;
+            }
+        }
+    }
+
     void FinishProcessing()
     {
         if (m_currentProductTransform != null)
@@ -145,6 +165,11 @@ public class TransmutationProductCreation : MonoBehaviour
         if (m_currentProductID != 0)
         {
             m_currentProductTransform.GetComponent<MeshRenderer>().enabled = false;
+        }
+
+        if (m_currentProductID != 0)
+        {
+            AddToInventory(m_currentProductID);
         }
 
         m_currentProductID = 0;

@@ -30,11 +30,9 @@ public static class TransmutationTableDataApplier
     {
         
         Debug.Log("Applying transmutation table state machine");
-        transmutationTableStateMachine.ApplyPackState(transmutationTableData);
-        transmutationTableStateMachine.ApplyElementState(transmutationTableData);
-        transmutationTableStateMachine.ApplyChoosenProductID(transmutationTableData);
-        transmutationTableStateMachine.ApplyPortalState(transmutationTableData);
-        transmutationTableStateMachine.ApplyCircleState(transmutationTableData);
-        transmutationTableStateMachine.ApplyInstantiatedProductState(transmutationTableData);
+        transmutationTableStateMachine.ResetTransmutationTableState();
+        transmutationTableStateMachine.ApplyRecipesState(transmutationTableData);
+        transmutationTableStateMachine.ApplyInventoryState(transmutationTableData);
+        transmutationTableStateMachine.ApplySlotState(transmutationTableData);
     }
 }

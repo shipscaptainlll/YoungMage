@@ -102,6 +102,47 @@ public class TransmutationRecipesPanel : MonoBehaviour
         newRecipe.GetComponent<CanvasGroup>().alpha = 1;
     }
 
+    public void ResetRecipes()
+    {
+        m_activatedRecipesDictionary = new Dictionary<int, bool>();
+
+        foreach (int element in m_potentialProductLibrary.PotentialProducts.Keys)
+        {
+            m_activatedRecipesDictionary.Add(element, false);
+        }
+
+        foreach (Transform element in m_recipesHolder)
+        {
+            DestroyImmediate(element.gameObject);
+        }
+    }
+
+    public void UploadRecipes(int[] recipeIDs)
+    {
+        ResetRecipes();
+
+        foreach (int element in recipeIDs)
+        {
+            m_activatedRecipesDictionary[element] = true;
+
+            Transform m_newRecipeTemplate = FindNewTemplate(element);
+            if (m_newRecipeTemplate == null)
+            {
+                return;
+            }
+            //m_transmutationErrorsNotificator.ActivatePopup("New recipe found: " + ItemsNames.GetName(itemID));
+            Transform newRecipe = Instantiate(m_newRecipeTemplate, m_recipesHolder.position, m_recipesHolder.rotation);
+            newRecipe.parent = m_recipesHolder;
+            newRecipe.SetAsFirstSibling();
+            newRecipe.localScale = new Vector3(0.7702f, 0.7702f, 0.7702f);
+            RectTransform originRect = m_newRecipeTemplate.GetComponent<RectTransform>();
+            newRecipe.GetComponent<RectTransform>().sizeDelta = new Vector2(originRect.rect.width, originRect.rect.height);
+            newRecipe.GetComponent<CanvasGroup>().alpha = 1;
+        }
+
+        
+    }
+
     Transform FindNewTemplate(int itemID)
     {
         foreach (Transform element in m_preLoadedTemplatesHolder)

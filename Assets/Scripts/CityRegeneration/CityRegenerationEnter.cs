@@ -83,7 +83,10 @@ public class CityRegenerationEnter : MonoBehaviour
             isActive = true;
             isEntering = true;
             panelsManager.EscapeMenuBlocked = true;
-            personMovement.enabled = false;
+            personMovement.TurnOffSounds();
+            personMovement.Occupied = true;
+            personMovement.TurnOffSounds();
+            //personMovement.enabled = false;
             quickAccessPanel.GetComponent<CanvasGroup>().alpha = 0;
             if (cameraRepositioningCoroutine != null) { 
                 StopCoroutine(cameraRepositioningCoroutine);
@@ -139,7 +142,9 @@ public class CityRegenerationEnter : MonoBehaviour
             isActive = false;
             panelsManager.EscapeMenuBlocked = false;
             camera.CityRegenerationMode = false;
-            personMovement.enabled = true;
+            
+            //personMovement.enabled = true;
+            personMovement.Occupied = false;
             m_cameraTransformLookAt.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
             //camera.CityRegenerationMode = false;
             quickAccessPanel.GetComponent<CanvasGroup>().alpha = 1;

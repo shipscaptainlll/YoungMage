@@ -9,7 +9,9 @@ public class OreMiningManager : MonoBehaviour
     MiningProductPopuper productPopuper;
     [SerializeField] OreHealthDecreaser oreHealthDecreaser;
     [SerializeField] ParticleSystem particlesPS;
+    [SerializeField] bool activated;
     SkeletonBehavior connectedSkeleton;
+    [SerializeField] SkeletonComingMark skeletonComingMark;
 
     [Header("Audio Connection")]
     [SerializeField] SoundManager soundManager;
@@ -42,12 +44,21 @@ public class OreMiningManager : MonoBehaviour
             if (value == null)
             {
                 DisconnectSkeleton();
+                connectedSkeleton.TargetOre = null;
+                connectedSkeleton = value;
+                skeletonComingMark.StopAnimation();
+
+                bookSpellsActivator.CastMiningSpell();
             } else
             {
+                connectedSkeleton = value;
+                connectedSkeleton.TargetOre = transform;
                 ConnectSkeleton(value);
+                skeletonComingMark.ActivateAnimation();
+                
+                bookSpellsActivator.CastMiningSpell();
             }
-            connectedSkeleton = value;
-            bookSpellsActivator.CastMiningSpell();
+            
         }
     }
     // Start is called before the first frame update
@@ -81,13 +92,16 @@ public class OreMiningManager : MonoBehaviour
             
         }
         
+
     }
 
     void ConnectSkeleton(SkeletonBehavior connectingSkeleton)
     {
-        VisualiseOreHealthbar();
-        Debug.Log("Connected");
+        
+        
         ConnectScriptsInterraction(connectingSkeleton);
+        Debug.Log("Connected");
+        //VisualiseOreHealthbar();
     }
 
     void DisconnectSkeleton()
@@ -156,7 +170,18 @@ public class OreMiningManager : MonoBehaviour
     public void VisualiseOreHealthbar()
     {
         oreHealthDecreaser.gameObject.GetComponent<CanvasGroup>().alpha = 1;
+        //oreHealthDecreaser.transform.LookAt(2 * oreHealthDecreaser.transform.position - connectedSkeleton.transform.Find("OrehealthTarget").position);
+        oreHealthDecreaser.transform.LookAt(connectedSkeleton.transform.Find("OrehealthTarget").position);
+        //Debug.Log("local rotation " + transform.localRotation);
+        //oreHealthDecreaser.transform.localRotation = Quaternion.Euler(new Vector3(oreHealthDecreaser.transform.localRotation.x, -90, -90));
+        //Debug.Log(transform.localRotation);
         healthVisible = true;
+    }
+
+    public void UpdateSkeletonReached()
+    {
+        VisualiseOreHealthbar();
+        skeletonComingMark.StopAnimation();
     }
 
     void ConnectScriptsInterraction(SkeletonBehavior connectingSkeleton)

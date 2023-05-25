@@ -5,113 +5,68 @@ using UnityEngine;
 [System.Serializable]
 public class TransmutationTableData
 {
-    public bool[] packShown;
-    public float[] packAngle;
-    public int[] choosenResourcesID;
-    public bool[] elementVisible;
-    public int chosenProductID;
-    public bool portalOpened;
-    public bool circleActive;
-    public int instantiatedProductID;
-    public float[] instantiatedProductPosition;
+    public int[] inventoryIDs;
+    public int[] slotsIDs;
+    public int[] uploadedRecipes;
 
 
     public TransmutationTableData(TransmutationTableStateMachine transmutationTableStateMachine)
     {
-        GetPackVisibility(transmutationTableStateMachine);
-        GetPackAngle(transmutationTableStateMachine);
-        GetElementsCurrentID(transmutationTableStateMachine);
-        GetElementsVisibility(transmutationTableStateMachine);
-        GetChoosenProductID(transmutationTableStateMachine);
-        GetPortalState(transmutationTableStateMachine);
-        GetCircleState(transmutationTableStateMachine);
-        GetInstantiatedProductID(transmutationTableStateMachine);
-        GetInstantiatedProductPosition(transmutationTableStateMachine);
+        GetInventoryIDs(transmutationTableStateMachine);
+        GetSlotsIDs(transmutationTableStateMachine);
+        GetAvailableRecipes(transmutationTableStateMachine);
     }
 
-    public void GetPackVisibility(TransmutationTableStateMachine transmutationTableStateMachine)
+    void GetInventoryIDs(TransmutationTableStateMachine transmutationTableStateMachine)
     {
-        packShown = new bool[transmutationTableStateMachine.ElementsHolder.childCount];
-        int indexer = 0;
-
-        foreach (Transform element in transmutationTableStateMachine.ElementsHolder)
+        List<int> cache = new List<int>();
+        Transform inventoryRowsHolder = transmutationTableStateMachine.GetInventoryRows();
+        foreach (Transform row in inventoryRowsHolder)
         {
-            packShown[indexer] = element.GetChild(1).GetComponent<TransmutationResourceChoose>().ResourcePackShown;
-            Debug.Log("visibility of " + indexer + " pack is: Visible " + packShown[indexer]);
-            indexer++;
+            foreach (Transform slot in row)
+            {
+                int slotCustomID = slot.Find("Borders").Find("Element").GetComponent<Element>().CustomID;
+                cache.Add(slotCustomID);
+                //Debug.Log("main inventory id " + slotCustomID);
+            }
+        }
+        inventoryIDs = new int[cache.Count];
+        inventoryIDs = cache.ToArray();
+    }
+
+    void GetSlotsIDs(TransmutationTableStateMachine transmutationTableStateMachine)
+    {
+        List<int> cache = new List<int>();
+        Transform slotRowsHolder = transmutationTableStateMachine.GetSlotRows();
+        foreach (Transform row in slotRowsHolder)
+        {
+            foreach (Transform slot in row)
+            {
+                int slotCustomID = slot.Find("Borders").Find("Element").GetComponent<Element>().CustomID;
+                cache.Add(slotCustomID);
+                //Debug.Log("main inventory id " + slotCustomID);
+            }
+        }
+        slotsIDs = new int[cache.Count];
+        slotsIDs = cache.ToArray();
+    }
+
+    public void GetAvailableRecipes(TransmutationTableStateMachine transmutationTableStateMachine)
+    {
+        Dictionary<int, bool> activateRecipes = transmutationTableStateMachine.GetActivatedRecipes();
+        List<int> cache = new List<int>();
+
+        foreach (var element in activateRecipes)
+        {
+            if (element.Value == true)
+            {
+                cache.Add(element.Key);
+            }
         }
 
-    }
+        uploadedRecipes = new int[cache.Count];
+        uploadedRecipes = cache.ToArray();
 
-    public void GetPackAngle(TransmutationTableStateMachine transmutationTableStateMachine)
-    {
-        packAngle = new float[transmutationTableStateMachine.ElementsHolder.childCount];
-        int indexer = 0;
-
-        foreach (Transform element in transmutationTableStateMachine.ElementsHolder)
-        {
-            packAngle[indexer] = element.GetChild(1).GetComponent<TransmutationResourceChoose>().CurrentAngle;
-            Debug.Log("angle of " + indexer + " pack is: " + packAngle[indexer]);
-            indexer++;
-        }
-
-    }
-
-    public void GetElementsCurrentID(TransmutationTableStateMachine transmutationTableStateMachine)
-    {
-        choosenResourcesID = new int[transmutationTableStateMachine.ElementsHolder.childCount];
-        int indexer = 0;
-
-        foreach (Transform element in transmutationTableStateMachine.ElementsHolder)
-        {
-            choosenResourcesID[indexer] = element.GetChild(1).GetComponent<TransmutationResourceChoose>().CurrentID;
-            Debug.Log("choosen resource ID of " + indexer + " element is:  " + choosenResourcesID[indexer]);
-            indexer++;
-        }
-
-    }
-
-    public void GetElementsVisibility(TransmutationTableStateMachine transmutationTableStateMachine)
-    {
-        elementVisible = new bool[transmutationTableStateMachine.ElementsHolder.childCount];
-        int indexer = 0;
-
-        foreach (Transform element in transmutationTableStateMachine.ElementsHolder)
-        {
-            elementVisible[indexer] = element.GetChild(1).GetComponent<TransmutationResourceChoose>().ResourceShown;
-            Debug.Log("visibility of " + indexer + " element is: Visible " + elementVisible[indexer]);
-            indexer++;
-        }
-    }
-
-    public void GetChoosenProductID(TransmutationTableStateMachine transmutationTableStateMachine)
-    {
-        chosenProductID = transmutationTableStateMachine.GetPotentialProductID();
-        Debug.Log("choosen product ID is " + chosenProductID);
-    }
-
-    public void GetPortalState(TransmutationTableStateMachine transmutationTableStateMachine)
-    {
-        portalOpened = transmutationTableStateMachine.CheckPortalOpened();
-        Debug.Log("portal is opened " + portalOpened);
-    }
-
-    public void GetCircleState(TransmutationTableStateMachine transmutationTableStateMachine)
-    {
-        circleActive = transmutationTableStateMachine.CheckCircleActive();
-        Debug.Log("circle is active " + circleActive);
-    }
-
-    public void GetInstantiatedProductID(TransmutationTableStateMachine transmutationTableStateMachine)
-    {
-        instantiatedProductID = transmutationTableStateMachine.GetInstantiatedProductID();
-        Debug.Log("instantiated product ID is " + instantiatedProductID);
-    }
-
-    public void GetInstantiatedProductPosition(TransmutationTableStateMachine transmutationTableStateMachine)
-    {
-        instantiatedProductPosition = transmutationTableStateMachine.GetCreatedObjectPosition();
-        Debug.Log("instantiated product position is " + instantiatedProductPosition[0] + ", " + +instantiatedProductPosition[1] + ", " + instantiatedProductPosition[2]);
     }
 
 

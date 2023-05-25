@@ -23,7 +23,7 @@ public class LearningModeFlow : MonoBehaviour
 
         if (!m_activateLearningMode)
         {
-            Destroy(m_castleLookCatcher.gameObject);
+            //Destroy(m_castleLookCatcher.gameObject);
         }
         
         if (m_activateLearningMode)

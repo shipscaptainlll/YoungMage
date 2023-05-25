@@ -200,6 +200,7 @@ public class SkeletonBehavior : MonoBehaviour
     public AudioSource WalkingGroundSound { get { return walkingGroundSound; } }
 
     public Transform OccupiedArenaPositions { get { return occupiedArenaPosition; } }
+    public Transform TargetOre { get { return targetOre; } set { targetOre = value; } }
     //cache
     [SerializeField] Transform targetMage1;
     public Transform CastlePosition { set { castlePosition = value; } }
@@ -578,11 +579,14 @@ public class SkeletonBehavior : MonoBehaviour
             //Debug.Log(navigationTarget.parent.name == "SkeletonPositions");
             if (navigationTarget != null && navigationTarget.GetComponent<IOre>() == null && navigationTarget.parent.name != "SkeletonPositions")
             {
+                Debug.Log("reached target is " + targetOre);
                 isMoving = false;
                 localAnimator.CrossFade("SkelIdle", 0.1f);
             } else if ((navigationTarget != null && navigationTarget.GetComponent<IOre>() != null) ||
                 (navigationTarget != null && navigationTarget.parent.name == "SkeletonPositions"))
             {
+                Debug.Log("reached target is " + targetOre);
+                targetOre.GetComponent<OreMiningManager>().UpdateSkeletonReached();
                 isMoving = false;
                 localAnimator.CrossFade("SkelMine", 0.1f);
             }
@@ -615,7 +619,8 @@ public class SkeletonBehavior : MonoBehaviour
         else if ((navigationTarget != null && navigationTarget.GetComponent<IOre>() != null) ||
           (navigationTarget != null && navigationTarget.parent.name == "SkeletonPositions"))
         {
-            localAnimator.CrossFade("SkelMine", 0.1f);
+            //Debug.Log("reached target is " + targetOre);
+            //localAnimator.CrossFade("SkelMine", 0.1f);
         }
         if (navigationTarget == null)
         {
@@ -1322,6 +1327,7 @@ public class SkeletonBehavior : MonoBehaviour
         contactManager.GetComponent<ContactManager>().ObjectOverloaded -= ShowEmotion;
         connectedTeleport.GetComponent<Teleporter>().TeleportFound -= StopGravity;
         transform.GetComponent<CopycatCreator>().OriginTeleported -= StopActivities;
+        targetOre = null;
     }
 
     public void InstantiateSounds()

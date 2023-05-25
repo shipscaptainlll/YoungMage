@@ -2,11 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 public class MiscPanel : MonoBehaviour
 {
     [SerializeField] Slider slider;
+    [SerializeField] Slider languageSlider;
+    [SerializeField] Text languageComment;
     
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
@@ -23,6 +26,7 @@ public class MiscPanel : MonoBehaviour
     {
         chooseSound = soundManager.FindSound("SettingElement");
         UploadPlayerPrefs();
+        UpdateLanguageParametersRepresentation();
     }
 
     public void ResetTutorial()
@@ -58,6 +62,7 @@ public class MiscPanel : MonoBehaviour
         Text sliderValueRepresentation = slider.gameObject.transform.Find("Text").GetComponent<Text>();
         sliderValueRepresentation.text = LocalizationChanger.GetLocalizationName(newLocalizationId);
         LocalizationChanger.ApplyLocalization(newLocalizationId);
+        PlayerPrefs.SetString("selected-locale", LocalizationSettings.SelectedLocale.ToString());
         //if (AutosaveTimeChangeRequested != null) { AutosaveTimeChangeRequested(newAutosaveDelay); }
         if (SettingChanged != null) { SettingChanged(1); }
         chooseSound.Play();
@@ -70,8 +75,17 @@ public class MiscPanel : MonoBehaviour
         Debug.Log("all misc settings was saved");
     }
 
+    public void UpdateLanguageParametersRepresentation()
+    {
+        languageComment.text = LocalizationChanger.GetLocalizationName(LocalizationSettings.SelectedLocale.LocaleName);
+        languageSlider.value = LocalizationChanger.GetLocalizationId(LocalizationSettings.SelectedLocale.LocaleName);
+        PlayerPrefs.SetString("selected-locale", LocalizationSettings.SelectedLocale.ToString());
+    }
+
     public void UploadPlayerPrefs()
     {
+        
         slider.value = PlayerPrefs.GetFloat("autoSaveDelay", 3);
+        Debug.Log("current language is " + LocalizationSettings.SelectedLocale.LocaleName + " while player prefs is " + PlayerPrefs.GetString("selected-locale"));
     }
 }

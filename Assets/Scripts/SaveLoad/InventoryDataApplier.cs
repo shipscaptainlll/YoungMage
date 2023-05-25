@@ -62,7 +62,7 @@ public static class InventoryDataApplier
             foreach (Transform slot in row)
             {
                 //Debug.Log("quickaccess outer id was " + itemsDataLoaded.outerQuickaccessIDs [indexer]);
-                slot.Find("Borders").GetChild(2).GetComponent<QuickAccessElement>().CustomID = itemsDataLoaded.outerQuickaccessIDs[indexer++];
+                slot.Find("Borders").Find("Element").GetComponent<QuickAccessElement>().CustomID = itemsDataLoaded.outerQuickaccessIDs[indexer++];
 
             }
         }

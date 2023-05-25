@@ -24,6 +24,7 @@ public class PortalOpener : MonoBehaviour
     AudioSource workPortalSound;
     AudioSource closePortalSound;
     bool portalOpened;
+    bool portalIsClosing;
     Transform housePortal;
     Transform fieldPortal;
     bool cycleRunning = false;
@@ -37,6 +38,7 @@ public class PortalOpener : MonoBehaviour
     public Transform ChoosenSkeleton { get { return choosenSkeleton; } }
 
     public event Action PortalJustOpened = delegate { };
+    public bool PortalIsClosing { get { return portalIsClosing; } }
 
     // Start is called before the first frame update
     void Start()
@@ -104,6 +106,7 @@ public class PortalOpener : MonoBehaviour
             //Debug.Log("ClosingPortal");
             if (cycleRunning)
             {
+                portalIsClosing = true;
                 //Debug.Log("ClosingPortal1");
                 cycleRunning = false;
                 //Debug.Log("ClosingPortal2");
@@ -189,6 +192,7 @@ public class PortalOpener : MonoBehaviour
         fieldPortalContainer.gameObject.SetActive(false);
         fieldPortal.gameObject.SetActive(false);
         portalOpened = false;
+        portalIsClosing = false;
         //fieldPortalContainer.gameObject.SetActive(false);
     }
 
@@ -249,7 +253,7 @@ public class PortalOpener : MonoBehaviour
 
     void ChooseSkeletonInstance()
     {
-        //Debug.Log(skeletonsStack.SkeletonStack.Count);
+        //Debug.Log("Count of skeletons " + skeletonsStack.SkeletonStack.Count);
         choosenSkeleton = null;
         
         var skeletons = skeletonsStack.SkeletonsArena.ToArray();

@@ -4,148 +4,59 @@ using UnityEngine;
 
 public class TransmutationTableStateMachine : MonoBehaviour
 {
-    [SerializeField] Transform elementsHolder;
-    [SerializeField] PotentialProductVisualisation potentialProductVisualisation;
-    [SerializeField] PortalInstantiator portalInstantiator;
-    [SerializeField] AppearanceTransmutationCircle appearanceTransmutationCircle;
-    [SerializeField] PotentialProductAppearance potentialProductAppearance;
-
-    public Transform ElementsHolder { get { return elementsHolder; } }
+    [SerializeField] Transform inventoryRowsHolder;
+    [SerializeField] Transform slotRowsHolder;
+    [SerializeField] TransmutationRecipesPanel transmutationRecipesPanel;
+    [SerializeField] TransmutationElementsManager transmutationElementsManager;
 
 
-    public int GetPotentialProductID()
+    public Transform GetInventoryRows()
     {
-        return potentialProductVisualisation.CurrentProductID;
+        return inventoryRowsHolder;
     }
 
-    public bool CheckPortalOpened()
+    public Transform GetSlotRows()
     {
-        return portalInstantiator.PortalIsActive;
+        return slotRowsHolder;
     }
 
-    public bool CheckCircleActive()
+    public Dictionary<int, bool> GetActivatedRecipes()
     {
-        return appearanceTransmutationCircle.CircleShown;
+        return transmutationRecipesPanel.ActivatedRecipesDictionary;
     }
 
-    public int GetInstantiatedProductID()
-    {
-        if (potentialProductAppearance.InstantiatedProductHolder.childCount == 0)
-        {
-            return 0;
-        } else
-        {
-            return potentialProductAppearance.InstantiatedProductHolder.GetChild(0).GetComponent<TransmutationProduct>().ID;
-        }
-        
-    }
-
-    public float[] GetCreatedObjectPosition()
-    {
-        float[] position = new float[3];
-
-        if (potentialProductAppearance.CreatedObject == null)
-        {
-            return position;
-        } else
-        {
-            position[0] = potentialProductAppearance.CreatedObject.position.x;
-            position[1] = potentialProductAppearance.CreatedObject.position.y;
-            position[2] = potentialProductAppearance.CreatedObject.position.z;
-            return position;
-        }
-    }
-
-    public void ApplyPackState(TransmutationTableData transmutationTableData)
+    public void ApplyInventoryState(TransmutationTableData transmutationTableData)
     {
         int indexer = 0;
-
-        foreach (Transform element in elementsHolder)
+        foreach (Transform row in inventoryRowsHolder)
         {
-            if (transmutationTableData.packShown[indexer])
+            foreach (Transform slot in row)
             {
-                element.GetChild(1).GetComponent<TransmutationResourceChoose>().ShowResourcePack();
+                slot.Find("Borders").Find("Element").GetComponent<Element>().CustomID = transmutationTableData.inventoryIDs[indexer++];
             }
-            else
-            {
-                element.GetChild(1).GetComponent<TransmutationResourceChoose>().HideResourcePack();
-            }
-            Debug.Log("visibility of " + indexer + " pack was: Visible " + transmutationTableData.packShown[indexer]);
-
-            //element.GetChild(1).GetComponent<TransmutationResourceChoose>().UploadRotation(transmutationTableData.packAngle[indexer]);
-            //Debug.Log("angle of " + indexer + " pack was: " + transmutationTableData.packAngle[indexer]);
-            indexer++;
         }
     }
 
-    public void ApplyElementState(TransmutationTableData transmutationTableData)
+    public void ApplySlotState(TransmutationTableData transmutationTableData)
     {
         int indexer = 0;
-
-        foreach (Transform element in elementsHolder)
+        foreach (Transform row in slotRowsHolder)
         {
-            
-            element.GetChild(1).GetComponent<TransmutationResourceChoose>().UploadChoosenResourceID(transmutationTableData.choosenResourcesID[indexer]);
-            Debug.Log("choosen resource ID of " + indexer + " element was:  " + transmutationTableData.choosenResourcesID[indexer]);
-            if (transmutationTableData.elementVisible[indexer])
+            foreach (Transform slot in row)
             {
-                element.GetChild(1).GetComponent<TransmutationResourceChoose>().VisualizeChosenResource(transmutationTableData.choosenResourcesID[indexer]);
+                slot.Find("Borders").Find("Element").GetComponent<Element>().CustomID = transmutationTableData.slotsIDs[indexer++];
             }
-            else
-            {
-                element.GetChild(1).GetComponent<TransmutationResourceChoose>().UploadHidingElement();
-            }
-            Debug.Log("visibility of " + indexer + " element was: Visible " + transmutationTableData.elementVisible[indexer]);
-
-            indexer++;
         }
     }
 
-    public void ApplyChoosenProductID(TransmutationTableData transmutationTableData)
+    public void ApplyRecipesState(TransmutationTableData transmutationTableData)
     {
-        potentialProductVisualisation.VisualisePotentialProduct();
+        transmutationRecipesPanel.UploadRecipes(transmutationTableData.uploadedRecipes);
     }
 
-    public void ApplyPortalState(TransmutationTableData transmutationTableData)
+    public void ResetTransmutationTableState()
     {
-        
-        if (transmutationTableData.portalOpened)
-        {
-            portalInstantiator.ImmediatePortalClosing();
-            portalInstantiator.ImmediatePortalOpening();
-        }
-        else
-        {
-            portalInstantiator.ImmediatePortalClosing();
-        }
-
-        Debug.Log("portal was opened " + transmutationTableData.portalOpened);
+        transmutationElementsManager.ResetElementsList();
     }
 
-    public void ApplyCircleState(TransmutationTableData transmutationTableData)
-    {
-        if (transmutationTableData.circleActive)
-        {
-            appearanceTransmutationCircle.ImmediateCircleDisappearance();
-            appearanceTransmutationCircle.CircleAppearance();
-        }
-        else
-        {
-            appearanceTransmutationCircle.ImmediateCircleDisappearance();
-        }
-
-        Debug.Log("circle was active " + transmutationTableData.circleActive);
-    }
-
-    public void ApplyInstantiatedProductState(TransmutationTableData transmutationTableData)
-    {
-        potentialProductAppearance.ReleaseProduct();
-        if (transmutationTableData.instantiatedProductID != 0)
-        {
-            Vector3 uploadedPosition = new Vector3(transmutationTableData.instantiatedProductPosition[0], transmutationTableData.instantiatedProductPosition[1], transmutationTableData.instantiatedProductPosition[2]);
-            potentialProductAppearance.InstantiateProduct(transmutationTableData.instantiatedProductID, uploadedPosition);
-        }
-        Debug.Log("instantiated product ID is " + transmutationTableData.instantiatedProductID);
-        Debug.Log("instantiated product position was " + transmutationTableData.instantiatedProductPosition[0] + ", " + transmutationTableData.instantiatedProductPosition[1] + ", " + transmutationTableData.instantiatedProductPosition[2]);
-    }
 }

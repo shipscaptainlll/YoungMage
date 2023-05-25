@@ -57,7 +57,7 @@ public class InventoryData
         {
             foreach (Transform slot in row)
             {
-                int slotCustomID = slot.Find("Borders").GetChild(2).GetComponent<QuickAccessElement>().CustomID;
+                int slotCustomID = slot.Find("Borders").Find("Element").GetComponent<QuickAccessElement>().CustomID;
                 cache.Add(slotCustomID);
                 //Debug.Log("outer qucikaccess id " + slotCustomID);
             }

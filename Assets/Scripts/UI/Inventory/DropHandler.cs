@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class DropHandler : MonoBehaviour, IDropHandler
 {
@@ -32,9 +33,18 @@ public class DropHandler : MonoBehaviour, IDropHandler
         RectTransform inventoryPanel = transform as RectTransform;
         if (eventData.pointerDrag.transform.GetComponent<Element>().ElementType == "transmutationSlotSlot")
         {
-            eventData.pointerDrag.transform.GetComponent<Element>().AttachedCounter.GetComponent<ICounter>().AddResource(1);
-            eventData.pointerDrag.transform.GetComponent<Element>().CustomID = 0;
-            return;
+            bool onTransmutationLayer = FindTransmutationSlotLayer();
+
+            if (onTransmutationLayer)
+            {
+                return;
+            } else
+            {
+                eventData.pointerDrag.transform.GetComponent<Element>().AttachedCounter.GetComponent<ICounter>().AddResource(1);
+                eventData.pointerDrag.transform.GetComponent<Element>().CustomID = 0;
+                return;
+            }
+
         }
         if (RectTransformUtility.RectangleContainsScreenPoint(inventoryPanel, Input.mousePosition))
         {
@@ -192,6 +202,48 @@ public class DropHandler : MonoBehaviour, IDropHandler
     {
         quickAccessPanel.GetChild(numberOfSlot).Find("Borders").Find("Element").GetComponent<QuickAccessElement>().CustomID = 0;
     }
+    
+
+    bool FindTransmutationSlotLayer()
+    {
+        var pointer = new PointerEventData(EventSystem.current);
+
+        pointer.position = Input.mousePosition;
+
+        EventSystem.current.RaycastAll(pointer, hitObjects);
+
+
+        if (hitObjects[0].gameObject.GetComponent<TransmutationSlotsLayer>())
+        {
+            return true;
+        }
+
+        if (hitObjects.Count > 1 && hitObjects[1].gameObject.GetComponent<TransmutationSlotsLayer>() != null)
+        {
+            return true;
+        }
+        else if (hitObjects.Count > 2 && hitObjects[2].gameObject.GetComponent<TransmutationSlotsLayer>() != null)
+        {
+            return true;
+        }
+        else if (hitObjects.Count > 3 && hitObjects[3].gameObject.GetComponent<TransmutationSlotsLayer>() != null)
+        {
+            return true;
+        }
+        else if (hitObjects.Count > 4 && hitObjects[4].gameObject.GetComponent<TransmutationSlotsLayer>() != null)
+        {
+            return true;
+        }
+        else if (hitObjects.Count > 5 && hitObjects[5].gameObject.GetComponent<TransmutationSlotsLayer>() != null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
 
     GameObject GetObjectUnderMouse()
     {
@@ -227,25 +279,28 @@ public class DropHandler : MonoBehaviour, IDropHandler
             return hitObjects[0].gameObject;
         } 
         
-        if (hitObjects[1].gameObject.GetComponent<Element>() != null)
+        if (hitObjects.Count > 1 && hitObjects[1].gameObject.GetComponent<Element>() != null)
         {
             return hitObjects[1].gameObject;
         } 
-        else if (hitObjects[2].gameObject.GetComponent<Element>() != null)
+        else if (hitObjects.Count > 2 && hitObjects[2].gameObject.GetComponent<Element>() != null)
         {
             return hitObjects[2].gameObject;
         }
-        else if (hitObjects[3].gameObject.GetComponent<Element>() != null)
+        else if (hitObjects.Count > 3 && hitObjects[3].gameObject.GetComponent<Element>() != null)
         {
             return hitObjects[3].gameObject;
         } 
-        else if (hitObjects[4].gameObject.GetComponent<Element>() != null)
+        else if (hitObjects.Count > 4 && hitObjects[4].gameObject.GetComponent<Element>() != null)
         {
             return hitObjects[4].gameObject;
         }
-        else
+        else if (hitObjects.Count > 5 && hitObjects[5].gameObject.GetComponent<Element>() != null)
         {
             return hitObjects[5].gameObject;
+        } else
+        {
+            return null;
         }
         
     }
@@ -255,7 +310,14 @@ public class DropHandler : MonoBehaviour, IDropHandler
         //meObject objectUnderMouse = GetObjectUnderMouse();
         //Debug.Log("we are here " + objectUnderMouse.gameObject.name);
         string objectType = "";
-        objectType = foundObject.GetComponent<Element>().ElementType;
+        if (foundObject != null && foundObject.GetComponent<Element>() != null)
+        {
+            objectType = foundObject.GetComponent<Element>().ElementType;
+        } else
+        {
+            
+        }
+        
         
         
         return objectType;

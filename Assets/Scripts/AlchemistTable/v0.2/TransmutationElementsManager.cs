@@ -107,6 +107,16 @@ public class TransmutationElementsManager : MonoBehaviour
         
     }
 
+    public void UploadResetElements()
+    {
+        ResetElementsList();
+
+        foreach (Transform slot in baseElementsHolder)
+        {
+            slot.GetComponent<TransmutationElement>().HideVisibility();
+        }        
+    }
+
     void DisableElement(TransmutationElement transmutationElement)
     {
         Debug.Log("were are here 1");
