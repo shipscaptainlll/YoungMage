@@ -75,6 +75,11 @@ public class PanelsManagerMainmenu : MonoBehaviour
         }
     }
 
+    public void HideBeforeLoading()
+    {
+        closeCurrentPanel();
+    }
+
     void ChooseEscapeActions()
     {
         if (currentlyOpened != null)

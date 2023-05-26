@@ -12,6 +12,7 @@ public class DoorHealthDecreaser : MonoBehaviour
     [SerializeField] Transform instantiationPoint;
     [SerializeField] Transform PSInstantiationPoint;
     [SerializeField] float healthRegeneration;
+    [SerializeField] RectTransform healthTransform;
     [SerializeField] float maximumWidth;
     [SerializeField] float currentHealth;
 
@@ -23,7 +24,7 @@ public class DoorHealthDecreaser : MonoBehaviour
     float minimalWidth = 0;
     
 
-    RectTransform healthTransform;
+    //RectTransform healthTransform;
     Coroutine healthDecreasingCoroutine;
     Coroutine healthRegenerationCoroutine;
     public event Action HealthReachedZero = delegate { };
@@ -32,7 +33,7 @@ public class DoorHealthDecreaser : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        healthTransform = transform.Find("Borders").Find("Foreground").GetComponent<RectTransform>();
+        //healthTransform = transform.Find("Borders").Find("Foreground").GetComponent<RectTransform>();
     }
 
     public void CalculateDamage(SkeletonBehavior skeleton)

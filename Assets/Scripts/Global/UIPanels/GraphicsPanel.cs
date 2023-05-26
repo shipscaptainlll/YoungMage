@@ -72,14 +72,23 @@ public class GraphicsPanel : MonoBehaviour
     {
         chooseSound = soundManager.FindSound("SettingElement");
         UploadPlayerPrefs();
-        m_panelsManager.ManageSettingsPanel("graphicsPanel");
+        if (m_panelsManager != null)
+        {
+            m_panelsManager.ManageSettingsPanel("graphicsPanel");
+        } else
+        {
+            Debug.Log("fix later m_panelsManager none here");
+        }
         
-        if (m_volume.profile.TryGet<ColorAdjustments>(out m_colorAdjustments))
+        
+        if (m_volume != null && m_volume.profile.TryGet<ColorAdjustments>(out m_colorAdjustments))
         {
             
         }
         QualitySettings.vSyncCount = 0;
     }
+
+
     
     public void SetTotalGraphicsQuality(Slider slider)
     {
@@ -452,9 +461,13 @@ Debug.Log("max framerate is " + m_maxFramerateLevel);
     {
         m_FOVLevel = (int) slider.value;
 
-        m_mainCamera.fieldOfView = m_FOVLevel;
-        m_secondCamera.fieldOfView = m_FOVLevel;
-        m_thirdCamera.fieldOfView = m_FOVLevel;
+        if (m_mainCamera != null && m_secondCamera != null && m_thirdCamera != null)
+        {
+            m_mainCamera.fieldOfView = m_FOVLevel;
+            m_secondCamera.fieldOfView = m_FOVLevel;
+            m_thirdCamera.fieldOfView = m_FOVLevel;
+        }
+
         
         m_FOVComments.text = m_FOVLevel.ToString();
         

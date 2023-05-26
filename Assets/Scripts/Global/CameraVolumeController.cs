@@ -10,7 +10,7 @@ public class CameraVolumeController : MonoBehaviour
     static DepthOfField depthOfField;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         volume = gameObject.GetComponent<Volume>();
         if (volume.profile.TryGet<DepthOfField>(out depthOfField))
@@ -21,8 +21,15 @@ public class CameraVolumeController : MonoBehaviour
     }
     
     
-    public static void  BlurScreen()
+    public void  BlurScreen()
     {
+        StartCoroutine(BlurAfterDelay());
+        
+    }
+
+    IEnumerator BlurAfterDelay()
+    {
+        yield return new WaitForSeconds(0.05f);
         depthOfField.focusDistance.Override(0.1f);
         depthOfField.focalLength.Override(300f);
         depthOfField.aperture.Override(32f);
@@ -31,8 +38,14 @@ public class CameraVolumeController : MonoBehaviour
         depthOfField.bladeRotation.Override(-5f);
     }
 
-    public static void UnBlurScreen()
+    public void UnBlurScreen()
     {
+        StartCoroutine(UnblurAfterDelay());
+    }
+
+    IEnumerator UnblurAfterDelay()
+    {
+        yield return new WaitForSeconds(0.05f);
         depthOfField.focusDistance.Override(10f);
         depthOfField.focalLength.Override(50f);
         depthOfField.aperture.Override(5.6f);

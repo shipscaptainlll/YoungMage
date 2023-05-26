@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class LoadGameData : MonoBehaviour
 {
     SaveSystemSerialization saveSystemSerialization;
+    public static LoadGameData instance;
     int saveId = 0;
 
     public int SaveId { get { return saveId; } set { saveId = value; } }
@@ -13,13 +14,14 @@ public class LoadGameData : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(this.gameObject);
+        if (instance != null)
+        {
+            Destroy(gameObject);
+        } else
+        {
+            instance = this;
+        }
         SceneManager.sceneLoaded += UploadGameData;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     void UploadGameData(Scene scene, LoadSceneMode mode)
@@ -27,6 +29,7 @@ public class LoadGameData : MonoBehaviour
         if (scene.name == "SampleScene") {
             saveSystemSerialization = GameObject.Find("SaveSystemSerialization").GetComponent<SaveSystemSerialization>();
             Debug.Log("hello there" + saveSystemSerialization);
+            Debug.Log("just loaded load number " + saveId);
             saveSystemSerialization.LoadProgress(saveId);
         }
         

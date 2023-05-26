@@ -61,6 +61,7 @@ public class LoadPanelsMain : MonoBehaviour
         //saveSystemSerialization.LoadProgress(saveSystemSerialization.SaveDirectoryPath);
         loadGameData.SaveId = lastSaveIndex;
         panelsManagerMainmenu.OpenNewgamePanel();
+        panelsManagerMainmenu.HideBeforeLoading();
         //Debug.Log("Game was autosaved");
     }
 
@@ -128,9 +129,17 @@ public class LoadPanelsMain : MonoBehaviour
         int index = Int32.Parse(loadNumber);
         //FindSaveElement(index);
         loadGameData.SaveId = index;
-        panelsManagerMainmenu.OpenNewgamePanel();
+        panelsManagerMainmenu.HideBeforeLoading();
+        StartCoroutine(OpenGameSceneDelayed());
+        
         //saveSystemSerialization.LoadProgress(index);
         //Debug.Log("was loaded + " + index);
+    }
+
+    IEnumerator OpenGameSceneDelayed()
+    {
+        yield return new WaitForSeconds(0.05f);
+        panelsManagerMainmenu.OpenNewgamePanel();
     }
 
     public void LoadLastGame()

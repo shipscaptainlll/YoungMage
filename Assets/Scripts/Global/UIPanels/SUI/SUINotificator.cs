@@ -13,11 +13,6 @@ public class SUINotificator : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void Notify(string description)
     {

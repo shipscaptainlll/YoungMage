@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Localization.Settings;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MiscPanel : MonoBehaviour
@@ -10,6 +11,9 @@ public class MiscPanel : MonoBehaviour
     [SerializeField] Slider slider;
     [SerializeField] Slider languageSlider;
     [SerializeField] Text languageComment;
+
+    [SerializeField] Transform tutorialButton;
+    [SerializeField] Transform stuckButton;
     
     [Header("Sounds Manager")]
     [SerializeField] SoundManager soundManager;
@@ -27,6 +31,12 @@ public class MiscPanel : MonoBehaviour
         chooseSound = soundManager.FindSound("SettingElement");
         UploadPlayerPrefs();
         UpdateLanguageParametersRepresentation();
+
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            tutorialButton.gameObject.SetActive(false);
+            stuckButton.gameObject.SetActive(false);
+        }
     }
 
     public void ResetTutorial()
