@@ -65,7 +65,7 @@ public class SavePanel : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B))
         {
             //saveSystemSerialization.SaveProgress();
-            AutoSave();
+            //AutoSave();
         }
 
         
